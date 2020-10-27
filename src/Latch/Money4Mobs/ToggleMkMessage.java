@@ -1,4 +1,4 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,7 +13,7 @@ public class ToggleMkMessage implements CommandExecutor {
     private static MobConfigManager cfgm;
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        List<Player> playerList = Enchant.getPlayerList();
+        List<Player> playerList = Money4Mobs.getPlayerList();
         org.bukkit.entity.Player player = (org.bukkit.entity.Player) commandSender;
         List<MobModel> mm = cfgm.getMobModelFromConfig();
         for (int i = 0; i < playerList.size(); i++){

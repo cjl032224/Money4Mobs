@@ -1,4 +1,4 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
 import java.util.*;
 import java.util.stream.Collectors;

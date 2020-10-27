@@ -1,8 +1,6 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -13,16 +11,19 @@ import java.util.List;
 
 public class MobConfigManager {
 
-    private Enchant plugin = Enchant.getPlugin(Enchant.class);
+    private Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
     private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     public static FileConfiguration mobsCfg;
     public File mobsFile;
 
+    // Set up mobs.yml configuration file
     public void setup(){
+        // if the Mobs4Money folder does not exist, create the Mobs4Money folder
         if(!plugin.getDataFolder().exists()){
             plugin.getDataFolder().mkdir();
         }
         mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
+        //if the mobs.yml does not exist, create it
         if(!mobsFile.exists()){
             try {
                 mobsFile.createNewFile();
@@ -51,6 +52,7 @@ public class MobConfigManager {
         }
     }
 
+    // Sets mob list from mobs.yml file
     public static void setMobListFromConfig(){
         for(String path : mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             int worth = mobsCfg.getInt("mobs." + path + ".worth");

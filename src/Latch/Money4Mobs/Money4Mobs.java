@@ -1,4 +1,4 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Enchant extends JavaPlugin implements Listener {
+public class Money4Mobs extends JavaPlugin implements Listener {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
-    private static List<Latch.Enchant.Player> playerList = new ArrayList<Latch.Enchant.Player>();
+    private static List<Latch.Money4Mobs.Player> playerList = new ArrayList<Latch.Money4Mobs.Player>();
     private static SetMobList sml = new SetMobList();
     private MobConfigManager cfgm;
     @Override
@@ -38,14 +38,13 @@ public class Enchant extends JavaPlugin implements Listener {
         };
         cfgm.setMobListFromConfig();
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            playerList.add(new Latch.Enchant.Player(p.getName(), true ));
+            playerList.add(new Latch.Money4Mobs.Player(p.getName(), true ));
         }
         this.getCommand("enc").setExecutor(new EnchantCommand());
         this.getCommand("enc").setTabCompleter(new TabComplete());
         this.getCommand("mk").setExecutor(new ToggleMkMessage());
         this.getCommand("mk").setTabCompleter(new MobWorthTabComplete());
         sml.getMobModel();
-
     }
 
     @Override
@@ -60,6 +59,15 @@ public class Enchant extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
+        int count = 0;
+        for (int i = 0; i < playerList.size(); i++){
+            if(event.getPlayer().getName().equals(playerList.get(i).getPlayerName()) ){
+                count = 1;
+            }
+        }
+        if (count == 0){
+            playerList.add(new Latch.Money4Mobs.Player(event.getPlayer().getName(), true ));
+        }
     }
 
     @EventHandler
@@ -90,7 +98,7 @@ public class Enchant extends JavaPlugin implements Listener {
 
     public void removePlayerOnLeave(PlayerQuitEvent event){
         Player pa = event.getPlayer();
-        Latch.Enchant.Player player = new Latch.Enchant.Player();
+        Latch.Money4Mobs.Player player = new Latch.Money4Mobs.Player();
         for (int i = 0; i < playerList.size(); i++) {
             if (pa.toString().equals(playerList.get(i).getPlayerName())) {
                 playerList.remove(i);
@@ -101,7 +109,7 @@ public class Enchant extends JavaPlugin implements Listener {
     public void callRewardMobKiller(EntityDeathEvent event){
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
-        Latch.Enchant.Player player = new Latch.Enchant.Player();
+        Latch.Money4Mobs.Player player = new Latch.Money4Mobs.Player();
         if (pa != null && pa.hasPermission("enc.mk")) {
             MobKiller.rewardPlayerMoney(pa, e, econ);
         }
@@ -117,7 +125,7 @@ public class Enchant extends JavaPlugin implements Listener {
         cfgm.setup();
     }
 
-    public static List<Latch.Enchant.Player> getPlayerList(){
+    public static List<Latch.Money4Mobs.Player> getPlayerList(){
         return playerList;
     }
 }

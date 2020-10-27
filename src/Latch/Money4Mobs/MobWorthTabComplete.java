@@ -1,4 +1,4 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

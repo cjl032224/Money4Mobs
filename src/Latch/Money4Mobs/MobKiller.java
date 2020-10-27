@@ -1,4 +1,4 @@
-package Latch.Enchant;
+package Latch.Money4Mobs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public abstract class MobKiller implements CommandExecutor {
             }
         }
         EconomyResponse r = econ.depositPlayer(pa, money);
-        List<Latch.Enchant.Player> playerList = Enchant.getPlayerList();
+        List<Latch.Money4Mobs.Player> playerList = Money4Mobs.getPlayerList();
         for (int i = 0; i < playerList.size(); i++) {
             if (pa.getName().equals(playerList.get(i).getPlayerName())) {
                 Boolean displayMessage = playerList.get(i).getKillerMessage();

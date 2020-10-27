@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EnchantPlugin.iml" filepath="$PROJECT_DIR$/EnchantPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Money4Mobs.iml" filepath="$PROJECT_DIR$/Money4Mobs.iml" />
     </modules>
   </component>
 </project>
