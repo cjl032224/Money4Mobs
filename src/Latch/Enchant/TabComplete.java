@@ -1,0 +1,56 @@
+package Latch.Enchant;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
+
+public class TabComplete implements TabCompleter {
+    //create a static array of values you want to return
+    private static Set<Enchantment> enchantmentList = new HashSet<>();
+    private static List<String> strings;
+    protected List<String> ecList;
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        EnchantCommand enchantCommand = new EnchantCommand();
+
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+
+            for(Enchantment enchantment : Enchantment.values())
+            {
+                enchantmentList.add(enchantment);
+            }
+            List<Enchantment> aList = enchantmentList.stream().collect(Collectors.toList());
+            strings = aList.stream()
+                    .map(object -> Objects.toString(object, null))
+                    .collect(Collectors.toList());
+            for (int i = 0; i < strings.size(); i++) {
+
+                String enchantment = strings.get(i);
+                String[] enchantmentArray = enchantment.split(":");
+                enchantmentArray = enchantmentArray[1].split(",");
+                enchantment = enchantmentArray[0];
+                strings.set(i, enchantment);
+            }
+            setEnchantmentList(strings);
+        }
+
+        return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], strings, new ArrayList<>()) : null;
+    }
+
+    public void setEnchantmentList(List<String> value) {
+        this.ecList = value;
+    }
+
+    public List<String> getEnchantmentList() {
+        return ecList;
+    }
+
+
+}

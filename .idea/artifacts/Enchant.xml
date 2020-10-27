@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Enchant">
+    <output-path>U:/Users/Latch/Documents/enderDragon/plugins</output-path>
+    <root id="archive" name="Enchant.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/api/spigot-api-1.16.3-R0.1-20201017.202830-25-shaded.jar" />
+      <element id="module-output" name="EnchantPlugin" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,15 @@
+name: enchant
+version: 0.0.10
+author: Latch
+main: Latch.Enchant.Enchant
+api-version: 1.16
+softdepend: [Vault]
+commands:
+  enc:
+    description: Enchants item
+    usage: /enc
+    permission: Enchanter.command.enc
+  mk:
+    description: Mob Killer
+    usage: /mk
+    permission: Enchanter.command.mk
