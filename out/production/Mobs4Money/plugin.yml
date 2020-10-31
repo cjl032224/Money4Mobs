@@ -1,15 +1,15 @@
 name: Money4Mobs
-version: 0.0.10
+version: 1.0.1
 author: Latch
 main: Latch.Money4Mobs.Money4Mobs
 api-version: 1.16
 softdepend: [Vault]
 commands:
-  enc:
-    description: Enchants item
-    usage: /enc
-    permission: Enchanter.command.enc
   mk:
     description: Mob Killer
     usage: /mk
     permission: Enchanter.command.mk
+  enc:
+    description: Mob Killer
+    usage: /enc
+    permission: Enchanter.command.enc

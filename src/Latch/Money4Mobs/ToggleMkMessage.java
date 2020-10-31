@@ -13,7 +13,7 @@ public class ToggleMkMessage implements CommandExecutor {
     private static MobConfigManager cfgm;
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        List<Player> playerList = Money4Mobs.getPlayerList();
+        List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         org.bukkit.entity.Player player = (org.bukkit.entity.Player) commandSender;
         List<MobModel> mm = cfgm.getMobModelFromConfig();
         for (int i = 0; i < playerList.size(); i++){

@@ -21,7 +21,7 @@ public class EnchantCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
-        TabComplete tc = new TabComplete();
+        EnchantTabComplete tc = new EnchantTabComplete();
 
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;

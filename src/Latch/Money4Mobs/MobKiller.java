@@ -1,15 +1,27 @@
 package Latch.Money4Mobs;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.logging.Logger;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class MobKiller implements CommandExecutor {
 
@@ -18,30 +30,166 @@ public abstract class MobKiller implements CommandExecutor {
 
     private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     private static List<MobModel> mm = cfgm.getMobModelFromConfig();
+    private static EntityDeathEvent ede;
+    private static Random rand = new Random();
+    private static Integer lootingLevel;
+    private static DecimalFormat df = new DecimalFormat("0.00");
+    private static Boolean isRange = false;
+    private static Integer percentage = 0;
+    private static Integer money = 0;
+    private static List<MobSpawnedReason> msr = new ArrayList<MobSpawnedReason>();
+    private static Boolean giveMoney = true;
+    private static Boolean spawners = false;
+    private static Boolean spawnEggs = false;
+
+
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
-
-        Integer money = 0;
-        String es = e.toString();
-
-        for(int i = 0; i < mm.size(); i++){
-            String entity = "Craft"+mm.get(i).getMobName();
-            if(es.equals(entity)){
-                money = mm.get(i).getWorth();
-            }
+        giveMoneyCheck(pa,e);
+        if (Boolean.TRUE.equals(giveMoney)){
+            checkPercentage(pa);
+            setRange(e);
+            setCustomDrops(e, pa);
+            sendKillMessage(pa, econ);
         }
+    }
+
+    public static void setEvent(EntityDeathEvent e) {
+        ede = e;
+    }
+
+    public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
-        List<Latch.Money4Mobs.Player> playerList = Money4Mobs.getPlayerList();
+        List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         for (int i = 0; i < playerList.size(); i++) {
             if (pa.getName().equals(playerList.get(i).getPlayerName())) {
                 Boolean displayMessage = playerList.get(i).getKillerMessage();
                 if(displayMessage == true) {
                     if (r.amount != 0) {
                         if(r.transactionSuccess()) {
-                            pa.sendMessage(String.format("You were given %s and now have %s", econ.format(r.amount), econ.format(r.balance)));
+                            Double balance = r.balance;
+                            df.format(balance);
+                            df.setRoundingMode(RoundingMode.UP);
+                            pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                    ChatColor.GRAY + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) + ChatColor.GRAY + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
                         } else {
                             pa.sendMessage(String.format("An error occured: %s", r.errorMessage));
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public static void setCustomDrops(Entity e, Player p){
+        lootingLevel = 1;
+        getLootingLevel();
+        String es = e.toString();
+        int chance = rand.nextInt(100);
+        Integer multiplier = 1;
+        if (lootingLevel == 2){
+            multiplier = 2;
+        } else if (lootingLevel == 3){
+            multiplier = 3;
+        } else {
+            multiplier = 1;
+        }
+
+        if(es.equals("CraftCreeper")){
+            ede.getDrops().clear();
+            ede.getDrops().add(new ItemStack(Material.GUNPOWDER, 2 * multiplier));
+            if(chance > 75){
+                ede.getDrops().add(new ItemStack(Material.TNT, 1 * multiplier));
+            }
+        }
+        if(es.equals("CraftShulker")){
+            ede.getDrops().clear();
+            ede.getDrops().add(new ItemStack(Material.SHULKER_SHELL, 2 * multiplier));
+        }
+        if(es.equals("CraftEnderman")){
+            ede.getDrops().clear();
+            ede.getDrops().add(new ItemStack(Material.ENDER_PEARL, 1 * multiplier));
+        }
+    }
+
+    public static void getSpawnReason(CreatureSpawnEvent e) {
+        msr.add(new MobSpawnedReason(e.getSpawnReason().toString(), e.getEntity().getUniqueId().toString()));
+    }
+
+    public static void getLootingLevel(){
+        Map<Enchantment, Integer> s = ede.getEntity().getKiller().getInventory().getItemInMainHand().getEnchantments();
+        for (Map.Entry<Enchantment,Integer> entry : s.entrySet()){
+            if (entry.getKey().toString().contains("looting")){
+                lootingLevel = entry.getValue();
+            }
+        }
+    }
+
+    public static Boolean giveMoneyCheck(Player pa, Entity e){
+        Integer counter = 0;
+        checkSpawners();
+        checkSpawnEggs();
+        for (int k = 0; k < msr.size(); k++){
+            if(msr.get(k).getUuid().equals(e.getUniqueId().toString())){
+                counter = 1;
+
+                if(Boolean.FALSE.equals(spawners) && Boolean.TRUE.equals(spawnEggs)){
+                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") ){
+                        giveMoney = false;
+                        msr.remove(k);
+                    }
+                }
+                if(Boolean.TRUE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)){
+                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG") ){
+                        giveMoney = false;
+                        msr.remove(k);
+                    }
+                }
+                if(Boolean.FALSE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)){
+                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")){
+                        giveMoney = false;
+                        msr.remove(k);
+                    }
+                }
+
+            }
+        }
+        if(counter == 0){
+            giveMoney = true;
+        }
+        return giveMoney;
+    }
+
+    public static void checkSpawners(){
+        spawners = cfgm.mobsCfg.getBoolean("spawners");
+    }
+
+    public static void checkSpawnEggs(){
+        spawnEggs = cfgm.mobsCfg.getBoolean("spawneggs");
+    }
+
+    public static void checkPercentage(Player pa){
+        Integer percentage = cfgm.mobsCfg.getInt("range.percentage");
+        if (percentage < 1  || percentage > 100) {
+            log.info(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
+            pa.sendMessage(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
+            isRange = false;
+        }
+    }
+
+    public static void setRange(Entity e){
+        isRange = cfgm.mobsCfg.getBoolean("range.enabled");
+        for(int i = 0; i < mm.size(); i++){
+            String entity = "Craft"+mm.get(i).getMobName();
+            String es = e.toString();
+            if(es.equals(entity)){
+                money = mm.get(i).getWorth();
+                Integer variable = (money / 100) * percentage ;
+                if (Boolean.FALSE.equals(isRange)){
+                    money = mm.get(i).getWorth();
+                } else if (Boolean.TRUE.equals(isRange)) {
+                    Integer low = (money - variable);
+                    Integer high = (money + variable);
+                    money = (int)(Math.random() * (high - low + 1) + low);
                 }
             }
         }

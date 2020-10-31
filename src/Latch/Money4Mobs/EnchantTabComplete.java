@@ -10,7 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-public class TabComplete implements TabCompleter {
+public class EnchantTabComplete implements TabCompleter {
     //create a static array of values you want to return
     private static Set<Enchantment> enchantmentList = new HashSet<>();
     private static List<String> strings;

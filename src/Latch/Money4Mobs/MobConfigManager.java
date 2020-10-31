@@ -40,6 +40,11 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
+            mobsCfg.set("version", "1.0.2");
+            mobsCfg.set("range.enabled", false);
+            mobsCfg.set("range.percentage", 25);
+            mobsCfg.set("spawners", false);
+            mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
                 String mobName = mobList.get(i).mobName;
                 Integer worth = mobList.get(i).worth;
