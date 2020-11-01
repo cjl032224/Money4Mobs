@@ -30,10 +30,15 @@ public class ToggleMkMessage implements CommandExecutor {
                 } else if(args.length == 2) {
                     if(args[0].equals("worth")){
                         for (int j = 0; j < mm.size(); j++){
-                            if(args[1].equals(mm.get(j).mobName)){
+                            if(args[1].equalsIgnoreCase(mm.get(j).mobName)){
                                 String mobName = mm.get(j).mobName;
-                                Integer worth = mm.get(j).worth;
-                                player.sendMessage(mobName + " are worth $" + worth.toString());
+                                Integer lowWorth = mm.get(j).lowWorth;
+                                Integer highWorth = mm.get(j).highWorth;
+                                if(lowWorth == highWorth){
+                                    player.sendMessage(mobName + "s are worth $" + lowWorth.toString());
+                                } else {
+                                    player.sendMessage(mobName + "s are worth between $" + lowWorth.toString() + " and $" + highWorth.toString());
+                                }
                             }
                         }
                     }

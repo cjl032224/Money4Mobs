@@ -40,15 +40,15 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.0.3");
-            mobsCfg.set("range.enabled", false);
-            mobsCfg.set("range.percentage", 25);
+            mobsCfg.set("version", "1.0.4");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
                 String mobName = mobList.get(i).mobName;
-                Integer worth = mobList.get(i).worth;
-                mobsCfg.set("mobs." + mobName + ".worth", worth );
+                Integer lowWorth = mobList.get(i).lowWorth;
+                Integer highWorth = mobList.get(i).highWorth;
+                mobsCfg.set("mobs." + mobName + ".worth.low", lowWorth);
+                mobsCfg.set("mobs." + mobName + ".worth.high", highWorth);
             }
             mobsCfg.save(mobsFile);
         }
@@ -60,9 +60,10 @@ public class MobConfigManager {
     // Sets mob list from mobs.yml file
     public static void setMobListFromConfig(){
         for(String path : mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            int worth = mobsCfg.getInt("mobs." + path + ".worth");
+            int lowWorth = mobsCfg.getInt("mobs." + path + ".worth.low");
+            int highWorth = mobsCfg.getInt("mobs." + path + ".worth.high");
             String mob = path;
-            mobListFromConfig.add(new MobModel(mob,worth));
+            mobListFromConfig.add(new MobModel(mob,lowWorth, highWorth));
         }
     }
 

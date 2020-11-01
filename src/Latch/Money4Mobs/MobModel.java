@@ -2,12 +2,13 @@ package Latch.Money4Mobs;
 
 public class MobModel {
     protected String mobName;
-    protected Integer worth;
-
+    protected Integer lowWorth;
+    protected Integer highWorth;
     public MobModel() {};
-    public MobModel(String mobName, Integer worth) {
+    public MobModel(String mobName, Integer lowWorth, Integer highWorth) {
         this.mobName = mobName;
-        this.worth = worth;
+        this.lowWorth = lowWorth;
+        this.highWorth = highWorth;
     }
 
     public String getMobName(){
@@ -18,12 +19,20 @@ public class MobModel {
         this.mobName = mobName;
     }
 
-    public Integer getWorth() {
-        return worth;
+    public Integer getLowWorth() {
+        return lowWorth;
     }
 
-    public void setWorth(Integer worth){
-        this.worth = worth;
+    public void setLowWorth(Integer lowWorth){
+        this.lowWorth = lowWorth;
+    }
+
+    public Integer getHighWorth() {
+        return highWorth;
+    }
+
+    public void setHighWorth(Integer highWorth){
+        this.highWorth = highWorth;
     }
 
 }

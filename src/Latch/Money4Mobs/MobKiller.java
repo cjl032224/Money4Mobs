@@ -34,8 +34,6 @@ public abstract class MobKiller implements CommandExecutor {
     private static Random rand = new Random();
     private static Integer lootingLevel;
     private static DecimalFormat df = new DecimalFormat("0.00");
-    private static Boolean isRange = false;
-    private static Integer percentage = 0;
     private static Integer money = 0;
     private static List<MobSpawnedReason> msr = new ArrayList<MobSpawnedReason>();
     private static Boolean giveMoney = true;
@@ -46,7 +44,6 @@ public abstract class MobKiller implements CommandExecutor {
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
-            checkPercentage(pa);
             setRange(e);
             setCustomDrops(e, pa);
             sendKillMessage(pa, econ);
@@ -167,30 +164,16 @@ public abstract class MobKiller implements CommandExecutor {
         spawnEggs = cfgm.mobsCfg.getBoolean("spawneggs");
     }
 
-    public static void checkPercentage(Player pa){
-        percentage = cfgm.mobsCfg.getInt("range.percentage");
-        if (percentage < 1  || percentage > 100) {
-            log.info(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
-            pa.sendMessage(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
-            isRange = false;
-        }
-    }
-
     public static void setRange(Entity e){
-        isRange = cfgm.mobsCfg.getBoolean("range.enabled");
         for(int i = 0; i < mm.size(); i++){
             String entity = "Craft"+mm.get(i).getMobName();
             String es = e.toString();
+            Integer lowWorth = mm.get(i).getLowWorth();
+            Integer highWorth = mm.get(i).getHighWorth();
             if(es.equals(entity)){
-                money = mm.get(i).getWorth();
-                Integer variable = (money / 100) * percentage;
-                if (Boolean.FALSE.equals(isRange)){
-                    money = mm.get(i).getWorth();
-                } else if (Boolean.TRUE.equals(isRange)) {
-                    Integer low = (money - variable);
-                    Integer high = (money + variable);
-                    money = (int)(Math.random() * (high - low + 1) + low);
-                }
+                money = mm.get(i).getHighWorth();
+                money = (int)(Math.random() * (highWorth - lowWorth + 1) + lowWorth);
+
             }
         }
     }

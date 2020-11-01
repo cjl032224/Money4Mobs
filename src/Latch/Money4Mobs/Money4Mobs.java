@@ -36,7 +36,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         setupEconomy();
         loadConfig();
         reloadConfig();
-        if(cfgm.mobsCfg.getInt("mobs.Bee.worth") == 0){
+        if(cfgm.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             cfgm.createMobsConfig();
         };
         cfgm.setMobListFromConfig();
