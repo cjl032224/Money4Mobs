@@ -40,7 +40,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.0.2");
+            mobsCfg.set("version", "1.0.3");
             mobsCfg.set("range.enabled", false);
             mobsCfg.set("range.percentage", 25);
             mobsCfg.set("spawners", false);

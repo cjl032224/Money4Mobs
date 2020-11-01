@@ -168,7 +168,7 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void checkPercentage(Player pa){
-        Integer percentage = cfgm.mobsCfg.getInt("range.percentage");
+        percentage = cfgm.mobsCfg.getInt("range.percentage");
         if (percentage < 1  || percentage > 100) {
             log.info(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
             pa.sendMessage(ChatColor.GOLD + "[Money4Mobs] " + ChatColor.GRAY + "- " + ChatColor.RED + "Percentage must be between 1 and 100");
@@ -183,7 +183,7 @@ public abstract class MobKiller implements CommandExecutor {
             String es = e.toString();
             if(es.equals(entity)){
                 money = mm.get(i).getWorth();
-                Integer variable = (money / 100) * percentage ;
+                Integer variable = (money / 100) * percentage;
                 if (Boolean.FALSE.equals(isRange)){
                     money = mm.get(i).getWorth();
                 } else if (Boolean.TRUE.equals(isRange)) {
