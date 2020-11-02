@@ -45,7 +45,7 @@ public abstract class MobKiller implements CommandExecutor {
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e);
-            setCustomDrops(e, pa);
+            //setCustomDrops(e, pa);
             sendKillMessage(pa, econ);
         }
     }
