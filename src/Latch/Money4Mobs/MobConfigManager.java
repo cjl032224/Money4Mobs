@@ -40,7 +40,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.0.5");
+            mobsCfg.set("version", "1.0.6");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
@@ -49,6 +49,16 @@ public class MobConfigManager {
                 Integer highWorth = mobList.get(i).highWorth;
                 mobsCfg.set("mobs." + mobName + ".worth.low", lowWorth);
                 mobsCfg.set("mobs." + mobName + ".worth.high", highWorth);
+                mobsCfg.set("mobs." + mobName + ".customDrops", false);
+                mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
+                String air = "AIR";
+                if(i == 1){
+                    mobsCfg.set("mobs." + mobName + ".drops.item-1.name", air);
+                    mobsCfg.set("mobs." + mobName + ".drops.item-1.amount", 5);
+                    mobsCfg.set("mobs." + mobName + ".drops.item-2.name", air);
+
+                    mobsCfg.set("mobs." + mobName + ".drops.item-2.amount", 10);
+                }
             }
             mobsCfg.save(mobsFile);
         }
@@ -59,12 +69,32 @@ public class MobConfigManager {
 
     // Sets mob list from mobs.yml file
     public static void setMobListFromConfig(){
+        Integer counter1 = 0;
         for(String path : mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             int lowWorth = mobsCfg.getInt("mobs." + path + ".worth.low");
             int highWorth = mobsCfg.getInt("mobs." + path + ".worth.high");
+            Boolean customDrops = mobsCfg.getBoolean("mobs." + path + ".customDrops");
+            Boolean keepDefaultDrops = mobsCfg.getBoolean("mobs." + path + ".keepDefaultDrops");
+            Integer counter = 1;
+            List<ItemModel> im = new ArrayList<ItemModel>();
+            if(mobsCfg.getString("mobs." + path + ".drops.item-1.name") != null){
+                for(String items : mobsCfg.getConfigurationSection("mobs." + path + ".drops").getKeys(false)) {
+                    String name = mobsCfg.getString("mobs." + path + ".drops.item-" + counter + ".name");
+                    Integer amount = mobsCfg.getInt("mobs." + path + ".drops.item-" + counter + ".amount");
+                    im.add(new ItemModel(name,amount));
+                    counter++;
+                }
+            }
+
+
             String mob = path;
-            mobListFromConfig.add(new MobModel(mob,lowWorth, highWorth));
+            mobListFromConfig.add(new MobModel(mob,lowWorth, highWorth, keepDefaultDrops, customDrops, im));
+            mobListFromConfig.get(counter1).setCustomDrops(customDrops);
+            mobListFromConfig.get(counter1).setKeepDefaultDrops(keepDefaultDrops);
+            mobListFromConfig.get(counter1).setItems(im);
+            counter1++;
         }
+
     }
 
     public static List<MobModel> getMobModelFromConfig() {
