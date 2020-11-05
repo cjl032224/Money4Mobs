@@ -1,24 +1,20 @@
 package Latch.Money4Mobs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,18 +24,23 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static Economy econ = null;
     private static List<Mobs4MoneyPlayer> playerList = new ArrayList<Mobs4MoneyPlayer>();
     private static SetMobList sml = new SetMobList();
-    private MobConfigManager cfgm;
+    private MobConfigManager MobCfgm;
+    private ItemListManager ItemCfgm;
     @Override
     public void onEnable() {
-        loadConfigManager();
+        loadMobConfigManager();
+        loadItemConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         loadConfig();
         reloadConfig();
-        if(cfgm.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
-            cfgm.createMobsConfig();
+        if(MobCfgm.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
+            MobCfgm.createMobsConfig();
         };
-        cfgm.setMobListFromConfig();
+        if(!ItemCfgm.itemsFile.exists() ){
+            ItemCfgm.createItemsConfig();
+        }
+        MobCfgm.setMobListFromConfig();
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
@@ -134,9 +135,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         saveConfig();
     }
 
-    public void loadConfigManager(){
-        cfgm = new MobConfigManager();
-        cfgm.setup();
+    public void loadMobConfigManager(){
+        MobCfgm = new MobConfigManager();
+        MobCfgm.setup();
+    }
+
+    public void loadItemConfigManager(){
+        ItemCfgm = new ItemListManager();
+        ItemCfgm.setup();
     }
 
     public static List<Mobs4MoneyPlayer> getPlayerList(){

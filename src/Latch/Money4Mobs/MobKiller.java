@@ -5,10 +5,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -18,10 +16,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MerchantRecipe;
 
 public abstract class MobKiller implements CommandExecutor {
 
@@ -45,14 +43,14 @@ public abstract class MobKiller implements CommandExecutor {
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e);
-            //setCustomDrops(e, pa);
+            setCustomDrops(e, pa);
             sendKillMessage(pa, econ);
         }
     }
-
     public static void setEvent(EntityDeathEvent e) {
         ede = e;
     }
+
 
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
@@ -90,21 +88,22 @@ public abstract class MobKiller implements CommandExecutor {
         } else {
             multiplier = 1;
         }
-
-        if(es.equals("CraftCreeper")){
-            ede.getDrops().clear();
-            ede.getDrops().add(new ItemStack(Material.GUNPOWDER, 2 * multiplier));
-            if(chance > 75){
-                ede.getDrops().add(new ItemStack(Material.TNT, 1 * multiplier));
+        String[] name = es.split("Craft");
+        for (Integer i = 0; i < mm.size(); i++){
+            if(Boolean.TRUE.equals(mm.get(i).getCustomDrops())){
+                if (mm.get(i).getMobName().equals(name[1])) {
+                    if(!Boolean.TRUE.equals(mm.get(i).getKeepDefaultDrops())){
+                        ede.getDrops().clear();
+                    }
+                    for (Integer j = 0; j < mm.get(i).getItems().size(); j++){
+                        String itemName = mm.get(i).getItems().get(j).getItemName();
+                        Material m = Material.valueOf(itemName);
+                        Integer amount = mm.get(i).getItems().get(j).getAmount();
+                        ede.getDrops().add(new ItemStack(m, amount));
+                    }
+                }
             }
-        }
-        if(es.equals("CraftShulker")){
-            ede.getDrops().clear();
-            ede.getDrops().add(new ItemStack(Material.SHULKER_SHELL, 2 * multiplier));
-        }
-        if(es.equals("CraftEnderman")){
-            ede.getDrops().clear();
-            ede.getDrops().add(new ItemStack(Material.ENDER_PEARL, 1 * multiplier));
+
         }
     }
 
