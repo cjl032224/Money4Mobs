@@ -20,6 +20,7 @@ public class MkCommand implements CommandExecutor {
     FileConfiguration mobsCfg = MobCfgm.mobsCfg;
     File pFile = MobConfigManager.mobsFile;
     private static Material[] materials = Material.values();
+    private static List<MobModel> mobList = new ArrayList<MobModel>();
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
@@ -191,6 +192,68 @@ public class MkCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
                         }
                     }
+                    if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
+                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".customDrops", Boolean.parseBoolean(args[2]));
+                                    mm.get(j).setCustomDrops(Boolean.parseBoolean(args[2]));
+                                    try {
+                                        player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + args[2]);
+                                        mobsCfg.save(pFile);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("removeCustomDrop")) {
+                        if (player.hasPermission("m4m.command.mk.removeCustomDrop")) {
+                            ItemModel item = new ItemModel();
+                            List<ItemModel> itemList = new ArrayList<>();
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    for (int k = 0; k < mm.get(j).getItems().size(); k++) {
+                                        itemList.add(new ItemModel(mm.get(j).getItems().get(k).getItemName(),mm.get(j).getItems().get(k).getAmount(), mm.get(j).getItems().get(k).getChance() ));
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".drops.item-" + (k + 1), null);
+                                        try {
+                                            mobsCfg.save(pFile);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    for (int k = 0; k < itemList.size(); k++){
+                                        if(args[2].equalsIgnoreCase(itemList.get(k).getItemName())) {
+                                            itemList.remove(k);
+                                        }
+                                    }
+                                    int counter = 1;
+                                    for (int k = 0; k < itemList.size(); k++){
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".drops.item-" + counter + ".name", itemList.get(k).getItemName());
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".drops.item-" + counter + ".amount", itemList.get(k).getAmount());
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".drops.item-" + counter + ".chance", itemList.get(k).getChance());
+                                        counter++;
+                                    }
+                                    mm.get(j).getItems().clear();
+                                    mm.get(j).setItems(itemList);
+
+                                    try {
+                                        player.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " drops for " + ChatColor.GOLD + mobName + "s ");
+                                        mobsCfg.save(pFile);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
+                        }
+                    }
                 } else if (args.length == 5) {
                     if (args[0].equalsIgnoreCase("addCustomDrop")) {
                         if (player.hasPermission("m4m.command.mk.addCustomDrop")) {
@@ -207,7 +270,6 @@ public class MkCommand implements CommandExecutor {
                                             int chance = Integer.parseInt(args[4]);
                                             int counter2 = 0;
                                             List<ItemModel> im = new ArrayList<ItemModel>();
-                                            System.out.println("asdad");
                                             List<ItemModel> mobItems;
                                             for (int l = 0; l < mm.get(j).getItems().size(); l++){
                                                 String currentItemName = mm.get(j).getItems().get(l).getItemName();
@@ -219,7 +281,6 @@ public class MkCommand implements CommandExecutor {
                                             im.add(new ItemModel(args[2], amount, chance));
                                             mm.get(j).setItems(im);
                                             counter2++;
-                                            System.out.println("mobs." + mm.get(j).getMobName() + ".drops.item-" + counter2 + ".name"+ args[2]);
                                             MobCfgm.mobsCfg.set("mobs." + mm.get(j).getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
                                             MobCfgm.mobsCfg.set("mobs." + mm.get(j).getMobName() + ".drops.item-" + counter2 + ".amount", Integer.parseInt(args[3]));
                                             MobCfgm.mobsCfg.set("mobs." + mm.get(j).getMobName() + ".drops.item-" + counter2 + ".chance", Integer.parseInt(args[4]));

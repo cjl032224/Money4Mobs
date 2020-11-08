@@ -68,6 +68,36 @@ public class MobWorthTabComplete implements TabCompleter {
             }
 
         }
+        if(args[0].equalsIgnoreCase("removeCustomDrop")) {
+            List<MobModel> mobsList = mobModelList.getMobModel();
+            for (int i = 0; i < mobsList.size(); i++){
+                mobArrayList.add(i, mobsList.get(i).getMobName());
+            }
+            if (args.length > 1) {
+                if (StringUtils.isNotBlank(args[0]) && StringUtils.isBlank(args[1])) {
+                    return StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>());
+                }
+                else if (StringUtils.isNotBlank(args[1])) {
+                    List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
+                    List<ItemModel> im = new ArrayList<>();
+                    for (int j = 0; j < mm.size(); j++){
+                        if(mm.get(j).getMobName().equalsIgnoreCase(args[1])){
+                            itemList.clear();
+                            for (int k = 0; k < mm.get(j).getItems().size(); k++) {
+                                itemList.add(mm.get(j).getItems().get(k).getItemName());
+                            }
+                        }
+                    }
+                    try {
+                        return StringUtil.copyPartialMatches(args[2], itemList, new ArrayList<>());
+                    }
+                    catch (ArrayIndexOutOfBoundsException ignored) {
+
+                    }
+                }
+            }
+
+        }
 
         return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>()) : null;
     }
