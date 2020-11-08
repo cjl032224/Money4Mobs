@@ -37,9 +37,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if(MobCfgm.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             MobCfgm.createMobsConfig();
         };
-        if(!ItemCfgm.itemsFile.exists() ){
-            ItemCfgm.createItemsConfig();
-        }
+        ItemCfgm.createItemsConfig();
         MobCfgm.setMobListFromConfig();
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));

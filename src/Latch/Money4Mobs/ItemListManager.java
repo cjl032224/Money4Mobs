@@ -22,6 +22,7 @@ public class ItemListManager {
         if(!plugin.getDataFolder().exists()){
             plugin.getDataFolder().mkdir();
         }
+
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
         //if the mobs.yml does not exist, create it
         if(!itemsFile.exists()){
