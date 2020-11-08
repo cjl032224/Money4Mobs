@@ -150,9 +150,15 @@ public abstract class MobKiller implements CommandExecutor {
                         msr.remove(k);
                     }
                 }
-                if(Boolean.FALSE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)){
-                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")){
+                if(Boolean.FALSE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)) {
+                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")) {
                         giveMoney = false;
+                        msr.remove(k);
+                    }
+                }
+                if(Boolean.TRUE.equals(spawners) && Boolean.TRUE.equals(spawnEggs)) {
+                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")) {
+                        giveMoney = true;
                         msr.remove(k);
                     }
                 }
