@@ -40,7 +40,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.0.6");
+            mobsCfg.set("version", "1.0.7");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
