@@ -18,10 +18,12 @@ public class MobWorthTabComplete implements TabCompleter {
         List<String> setWorthList = new ArrayList<>();
 
         firstArgumentList.add(0, "drops");
-        firstArgumentList.add(1, "setHighWorth");
-        firstArgumentList.add(2, "setLowWorth");
-        firstArgumentList.add(3, "toggleKM");
-        firstArgumentList.add(4, "worth");
+        firstArgumentList.add(1, "setMoneyFromSpawners");
+        firstArgumentList.add(2, "setMoneyFromSpawnEggs");
+        firstArgumentList.add(3, "setHighWorth");
+        firstArgumentList.add(4, "setLowWorth");
+        firstArgumentList.add(5, "toggleKM");
+        firstArgumentList.add(6, "worth");
         try {
             if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")
                     || args[0].equalsIgnoreCase("setLowWorth") || args[0].equalsIgnoreCase("setHighWorth")){

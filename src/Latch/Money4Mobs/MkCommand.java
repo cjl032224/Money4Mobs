@@ -17,6 +17,7 @@ import java.util.List;
 public class MkCommand implements CommandExecutor {
     private MobConfigManager MobCfgm;
     FileConfiguration mobsCfg = MobCfgm.mobsCfg;
+    File pFile = MobConfigManager.mobsFile;
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         Player player = (Player) commandSender;
@@ -54,7 +55,7 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 5");
                         }
                     } else if (args[0].equalsIgnoreCase("drops")) {
                         if (player.hasPermission("m4m.command.mk.drops")) {
@@ -78,56 +79,80 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 3");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setMoneyFromSpawnEggs")) {
+                        if (player.hasPermission("m4m.command.mk.setMoneyFromSpawnEggs")) {
+                            MobCfgm.mobsCfg.set("spawneggs", Boolean.parseBoolean(args[1]));
+                            try {
+                                player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + args[1]);
+                                mobsCfg.save(pFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setMoneyFromSpawners")) {
+                        if (player.hasPermission("m4m.command.mk.setMoneyFromSpawners")) {
+                            MobCfgm.mobsCfg.set("spawners", Boolean.parseBoolean(args[1]));
+                            try {
+                                player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + args[1]);
+                                mobsCfg.save(pFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 } else if (args.length == 3) {
                     if (args[0].equalsIgnoreCase("setLowWorth")) {
-                        for (int j = 0; j < mm.size(); j++) {
-                            if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
-                                String mobName = mm.get(j).mobName;
-                                Integer highWorth = mm.get(j).getHighWorth();
-                                if (highWorth >= Integer.parseInt(args[2])) {
-                                    mm.get(j).setHighWorth(Integer.parseInt(args[2]));
-                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
-                                    File pFile = MobConfigManager.mobsFile;
-                                    try {
-                                        player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "s has been set to " + ChatColor.GOLD + args[2]);
-                                        mobsCfg.save(pFile);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                        if (player.hasPermission("m4m.command.mk.setLowWorth")) {
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    Integer highWorth = mm.get(j).getHighWorth();
+                                    if (highWorth >= Integer.parseInt(args[2])) {
+                                        mm.get(j).setHighWorth(Integer.parseInt(args[2]));
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
+                                        try {
+                                            player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                            mobsCfg.save(pFile);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "High worth for " + mobName + "s is lower than the value you are setting");
                                     }
-                                } else {
-                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "High worth for " + mobName + "s is lower than the value you are setting");
                                 }
                             }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
                         }
-                    } else {
-                        player.sendMessage(ChatColor.RED + "You do not have access to this command");
                     }
-                } else if (args[0].equalsIgnoreCase("setHighWorth")) {
-                    if (player.hasPermission("m4m.command.mk.setHighWorth")) {
-                        for (int j = 0; j < mm.size(); j++) {
-                            if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
-                                String mobName = mm.get(j).mobName;
-                                Integer lowWorth = mm.get(j).getLowWorth();
-                                if (lowWorth <= Integer.parseInt(args[2])) {
-                                    mm.get(j).setHighWorth(Integer.parseInt(args[2]));
-                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".worth.high", Integer.parseInt(args[2]));
-                                    File pFile = MobConfigManager.mobsFile;
-                                    try {
-                                        player.sendMessage(ChatColor.GREEN + "High worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
-                                        mobsCfg.save(pFile);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                    if (args[0].equalsIgnoreCase("setHighWorth")) {
+                        if (player.hasPermission("m4m.command.mk.setHighWorth")) {
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    Integer lowWorth = mm.get(j).getLowWorth();
+                                    if (lowWorth <= Integer.parseInt(args[2])) {
+                                        mm.get(j).setHighWorth(Integer.parseInt(args[2]));
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".worth.high", Integer.parseInt(args[2]));
+
+                                        try {
+                                            player.sendMessage(ChatColor.GREEN + "High worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                            mobsCfg.save(pFile);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Low worth for " + mobName + "s is higher than the value you are setting");
                                     }
-                                } else {
-                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Low worth for " + mobName + "s is higher than the value you are setting");
                                 }
                             }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command 1");
                         }
-                    } else {
-                        player.sendMessage(ChatColor.RED + "You do not have access to this command");
                     }
                 }
             }
