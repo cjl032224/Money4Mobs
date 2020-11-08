@@ -14,7 +14,7 @@ public class MobConfigManager {
     private Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
     private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     public static FileConfiguration mobsCfg;
-    public File mobsFile;
+    public static File mobsFile;
 
     // Set up mobs.yml configuration file
     public void setup(){

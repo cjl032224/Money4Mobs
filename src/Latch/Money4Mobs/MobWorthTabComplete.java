@@ -15,11 +15,16 @@ public class MobWorthTabComplete implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> mobArrayList = new ArrayList<>();
         List<String> firstArgumentList = new ArrayList<>();
+        List<String> setWorthList = new ArrayList<>();
+
         firstArgumentList.add(0, "drops");
-        firstArgumentList.add(1, "toggleKM");
-        firstArgumentList.add(2, "worth");
+        firstArgumentList.add(1, "setHighWorth");
+        firstArgumentList.add(2, "setLowWorth");
+        firstArgumentList.add(3, "toggleKM");
+        firstArgumentList.add(4, "worth");
         try {
-            if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")){
+            if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")
+                    || args[0].equalsIgnoreCase("setLowWorth") || args[0].equalsIgnoreCase("setHighWorth")){
                     List<MobModel> mobsList = mobModelList.getMobModel();
                     for (int i = 0; i < mobsList.size(); i++){
                         mobArrayList.add(i, mobsList.get(i).getMobName());
