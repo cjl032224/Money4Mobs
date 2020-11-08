@@ -3,10 +3,12 @@ package Latch.Money4Mobs;
 public class ItemModel {
     protected String itemName;
     protected Integer amount;
+    protected Integer chance;
     public ItemModel() {};
-    public ItemModel(String itemName, Integer amount) {
+    public ItemModel(String itemName, Integer amount, Integer chance) {
         this.itemName = itemName;
         this.amount = amount;
+        this.chance = chance;
     }
 
     public String getItemName(){
@@ -23,6 +25,14 @@ public class ItemModel {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Integer getChance(){
+        return chance;
+    }
+
+    public void setChance(Integer chance) {
+        this.chance = chance;
     }
 
 }

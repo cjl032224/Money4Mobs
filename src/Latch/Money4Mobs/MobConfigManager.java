@@ -40,7 +40,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.0.6");
+            mobsCfg.set("version", "1.0.7");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
@@ -55,9 +55,10 @@ public class MobConfigManager {
                 if(i == 1){
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.name", air);
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.amount", 5);
+                    mobsCfg.set("mobs." + mobName + ".drops.item-1.chance", 100);
                     mobsCfg.set("mobs." + mobName + ".drops.item-2.name", air);
-
                     mobsCfg.set("mobs." + mobName + ".drops.item-2.amount", 10);
+                    mobsCfg.set("mobs." + mobName + ".drops.item-2.chance", 100);
                 }
             }
             mobsCfg.save(mobsFile);
@@ -81,7 +82,8 @@ public class MobConfigManager {
                 for(String items : mobsCfg.getConfigurationSection("mobs." + path + ".drops").getKeys(false)) {
                     String name = mobsCfg.getString("mobs." + path + ".drops.item-" + counter + ".name");
                     Integer amount = mobsCfg.getInt("mobs." + path + ".drops.item-" + counter + ".amount");
-                    im.add(new ItemModel(name,amount));
+                    Integer chance = mobsCfg.getInt("mobs." + path + ".drops.item-" + counter + ".chance");
+                    im.add(new ItemModel(name,amount,chance));
                     counter++;
                 }
             }
