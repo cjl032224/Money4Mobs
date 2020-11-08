@@ -17,13 +17,8 @@ public class EnchantTabComplete implements TabCompleter {
     protected List<String> ecList;
 
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        EnchantCommand enchantCommand = new EnchantCommand();
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
-            for(Enchantment enchantment : Enchantment.values())
-            {
+            for(Enchantment enchantment : Enchantment.values()) {
                 enchantmentList.add(enchantment);
             }
             List<Enchantment> aList = enchantmentList.stream().collect(Collectors.toList());
@@ -39,17 +34,13 @@ public class EnchantTabComplete implements TabCompleter {
                 strings.set(i, enchantment);
             }
             setEnchantmentList(strings);
-        }
+
 
         return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], strings, new ArrayList<>()) : null;
     }
 
     public void setEnchantmentList(List<String> value) {
         this.ecList = value;
-    }
-
-    public List<String> getEnchantmentList() {
-        return ecList;
     }
 
 

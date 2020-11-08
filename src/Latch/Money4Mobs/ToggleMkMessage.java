@@ -10,23 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToggleMkMessage implements CommandExecutor {
-    private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
-    private static MobConfigManager cfgm;
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         org.bukkit.entity.Player player = (org.bukkit.entity.Player) commandSender;
-        List<MobModel> mm = cfgm.getMobModelFromConfig();
+        List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
         for (int i = 0; i < playerList.size(); i++){
             if (player.getName().equals(playerList.get(i).getPlayerName())){
                 if (args.length == 1) {
-                    if(args[0].toLowerCase().equals("on")){
-                        playerList.get(i).setKillerMessage(true);
-                        player.sendMessage(ChatColor.GREEN + "MobKiller message on");
-                    }
-                    else if (args[0].toLowerCase().equals("off")){
-                        playerList.get(i).setKillerMessage(false);
-                        player.sendMessage(ChatColor.GREEN + "MobKiller message off");
+                    if (player.hasPermission("m4m.command.mk.toggleKM")){
+                        if(args[0].equalsIgnoreCase("toggleKM")){
+                            if(Boolean.TRUE.equals(playerList.get(i).getKillerMessage())){
+                                player.sendMessage(ChatColor.GREEN + "MobKiller message off");
+                                playerList.get(i).setKillerMessage(false);
+                            }
+                            else {
+                                player.sendMessage(ChatColor.GREEN + "MobKiller message on");
+                                playerList.get(i).setKillerMessage(true);
+                            }
+                        }
                     }
                 } else if(args.length == 2) {
                     if(args[0].equals("worth")){

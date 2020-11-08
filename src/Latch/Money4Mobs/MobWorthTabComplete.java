@@ -3,6 +3,7 @@ package Latch.Money4Mobs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,29 +11,25 @@ import java.util.List;
 import java.util.Set;
 
 public class MobWorthTabComplete implements TabCompleter {
-
-    private static Set<String> worthList = new HashSet<>();
-    private static List<String> strings;
-
-    public List<String> getMobs() {
-        List<String> mobArrayList = new ArrayList<>();
-        SetMobList mobModelList = new SetMobList();
-        List<MobModel> mobsList = mobModelList.getMobModel();
-        for (int i = 0; i < mobsList.size(); i++){
-            mobArrayList.add(i, mobsList.get(i).getMobName());
-        }
-        return mobArrayList;
-    }
-
+    private static SetMobList mobModelList = new SetMobList();
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return getMobs();
-    }
-
-    public void setWorthList(List<String> value) {
-        this.strings = value;
-    }
-
-    public List<String> getWorthList() {
-        return strings;
+        List<String> mobArrayList = new ArrayList<>();
+        List<String> firstArgumentList = new ArrayList<>();
+        firstArgumentList.add(0, "drops");
+        firstArgumentList.add(1, "toggleKM");
+        firstArgumentList.add(2, "worth");
+        try {
+            if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")){
+                    List<MobModel> mobsList = mobModelList.getMobModel();
+                    for (int i = 0; i < mobsList.size(); i++){
+                        mobArrayList.add(i, mobsList.get(i).getMobName());
+                    }
+                    return (args.length > 0) ? StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>()) : null;
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>()) : null;
+        }
+        return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>()) : null;
     }
 }
