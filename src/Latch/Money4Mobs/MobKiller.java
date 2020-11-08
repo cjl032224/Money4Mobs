@@ -79,7 +79,7 @@ public abstract class MobKiller implements CommandExecutor {
         lootingLevel = 1;
         getLootingLevel();
         String es = e.toString();
-        int chance = rand.nextInt(100);
+        int randomNumber = rand.nextInt(100);
         Integer multiplier = 1;
         if (lootingLevel == 2){
             multiplier = 2;
@@ -88,6 +88,8 @@ public abstract class MobKiller implements CommandExecutor {
         } else {
             multiplier = 1;
         }
+
+        cfgm.mobsCfg.getBoolean("spawneggs");
         String[] name = es.split("Craft");
         for (Integer i = 0; i < mm.size(); i++){
             if(Boolean.TRUE.equals(mm.get(i).getCustomDrops())){
@@ -96,10 +98,18 @@ public abstract class MobKiller implements CommandExecutor {
                         ede.getDrops().clear();
                     }
                     for (Integer j = 0; j < mm.get(i).getItems().size(); j++){
-                        String itemName = mm.get(i).getItems().get(j).getItemName();
-                        Material m = Material.valueOf(itemName);
-                        Integer amount = mm.get(i).getItems().get(j).getAmount();
-                        ede.getDrops().add(new ItemStack(m, amount));
+                        int chance;
+                        if (mm.get(i).getItems().get(j).getChance() == 0){
+                            chance = 100;
+                        } else {
+                            chance = mm.get(i).getItems().get(j).getChance();
+                        }
+                        if (randomNumber <= chance) {
+                            String itemName = mm.get(i).getItems().get(j).getItemName();
+                            Material m = Material.valueOf(itemName);
+                            Integer amount = mm.get(i).getItems().get(j).getAmount();
+                            ede.getDrops().add(new ItemStack(m, amount));
+                        }
                     }
                 }
             }
