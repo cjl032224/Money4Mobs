@@ -50,4 +50,8 @@ public class ItemListManager {
         }
     }
 
+    public static Material[] getItemModelFromConfig() {
+        return m;
+    }
+
 }

@@ -43,7 +43,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
-        this.getCommand("mk").setExecutor(new ToggleMkMessage());
+        this.getCommand("mk").setExecutor(new MkCommand());
         this.getCommand("mk").setTabCompleter(new MobWorthTabComplete());
         this.getCommand("enc").setExecutor(new EnchantCommand());
         this.getCommand("enc").setTabCompleter(new EnchantTabComplete());
@@ -123,7 +123,8 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         Mobs4MoneyPlayer player = new Mobs4MoneyPlayer();
-        if (pa != null && pa.hasPermission("m4m.command.mk")) {
+        if (pa != null && pa.hasPermission("m4m.rewardMoney")) {
+            loadConfig();
             MobKiller.rewardPlayerMoney(pa, e, econ);
         }
     }

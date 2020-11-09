@@ -2,6 +2,7 @@ package Latch.Money4Mobs;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,21 +18,29 @@ import java.util.Set;
 
 public class EnchantCommand implements CommandExecutor {
 
-    private static Set<Enchantment> enchantmentList = new HashSet<>();
-    private static List<String> strings;
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
         EnchantTabComplete tc = new EnchantTabComplete();
-
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             if (player.hasPermission("m4m.command.enc")) {
+                // If the user only types '/enc'
                 if(args.length == 0){
                     player.sendMessage(ChatColor.RED +("Error: ") + ChatColor.GRAY + ("Please use command like this -> " +ChatColor.DARK_GRAY + "/enc enchantment level"));
                 }
+                // If the user types '/enc [arg1]'
                 else if (args.length == 1) {
-                    player.sendMessage(ChatColor.RED + ("Error - missing level: ") + ChatColor.GRAY + ("Please use command like this -> " + ChatColor.DARK_GRAY + "/enc enchantment level"));
+                    Enchantment slip = Enchantment.getByKey(NamespacedKey.minecraft(args[0]));
+                    // Sends player error message if they have improper enchant name or missing level parameter
+                    try {
+                        if(slip.getKey().getKey().equals(args[0])){
+                            player.sendMessage(ChatColor.RED + ("Error - missing level: ") + ChatColor.GRAY + ("Please use command like this -> " + ChatColor.DARK_GRAY + "/enc enchantment level"));
+                        }
+                    }
+                    catch (NullPointerException e) {
+                        player.sendMessage(ChatColor.RED + ("Error - Enchantment not found: " + ChatColor.GRAY + ("Please use command like this -> " + ChatColor.DARK_GRAY + "/enc enchantment level")));
+                    }
                 }
                 else if (args.length == 2){
                     Integer level = 0;
