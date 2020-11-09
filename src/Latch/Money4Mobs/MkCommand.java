@@ -31,8 +31,8 @@ public class MkCommand implements CommandExecutor {
         for (int i = 0; i < playerList.size(); i++) {
             if (player.getName().equals(playerList.get(i).getPlayerName())) {
                 if (args.length == 1) {
-                    if (player.hasPermission("m4m.command.mk.toggleKM")) {
-                        if (args[0].equalsIgnoreCase("toggleKM")) {
+                    if (args[0].equalsIgnoreCase("toggleKM")) {
+                        if (player.hasPermission("m4m.command.mk.toggleKM")) {
                             if (Boolean.TRUE.equals(playerList.get(i).getKillerMessage())) {
                                 player.sendMessage(ChatColor.GREEN + "MobKiller message off");
                                 playerList.get(i).setKillerMessage(false);
@@ -40,6 +40,51 @@ public class MkCommand implements CommandExecutor {
                                 player.sendMessage(ChatColor.GREEN + "MobKiller message on");
                                 playerList.get(i).setKillerMessage(true);
                             }
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
+                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs")) {
+                            Boolean spawnEgg = MobCfgm.mobsCfg.getBoolean("spawneggs");
+                            if (Boolean.TRUE.equals(spawnEgg)){
+                                MobCfgm.mobsCfg.set("spawneggs", false);
+                                spawnEgg = false;
+                            } else {
+                                MobCfgm.mobsCfg.set("spawneggs", true);
+                                spawnEgg = true;
+                            }
+                            try {
+                                player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + ChatColor.GOLD + spawnEgg);
+                                mobsCfg.save(pFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
+                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawners")) {
+                            Boolean spawners = MobCfgm.mobsCfg.getBoolean("spawners");
+                            if (Boolean.TRUE.equals(spawners)){
+                                MobCfgm.mobsCfg.set("spawners", false);
+                                spawners = false;
+                            } else {
+                                MobCfgm.mobsCfg.set("spawners", true);
+                                spawners = true;
+                            }
+                            try {
+                                player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + ChatColor.GOLD + spawners);
+                                mobsCfg.save(pFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                 } else if (args.length == 2) {
@@ -51,14 +96,17 @@ public class MkCommand implements CommandExecutor {
                                     Integer lowWorth = mm.get(j).lowWorth;
                                     Integer highWorth = mm.get(j).highWorth;
                                     if (lowWorth.equals(highWorth)) {
-                                        player.sendMessage(mobName + "s are worth $" + lowWorth.toString());
+                                        player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                " are worth " + ChatColor.GOLD + "$" + lowWorth.toString());
                                     } else {
-                                        player.sendMessage(mobName + "s are worth between $" + lowWorth.toString() + " and $" + highWorth.toString());
+                                        player.sendMessage(ChatColor.GOLD +mobName + "s" + ChatColor.GREEN + " are worth between "
+                                                + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
+                                                ChatColor.GOLD + "$" + highWorth.toString());
                                     }
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 5");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     } else if (args[0].equalsIgnoreCase("drops")) {
                         if (player.hasPermission("m4m.command.mk.drops")) {
@@ -68,41 +116,79 @@ public class MkCommand implements CommandExecutor {
                                     String mobName = mm.get(k).mobName;
                                     if (Boolean.TRUE.equals(mm.get(k).getCustomDrops())) {
                                         if (mm.get(k).getItems().size() == 0) {
-                                            player.sendMessage(mobName + "s don't have any custom drops set");
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " don't have any custom drops set");
                                         }
                                         for (int l = 0; l < mm.get(k).getItems().size(); l++) {
                                             String itemName = mm.get(k).getItems().get(l).getItemName();
                                             Integer amount = mm.get(k).getItems().get(l).getAmount();
                                             Integer chance = mm.get(k).getItems().get(l).getChance();
-                                            player.sendMessage(mobName + "s have a " + chance + "% of dropping " + amount + " " + itemName);
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " have a " +
+                                                    ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " of dropping " + ChatColor.GOLD + amount +
+                                                    " " + itemName);
                                         }
                                     } else {
-                                        player.sendMessage("Custom drops are not enabled for " + mobName + "s.");
+                                        player.sendMessage(ChatColor.GREEN + "Custom drops are not enabled for " + ChatColor.GOLD + mobName + "s.");
                                     }
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 3");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
-                    } else if (args[0].equalsIgnoreCase("setMoneyFromSpawnEggs")) {
-                        if (player.hasPermission("m4m.command.mk.setMoneyFromSpawnEggs")) {
-                            MobCfgm.mobsCfg.set("spawneggs", Boolean.parseBoolean(args[1]));
-                            try {
-                                player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + args[1]);
-                                mobsCfg.save(pFile);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    }
+                    else if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
+                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    Boolean customDrops = MobCfgm.mobsCfg.getBoolean("mobs." + mobName + ".customDrops");
+                                    if (Boolean.TRUE.equals(customDrops)){
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".customDrops", false);
+                                        mm.get(j).setCustomDrops(false);
+                                        customDrops = false;
+                                    }
+                                    else {
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".customDrops", true);
+                                        mm.get(j).setCustomDrops(true);
+                                        customDrops = true;
+                                    }
+                                    try {
+                                        player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + ChatColor.GOLD + customDrops);
+                                        mobsCfg.save(pFile);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
-                    } else if (args[0].equalsIgnoreCase("setMoneyFromSpawners")) {
-                        if (player.hasPermission("m4m.command.mk.setMoneyFromSpawners")) {
-                            MobCfgm.mobsCfg.set("spawners", Boolean.parseBoolean(args[1]));
-                            try {
-                                player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + args[1]);
-                                mobsCfg.save(pFile);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    }
+                    else if (args[0].equalsIgnoreCase("toggleDefaultDrops")) {
+                        if (player.hasPermission("m4m.command.mk.toggleDefaultDrops")) {
+                            for (int j = 0; j < mm.size(); j++) {
+                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
+                                    String mobName = mm.get(j).mobName;
+                                    Boolean defaultDrops = MobCfgm.mobsCfg.getBoolean("mobs." + mobName + ".defaultDrops");
+                                    if (Boolean.TRUE.equals(defaultDrops)){
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".defaultDrops", false);
+                                        mm.get(j).setCustomDrops(false);
+                                        defaultDrops = false;
+                                    }
+                                    else {
+                                        MobCfgm.mobsCfg.set("mobs." + mobName + ".defaultDrops", true);
+                                        mm.get(j).setCustomDrops(true);
+                                        defaultDrops = true;
+                                    }
+                                    try {
+                                        player.sendMessage(ChatColor.GREEN + "Default drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + ChatColor.GOLD + defaultDrops);
+                                        mobsCfg.save(pFile);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
+                        } else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                 } else if (args.length == 3) {
@@ -127,7 +213,7 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                     if (args[0].equalsIgnoreCase("setHighWorth")) {
@@ -152,63 +238,7 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 1");
-                        }
-                    }
-                    if (args[0].equalsIgnoreCase("toggleMobDefaultDrops")) {
-                        if (player.hasPermission("m4m.command.mk.toggleMobDefaultDrops")) {
-                            for (int j = 0; j < mm.size(); j++) {
-                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
-                                    String mobName = mm.get(j).mobName;
-                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", Boolean.parseBoolean(args[2]));
-                                    try {
-                                        player.sendMessage(ChatColor.GOLD + mobName + ChatColor.GREEN + "s keepDefaultDrops set to " + args[1]);
-                                        mobsCfg.save(pFile);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
-                        }
-                    }
-                    if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
-                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
-                            for (int j = 0; j < mm.size(); j++) {
-                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
-                                    String mobName = mm.get(j).mobName;
-                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".customDrops", Boolean.parseBoolean(args[2]));
-                                    mm.get(j).setCustomDrops(Boolean.parseBoolean(args[2]));
-                                    try {
-                                        player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + args[2]);
-                                        mobsCfg.save(pFile);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
-                        }
-                    }
-                    if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
-                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
-                            for (int j = 0; j < mm.size(); j++) {
-                                if (args[1].equalsIgnoreCase(mm.get(j).mobName)) {
-                                    String mobName = mm.get(j).mobName;
-                                    MobCfgm.mobsCfg.set("mobs." + mobName + ".customDrops", Boolean.parseBoolean(args[2]));
-                                    mm.get(j).setCustomDrops(Boolean.parseBoolean(args[2]));
-                                    try {
-                                        player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + args[2]);
-                                        mobsCfg.save(pFile);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                     if (args[0].equalsIgnoreCase("removeCustomDrop")) {
@@ -251,7 +281,7 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command 4 ");
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                 } else if (args.length == 5) {
@@ -295,6 +325,9 @@ public class MkCommand implements CommandExecutor {
                                     }
                                 }
                             }
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                         }
                     }
                 }

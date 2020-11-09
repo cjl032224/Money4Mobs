@@ -23,13 +23,13 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add(0, "addCustomDrop");
         firstArgumentList.add(1, "drops");
         firstArgumentList.add(2, "removeCustomDrop");
-        firstArgumentList.add(3, "setMobDefaultDrops");
-        firstArgumentList.add(4, "setMoneyFromSpawners");
-        firstArgumentList.add(5, "setMoneyFromSpawnEggs");
-        firstArgumentList.add(6, "setHighWorth");
-        firstArgumentList.add(7, "setLowWorth");
-        firstArgumentList.add(8, "toggleCustomDrops");
-        firstArgumentList.add(9, "toggleKM");
+        firstArgumentList.add(3, "setHighWorth");
+        firstArgumentList.add(4, "setLowWorth");
+        firstArgumentList.add(5, "toggleCustomDrops");
+        firstArgumentList.add(6, "toggleDefaultDrops");
+        firstArgumentList.add(7, "toggleKM");
+        firstArgumentList.add(8, "toggleMoneyFromSpawnEggs");
+        firstArgumentList.add(9, "toggleMoneyFromSpawners");
         firstArgumentList.add(10, "worth");
         for (int i = 0; i < m.length; i++){
             itemList.add(i, m[i].toString());
@@ -37,7 +37,7 @@ public class MobWorthTabComplete implements TabCompleter {
         try {
             if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")
                     || args[0].equalsIgnoreCase("setLowWorth") || args[0].equalsIgnoreCase("setHighWorth") ||
-                    args[0].equalsIgnoreCase("toggleCustomDrops")){
+                    args[0].equalsIgnoreCase("toggleCustomDrops") || args[0].equalsIgnoreCase("toggleDefaultDrops")){
                     List<MobModel> mobsList = mobModelList.getMobModel();
                     for (int i = 0; i < mobsList.size(); i++){
                         mobArrayList.add(i, mobsList.get(i).getMobName());

@@ -1,5 +1,7 @@
 package Latch.Money4Mobs;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -13,31 +15,27 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MerchantRecipe;
 
 public abstract class MobKiller implements CommandExecutor {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private static MobConfigManager cfgm;
-
+    private static MobConfigManager MobCfgm;
     private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
-    private static List<MobModel> mm = cfgm.getMobModelFromConfig();
+    private static List<MobModel> mm = MobCfgm.getMobModelFromConfig();
     private static EntityDeathEvent ede;
     private static Random rand = new Random();
     private static Integer lootingLevel;
     private static DecimalFormat df = new DecimalFormat("0.00");
     private static Integer money = 0;
     private static List<MobSpawnedReason> msr = new ArrayList<MobSpawnedReason>();
-    private static Boolean giveMoney = true;
-    private static Boolean spawners = false;
-    private static Boolean spawnEggs = false;
-
+    private static Boolean giveMoney = false;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
         giveMoneyCheck(pa,e);
@@ -89,7 +87,7 @@ public abstract class MobKiller implements CommandExecutor {
             multiplier = 1;
         }
 
-        cfgm.mobsCfg.getBoolean("spawneggs");
+        MobCfgm.mobsCfg.getBoolean("spawneggs");
         String[] name = es.split("Craft");
         for (Integer i = 0; i < mm.size(); i++){
             if(Boolean.TRUE.equals(mm.get(i).getCustomDrops())){
@@ -132,51 +130,31 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static Boolean giveMoneyCheck(Player pa, Entity e){
         Integer counter = 0;
-        checkSpawners();
-        checkSpawnEggs();
         for (int k = 0; k < msr.size(); k++){
             if(msr.get(k).getUuid().equals(e.getUniqueId().toString())){
                 counter = 1;
-
-                if(Boolean.FALSE.equals(spawners) && Boolean.TRUE.equals(spawnEggs)){
-                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") ){
-                        giveMoney = false;
-                        msr.remove(k);
-                    }
-                }
-                if(Boolean.TRUE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)){
-                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG") ){
-                        giveMoney = false;
-                        msr.remove(k);
-                    }
-                }
-                if(Boolean.FALSE.equals(spawners) && Boolean.FALSE.equals(spawnEggs)) {
-                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")) {
-                        giveMoney = false;
-                        msr.remove(k);
-                    }
-                }
-                if(Boolean.TRUE.equals(spawners) && Boolean.TRUE.equals(spawnEggs)) {
-                    if (msr.get(k).getMobSpawnReason().equals("SPAWNER") || msr.get(k).getMobSpawnReason().equals("SPAWNER_EGG")) {
+                if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")){
+                    Boolean spawnEggs = MobCfgm.mobsCfg.getBoolean("spawneggs");
+                    if (Boolean.TRUE.equals(spawnEggs)) {
                         giveMoney = true;
-                        msr.remove(k);
+                    } else {
+                        giveMoney = false;
                     }
                 }
-
+                else if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER")){
+                    Boolean spawners = MobCfgm.mobsCfg.getBoolean("spawners");
+                    if (Boolean.TRUE.equals(spawners)) {
+                        giveMoney = true;
+                    } else {
+                        giveMoney = false;
+                    }
+                }
             }
         }
         if(counter == 0){
             giveMoney = true;
         }
         return giveMoney;
-    }
-
-    public static void checkSpawners(){
-        spawners = cfgm.mobsCfg.getBoolean("spawners");
-    }
-
-    public static void checkSpawnEggs(){
-        spawnEggs = cfgm.mobsCfg.getBoolean("spawneggs");
     }
 
     public static void setRange(Entity e){
