@@ -314,43 +314,48 @@ public class MkCommand implements CommandExecutor {
                         if (player.hasPermission("m4m.command.mk.addCustomDrop")) {
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                                    Material m = Material.valueOf(args[2]);
-                                    for (Material material : materials) {
-                                        int counter = 0;
-                                        if (material.equals(m)) {
-                                            counter++;
-                                        }
-                                        if (counter != 0) {
-                                            try {
-                                                int amount = Integer.parseInt(args[3]);
-                                                int chance = Integer.parseInt(args[4]);
-                                                int counter2 = 0;
-                                                List<ItemModel> im = new ArrayList<>();
-                                                for (int l = 0; l < mobModel.getItems().size(); l++) {
-                                                    String currentItemName = mobModel.getItems().get(l).getItemName();
-                                                    int currentItemAmount = mobModel.getItems().get(l).getAmount();
-                                                    int currentItemChance = mobModel.getItems().get(l).getChance();
-                                                    im.add(new ItemModel(currentItemName, currentItemAmount, currentItemChance));
-                                                    counter2++;
-                                                }
-                                                im.add(new ItemModel(args[2], amount, chance));
-                                                mobModel.setItems(im);
-                                                counter2++;
-                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
-                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", Integer.parseInt(args[3]));
-                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", Integer.parseInt(args[4]));
-                                                try {
-                                                    player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
-                                                            mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "of dropping.");
-                                                    mobsCfg.save(pFile);
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            } catch (NumberFormatException e) {
-                                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                    try {
+                                        Material m = Material.valueOf(args[2].toUpperCase());
+                                        for (Material material : materials) {
+                                            int counter = 0;
+                                            if (material.equals(m)) {
+                                                counter++;
                                             }
+                                            if (counter != 0) {
+                                                try {
+                                                    int amount = Integer.parseInt(args[3]);
+                                                    int chance = Integer.parseInt(args[4]);
+                                                    int counter2 = 0;
+                                                    List<ItemModel> im = new ArrayList<>();
+                                                    for (int l = 0; l < mobModel.getItems().size(); l++) {
+                                                        String currentItemName = mobModel.getItems().get(l).getItemName();
+                                                        int currentItemAmount = mobModel.getItems().get(l).getAmount();
+                                                        int currentItemChance = mobModel.getItems().get(l).getChance();
+                                                        im.add(new ItemModel(currentItemName, currentItemAmount, currentItemChance));
+                                                        counter2++;
+                                                    }
+                                                    im.add(new ItemModel(args[2], amount, chance));
+                                                    mobModel.setItems(im);
+                                                    counter2++;
+                                                    MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
+                                                    MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", Integer.parseInt(args[3]));
+                                                    MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", Integer.parseInt(args[4]));
+                                                    try {
+                                                        player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
+                                                                mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "of dropping.");
+                                                        mobsCfg.save(pFile);
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                } catch (NumberFormatException e) {
+                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                }
 
+                                            }
                                         }
+                                    }
+                                    catch (IllegalArgumentException e){
+                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " is not a valid item.");
                                     }
                                 }
                             }
