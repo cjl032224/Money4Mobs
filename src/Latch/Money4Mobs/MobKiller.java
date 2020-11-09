@@ -41,6 +41,7 @@ public abstract class MobKiller implements CommandExecutor {
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e);
+            setDefaultDrops();
             setCustomDrops(e, pa);
             sendKillMessage(pa, econ);
         }
@@ -92,9 +93,6 @@ public abstract class MobKiller implements CommandExecutor {
         for (Integer i = 0; i < mm.size(); i++){
             if(Boolean.TRUE.equals(mm.get(i).getCustomDrops())){
                 if (mm.get(i).getMobName().equals(name[1])) {
-                    if(!Boolean.TRUE.equals(mm.get(i).getKeepDefaultDrops())){
-                        ede.getDrops().clear();
-                    }
                     for (Integer j = 0; j < mm.get(i).getItems().size(); j++){
                         int chance;
                         if (mm.get(i).getItems().get(j).getChance() == 0){
@@ -115,6 +113,15 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
+    public static void setDefaultDrops() {
+        for (Integer i = 0; i < mm.size(); i++){
+            if (ede.getEntity().getName().equalsIgnoreCase(mm.get(i).mobName)){
+                if(!Boolean.TRUE.equals(mm.get(i).getKeepDefaultDrops())){
+                    ede.getDrops().clear();
+                }
+            }
+        }
+    }
     public static void getSpawnReason(CreatureSpawnEvent e) {
         msr.add(new MobSpawnedReason(e.getSpawnReason().toString(), e.getEntity().getUniqueId().toString()));
     }

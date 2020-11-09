@@ -40,7 +40,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.1.0");
+            mobsCfg.set("version", "1.2.0");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
@@ -49,8 +49,8 @@ public class MobConfigManager {
                 Integer highWorth = mobList.get(i).highWorth;
                 mobsCfg.set("mobs." + mobName + ".worth.low", lowWorth);
                 mobsCfg.set("mobs." + mobName + ".worth.high", highWorth);
-                mobsCfg.set("mobs." + mobName + ".customDrops", false);
                 mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
+                mobsCfg.set("mobs." + mobName + ".customDrops", false);
                 String air = "AIR";
                 if(i == 1){
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.name", air);
