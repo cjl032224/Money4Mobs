@@ -137,30 +137,35 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static Boolean giveMoneyCheck(Player pa, Entity e){
         Integer counter = 0;
-        for (int k = 0; k < msr.size(); k++){
-            if(msr.get(k).getUuid().equals(e.getUniqueId().toString())){
-                counter = 1;
-                if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")){
-                    Boolean spawnEggs = MobCfgm.mobsCfg.getBoolean("spawneggs");
-                    if (Boolean.TRUE.equals(spawnEggs)) {
-                        giveMoney = true;
-                    } else {
-                        giveMoney = false;
+        if (pa.hasPermission("m4m.rewardMoney")) {
+            for (int k = 0; k < msr.size(); k++){
+                if(msr.get(k).getUuid().equals(e.getUniqueId().toString())){
+                    counter = 1;
+                    if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")){
+                        Boolean spawnEggs = MobCfgm.mobsCfg.getBoolean("spawneggs");
+                        if (Boolean.TRUE.equals(spawnEggs)) {
+                            giveMoney = true;
+                        } else {
+                            giveMoney = false;
+                        }
                     }
-                }
-                else if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER")){
-                    Boolean spawners = MobCfgm.mobsCfg.getBoolean("spawners");
-                    if (Boolean.TRUE.equals(spawners)) {
-                        giveMoney = true;
-                    } else {
-                        giveMoney = false;
+                    else if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER")){
+                        Boolean spawners = MobCfgm.mobsCfg.getBoolean("spawners");
+                        if (Boolean.TRUE.equals(spawners)) {
+                            giveMoney = true;
+                        } else {
+                            giveMoney = false;
+                        }
                     }
                 }
             }
+            if(counter == 0){
+                giveMoney = true;
+            }
+        } else {
+            giveMoney = false;
         }
-        if(counter == 0){
-            giveMoney = true;
-        }
+
         return giveMoney;
     }
 
