@@ -1,12 +1,11 @@
 package Latch.Money4Mobs;
 
-import java.util.List;
-
 public class Mobs4MoneyPlayer {
     protected String playerName;
     protected Boolean killerMessage;
 
     public Mobs4MoneyPlayer() {};
+
     public Mobs4MoneyPlayer(String playerName, Boolean killerMessage) {
         this.playerName = playerName;
         this.killerMessage = killerMessage;

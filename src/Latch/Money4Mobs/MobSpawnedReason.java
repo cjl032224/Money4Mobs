@@ -4,7 +4,6 @@ public class MobSpawnedReason {
     protected String mobSpawnReason;
     protected String uuid;
 
-    public MobSpawnedReason() {};
     public MobSpawnedReason(String mobSpawnReason, String uuid) {
         this.mobSpawnReason = mobSpawnReason;
         this.uuid = uuid;

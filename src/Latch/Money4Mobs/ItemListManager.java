@@ -7,14 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class ItemListManager {
 
     private Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
     public static FileConfiguration itemsCfg;
     public File itemsFile;
-    private static Material[] m = Material.values();
+    private static final Material[] m = Material.values();
 
     // Set up mobs.yml configuration file
     public void setup(){
@@ -39,7 +38,6 @@ public class ItemListManager {
     public void createItemsConfig(){
         try {
             itemsFile.createNewFile();
-
             for (int i = 0; i < m.length; i++){
                 itemsCfg.set("items.name." + i, m[i].toString());
             }
@@ -48,10 +46,6 @@ public class ItemListManager {
         catch(IOException e){
             System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
         }
-    }
-
-    public static Material[] getItemModelFromConfig() {
-        return m;
     }
 
 }

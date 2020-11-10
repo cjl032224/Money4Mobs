@@ -4,7 +4,7 @@ public class ItemModel {
     protected String itemName;
     protected Integer amount;
     protected Integer chance;
-    public ItemModel() {};
+
     public ItemModel(String itemName, Integer amount, Integer chance) {
         this.itemName = itemName;
         this.amount = amount;

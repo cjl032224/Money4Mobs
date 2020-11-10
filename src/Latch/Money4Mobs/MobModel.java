@@ -9,7 +9,6 @@ public class MobModel {
     protected Boolean customDrops;
     protected List<ItemModel> im;
     protected Boolean keepDefaultDrops;
-    public MobModel() {};
     public MobModel(String mobName, Integer lowWorth, Integer highWorth, Boolean keepDefaultDrops, Boolean customDrops, List<ItemModel> im) {
         this.mobName = mobName;
         this.lowWorth = lowWorth;

@@ -1,8 +1,8 @@
 package Latch.Money4Mobs;
+
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -10,18 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import java.util.Set;
-
 public class EnchantCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
-        EnchantTabComplete tc = new EnchantTabComplete();
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             if (player.hasPermission("m4m.command.enc")) {
@@ -56,6 +49,7 @@ public class EnchantCommand implements CommandExecutor {
                             ItemMeta im = is.getItemMeta();
                             Enchantment slip = Enchantment.getByKey(NamespacedKey.minecraft(args[0]));
                             if (im != null) {
+                                assert slip != null;
                                 im.addEnchant(slip, level, true);
                                 is.setItemMeta(im);
                             }
@@ -68,7 +62,7 @@ public class EnchantCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.RED + ("Error - incorrect level: ") + ChatColor.GRAY + ("level value must be a number"));
                     }
                 }
-                else if(args.length > 2){
+                else {
                     player.sendMessage(ChatColor.RED +("Error: ") + ChatColor.GRAY + ("Please use command like this -> " +ChatColor.DARK_GRAY + "/enc enchantment level"));
                     player.sendMessage(ChatColor.RED +("Do not give more than the 2 needed parameters"));
                 }

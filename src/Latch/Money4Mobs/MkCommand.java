@@ -200,7 +200,7 @@ public class MkCommand implements CommandExecutor {
                                     Integer highWorth = mobModel.getHighWorth();
                                     try {
                                         if (highWorth >= Integer.parseInt(args[2])) {
-                                            mobModel.setHighWorth(Integer.parseInt(args[2]));
+                                            mobModel.setLowWorth(Integer.parseInt(args[2]));
                                             MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
                                             try {
                                                 player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
@@ -350,7 +350,6 @@ public class MkCommand implements CommandExecutor {
                                                 } catch (NumberFormatException e) {
                                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                 }
-
                                             }
                                         }
                                     }

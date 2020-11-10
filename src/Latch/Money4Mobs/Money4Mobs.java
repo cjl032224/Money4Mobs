@@ -2,6 +2,7 @@ package Latch.Money4Mobs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
@@ -22,8 +23,8 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
-    private static List<Mobs4MoneyPlayer> playerList = new ArrayList<Mobs4MoneyPlayer>();
-    private static SetMobList sml = new SetMobList();
+    private static final List<Mobs4MoneyPlayer> playerList = new ArrayList<>();
+    private static final SetMobList sml = new SetMobList();
     private MobConfigManager MobCfgm;
     private ItemListManager ItemCfgm;
     @Override
@@ -34,19 +35,20 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         setupEconomy();
         loadConfig();
         reloadConfig();
-        if(MobCfgm.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
+        if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             MobCfgm.createMobsConfig();
         };
         ItemCfgm.createItemsConfig();
-        MobCfgm.setMobListFromConfig();
+        MobConfigManager.setMobListFromConfig();
+
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
-        this.getCommand("mk").setExecutor(new MkCommand());
-        this.getCommand("mk").setTabCompleter(new MobWorthTabComplete());
-        this.getCommand("enc").setExecutor(new EnchantCommand());
-        this.getCommand("enc").setTabCompleter(new EnchantTabComplete());
+        Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
+        Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
+        Objects.requireNonNull(this.getCommand("enc")).setExecutor(new EnchantCommand());
+        Objects.requireNonNull(this.getCommand("enc")).setTabCompleter(new EnchantTabComplete());
 
         sml.getMobModel();
     }
@@ -58,7 +60,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event){
-
         MobKiller.setEvent(event);
         callRewardMobKiller(event);
     }
@@ -66,8 +67,8 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
         int count = 0;
-        for (int i = 0; i < playerList.size(); i++){
-            if(event.getPlayer().getName().equals(playerList.get(i).getPlayerName()) ){
+        for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
+            if (event.getPlayer().getName().equals(mobs4MoneyPlayer.getPlayerName())) {
                 count = 1;
             }
         }
@@ -88,30 +89,24 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         removePlayerOnLeave(event);
     }
 
-    public Boolean setupEconomy() {
+    public void setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
+            return;
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
-            return false;
+            return;
         }
         econ = rsp.getProvider();
         setEconomy(econ);
-        return econ != null;
-    }
-
-    public static Economy getEconomy() {
-        return econ;
     }
 
     public void setEconomy(Economy value) {
-        this.econ = value;
+        econ = value;
     }
 
     public void removePlayerOnLeave(PlayerQuitEvent event){
         Player pa = event.getPlayer();
-        Mobs4MoneyPlayer player = new Mobs4MoneyPlayer();
         for (int i = 0; i < playerList.size(); i++) {
             if (pa.toString().equals(playerList.get(i).getPlayerName())) {
                 playerList.remove(i);
@@ -122,7 +117,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void callRewardMobKiller(EntityDeathEvent event){
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
-        Mobs4MoneyPlayer player = new Mobs4MoneyPlayer();
         if (pa != null && pa.hasPermission("m4m.rewardMoney")) {
             loadConfig();
             MobKiller.rewardPlayerMoney(pa, e, econ);

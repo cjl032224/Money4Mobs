@@ -11,6 +11,7 @@ public class SetMobList {
         setMobWorth();
         return mobList;
     }
+
     public void setMobWorth(){
         mobList.add(new MobModel("Bat", 10, 10, true, false, null));
         mobList.add(new MobModel("Bee", 15, 15, true, false, null));
