@@ -8,11 +8,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MobConfigManager {
 
-    private Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
-    private static List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
+    private final Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
+    private static final List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
 
@@ -40,7 +41,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.2.1");
+            mobsCfg.set("version", "1.2.3");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             for (int i = 0; i < mobList.size(); i++){
@@ -71,7 +72,7 @@ public class MobConfigManager {
     // Sets mob list from mobs.yml file
     public static void setMobListFromConfig(){
         Integer counter1 = 0;
-        for(String path : mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+        for(String path : Objects.requireNonNull(mobsCfg.getConfigurationSection("mobs")).getKeys(false)) {
             int lowWorth = mobsCfg.getInt("mobs." + path + ".worth.low");
             int highWorth = mobsCfg.getInt("mobs." + path + ".worth.high");
             Boolean customDrops = mobsCfg.getBoolean("mobs." + path + ".customDrops");
@@ -87,16 +88,12 @@ public class MobConfigManager {
                     counter++;
                 }
             }
-
-
-            String mob = path;
-            mobListFromConfig.add(new MobModel(mob,lowWorth, highWorth, keepDefaultDrops, customDrops, im));
+            mobListFromConfig.add(new MobModel(path,lowWorth, highWorth, keepDefaultDrops, customDrops, im));
             mobListFromConfig.get(counter1).setCustomDrops(customDrops);
             mobListFromConfig.get(counter1).setKeepDefaultDrops(keepDefaultDrops);
             mobListFromConfig.get(counter1).setItems(im);
             counter1++;
         }
-
     }
 
     public static List<MobModel> getMobModelFromConfig() {
