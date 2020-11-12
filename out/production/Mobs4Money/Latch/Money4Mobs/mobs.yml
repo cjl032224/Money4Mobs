@@ -186,6 +186,12 @@ mobs:
       high: 3
     keepDefaultDrops: true
     customDrops: false
+  Ocelot:
+    worth:
+      low: 25
+      high: 25
+    keepDefaultDrops: true
+    customDrops: false
   Panda:
     worth:
       low: 25
@@ -198,22 +204,28 @@ mobs:
       high: 100
     keepDefaultDrops: true
     customDrops: false
+  Phantom:
+    worth:
+      low: 45
+      high: 45
+    keepDefaultDrops: true
+    customDrops: false
   Pig:
     worth:
       low: 3
       high: 3
     keepDefaultDrops: true
     customDrops: false
+  PigZombie:
+    worth:
+      low: 45
+      high: 45
+    keepDefaultDrops: true
+    customDrops: false
   PiglinBrute:
     worth:
       low: 75
       high: 75
-    keepDefaultDrops: true
-    customDrops: false
-  Ocelot:
-    worth:
-      low: 25
-      high: 25
     keepDefaultDrops: true
     customDrops: false
   Pillager:
@@ -400,11 +412,5 @@ mobs:
     worth:
       low: 20
       high: 20
-    keepDefaultDrops: true
-    customDrops: false
-  PigZombie:
-    worth:
-      low: 45
-      high: 45
     keepDefaultDrops: true
     customDrops: false
