@@ -41,7 +41,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.2.4");
+            mobsCfg.set("version", "1.2.5");
             mobsCfg.set("language", "English");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
