@@ -1,6 +1,7 @@
-version: 1.2.0
+version: 1.2.4
+language: English
 spawners: false
-spawneggs: false
+spawneggs: true
 mobs:
   Bat:
     worth:
