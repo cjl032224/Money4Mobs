@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,9 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +30,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static final SetMobList sml = new SetMobList();
     private MobConfigManager MobCfgm;
     private ItemListManager ItemCfgm;
+
     @Override
     public void onEnable() {
         loadMobConfigManager();
@@ -35,9 +39,12 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         setupEconomy();
         loadConfig();
         reloadConfig();
+        File testConfigFile = new File(getDataFolder(), "config.yml");
+        testConfigFile.delete();// Success
         if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             MobCfgm.createMobsConfig();
         };
+
         ItemCfgm.createItemsConfig();
         MobConfigManager.setMobListFromConfig();
 

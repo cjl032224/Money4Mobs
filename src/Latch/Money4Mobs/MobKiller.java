@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import java.io.File;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -12,6 +13,8 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -55,10 +58,22 @@ public abstract class MobKiller implements CommandExecutor {
                             Double balance = r.balance;
                             df.format(balance);
                             df.setRoundingMode(RoundingMode.UP);
-                            pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                    ChatColor.GRAY + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) + ChatColor.GRAY + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
-                        } else {
-                            pa.sendMessage(String.format("An error occured: %s", r.errorMessage));
+                            String language = MobConfigManager.mobsCfg.getString("language");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                        ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + Math.round(r.amount) + "$" +
+                                        ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + df.format(balance) + "$"));
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                        ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
+                            } else {
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                        ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
+                            }
                         }
                     }
                 }

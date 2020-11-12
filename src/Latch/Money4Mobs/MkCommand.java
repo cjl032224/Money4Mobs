@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -17,62 +18,166 @@ public class MkCommand implements CommandExecutor {
     FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     File pFile = MobConfigManager.mobsFile;
     private static final Material[] materials = Material.values();
+
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         Player player = (Player) commandSender;
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
+        String language = MobConfigManager.mobsCfg.getString("language");
         for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
             if (player.getName().equals(mobs4MoneyPlayer.getPlayerName())) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
                         if (player.hasPermission("m4m.command.mk.toggleKM")) {
+                            assert language != null;
                             if (Boolean.TRUE.equals(mobs4MoneyPlayer.getKillerMessage())) {
-                                player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + " off");
+                                if (language.equalsIgnoreCase("French")) {
+                                    player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "désactivé");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN + "Mensaje de Mobkiller " + ChatColor.GOLD + "desactivado");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off");
+                                }
                                 mobs4MoneyPlayer.setKillerMessage(false);
                             } else {
-                                player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + " on");
+                                if (language.equalsIgnoreCase("French")) {
+                                    player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "activé");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN + "Mensaje de Mobkiller " + ChatColor.GOLD + "en");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + " on");
+                                }
                                 mobs4MoneyPlayer.setKillerMessage(true);
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
+                        String bool = "";
                         if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs")) {
                             boolean spawnEgg = MobConfigManager.mobsCfg.getBoolean("spawneggs");
                             if (Boolean.TRUE.equals(spawnEgg)) {
                                 MobConfigManager.mobsCfg.set("spawneggs", false);
-                                spawnEgg = false;
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "false";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "falso";
+                                }
+                                else {
+                                    bool = "false";
+                                }
                             } else {
                                 MobConfigManager.mobsCfg.set("spawneggs", true);
-                                spawnEgg = true;
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "true";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "verdadero";
+                                }
+                                else {
+                                    bool = "true";
+                                }
                             }
                             try {
-                                player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + ChatColor.GOLD + spawnEgg);
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.GREEN + "L'argent récompensé par les foules engendrées avec des œufs est défini sur " +
+                                            ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN + "El dinero recompensado por las turbas generadas con huevos se establece en " +
+                                            ChatColor.GOLD + bool);
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + ChatColor.GOLD + bool);
+                                }
                                 mobsCfg.save(pFile);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
+                        String bool = "";
                         if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawners")) {
                             boolean spawners = MobConfigManager.mobsCfg.getBoolean("spawners");
                             if (Boolean.TRUE.equals(spawners)) {
                                 MobConfigManager.mobsCfg.set("spawners", false);
-                                spawners = false;
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "false";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "falso";
+                                }
+                                else {
+                                    bool = "false";
+                                }
                             } else {
                                 MobConfigManager.mobsCfg.set("spawners", true);
-                                spawners = true;
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "true";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "verdadero";
+                                }
+                                else {
+                                    bool = "true";
+                                }
                             }
                             try {
-                                player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + ChatColor.GOLD + spawners);
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.GREEN + "L'argent récompensé par les foules de géniteurs est fixé à " +
+                                            ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN +  "El dinero recompensado por las turbas generadoras se establece en " +
+                                            ChatColor.GOLD + bool);
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + ChatColor.GOLD + bool);
+                                }
                                 mobsCfg.save(pFile);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                 } else if (args.length == 2) {
@@ -83,18 +188,50 @@ public class MkCommand implements CommandExecutor {
                                     String mobName = mobModel.mobName;
                                     Integer lowWorth = mobModel.lowWorth;
                                     Integer highWorth = mobModel.highWorth;
+                                    assert language != null;
                                     if (lowWorth.equals(highWorth)) {
-                                        player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
-                                                " are worth " + ChatColor.GOLD + "$" + lowWorth.toString());
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " valent " + ChatColor.GOLD + "$" + lowWorth.toString());
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " valen " + ChatColor.GOLD + "$" + lowWorth.toString());
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " are worth " + ChatColor.GOLD + "$" + lowWorth.toString());
+                                        }
                                     } else {
-                                        player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " are worth between "
-                                                + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
-                                                ChatColor.GOLD + "$" + highWorth.toString());
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " valent entre " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " et " +
+                                                    ChatColor.GOLD + "$" + highWorth.toString());
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " valen entre " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " y " +
+                                                    ChatColor.GOLD + "$" + highWorth.toString());
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " are worth between "
+                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
+                                                    ChatColor.GOLD + "$" + highWorth.toString());
+                                        }
                                     }
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("drops")) {
                         if (player.hasPermission("m4m.command.mk.drops")) {
@@ -105,30 +242,80 @@ public class MkCommand implements CommandExecutor {
                                     String mobName = mobModel.mobName;
                                     if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
                                         if (mobModel.getItems().size() == 0) {
-                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " don't have any custom drops set");
+                                            assert language != null;
+                                            if (language.equalsIgnoreCase("French")){
+                                                player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " n'ont pas de set de gouttes personnalisé.");
+                                            }
+                                            else if (language.equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " no tiene ningún conjunto de gotas personalizado.");
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " don't have any custom drops set.");
+                                            }
                                         }
                                         for (int l = 0; l < mobModel.getItems().size(); l++) {
                                             String itemName = mobModel.getItems().get(l).getItemName();
                                             Integer amount = mobModel.getItems().get(l).getAmount();
                                             Integer chance = mobModel.getItems().get(l).getChance();
-                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " have a " +
-                                                    ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping " + ChatColor.GOLD + amount +
-                                                    " " + itemName);
+                                            assert language != null;
+                                            if (language.equalsIgnoreCase("French")){
+                                                player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ont " +
+                                                        ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " de chances de perdre " + ChatColor.GOLD + amount +
+                                                        " " + itemName);
+                                            }
+                                            else if (language.equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " tienen un " +
+                                                        ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " de probabilidad de soltar " + ChatColor.GOLD + amount +
+                                                        " " + itemName);
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " have a " +
+                                                        ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping " + ChatColor.GOLD + amount +
+                                                        " " + itemName);
+                                            }
                                         }
                                     } else {
-                                        player.sendMessage(ChatColor.GREEN + "Custom drops are not enabled for " + ChatColor.GOLD + mobName + "s.");
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Les largages personnalisés sont activés pour les  " + ChatColor.GOLD + mobName + "s.");
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Las gotas personalizadas están habilitadas para " + ChatColor.GOLD + mobName + "s.");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GREEN + "Custom drops are not enabled for " + ChatColor.GOLD + mobName + "s.");
+                                        }
                                     }
                                 }
                             }
                             if (Boolean.TRUE.equals(error)) {
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
                         if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
                             boolean error = true;
+                            String bool = "";
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     String mobName = mobModel.mobName;
@@ -137,14 +324,43 @@ public class MkCommand implements CommandExecutor {
                                     if (Boolean.TRUE.equals(customDrops)) {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".customDrops", false);
                                         mobModel.setCustomDrops(false);
-                                        customDrops = false;
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French") ){
+                                            bool = "false";
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            bool = "falso";
+                                        }
+                                        else {
+                                            bool = "false";
+                                        }
                                     } else {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".customDrops", true);
                                         mobModel.setCustomDrops(true);
-                                        customDrops = true;
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French") ){
+                                            bool = "true";
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            bool = "verdadero";
+                                        }
+                                        else {
+                                            bool = "true";
+                                        }
                                     }
                                     try {
-                                        player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + ChatColor.GOLD + customDrops);
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Abandons personnalisés pour " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "définis sur " + ChatColor.GOLD + bool);
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Gotas personalizadas para " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "configuradas en " + ChatColor.GOLD + bool);
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "set to " + ChatColor.GOLD + bool);
+                                        }
                                         mobsCfg.save(pFile);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -152,14 +368,33 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             if(Boolean.TRUE.equals(error)){
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")) {
                         if (player.hasPermission("m4m.command.mk.toggleDefaultDrops")) {
                             boolean error = true;
+                            String bool = "";
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     error = false;
@@ -168,14 +403,43 @@ public class MkCommand implements CommandExecutor {
                                     if (Boolean.TRUE.equals(defaultDrops)) {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", false);
                                         mobModel.setKeepDefaultDrops(false);
-                                        defaultDrops = false;
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French") ){
+                                            bool = "false";
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            bool = "falso";
+                                        }
+                                        else {
+                                            bool = "false";
+                                        }
                                     } else {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
                                         mobModel.setKeepDefaultDrops(true);
-                                        defaultDrops = true;
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French") ){
+                                            bool = "true";
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            bool = "verdadero";
+                                        }
+                                        else {
+                                            bool = "true";
+                                        }
                                     }
                                     try {
-                                        player.sendMessage(ChatColor.GREEN + "Default drops for " + ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "set to " + ChatColor.GOLD + defaultDrops);
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Les abandons par défaut pour les  " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "sont définis sur " + ChatColor.GOLD + bool);
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Gotas predeterminadas para " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "configuradas en " + ChatColor.GOLD + bool);
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GREEN + "Default drops for " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "set to " + ChatColor.GOLD + bool);
+                                        }
                                         mobsCfg.save(pFile);
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -183,10 +447,28 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             if (Boolean.TRUE.equals(error)) {
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                 } else if (args.length == 3) {
@@ -203,25 +485,73 @@ public class MkCommand implements CommandExecutor {
                                             mobModel.setLowWorth(Integer.parseInt(args[2]));
                                             MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
                                             try {
-                                                player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                                assert language != null;
+                                                if (language.equalsIgnoreCase("French")){
+                                                    player.sendMessage(ChatColor.GREEN + "La faible valeur des " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " a été fixée à " + ChatColor.GOLD + args[2]);
+                                                }
+                                                else if (language.equalsIgnoreCase("Spanish")) {
+                                                    player.sendMessage(ChatColor.GREEN + "El valor bajo para " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " se ha establecido en " + ChatColor.GOLD + args[2]);
+                                                }
+                                                else {
+                                                    player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                                }
                                                 mobsCfg.save(pFile);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
                                         } else {
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "High worth for " + mobName + "s is lower than the value you are setting");
+                                            assert language != null;
+                                            if (language.equalsIgnoreCase("French")) {
+                                                player.sendMessage(ChatColor.RED + "Errrur: " + ChatColor.GRAY + "La valeur élevée des " + mobName + "s est inférieure à la valeur que vous définissez.");
+                                            }
+                                            else if (language.equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY +
+                                                        "El valor alto para " + mobName + "s es menor que el valor que está estableciendo.");
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "High worth for " + mobName + "s is lower than the value you are setting.");
+                                            }
                                         }
                                     } catch (NumberFormatException e){
-                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setLowWorth [mobName] [amount]");
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk setLowWorth [mobName] [amount]");
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk setLowWorth [mobName] [amount]");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setLowWorth [mobName] [amount]");
+                                        }
                                     }
 
                                 }
                             }
                             if (Boolean.TRUE.equals(error)) {
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                     if (args[0].equalsIgnoreCase("setHighWorth")) {
@@ -237,24 +567,74 @@ public class MkCommand implements CommandExecutor {
                                             mobModel.setHighWorth(Integer.parseInt(args[2]));
                                             MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Integer.parseInt(args[2]));
                                             try {
-                                                player.sendMessage(ChatColor.GREEN + "High worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                                assert language != null;
+                                                if (language.equalsIgnoreCase("French")){
+                                                    player.sendMessage(ChatColor.GREEN + "La valeur élevée pour " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " a été fixée à " + ChatColor.GOLD + args[2]);
+                                                }
+                                                else if (language.equalsIgnoreCase("Spanish")) {
+                                                    player.sendMessage(ChatColor.GREEN + "El valor alto para " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " se ha establecido en " + ChatColor.GOLD + args[2]);
+                                                }
+                                                else {
+                                                    player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2]);
+                                                }
                                                 mobsCfg.save(pFile);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
                                         } else {
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Low worth for " + mobName + "s is higher than the value you are setting");
+                                            assert language != null;
+                                            if (language.equalsIgnoreCase("French")) {
+                                                player.sendMessage(ChatColor.RED + "Errrur: " + ChatColor.GRAY + "La valeur faible pour les " + mobName +
+                                                        "s est supérieure à la valeur que vous définissez.");
+                                            }
+                                            else if (language.equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY +
+                                                        "El valor bajo para " + mobName + "s es mayor que el valor que está estableciendo.");
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Low worth for " + mobName +
+                                                        "s is higher than the value you are setting.");
+                                            }
                                         }
                                     } catch (NumberFormatException e){
-                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setHighWorth [mobName] [amount]");
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk setHighWorth [mobName] [amount]");
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk setHighWorth [mobName] [amount]");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setHighWorth [mobName] [amount]");
+                                        }
                                     }
                                 }
                             }
                             if (Boolean.TRUE.equals(error)) {
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                     if (args[0].equalsIgnoreCase("removeCustomDrop")) {
@@ -291,10 +671,28 @@ public class MkCommand implements CommandExecutor {
                                     mobModel.getItems().clear();
                                     mobModel.setItems(itemList);
                                     if (Boolean.TRUE.equals(itemError)) {
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " drops do not exist for " + ChatColor.GOLD + mobName + "s ");
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Les gouttes " +  ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'existent pas pour les " + ChatColor.GOLD + mobName + "s ");
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Las gotas de " +  ChatColor.GOLD + args[1] + ChatColor.GRAY + " no existen para las " + ChatColor.GOLD + mobName + "s ");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " drops do not exist for " + ChatColor.GOLD + mobName + "s ");
+                                        }
                                     } else {
                                         try {
-                                            player.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " drops for " + ChatColor.GOLD + mobName + "s ");
+                                            assert language != null;
+                                            if (language.equalsIgnoreCase("French")){
+                                                player.sendMessage(ChatColor.GREEN + "Suppression des gouttes " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " pour " + ChatColor.GOLD + mobName + "s ");
+                                            }
+                                            else if (language.equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.GREEN + "Se eliminaron las gotas de " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " para " + ChatColor.GOLD + mobName + "s ");
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " drops for " + ChatColor.GOLD + mobName + "s ");
+                                            }
                                             mobsCfg.save(pFile);
                                         } catch (IOException e) {
                                             e.printStackTrace();
@@ -303,10 +701,28 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             if (Boolean.TRUE.equals(mobError)) {
-                                player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                 } else if (args.length == 5) {
@@ -341,25 +757,62 @@ public class MkCommand implements CommandExecutor {
                                                     MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", Integer.parseInt(args[3]));
                                                     MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", Integer.parseInt(args[4]));
                                                     try {
-                                                        player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
-                                                                mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "of dropping.");
+                                                        assert language != null;
+                                                        if (language.equalsIgnoreCase("French")){
+                                                            player.sendMessage(ChatColor.GREEN + "Ajout de " + ChatColor.GOLD + amount + " " + args[2] + " " +
+                                                                    mobModel.getMobName() + ChatColor.GREEN + " aux gouttes asdasd avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + " de chances de tomber.");
+                                                        }
+                                                        else if (language.equalsIgnoreCase("Spanish")){
+                                                            player.sendMessage(ChatColor.GREEN + "Se agregaron " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " a " + ChatColor.GOLD +
+                                                                    mobModel.getMobName() + ChatColor.GREEN + " gotas con un " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + " de probabilidad de caer.");
+                                                        }
+                                                        else {
+                                                            player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
+                                                                    mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + " chance of dropping.");                                                        }
                                                         mobsCfg.save(pFile);
                                                     } catch (IOException e) {
                                                         e.printStackTrace();
                                                     }
                                                 } catch (NumberFormatException e) {
-                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                    assert language != null;
+                                                    if (language.equalsIgnoreCase("French")){
+                                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("Spanish")){
+                                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                    }
+                                                    else {
+                                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                     catch (IllegalArgumentException e){
-                                        player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " is not a valid item.");
+                                        assert language != null;
+                                        if (language.equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                        }
+                                        else if (language.equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                        }
                                     }
                                 }
                             }
                         } else {
-                            player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
                         }
                     }
                 }
