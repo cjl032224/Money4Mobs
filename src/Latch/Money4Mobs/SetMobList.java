@@ -42,11 +42,13 @@ public class SetMobList {
         mobList.add(new MobModel("MagmaCube", 12, 12, true, false, null));
         mobList.add(new MobModel("Mule", 30, 30, true, false, null));
         mobList.add(new MobModel("MushroomCow", 3, 3, true, false, null));
+        mobList.add(new MobModel("Ocelot", 25, 25, true, false, null));
         mobList.add(new MobModel("Panda", 25, 25, true, false, null));
         mobList.add(new MobModel("Parrot", 100, 100, true, false, null));
+        mobList.add(new MobModel("Phantom", 45, 45, true, false, null));
         mobList.add(new MobModel("Pig", 3, 3, true, false, null));
+        mobList.add(new MobModel("PigZombie", 45, 45, true, false, null));
         mobList.add(new MobModel("PiglinBrute", 75, 75, true, false, null));
-        mobList.add(new MobModel("Ocelot", 25, 25, true, false, null));
         mobList.add(new MobModel("Pillager", 25, 25, true, false, null));
         mobList.add(new MobModel("PolarBear", 250, 250, true, false, null));
         mobList.add(new MobModel("Pufferfish", 30, 30, true, false, null));
@@ -78,7 +80,6 @@ public class SetMobList {
         mobList.add(new MobModel("Zombie", 15, 25, true, false, null));
         mobList.add(new MobModel("ZombieHorse", 35, 35, true, false, null));
         mobList.add(new MobModel("ZombieVillager", 20, 20, true, false, null));
-        mobList.add(new MobModel("PigZombie", 45, 45, true, false, null));
     }
 
 
