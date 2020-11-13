@@ -69,8 +69,18 @@ public abstract class MobKiller implements CommandExecutor {
                                 pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                         ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                 ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
-                            } else {
-
+                            }
+                            else if (language.equalsIgnoreCase("Chinese")){
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                        ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));
+                            }
+                            else if (language.equalsIgnoreCase("Hindi")){
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                        ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + " है।"));
+                            }
+                            else {
                                 pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                         ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                 ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
@@ -90,20 +100,20 @@ public abstract class MobKiller implements CommandExecutor {
         MobConfigManager.mobsCfg.getBoolean("spawneggs");
         String[] name = es.split("Craft");
 
-        for (int i = 0; i < mm.size(); i++){
-            if(Boolean.TRUE.equals(mm.get(i).getCustomDrops())){
-                if (mm.get(i).getMobName().equals(name[1])) {
-                    for (int j = 0; j < mm.get(i).getItems().size(); j++){
+        for (MobModel mobModel : mm) {
+            if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
+                if (mobModel.getMobName().equals(name[1])) {
+                    for (int j = 0; j < mobModel.getItems().size(); j++) {
                         int chance;
-                        if (mm.get(i).getItems().get(j).getChance() == 0){
+                        if (mobModel.getItems().get(j).getChance() == 0) {
                             chance = 100;
                         } else {
-                            chance = mm.get(i).getItems().get(j).getChance();
+                            chance = mobModel.getItems().get(j).getChance();
                         }
                         if (randomNumber <= chance) {
-                            String itemName = mm.get(i).getItems().get(j).getItemName();
+                            String itemName = mobModel.getItems().get(j).getItemName();
                             Material m = Material.valueOf(itemName);
-                            Integer amount = mm.get(i).getItems().get(j).getAmount();
+                            Integer amount = mobModel.getItems().get(j).getAmount();
                             ede.getDrops().add(new ItemStack(m, amount));
                         }
                     }
@@ -139,18 +149,17 @@ public abstract class MobKiller implements CommandExecutor {
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
         if (pa.hasPermission("m4m.rewardMoney")) {
-            for (int k = 0; k < msr.size(); k++){
-                if(msr.get(k).getUuid().equals(e.getUniqueId().toString())){
+            for (MobSpawnedReason mobSpawnedReason : msr) {
+                if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
                     counter = 1;
-                    if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")){
+                    if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")) {
                         Boolean spawnEggs = MobConfigManager.mobsCfg.getBoolean("spawneggs");
                         if (Boolean.TRUE.equals(spawnEggs)) {
                             giveMoney = true;
                         } else {
                             giveMoney = false;
                         }
-                    }
-                    else if(msr.get(k).getMobSpawnReason().equalsIgnoreCase("SPAWNER")){
+                    } else if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER")) {
                         Boolean spawners = MobConfigManager.mobsCfg.getBoolean("spawners");
                         if (Boolean.TRUE.equals(spawners)) {
                             giveMoney = true;
