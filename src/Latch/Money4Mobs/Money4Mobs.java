@@ -1,6 +1,7 @@
 package Latch.Money4Mobs;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,9 +9,7 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,14 +26,17 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
     private static final List<Mobs4MoneyPlayer> playerList = new ArrayList<>();
+    private static final List<UserModel> userList = new ArrayList<>();
     private static final SetMobList sml = new SetMobList();
     private MobConfigManager MobCfgm;
     private ItemListManager ItemCfgm;
+    private UserManager UserCfgm;
 
     @Override
     public void onEnable() {
         loadMobConfigManager();
         loadItemConfigManager();
+        loadUserConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         loadConfig();
@@ -46,11 +48,16 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         };
 
         ItemCfgm.createItemsConfig();
+        if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
+            UserCfgm.createUsersConfig();
+        }
         MobConfigManager.setMobListFromConfig();
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), "English"));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
+
 
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
         Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
@@ -59,6 +66,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
         sml.getMobModel();
     }
+
 
     @Override
     public void onDisable() {
@@ -72,13 +80,15 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onLogin(PlayerJoinEvent event) {
+    public void onLogin(PlayerJoinEvent event) throws IOException {
         int count = 0;
         for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
             if (event.getPlayer().getName().equals(mobs4MoneyPlayer.getPlayerName())) {
                 count = 1;
             }
         }
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), "English");
+        UserManager.addUserToList(um);
         if (count == 0){
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true ));
         }
@@ -145,7 +155,16 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         ItemCfgm.setup();
     }
 
+    private void loadUserConfigManager() {
+        UserCfgm = new UserManager();
+        UserCfgm.setup();
+    }
+
     public static List<Mobs4MoneyPlayer> getPlayerList(){
         return playerList;
+    }
+
+    public static List<UserModel> getUserList() {
+        return userList;
     }
 }

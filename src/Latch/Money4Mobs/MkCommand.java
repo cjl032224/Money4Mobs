@@ -1,6 +1,5 @@
 package Latch.Money4Mobs;
 
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,15 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MkCommand implements CommandExecutor {
-    FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
-    File pFile = MobConfigManager.mobsFile;
+    private static FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
+    private static File pFile = MobConfigManager.mobsFile;
+    private static FileConfiguration userCfg = UserManager.usersCfg;
+    private static File userFile = UserManager.usersFile;
     private static final Material[] materials = Material.values();
+    private static String language = "";
+    private static List<UserModel> um = UserManager.getUserList();
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         Player player = (Player) commandSender;
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
-        String language = MobConfigManager.mobsCfg.getString("language");
+        setLanguage(player);
         for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
             if (player.getName().equals(mobs4MoneyPlayer.getPlayerName())) {
                 if (args.length == 1) {
@@ -662,6 +665,70 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    else if (args[0].equalsIgnoreCase("language")) {
+                        if (player.hasPermission("m4m.command.mk.language")) {
+                            boolean success = false;
+                            if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") || args[1].equalsIgnoreCase("Spanish")
+                            || args[1].equalsIgnoreCase("Chinese") || args[1].equalsIgnoreCase("Hindi") ){
+                                int counter = 1;
+                                for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+                                    String userId = userCfg.getString("users.user-" + counter + ".userId");
+                                    assert userId != null;
+                                    if(userId.equalsIgnoreCase(player.getUniqueId().toString())){
+                                        assert language != null;
+                                        if (args[1].equalsIgnoreCase("French")){
+                                            player.sendMessage(ChatColor.GREEN + "Changement de la langue de en " + ChatColor.GOLD + "Français");
+                                        }
+                                        else if (args[1].equalsIgnoreCase("Spanish")){
+                                            player.sendMessage(ChatColor.GREEN + "Se cambió el idioma de Money4Mobs al " + ChatColor.GOLD + "español");
+                                        }
+                                        else if (args[1].equalsIgnoreCase("Chinese")){
+                                            player.sendMessage(ChatColor.GREEN + "将Money4Mobs语言更改为 " + ChatColor.GOLD + "中文");
+                                        }
+                                        else if (args[1].equalsIgnoreCase("Hindi")){
+                                            player.sendMessage(ChatColor.GREEN + "बदलने के लिए Money4Mobs भाषा " + ChatColor.GOLD + "हिंदी");
+                                        }
+                                        else {
+                                            player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + "English");
+                                        }
+                                        success = true;
+                                        userCfg.set("users.user-" + counter + ".language", args[1]);
+                                        try {
+                                            userCfg.save(userFile);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    counter++;
+                                }
+                                if (Boolean.TRUE.equals(success)){
+                                    for (UserModel user : um){
+                                        if (user.getUserId().equalsIgnoreCase(player.getUniqueId().toString())) {
+                                            user.setLanguage(args[1]);
+                                        }
+                                    }
+                                }
+                            }
+
+                        } else {
+                            assert language != null;
+                            if (args[1].equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (args[1].equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else if (args[1].equalsIgnoreCase("Chinese")){
+                                player.sendMessage(ChatColor.RED + "您无权访问此命令。");
+                            }
+                            else if (args[1].equalsIgnoreCase("Hindi")){
+                                player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
+                        }
+                    }
                 } else if (args.length == 3) {
                     if (args[0].equalsIgnoreCase("setLowWorth")) {
                         if (player.hasPermission("m4m.command.mk.setLowWorth")) {
@@ -1027,6 +1094,9 @@ public class MkCommand implements CommandExecutor {
                                                     try {
                                                         int amount = Integer.parseInt(args[3]);
                                                         int chance = Integer.parseInt(args[4]);
+                                                        if(chance > 100){
+                                                            chance = 100;
+                                                        }
                                                         int counter2 = 0;
                                                         List<ItemModel> im = new ArrayList<>();
                                                         for (int l = 0; l < mobModel.getItems().size(); l++) {
@@ -1040,8 +1110,8 @@ public class MkCommand implements CommandExecutor {
                                                         mobModel.setItems(im);
                                                         counter2++;
                                                         MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
-                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", Integer.parseInt(args[3]));
-                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", Integer.parseInt(args[4]));
+                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", amount);
+                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", chance);
                                                         try {
                                                             assert language != null;
                                                             if (language.equalsIgnoreCase("French")){
@@ -1149,4 +1219,17 @@ public class MkCommand implements CommandExecutor {
         }
         return true;
     }
+
+    private static void setLanguage(Player pa){
+        int counter = 1;
+        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = userCfg.getString("users.user-" + counter + ".userId");
+            assert userId != null;
+            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
+                language = userCfg.getString("users.user-" + counter + ".language");
+            }
+            counter++;
+        }
+    }
+
 }
