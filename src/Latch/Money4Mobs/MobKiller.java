@@ -172,6 +172,12 @@ public abstract class MobKiller implements CommandExecutor {
             if(counter == 0){
                 giveMoney = true;
             }
+            List<Mobs4MoneyPlayer> pl = Money4Mobs.getPlayerList();
+            for (int i = 0; i < Money4Mobs.getPlayerList().size(); i++){
+                if (e.getName().equalsIgnoreCase(pl.get(i).playerName)) {
+                    giveMoney = false;
+                }
+            }
         } else {
             giveMoney = false;
         }
