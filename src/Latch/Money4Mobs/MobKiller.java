@@ -1,6 +1,7 @@
 package Latch.Money4Mobs;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -31,8 +32,11 @@ public abstract class MobKiller implements CommandExecutor {
     private static Integer money = 0;
     private static final List<MobSpawnedReason> msr = new ArrayList<>();
     private static Boolean giveMoney = false;
+    private static String language = "";
+    private static FileConfiguration userCfg = UserManager.usersCfg;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
+        setLanguage(pa);
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e);
@@ -45,7 +49,17 @@ public abstract class MobKiller implements CommandExecutor {
     public static void setEvent(EntityDeathEvent e) {
         ede = e;
     }
-
+    public static void setLanguage(Player pa){
+        int counter = 1;
+        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = userCfg.getString("users.user-" + counter + ".userId");
+            assert userId != null;
+            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
+                language = userCfg.getString("users.user-" + counter + ".language");
+            }
+            counter++;
+        }
+    }
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
@@ -58,7 +72,6 @@ public abstract class MobKiller implements CommandExecutor {
                             Double balance = r.balance;
                             df.format(balance);
                             df.setRoundingMode(RoundingMode.UP);
-                            String language = MobConfigManager.mobsCfg.getString("language");
                             assert language != null;
                             if (language.equalsIgnoreCase("French")){
                                 pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(

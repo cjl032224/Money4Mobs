@@ -22,15 +22,16 @@ public class MobWorthTabComplete implements TabCompleter {
 
         firstArgumentList.add(0, "addCustomDrop");
         firstArgumentList.add(1, "drops");
-        firstArgumentList.add(2, "removeCustomDrop");
-        firstArgumentList.add(3, "setHighWorth");
-        firstArgumentList.add(4, "setLowWorth");
-        firstArgumentList.add(5, "toggleCustomDrops");
-        firstArgumentList.add(6, "toggleDefaultDrops");
-        firstArgumentList.add(7, "toggleKM");
-        firstArgumentList.add(8, "toggleMoneyFromSpawnEggs");
-        firstArgumentList.add(9, "toggleMoneyFromSpawners");
-        firstArgumentList.add(10, "worth");
+        firstArgumentList.add(2, "language");
+        firstArgumentList.add(3, "removeCustomDrop");
+        firstArgumentList.add(4, "setHighWorth");
+        firstArgumentList.add(5, "setLowWorth");
+        firstArgumentList.add(6, "toggleCustomDrops");
+        firstArgumentList.add(7, "toggleDefaultDrops");
+        firstArgumentList.add(8, "toggleKM");
+        firstArgumentList.add(9, "toggleMoneyFromSpawnEggs");
+        firstArgumentList.add(10, "toggleMoneyFromSpawners");
+        firstArgumentList.add(11, "worth");
         for (int i = 0; i < m.length; i++){
             itemList.add(i, m[i].toString());
         }
@@ -108,6 +109,15 @@ public class MobWorthTabComplete implements TabCompleter {
                     //
                 }
             }
+        }
+        if(args[0].equalsIgnoreCase("language")) {
+            List<String> languageList = new ArrayList<>();
+            languageList.add("Chinese");
+            languageList.add("English");
+            languageList.add("French");
+            languageList.add("Hindi");
+            languageList.add("Spanish");
+            return StringUtil.copyPartialMatches(args[1], languageList, new ArrayList<>());
         }
         return StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>());
     }
