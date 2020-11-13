@@ -21,19 +21,27 @@ public class MkCommand implements CommandExecutor {
     private static final Material[] materials = Material.values();
     private static String language = "";
     private static List<UserModel> um = UserManager.getUserList();
+    private static Boolean showMessage = true;
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         Player player = (Player) commandSender;
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
-        setLanguage(player);
-        for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
-            if (player.getName().equals(mobs4MoneyPlayer.getPlayerName())) {
+        int firstCounter = 1;
+        for(String firstUsers : userCfg.getConfigurationSection("users").getKeys(false)) {
+            String firstUserId = userCfg.getString("users.user-" + firstCounter + ".userId");
+            assert firstUserId != null;
+            if(firstUserId.equalsIgnoreCase(player.getUniqueId().toString())){
+                showMessage = userCfg.getBoolean("users.user-" + firstCounter + ".showMessage");
+                language = userCfg.getString("users.user-" + firstCounter + ".language");
+            }
+            firstCounter++;
+            if (player.getUniqueId().toString().equals(firstUserId)) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
                         if (player.hasPermission("m4m.command.mk.toggleKM")) {
                             assert language != null;
-                            if (Boolean.TRUE.equals(mobs4MoneyPlayer.getKillerMessage())) {
+                            if (Boolean.TRUE.equals(showMessage)) {
                                 if (language.equalsIgnoreCase("French")) {
                                     player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "désactivé.");
                                 }
@@ -49,7 +57,12 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                mobs4MoneyPlayer.setKillerMessage(false);
+                                userCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", false);
+                                try {
+                                    userCfg.save(userFile);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 if (language.equalsIgnoreCase("French")) {
                                     player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "activé.");
@@ -64,9 +77,14 @@ public class MkCommand implements CommandExecutor {
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller संदेश " + ChatColor.GOLD + "पर।");
                                 }
                                 else {
-                                    player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + " on.");
+                                    player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                mobs4MoneyPlayer.setKillerMessage(true);
+                                userCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", true);
+                                try {
+                                    userCfg.save(userFile);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         } else {
                             assert language != null;
@@ -1220,16 +1238,16 @@ public class MkCommand implements CommandExecutor {
         return true;
     }
 
-    private static void setLanguage(Player pa){
-        int counter = 1;
-        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = userCfg.getString("users.user-" + counter + ".userId");
-            assert userId != null;
-            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                language = userCfg.getString("users.user-" + counter + ".language");
-            }
-            counter++;
-        }
-    }
+//    private static void setLanguage(Player pa){
+//        int counter = 1;
+//        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+//            String userId = userCfg.getString("users.user-" + counter + ".userId");
+//            assert userId != null;
+//            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
+//                language = userCfg.getString("users.user-" + counter + ".language");
+//            }
+//            counter++;
+//        }
+//    }
 
 }
