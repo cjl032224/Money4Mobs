@@ -54,7 +54,7 @@ public class UserManager {
         if (counter == 0){
             usersCfg.set("users.user-" + userCount + ".userName", user.userName);
             usersCfg.set("users.user-" + userCount + ".userId", user.userId);
-            usersCfg.set("users.user-" + userCount + ".userId", user.showMessage);
+            usersCfg.set("users.user-" + userCount + ".showMessage", user.showMessage);
             usersCfg.set("users.user-" + userCount + ".language", user.language);
         }
         usersCfg.save(usersFile);
