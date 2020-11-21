@@ -116,10 +116,11 @@ public class MobWorthTabComplete implements TabCompleter {
             languageList.add("English");
             languageList.add("French");
             languageList.add("Hindi");
+            languageList.add("Italian");
             languageList.add("Spanish");
             try {
                 return StringUtil.copyPartialMatches(args[1], languageList, new ArrayList<>());
-            } catch (ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException ignore){
 
             }
         }
