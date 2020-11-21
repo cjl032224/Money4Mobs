@@ -54,6 +54,7 @@ public class UserManager {
         if (counter == 0){
             usersCfg.set("users.user-" + userCount + ".userName", user.userName);
             usersCfg.set("users.user-" + userCount + ".userId", user.userId);
+            usersCfg.set("users.user-" + userCount + ".showMessage", user.showMessage);
             usersCfg.set("users.user-" + userCount + ".language", user.language);
         }
         usersCfg.save(usersFile);
@@ -63,14 +64,14 @@ public class UserManager {
         try {
             usersFile.createNewFile();
             for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),"English"));
+                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, "English"));
             }
             int i = 0;
             for (UserModel user : userList){
                 i++;
                 usersCfg.set("users.user-" + i + ".userName", user.userName);
                 usersCfg.set("users.user-" + i + ".userId", user.userId);
-                //usersCfg.set("users.user-" + i + ".showMessage", user.showMessage);
+                usersCfg.set("users.user-" + i + ".showMessage", user.showMessage);
                 usersCfg.set("users.user-" + i + ".language", user.language);
             }
             usersCfg.save(usersFile);

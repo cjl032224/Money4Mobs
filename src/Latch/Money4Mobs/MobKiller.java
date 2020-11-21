@@ -34,6 +34,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static Boolean giveMoney = false;
     private static String language = "";
     private static FileConfiguration userCfg = UserManager.usersCfg;
+    private static Boolean showMessage = true;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
         setLanguage(pa);
@@ -42,6 +43,7 @@ public abstract class MobKiller implements CommandExecutor {
             setRange(e);
             setDefaultDrops();
             setCustomDrops(e, pa);
+            displayKillMessage(pa);
             sendKillMessage(pa, econ);
         }
     }
@@ -49,6 +51,7 @@ public abstract class MobKiller implements CommandExecutor {
     public static void setEvent(EntityDeathEvent e) {
         ede = e;
     }
+
     public static void setLanguage(Player pa){
         int counter = 1;
         for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
@@ -60,49 +63,75 @@ public abstract class MobKiller implements CommandExecutor {
             counter++;
         }
     }
+
+    public static void displayKillMessage(Player pa){
+        int counter = 1;
+        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = userCfg.getString("users.user-" + counter + ".userId");
+            assert userId != null;
+            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
+                showMessage = userCfg.getBoolean("users.user-" + counter + ".showMessage");
+            }
+            counter++;
+        }
+    }
+
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
-        List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
-        for (Mobs4MoneyPlayer mobs4MoneyPlayer : playerList) {
-            if (pa.getName().equals(mobs4MoneyPlayer.getPlayerName())) {
-                boolean displayMessage = mobs4MoneyPlayer.getKillerMessage();
-                if (displayMessage) {
+        int counter = 1;
+        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = userCfg.getString("users.user-" + counter + ".userId");
+            assert userId != null;
+            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
+                showMessage = userCfg.getBoolean("users.user-" + counter + ".showMessage");
+            }
+            if (pa.getUniqueId().toString().equals(userId)) {
+                if (showMessage) {
                     if (r.amount != 0) {
                         if (r.transactionSuccess()) {
                             Double balance = r.balance;
                             df.format(balance);
                             df.setRoundingMode(RoundingMode.UP);
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
-                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                        ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + Math.round(r.amount) + "$" +
-                                        ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + df.format(balance) + "$"));
-                            }
-                            else if (language.equalsIgnoreCase("Spanish")){
-                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                        ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
-                            }
-                            else if (language.equalsIgnoreCase("Chinese")){
-                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                        ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));
-                            }
-                            else if (language.equalsIgnoreCase("Hindi")){
-                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                        ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + " है।"));
-                            }
-                            else {
-                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                        ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
+                            if(Boolean.TRUE.equals(showMessage)){
+                                if (language.equalsIgnoreCase("French")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + Math.round(r.amount) + "$" +
+                                                    ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + df.format(balance) + "$"));
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
+                                }
+                                else if (language.equalsIgnoreCase("Chinese")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + " है।"));
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "Hai guadagnato " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " ed adesso hai " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + "."));
+                                }
+                                else {
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
+                                }
                             }
                         }
                     }
                 }
             }
+            counter++;
         }
+
     }
 
     public static void setCustomDrops(Entity e, Player p){

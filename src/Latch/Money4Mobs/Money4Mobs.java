@@ -46,7 +46,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             MobCfgm.createMobsConfig();
         };
-
         ItemCfgm.createItemsConfig();
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
@@ -54,7 +53,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MobConfigManager.setMobListFromConfig();
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), "English"));
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
@@ -87,7 +86,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 count = 1;
             }
         }
-        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), "English");
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English");
         UserManager.addUserToList(um);
         if (count == 0){
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true ));

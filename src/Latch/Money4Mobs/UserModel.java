@@ -5,13 +5,13 @@ import java.util.UUID;
 public class UserModel {
     protected String userName;
     protected String userId;
-    //protected Boolean showMessage;
+    protected Boolean showMessage;
     protected String language;
 
-    public UserModel(String userName, String userId, String language) {
+    public UserModel(String userName, String userId, Boolean showMessage, String language) {
         this.userName = userName;
         this.userId = userId;
-        //this.showMessage = showMessage;
+        this.showMessage = showMessage;
         this.language = language;
     }
 
@@ -29,6 +29,14 @@ public class UserModel {
 
     public void setUserId(String userId){
         this.userId = userId;
+    }
+
+    public Boolean getShowMessage() {
+        return showMessage;
+    }
+
+    public void setShowMessage(Boolean showMessage){
+        this.showMessage = showMessage;
     }
 
     public String getLanguage() {
