@@ -115,6 +115,7 @@ public class MobWorthTabComplete implements TabCompleter {
             languageList.add("Chinese");
             languageList.add("English");
             languageList.add("French");
+            languageList.add("German");
             languageList.add("Hindi");
             languageList.add("Italian");
             languageList.add("Spanish");

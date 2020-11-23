@@ -120,6 +120,11 @@ public abstract class MobKiller implements CommandExecutor {
                                             ChatColor.WHITE + "Hai guadagnato " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                     ChatColor.WHITE + " ed adesso hai " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + "."));
                                 }
+                                else if (language.equalsIgnoreCase("German")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "Sie haben " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " erhalten und haben jetzt " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + "."));
+                                }
                                 else {
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                             ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
