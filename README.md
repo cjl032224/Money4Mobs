@@ -2,7 +2,7 @@
 ## Give money to players and custom drops when they kill a mob
 ### Permissions for M4M
 Command | Permission | Description
------------- | ------------- | -------------
+------ | ------- | -------
 Not Applicable | m4m.rewardMoney | Needed permission for players to receive money.
 /mk toggleKM | m4m.command.mk.toggleKM | Turn on/off mob kill message for player. (this is for each individual player to toggle message.
 mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
