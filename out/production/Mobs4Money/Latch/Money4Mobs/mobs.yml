@@ -2,11 +2,12 @@ version: 1.2.12
 spawners: false
 spawneggs: true
 group-multiplier:
-  level1: 1
-  level2: 1
-  level3: 1
-  level4: 1
-  level5: 1
+  operator: 1
+  level-1: 1
+  level-2: 1
+  level-3: 1
+  level-4: 1
+  level-5: 1
 mobs:
   Bat:
     worth:
