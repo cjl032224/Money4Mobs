@@ -4,7 +4,7 @@ MobKiller message on.
 MobKiller message off.
 
 You do not have access to this command.
-Money rewarded from mobs spawned with eggs is set to $10.
+Money rewarded from mobs spawned with eggs is set to false.
 Money rewarded from spawner mobs is set to $10.
 
 Ghasts are worth $10.
