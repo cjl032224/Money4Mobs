@@ -257,7 +257,6 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa.isOp()){
             multiplier = operator;
         }
-
         for (MobModel mobModel : mm) {
             String entity = "Craft" + mobModel.getMobName();
             String es = e.toString();

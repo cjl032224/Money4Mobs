@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -96,7 +98,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
         if(!event.getSpawnReason().toString().equals("NATURAL")){
-            MobKiller.getSpawnReason(event);
+            try {
+                MobKiller.getSpawnReason(event);
+            } catch (NoClassDefFoundError e) {
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
+            }
         }
     }
 
