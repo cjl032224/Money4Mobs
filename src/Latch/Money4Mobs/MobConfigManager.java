@@ -41,9 +41,14 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.2.10");
+            mobsCfg.set("version", "1.2.12");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
+            mobsCfg.set("group-multiplier.level-1", 1);
+            mobsCfg.set("group-multiplier.level-2", 1);
+            mobsCfg.set("group-multiplier.level-3", 1);
+            mobsCfg.set("group-multiplier.level-4", 1);
+            mobsCfg.set("group-multiplier.level-5", 1);
             for (int i = 0; i < mobList.size(); i++){
                 String mobName = mobList.get(i).mobName;
                 Integer lowWorth = mobList.get(i).lowWorth;

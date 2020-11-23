@@ -1,7 +1,12 @@
-version: 1.2.4
-language: English
+version: 1.2.12
 spawners: false
 spawneggs: true
+group-multiplier:
+  level1: 1
+  level2: 1
+  level3: 1
+  level4: 1
+  level5: 1
 mobs:
   Bat:
     worth:
@@ -9,6 +14,11 @@ mobs:
       high: 10
     keepDefaultDrops: true
     customDrops: false
+    drops:
+      item-1:
+        name: ACACIA_BUTTON
+        amount: 2
+        chance: 22
   Bee:
     worth:
       low: 15
@@ -357,9 +367,14 @@ mobs:
   Villager:
     worth:
       low: 5
-      high: 5
+      high: 100
     keepDefaultDrops: true
-    customDrops: false
+    customDrops: true
+    drops:
+      item-1:
+        name: DIAMOND
+        amount: 10
+        chance: 100
   Vindicator:
     worth:
       low: 45

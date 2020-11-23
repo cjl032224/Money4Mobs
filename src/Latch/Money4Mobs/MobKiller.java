@@ -34,13 +34,14 @@ public abstract class MobKiller implements CommandExecutor {
     private static Boolean giveMoney = false;
     private static String language = "";
     private static FileConfiguration userCfg = UserManager.usersCfg;
+    private static FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static Boolean showMessage = true;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
         setLanguage(pa);
         giveMoneyCheck(pa,e);
         if (Boolean.TRUE.equals(giveMoney)){
-            setRange(e);
+            setRange(e, pa);
             setDefaultDrops();
             setCustomDrops(e, pa);
             displayKillMessage(pa);
@@ -225,7 +226,38 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void setRange(Entity e){
+    public static void setRange(Entity e, Player pa){
+        int level1 = mobsCfg.getInt("group-multiplier.level-1");
+        int level2 = mobsCfg.getInt("group-multiplier.level-2");
+        int level3 = mobsCfg.getInt("group-multiplier.level-3");
+        int level4 = mobsCfg.getInt("group-multiplier.level-4");
+        int level5 = mobsCfg.getInt("group-multiplier.level-5");
+        int operator = mobsCfg.getInt("group-multiplier.operator");
+        int multiplier = 1;
+
+
+        if (pa.hasPermission("m4m.multiplier.level-5")) {
+            multiplier = level5;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-4")) {
+            multiplier = level4;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-3")) {
+            multiplier = level3;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-2")) {
+            multiplier = level2;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-1")) {
+            multiplier = level1;
+        }
+        else {
+            multiplier = 1;
+        }
+        if (pa.isOp()){
+            multiplier = operator;
+        }
+
         for (MobModel mobModel : mm) {
             String entity = "Craft" + mobModel.getMobName();
             String es = e.toString();
@@ -234,6 +266,7 @@ public abstract class MobKiller implements CommandExecutor {
             if (es.equals(entity)) {
                 money = mobModel.getHighWorth();
                 money = (int) (Math.random() * (highWorth - lowWorth + 1) + lowWorth);
+                money = money * multiplier;
             }
         }
     }
