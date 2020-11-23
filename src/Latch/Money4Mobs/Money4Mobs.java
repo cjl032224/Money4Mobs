@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import Latch.Money4Mobs.Metrics;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
@@ -58,6 +58,12 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
+
+        int pluginId = 9484; // <-- Replace with the id of your plugin!
+        Metrics metrics = new Metrics(this, pluginId);
+
+        // Optional: Add custom charts
+        metrics.addCustomChart(new Metrics.SimplePie("chart_id", () -> "My value"));
 
 
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
