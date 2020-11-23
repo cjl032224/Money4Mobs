@@ -29,12 +29,12 @@ public abstract class MobKiller implements CommandExecutor {
     private static EntityDeathEvent ede;
     private static final Random rand = new Random();
     private static final DecimalFormat df = new DecimalFormat("0.00");
-    private static Integer money = 0;
+    private static double money = 0;
     private static final List<MobSpawnedReason> msr = new ArrayList<>();
     private static Boolean giveMoney = false;
     private static String language = "";
-    private static FileConfiguration userCfg = UserManager.usersCfg;
-    private static FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
+    private static final FileConfiguration userCfg = UserManager.usersCfg;
+    private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static Boolean showMessage = true;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
@@ -227,13 +227,13 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void setRange(Entity e, Player pa){
-        int level1 = mobsCfg.getInt("group-multiplier.level-1");
-        int level2 = mobsCfg.getInt("group-multiplier.level-2");
-        int level3 = mobsCfg.getInt("group-multiplier.level-3");
-        int level4 = mobsCfg.getInt("group-multiplier.level-4");
-        int level5 = mobsCfg.getInt("group-multiplier.level-5");
-        int operator = mobsCfg.getInt("group-multiplier.operator");
-        int multiplier = 1;
+        double level1 = mobsCfg.getDouble("group-multiplier.level-1");
+        double level2 = mobsCfg.getDouble("group-multiplier.level-2");
+        double level3 = mobsCfg.getDouble("group-multiplier.level-3");
+        double level4 = mobsCfg.getDouble("group-multiplier.level-4");
+        double level5 = mobsCfg.getDouble("group-multiplier.level-5");
+        double operator = mobsCfg.getDouble("group-multiplier.operator");
+        double multiplier = 1;
 
 
         if (pa.hasPermission("m4m.multiplier.level-5")) {
