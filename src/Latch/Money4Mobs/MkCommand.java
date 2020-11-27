@@ -1298,10 +1298,10 @@ public class MkCommand implements CommandExecutor {
                                             player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " drop non esistono per " + ChatColor.GOLD + mobName + "s.");
                                         }
                                         else if (language.equalsIgnoreCase("German")){
-                                            player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " drop non esistono per " + ChatColor.GOLD + mobName + "s.");
+                                            player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " -Drops sind für " + ChatColor.GOLD + mobName + " nicht vorhanden.");
                                         }
                                         else {
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + "-Drops sind für " + ChatColor.GOLD + mobName + "s nicht vorhanden.");
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " drops do not exist for " + ChatColor.GOLD + mobName + "s.");
                                         }
                                     } else {
                                         try {
@@ -1321,10 +1321,10 @@ public class MkCommand implements CommandExecutor {
                                                 player.sendMessage(ChatColor.GREEN + "Hai rimosso " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " dai drop per " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
                                             else if (language.equalsIgnoreCase("German")){
-                                                player.sendMessage(ChatColor.GREEN + "Hai rimosso " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " dai drop per " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
+                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " wurden entfernt..");
                                             }
                                             else {
-                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "wurden entfernt.");
+                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " drops removed from " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
                                             mobsCfg.save(mobsFile);
                                         } catch (IOException e) {
@@ -1385,156 +1385,161 @@ public class MkCommand implements CommandExecutor {
                 } else if (args.length == 5) {
                     if (args[0].equalsIgnoreCase("addCustomDrop")) {
                         if (player.hasPermission("m4m.command.mk.addCustomDrop") || player.isOp()) {
-                            for (MobModel mobModel : mm) {
-                                if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                                    try {
-                                        int itemPresent = 0;
-                                        for (int i = 0; i < mobModel.getItems().size(); i++) {
-                                            if (mobModel.getItems().get(i).getItemName().equalsIgnoreCase(args[2])) {
-                                                itemPresent = 1;
-                                                break;
-                                            }
-                                        }
-                                        if (itemPresent == 0){
-                                            Material m = Material.valueOf(args[2].toUpperCase());
-                                            for (Material material : materials) {
-                                                int counter = 0;
-                                                if (material.equals(m)) {
-                                                    counter++;
+                            if (args[1].equalsIgnoreCase("Player")){
+                                player.sendMessage(ChatColor.RED + "Error: Cannot add Custom Drops to Players.");
+                            }
+                            else {
+                                    for (MobModel mobModel : mm) {
+                                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
+                                            try {
+                                                int itemPresent = 0;
+                                                for (int i = 0; i < mobModel.getItems().size(); i++) {
+                                                    if (mobModel.getItems().get(i).getItemName().equalsIgnoreCase(args[2])) {
+                                                        itemPresent = 1;
+                                                        break;
+                                                    }
                                                 }
-                                                if (counter != 0) {
-                                                    try {
-                                                        int amount = Integer.parseInt(args[3]);
-                                                        int chance = Integer.parseInt(args[4]);
-                                                        if(chance > 100){
-                                                            chance = 100;
+                                                if (itemPresent == 0){
+                                                    Material m = Material.valueOf(args[2].toUpperCase());
+                                                    for (Material material : materials) {
+                                                        int counter = 0;
+                                                        if (material.equals(m)) {
+                                                            counter++;
                                                         }
-                                                        int counter2 = 0;
-                                                        List<ItemModel> im = new ArrayList<>();
-                                                        for (int l = 0; l < mobModel.getItems().size(); l++) {
-                                                            String currentItemName = mobModel.getItems().get(l).getItemName();
-                                                            int currentItemAmount = mobModel.getItems().get(l).getAmount();
-                                                            int currentItemChance = mobModel.getItems().get(l).getChance();
-                                                            im.add(new ItemModel(currentItemName, currentItemAmount, currentItemChance));
-                                                            counter2++;
-                                                        }
-                                                        im.add(new ItemModel(args[2], amount, chance));
-                                                        mobModel.setItems(im);
-                                                        counter2++;
-                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
-                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", amount);
-                                                        MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", chance);
-                                                        try {
-                                                            assert language != null;
-                                                            if (language.equalsIgnoreCase("French")){
-                                                                player.sendMessage(ChatColor.GREEN + "Ajout de " + ChatColor.GOLD + amount + " " + args[2] + " " +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + " aux gouttes avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de chances de tomber.");
+                                                        if (counter != 0) {
+                                                            try {
+                                                                int amount = Integer.parseInt(args[3]);
+                                                                int chance = Integer.parseInt(args[4]);
+                                                                if(chance > 100){
+                                                                    chance = 100;
+                                                                }
+                                                                int counter2 = 0;
+                                                                List<ItemModel> im = new ArrayList<>();
+                                                                for (int l = 0; l < mobModel.getItems().size(); l++) {
+                                                                    String currentItemName = mobModel.getItems().get(l).getItemName();
+                                                                    int currentItemAmount = mobModel.getItems().get(l).getAmount();
+                                                                    int currentItemChance = mobModel.getItems().get(l).getChance();
+                                                                    im.add(new ItemModel(currentItemName, currentItemAmount, currentItemChance));
+                                                                    counter2++;
+                                                                }
+                                                                im.add(new ItemModel(args[2], amount, chance));
+                                                                mobModel.setItems(im);
+                                                                counter2++;
+                                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".name", args[2]);
+                                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".amount", amount);
+                                                                MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", chance);
+                                                                try {
+                                                                    assert language != null;
+                                                                    if (language.equalsIgnoreCase("French")){
+                                                                        player.sendMessage(ChatColor.GREEN + "Ajout de " + ChatColor.GOLD + amount + " " + args[2] + " " +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + " aux gouttes avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de chances de tomber.");
+                                                                    }
+                                                                    else if (language.equalsIgnoreCase("Spanish")){
+                                                                        player.sendMessage(ChatColor.GREEN + "Se agregaron " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " a " + ChatColor.GOLD +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + " gotas con un " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de probabilidad de caer.");
+                                                                    }
+                                                                    else if (language.equalsIgnoreCase("Chinese")){
+                                                                        player.sendMessage(ChatColor.GREEN + "为" + ChatColor.GOLD + "" + args[2] + " 掉落增加了 " + ChatColor.GOLD + amount + mobModel.getMobName() +
+                                                                                ChatColor.GREEN + ", 掉落几率为 " + ChatColor.GOLD + chance + "%。");
+                                                                    }
+                                                                    else if (language.equalsIgnoreCase("Hindi")){
+                                                                        player.sendMessage(ChatColor.GOLD + "" + amount + " " + args[2] + " " + mobModel.getMobName() + ChatColor.GREEN + " बूँदें छोड़ने के " +
+                                                                                ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "संभावना के साथ जोड़ा गया।");
+                                                                    }
+                                                                    else if (language.equalsIgnoreCase("Italian")){
+                                                                        player.sendMessage(ChatColor.GREEN + "Aggiunto " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " per " + ChatColor.GOLD +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + " con la chance di drop impostata a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ".");
+                                                                    }
+                                                                    else if (language.equalsIgnoreCase("German")){
+                                                                        player.sendMessage(ChatColor.GREEN + "Es wurden " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " zu " + ChatColor.GOLD +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + "-Drops hinzugefügt, mit einer " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " igen Chance zu fallen.");
+                                                                    }
+                                                                    else {
+                                                                        player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping.");                                                        }
+                                                                    mobsCfg.save(mobsFile);
+                                                                } catch (IOException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            } catch (NumberFormatException e) {
+                                                                assert language != null;
+                                                                if (language.equalsIgnoreCase("French")){
+                                                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("Spanish")){
+                                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("Chinese")){
+                                                                    player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "像这样输入命令 -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("Hindi")){
+                                                                    player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + "इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("Italian")){
+                                                                    player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Inserisci il comando come questo -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("German")){
+                                                                    player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else {
+                                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
                                                             }
-                                                            else if (language.equalsIgnoreCase("Spanish")){
-                                                                player.sendMessage(ChatColor.GREEN + "Se agregaron " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " a " + ChatColor.GOLD +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + " gotas con un " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de probabilidad de caer.");
-                                                            }
-                                                            else if (language.equalsIgnoreCase("Chinese")){
-                                                                player.sendMessage(ChatColor.GREEN + "为" + ChatColor.GOLD + "" + args[2] + " 掉落增加了 " + ChatColor.GOLD + amount + mobModel.getMobName() +
-                                                                        ChatColor.GREEN + ", 掉落几率为 " + ChatColor.GOLD + chance + "%。");
-                                                            }
-                                                            else if (language.equalsIgnoreCase("Hindi")){
-                                                                player.sendMessage(ChatColor.GOLD + "" + amount + " " + args[2] + " " + mobModel.getMobName() + ChatColor.GREEN + " बूँदें छोड़ने के " +
-                                                                        ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "संभावना के साथ जोड़ा गया।");
-                                                            }
-                                                            else if (language.equalsIgnoreCase("Italian")){
-                                                                player.sendMessage(ChatColor.GREEN + "Aggiunto " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " per " + ChatColor.GOLD +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + " con la chance di drop impostata a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ".");
-                                                            }
-                                                            else if (language.equalsIgnoreCase("German")){
-                                                                player.sendMessage(ChatColor.GREEN + "Es wurden " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " zu " + ChatColor.GOLD +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + "-Drops hinzugefügt, mit einer " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " igen Chance zu fallen.");
-                                                            }
-                                                            else {
-                                                                player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping.");                                                        }
-                                                            mobsCfg.save(mobsFile);
-                                                        } catch (IOException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    } catch (NumberFormatException e) {
-                                                        assert language != null;
-                                                        if (language.equalsIgnoreCase("French")){
-                                                            player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else if (language.equalsIgnoreCase("Spanish")){
-                                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else if (language.equalsIgnoreCase("Chinese")){
-                                                            player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "像这样输入命令 -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else if (language.equalsIgnoreCase("Hindi")){
-                                                            player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + "इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else if (language.equalsIgnoreCase("Italian")){
-                                                            player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Inserisci il comando come questo -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else if (language.equalsIgnoreCase("German")){
-                                                            player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk addCustomDrop [mobName] [amount] [chance]");
-                                                        }
-                                                        else {
-                                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                         }
                                                     }
                                                 }
-                                            }
-                                        }
-                                        else {
-                                            assert language != null;
-                                            if (language.equalsIgnoreCase("French")) {
-                                                player.sendMessage(ChatColor.RED + "Erreur:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ya está presente como una gota personalizada.");
-                                            }
-                                            else if (language.equalsIgnoreCase("Spanish")) {
-                                                player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " est déjà présent en tant que drop personnalisé.");
-                                            }
-                                            else if (language.equalsIgnoreCase("Chinese")) {
-                                                player.sendMessage(ChatColor.RED + "错误:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " 已作为自定义放置出现。");
-                                            }
-                                            else if (language.equalsIgnoreCase("Hindi")) {
-                                                player.sendMessage(ChatColor.RED + "त्रुटि:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " पहले से ही कस्टम ड्रॉप के रूप में मौजूद है।");
-                                            }
-                                            else if (language.equalsIgnoreCase("Italian")) {
-                                                player.sendMessage(ChatColor.RED + "Errore:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " e'' gia'' presente come drop personalizzato.");
-                                            }
-                                            else if (language.equalsIgnoreCase("German")) {
-                                                player.sendMessage(ChatColor.RED + "Fehler:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ist bereits als benutzerdefiniertes Drop vorhanden.");
-                                            }
-                                            else {
-                                                player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " is already present as a custom drop.");
-                                            }
-                                        }
+                                                else {
+                                                    assert language != null;
+                                                    if (language.equalsIgnoreCase("French")) {
+                                                        player.sendMessage(ChatColor.RED + "Erreur:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ya está presente como una gota personalizada.");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("Spanish")) {
+                                                        player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " est déjà présent en tant que drop personnalisé.");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("Chinese")) {
+                                                        player.sendMessage(ChatColor.RED + "错误:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " 已作为自定义放置出现。");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("Hindi")) {
+                                                        player.sendMessage(ChatColor.RED + "त्रुटि:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " पहले से ही कस्टम ड्रॉप के रूप में मौजूद है।");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("Italian")) {
+                                                        player.sendMessage(ChatColor.RED + "Errore:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " e'' gia'' presente come drop personalizzato.");
+                                                    }
+                                                    else if (language.equalsIgnoreCase("German")) {
+                                                        player.sendMessage(ChatColor.RED + "Fehler:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ist bereits als benutzerdefiniertes Drop vorhanden.");
+                                                    }
+                                                    else {
+                                                        player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " is already present as a custom drop.");
+                                                    }
+                                                }
 
+                                            }
+                                            catch (IllegalArgumentException e){
+                                                assert language != null;
+                                                if (language.equalsIgnoreCase("French")){
+                                                    player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
+                                                }
+                                                else if (language.equalsIgnoreCase("Spanish")){
+                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
+                                                }
+                                                else if (language.equalsIgnoreCase("Chinese")){
+                                                    player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
+                                                }
+                                                else if (language.equalsIgnoreCase("Hindi")){
+                                                    player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
+                                                }
+                                                else if (language.equalsIgnoreCase("Italian")){
+                                                    player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
+                                                }
+                                                else if (language.equalsIgnoreCase("German")){
+                                                    player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
+                                                }
+                                                else {
+                                                    player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
+                                                }
+                                            }
+                                        }
                                     }
-                                    catch (IllegalArgumentException e){
-                                        assert language != null;
-                                        if (language.equalsIgnoreCase("French")){
-                                            player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
-                                        }
-                                        else if (language.equalsIgnoreCase("Spanish")){
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
-                                        }
-                                        else if (language.equalsIgnoreCase("Chinese")){
-                                            player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
-                                        }
-                                        else if (language.equalsIgnoreCase("Hindi")){
-                                            player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
-                                        }
-                                        else if (language.equalsIgnoreCase("Italian")){
-                                            player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
-                                        }
-                                        else if (language.equalsIgnoreCase("German")){
-                                            player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
-                                        }
-                                        else {
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
-                                        }
-                                    }
-                                }
                             }
                         } else {
                             assert language != null;

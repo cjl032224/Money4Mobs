@@ -50,6 +50,7 @@ public class SetMobList {
         mobList.add(new MobModel("PigZombie", 45, 45, true, false, null));
         mobList.add(new MobModel("PiglinBrute", 75, 75, true, false, null));
         mobList.add(new MobModel("Pillager", 25, 25, true, false, null));
+        mobList.add(new MobModel("Player", 25, 25, true, false, null));
         mobList.add(new MobModel("PolarBear", 250, 250, true, false, null));
         mobList.add(new MobModel("Pufferfish", 30, 30, true, false, null));
         mobList.add(new MobModel("Rabbit", 15, 15, true, false, null));
