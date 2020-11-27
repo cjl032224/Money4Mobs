@@ -67,7 +67,6 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void displayKillMessage(Player pa){
         int counter = 1;
-        pa.sendMessage("ddd: " + giveMoney);
         for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = userCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -80,7 +79,6 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
-        pa.sendMessage("qqqqqq: " + money);
         int counter = 1;
         for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = userCfg.getString("users.user-" + counter + ".userId");
