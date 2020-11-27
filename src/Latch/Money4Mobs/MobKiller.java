@@ -196,7 +196,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
-        if (pa.hasPermission("m4m.rewardMoney")) {
+        if (pa.hasPermission("m4m.rewardMoney") || pa.isOp()) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
                     counter = 1;
