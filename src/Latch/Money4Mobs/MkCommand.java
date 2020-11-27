@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class MkCommand implements CommandExecutor {
     private static FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
-    private static File pFile = MobConfigManager.mobsFile;
+    private static File mobsFile = MobConfigManager.mobsFile;
     private static FileConfiguration userCfg = UserManager.usersCfg;
     private static File userFile = UserManager.usersFile;
     private static final Material[] materials = Material.values();
@@ -24,7 +25,6 @@ public class MkCommand implements CommandExecutor {
     private static Boolean showMessage = true;
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        List<Mobs4MoneyPlayer> playerList = Money4Mobs.getPlayerList();
         Player player = (Player) commandSender;
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
         int firstCounter = 1;
@@ -39,7 +39,7 @@ public class MkCommand implements CommandExecutor {
             if (player.getUniqueId().toString().equals(firstUserId)) {
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
-                        if (player.hasPermission("m4m.command.mk.toggleKM")) {
+                        if (player.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
                             assert language != null;
                             if (Boolean.TRUE.equals(showMessage)) {
                                 if (language.equalsIgnoreCase("French")) {
@@ -124,7 +124,7 @@ public class MkCommand implements CommandExecutor {
                         }
                     } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
                         String bool = "";
-                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs")) {
+                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs") || player.isOp()) {
                             boolean spawnEgg = MobConfigManager.mobsCfg.getBoolean("spawneggs");
                             if (Boolean.TRUE.equals(spawnEgg)) {
                                 MobConfigManager.mobsCfg.set("spawneggs", false);
@@ -201,7 +201,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                mobsCfg.save(pFile);
+                                mobsCfg.save(mobsFile);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -231,7 +231,7 @@ public class MkCommand implements CommandExecutor {
                         }
                     } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
                         String bool = "";
-                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawners")) {
+                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromSpawners") || player.isOp()) {
                             boolean spawners = MobConfigManager.mobsCfg.getBoolean("spawners");
                             if (Boolean.TRUE.equals(spawners)) {
                                 MobConfigManager.mobsCfg.set("spawners", false);
@@ -308,7 +308,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                mobsCfg.save(pFile);
+                                mobsCfg.save(mobsFile);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -339,7 +339,7 @@ public class MkCommand implements CommandExecutor {
                     }
                 } else if (args.length == 2) {
                     if (args[0].equalsIgnoreCase("worth")) {
-                        if (player.hasPermission("m4m.command.mk.worth")) {
+                        if (player.hasPermission("m4m.command.mk.worth") || player.isOp()) {
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     String mobName = mobModel.mobName;
@@ -397,8 +397,8 @@ public class MkCommand implements CommandExecutor {
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "के बीच का मूल्य है।");
                                         }
                                         else if (language.equalsIgnoreCase("Italian")){
-                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " are worth between "
-                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ha un valore tra "
+                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " e " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
                                         }
                                         else if (language.equalsIgnoreCase("German")){
@@ -407,8 +407,8 @@ public class MkCommand implements CommandExecutor {
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "wert.");
                                         }
                                         else {
-                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ha un valore tra "
-                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " e " +
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " are worth between "
+                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
                                         }
                                     }
@@ -439,7 +439,7 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     } else if (args[0].equalsIgnoreCase("drops")) {
-                        if (player.hasPermission("m4m.command.mk.drops")) {
+                        if (player.hasPermission("m4m.command.mk.drops") || player.isOp()) {
                             boolean error = true;
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
@@ -585,7 +585,7 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
-                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops")) {
+                        if (player.hasPermission("m4m.command.mk.toggleCustomDrops") || player.isOp()) {
                             boolean error = true;
                             String bool = "";
                             for (MobModel mobModel : mm) {
@@ -673,7 +673,7 @@ public class MkCommand implements CommandExecutor {
                                             player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        mobsCfg.save(pFile);
+                                        mobsCfg.save(mobsFile);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -728,7 +728,7 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")) {
-                        if (player.hasPermission("m4m.command.mk.toggleDefaultDrops")) {
+                        if (player.hasPermission("m4m.command.mk.toggleDefaultDrops") || player.isOp()) {
                             boolean error = true;
                             String bool = "";
                             for (MobModel mobModel : mm) {
@@ -816,7 +816,7 @@ public class MkCommand implements CommandExecutor {
                                             player.sendMessage(ChatColor.GREEN + "Default drops for " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        mobsCfg.save(pFile);
+                                        mobsCfg.save(mobsFile);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -872,7 +872,7 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     else if (args[0].equalsIgnoreCase("language")) {
-                        if (player.hasPermission("m4m.command.mk.language")) {
+                        if (player.hasPermission("m4m.command.mk.language") || player.isOp()) {
                             boolean success = false;
                             if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") || args[1].equalsIgnoreCase("Spanish")
                             || args[1].equalsIgnoreCase("Chinese") || args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")
@@ -883,7 +883,6 @@ public class MkCommand implements CommandExecutor {
                                     assert userId != null;
                                     if(userId.equalsIgnoreCase(player.getUniqueId().toString())){
                                         assert language != null;
-                                        player.sendMessage("asdasd: " + args[1]);
                                         if (args[1].equalsIgnoreCase("French")){
                                             player.sendMessage(ChatColor.GREEN + "Changement de la langue de en " + ChatColor.GOLD + "Français.");
                                         }
@@ -952,7 +951,7 @@ public class MkCommand implements CommandExecutor {
                     }
                 } else if (args.length == 3) {
                     if (args[0].equalsIgnoreCase("setLowWorth")) {
-                        if (player.hasPermission("m4m.command.mk.setLowWorth")) {
+                        if (player.hasPermission("m4m.command.mk.setLowWorth") || player.isOp()) {
                             boolean error = true;
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
@@ -992,7 +991,7 @@ public class MkCommand implements CommandExecutor {
                                                 else {
                                                     player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                mobsCfg.save(pFile);
+                                                mobsCfg.save(mobsFile);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -1100,7 +1099,7 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (args[0].equalsIgnoreCase("setHighWorth")) {
-                        if (player.hasPermission("m4m.command.mk.setHighWorth")) {
+                        if (player.hasPermission("m4m.command.mk.setHighWorth") || player.isOp()) {
                             boolean error = true;
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
@@ -1140,7 +1139,7 @@ public class MkCommand implements CommandExecutor {
                                                 else {
                                                     player.sendMessage(ChatColor.GREEN + "High worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                mobsCfg.save(pFile);
+                                                mobsCfg.save(mobsFile);
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -1249,7 +1248,7 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (args[0].equalsIgnoreCase("removeCustomDrop")) {
-                        if (player.hasPermission("m4m.command.mk.removeCustomDrop")) {
+                        if (player.hasPermission("m4m.command.mk.removeCustomDrop") || player.isOp()) {
                             List<ItemModel> itemList = new ArrayList<>();
                             boolean itemError = true;
                             boolean mobError = true;
@@ -1261,7 +1260,7 @@ public class MkCommand implements CommandExecutor {
                                         itemList.add(new ItemModel(mobModel.getItems().get(k).getItemName(), mobModel.getItems().get(k).getAmount(), mobModel.getItems().get(k).getChance()));
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".drops.item-" + (k + 1), null);
                                         try {
-                                            mobsCfg.save(pFile);
+                                            mobsCfg.save(mobsFile);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
@@ -1327,7 +1326,7 @@ public class MkCommand implements CommandExecutor {
                                             else {
                                                 player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "wurden entfernt.");
                                             }
-                                            mobsCfg.save(pFile);
+                                            mobsCfg.save(mobsFile);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
@@ -1385,7 +1384,7 @@ public class MkCommand implements CommandExecutor {
                     }
                 } else if (args.length == 5) {
                     if (args[0].equalsIgnoreCase("addCustomDrop")) {
-                        if (player.hasPermission("m4m.command.mk.addCustomDrop")) {
+                        if (player.hasPermission("m4m.command.mk.addCustomDrop") || player.isOp()) {
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     try {
@@ -1429,7 +1428,7 @@ public class MkCommand implements CommandExecutor {
                                                             assert language != null;
                                                             if (language.equalsIgnoreCase("French")){
                                                                 player.sendMessage(ChatColor.GREEN + "Ajout de " + ChatColor.GOLD + amount + " " + args[2] + " " +
-                                                                        mobModel.getMobName() + ChatColor.GREEN + " aux gouttes asdasd avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de chances de tomber.");
+                                                                        mobModel.getMobName() + ChatColor.GREEN + " aux gouttes avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de chances de tomber.");
                                                             }
                                                             else if (language.equalsIgnoreCase("Spanish")){
                                                                 player.sendMessage(ChatColor.GREEN + "Se agregaron " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " a " + ChatColor.GOLD +
@@ -1454,7 +1453,7 @@ public class MkCommand implements CommandExecutor {
                                                             else {
                                                                 player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
                                                                         mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping.");                                                        }
-                                                            mobsCfg.save(pFile);
+                                                            mobsCfg.save(mobsFile);
                                                         } catch (IOException e) {
                                                             e.printStackTrace();
                                                         }

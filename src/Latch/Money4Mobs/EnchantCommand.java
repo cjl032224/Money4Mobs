@@ -17,7 +17,7 @@ public class EnchantCommand implements CommandExecutor {
 
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
-            if (player.hasPermission("m4m.command.enc")) {
+            if (player.hasPermission("m4m.command.enc") || player.isOp()) {
                 // If the user only types '/enc'
                 if(args.length == 0){
                     player.sendMessage(ChatColor.RED +("Error: ") + ChatColor.GRAY + ("Please use command like this -> " +ChatColor.DARK_GRAY + "/enc enchantment level"));

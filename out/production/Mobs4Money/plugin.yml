@@ -1,5 +1,5 @@
 name: Money4Mobs
-version: 1.2.15
+version: 1.2.16
 author: Latch
 main: Latch.Money4Mobs.Money4Mobs
 api-version: 1.16
@@ -8,7 +8,6 @@ commands:
   mk:
     description: Mob Killer
     usage: /mk
-    permission: m4m.command.mk
   enc:
     description: Enchants
     usage: /enc

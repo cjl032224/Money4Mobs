@@ -30,9 +30,9 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static final List<Mobs4MoneyPlayer> playerList = new ArrayList<>();
     private static final List<UserModel> userList = new ArrayList<>();
     private static final SetMobList sml = new SetMobList();
-    private MobConfigManager MobCfgm;
-    private ItemListManager ItemCfgm;
-    private UserManager UserCfgm;
+    private static MobConfigManager MobCfgm;
+    private static ItemListManager ItemCfgm;
+    private static UserManager UserCfgm;
 
     @Override
     public void onEnable() {
@@ -41,10 +41,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadUserConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
-        loadConfig();
-        reloadConfig();
-        File testConfigFile = new File(getDataFolder(), "config.yml");
-        testConfigFile.delete();// Success
         if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
             MobCfgm.createMobsConfig();
         };
@@ -83,7 +79,12 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event){
         MobKiller.setEvent(event);
-        callRewardMobKiller(event);
+        try {
+            if (event.getEntity().getKiller()!=null){
+                callRewardMobKiller(event);
+            }
+        } catch (RuntimeException ignore){
+        }
     }
 
     @EventHandler
@@ -145,7 +146,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void callRewardMobKiller(EntityDeathEvent event){
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
-        if (pa != null && pa.hasPermission("m4m.rewardMoney")) {
+        if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp()) {
             loadConfig();
             MobKiller.rewardPlayerMoney(pa, e, econ);
         }
@@ -156,17 +157,17 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         saveConfig();
     }
 
-    public void loadMobConfigManager(){
+    public static void loadMobConfigManager(){
         MobCfgm = new MobConfigManager();
         MobCfgm.setup();
     }
 
-    public void loadItemConfigManager(){
+    public static void loadItemConfigManager(){
         ItemCfgm = new ItemListManager();
         ItemCfgm.setup();
     }
 
-    private void loadUserConfigManager() {
+    private static void loadUserConfigManager() {
         UserCfgm = new UserManager();
         UserCfgm.setup();
     }
@@ -177,5 +178,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     public static List<UserModel> getUserList() {
         return userList;
+    }
+
+    public static void reloadConfigFiles(){
+        loadMobConfigManager();
+        loadItemConfigManager();
+        loadUserConfigManager();
     }
 }

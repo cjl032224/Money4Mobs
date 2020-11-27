@@ -1,10 +1,12 @@
 package Latch.Money4Mobs;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
@@ -32,6 +34,51 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add(9, "toggleMoneyFromSpawnEggs");
         firstArgumentList.add(10, "toggleMoneyFromSpawners");
         firstArgumentList.add(11, "worth");
+
+        Player pa = (Player) sender;
+
+        if (!pa.isOp()){
+            if(!pa.hasPermission("m4m.command.mk.toggleKM")){
+                firstArgumentList.remove("toggleKM");
+            }
+            if(!pa.hasPermission("m4m.command.mk.worth")){
+                firstArgumentList.remove("worth");
+            }
+            if(!pa.hasPermission("m4m.command.mk.setHighWorth")){
+                firstArgumentList.remove("setHighWorth");
+            }
+            if(!pa.hasPermission("m4m.command.mk.setLowWorth")){
+                firstArgumentList.remove("setLowWorth");
+            }
+            if(!pa.hasPermission("m4m.command.mk.drops")){
+                firstArgumentList.remove("drops");
+            }
+            if(!pa.hasPermission("m4m.command.mk.addCustomDrop")){
+                firstArgumentList.remove("addCustomDrop");
+            }
+            if(!pa.hasPermission("m4m.command.mk.removeCustomDrop")){
+                firstArgumentList.remove("removeCustomDrop");
+            }
+            if(!pa.hasPermission("m4m.command.mk.toggleCustomDrops")){
+                firstArgumentList.remove("toggleCustomDrops");
+            }
+            if(!pa.hasPermission("m4m.command.mk.toggleDefaultDrops")){
+                firstArgumentList.remove("toggleDefaultDrops");
+            }
+            if(!pa.hasPermission("m4m.command.mk.spawneggs")){
+                firstArgumentList.remove("toggleMoneyFromSpawnEggs");
+            }
+            if(!pa.hasPermission("m4m.command.mk.spawners")){
+                firstArgumentList.remove("toggleMoneyFromSpawners");
+            }
+            if(!pa.hasPermission("m4m.command.mk.language")){
+                firstArgumentList.remove("language");
+            }
+            if(firstArgumentList.size() == 0 ){
+                firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
+            }
+        }
+
         for (int i = 0; i < m.length; i++){
             itemList.add(i, m[i].toString());
         }
