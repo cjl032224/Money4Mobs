@@ -8,7 +8,7 @@ Not Applicable | m4m.rewardMoney | Needed permission for players to receive mone
 mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk setHighWorth [mobName] [amount] | m4m.command.mk.setHighWorth | Sets the high worth amount for the given mob.
 /mk setLowWorth [mobName] [amount] | m4m.command.mk.setLowWorth | Sets the low worth amount for the given mob.
-/mk drops [mobName] | m4m.command.mk.toggleKM | Displays custom drops, if any, and chance of custom mob dropping the custom item.
+/mk drops [mobName] | m4m.command.mk.drops | Displays custom drops, if any, and chance of custom mob dropping the custom item.
 /mk addCustomDrop [mobName] [itemName] [amount] [chance] | m4m.command.mk.addCustomDrop | Sets a custom item to drop for the given mob. Chance is represent in percent from 0 to 100%.
 /mk removeCustomDrop [mobName] [itemName] | m4m.command.mk.removeCustomDrop | Removes a custom item set for the given mob.
 /mk toggleCustomDrops [mobName] | m4m.command.mk.toggleCustomDrops | Toggles if the given mob will drop custom items set.
