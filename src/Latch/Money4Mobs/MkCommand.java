@@ -1386,7 +1386,27 @@ public class MkCommand implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("addCustomDrop")) {
                         if (player.hasPermission("m4m.command.mk.addCustomDrop") || player.isOp()) {
                             if (args[1].equalsIgnoreCase("Player")){
-                                player.sendMessage(ChatColor.RED + "Error: Cannot add Custom Drops to Players.");
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.RED + "Erreur: impossible d'ajouter des gouttes personnalisées aux lecteurs.");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.RED + "Error: no se pueden agregar gotas personalizadas a los jugadores.");
+                                }
+                                else if (language.equalsIgnoreCase("Chinese")){
+                                    player.sendMessage(ChatColor.RED + "错误：无法向播放器添加自定义放置。");
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    player.sendMessage(ChatColor.RED + "त्रुटि: खिलाड़ियों को कस्टम ड्रॉप्स नहीं जोड़ सकते।");
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    player.sendMessage(ChatColor.RED + "Errore: impossibile aggiungere drop personalizzati ai giocatori.");
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    player.sendMessage(ChatColor.RED + "Fehler: Spieler können keine benutzerdefinierten Drops hinzufügen.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.RED + "Error: Cannot add Custom Drops to Players.");
+                                }
                             }
                             else {
                                     for (MobModel mobModel : mm) {
@@ -1559,7 +1579,7 @@ public class MkCommand implements CommandExecutor {
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
                             else if (language.equalsIgnoreCase("German")){
-                                player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                                player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
