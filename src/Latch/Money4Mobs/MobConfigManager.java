@@ -41,7 +41,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.2.16");
+            mobsCfg.set("version", "1.2.17");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("group-multiplier.level-1", 1);
@@ -49,6 +49,7 @@ public class MobConfigManager {
             mobsCfg.set("group-multiplier.level-3", 1);
             mobsCfg.set("group-multiplier.level-4", 1);
             mobsCfg.set("group-multiplier.level-5", 1);
+            mobsCfg.set("group-multiplier.operator", 1);
             for (int i = 0; i < mobList.size(); i++){
                 String mobName = mobList.get(i).mobName;
                 Integer lowWorth = mobList.get(i).lowWorth;
@@ -67,6 +68,9 @@ public class MobConfigManager {
                     mobsCfg.set("mobs." + mobName + ".drops.item-2.chance", 100);
                 }
             }
+            mobsCfg.set("mobs.Player.keepDefaultDrops", null);
+            mobsCfg.set("mobs.Player.customDrops", null);
+            mobsCfg.set("drops", null);
             mobsCfg.save(mobsFile);
         }
         catch(IOException e){
@@ -75,7 +79,7 @@ public class MobConfigManager {
     }
 
     // Sets mob list from mobs.yml file
-    public static void setMobListFromConfig(){
+    public static void setMobListFromConfig() throws IOException {
         Integer counter1 = 0;
         for(String path : Objects.requireNonNull(mobsCfg.getConfigurationSection("mobs")).getKeys(false)) {
             int lowWorth = mobsCfg.getInt("mobs." + path + ".worth.low");
@@ -93,6 +97,10 @@ public class MobConfigManager {
                     counter++;
                 }
             }
+            mobsCfg.set("mobs.Player.keepDefaultDrops", null);
+            mobsCfg.set("mobs.Player.customDrops", null);
+            mobsCfg.set("drops", null);
+            mobsCfg.save(mobsFile);
             mobListFromConfig.add(new MobModel(path,lowWorth, highWorth, keepDefaultDrops, customDrops, im));
             mobListFromConfig.get(counter1).setCustomDrops(customDrops);
             mobListFromConfig.get(counter1).setKeepDefaultDrops(keepDefaultDrops);

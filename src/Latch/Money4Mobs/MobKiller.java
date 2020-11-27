@@ -67,6 +67,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void displayKillMessage(Player pa){
         int counter = 1;
+        pa.sendMessage("ddd: " + giveMoney);
         for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = userCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -79,6 +80,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
+        pa.sendMessage("qqqqqq: " + money);
         int counter = 1;
         for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = userCfg.getString("users.user-" + counter + ".userId");
@@ -226,6 +228,10 @@ public abstract class MobKiller implements CommandExecutor {
                     giveMoney = false;
                 }
             }
+
+            if(e instanceof Player) {
+                giveMoney = true;
+            }
         } else {
             giveMoney = false;
         }
@@ -265,6 +271,9 @@ public abstract class MobKiller implements CommandExecutor {
         for (MobModel mobModel : mm) {
             String entity = "Craft" + mobModel.getMobName();
             String es = e.toString();
+            if(e instanceof Player) {
+                es = "CraftPlayer";
+            }
             Integer lowWorth = mobModel.getLowWorth();
             Integer highWorth = mobModel.getHighWorth();
             if (es.equals(entity)) {

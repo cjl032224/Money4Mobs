@@ -48,7 +48,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
         }
-        MobConfigManager.setMobListFromConfig();
+        try {
+            MobConfigManager.setMobListFromConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
             userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
@@ -80,9 +84,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void onEntityDeath(EntityDeathEvent event){
         MobKiller.setEvent(event);
         try {
-            if (event.getEntity().getKiller()!=null){
-                callRewardMobKiller(event);
-            }
+            callRewardMobKiller(event);
         } catch (RuntimeException ignore){
         }
     }
