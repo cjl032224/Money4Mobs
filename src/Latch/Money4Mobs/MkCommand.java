@@ -949,6 +949,38 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    else if (args[0].equalsIgnoreCase("defaultLanguage")) {
+                        if (player.hasPermission("m4m.command.mk.defaultLanguage") || player.isOp()) {
+                            try {
+                                UserManager.updateUserDefaultLanguage(args[1]);
+                                MobConfigManager.updateDefaultLanguage(args[1]);
+                                if (args[1].equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.GREEN + "Changement de la langue par défaut des messages Money4Mobs en " + ChatColor.GOLD + "Français" + ChatColor.GREEN + ".");
+                                }
+                                else if (args[1].equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN + "Se cambió el idioma predeterminado de los mensajes de Money4Mobs a " + ChatColor.GOLD + "español" + ChatColor.GREEN + ".");
+                                }
+                                else if (args[1].equalsIgnoreCase("Chinese")){
+                                    player.sendMessage(ChatColor.GREEN + "将Money4Mobs消息的默认语言更改为 " + ChatColor.GOLD + "中文");
+                                }
+                                else if (args[1].equalsIgnoreCase("Hindi")){
+                                    player.sendMessage(ChatColor.GREEN + "करने के लिए Money4Mobs संदेशों की डिफ़ॉल्ट भाषा बदल गई " + ChatColor.GOLD + "हिंदी");
+                                }
+                                else if (args[1].equalsIgnoreCase("Italian")){
+                                    player.sendMessage(ChatColor.GREEN + "Modificata la lingua predefinita dei messaggi di Money4Mobs in " + ChatColor.GOLD + "italiana" + ChatColor.GREEN + ".");
+                                }
+                                else if (args[1].equalsIgnoreCase("German")){
+                                    player.sendMessage(ChatColor.GREEN + "Die Standardsprache von Money4Mobs-Nachrichten wurde in geändert " + ChatColor.GOLD + "Deutsch" +
+                                            ChatColor.GREEN + ".");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "Changed default language of Money4Mobs messages to " + ChatColor.GOLD + "English" + ChatColor.GREEN + ".");
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 } else if (args.length == 3) {
                     if (args[0].equalsIgnoreCase("setLowWorth")) {
                         if (player.hasPermission("m4m.command.mk.setLowWorth") || player.isOp()) {

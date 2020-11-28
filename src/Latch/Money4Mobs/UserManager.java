@@ -64,7 +64,7 @@ public class UserManager {
         try {
             usersFile.createNewFile();
             for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, "English"));
+                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, Money4Mobs.defaultLanguage));
             }
             int i = 0;
             for (UserModel user : userList){
@@ -79,6 +79,15 @@ public class UserManager {
         catch(IOException e){
             System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
         }
+    }
+
+    public static void updateUserDefaultLanguage(String language) throws IOException {
+        int i = 1;
+        for(String users : usersCfg.getConfigurationSection("users").getKeys(false)) {
+            usersCfg.set("users.user-" + i + ".language",language);
+            i++;
+        }
+        usersCfg.save(usersFile);
     }
 
     public static List<UserModel> getUserList(){

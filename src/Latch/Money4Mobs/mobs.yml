@@ -1,6 +1,7 @@
-version: 1.2.17
+version: 1.3.0
 spawners: false
-spawneggs: true
+spawneggs: false
+defaultLanguage: English
 group-multiplier:
   level-1: 1
   level-2: 1

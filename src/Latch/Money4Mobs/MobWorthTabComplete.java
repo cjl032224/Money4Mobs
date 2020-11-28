@@ -23,17 +23,18 @@ public class MobWorthTabComplete implements TabCompleter {
         List<String> firstArgumentList = new ArrayList<>();
 
         firstArgumentList.add(0, "addCustomDrop");
-        firstArgumentList.add(1, "drops");
-        firstArgumentList.add(2, "language");
-        firstArgumentList.add(3, "removeCustomDrop");
-        firstArgumentList.add(4, "setHighWorth");
-        firstArgumentList.add(5, "setLowWorth");
-        firstArgumentList.add(6, "toggleCustomDrops");
-        firstArgumentList.add(7, "toggleDefaultDrops");
-        firstArgumentList.add(8, "toggleKM");
-        firstArgumentList.add(9, "toggleMoneyFromSpawnEggs");
-        firstArgumentList.add(10, "toggleMoneyFromSpawners");
-        firstArgumentList.add(11, "worth");
+        firstArgumentList.add(1, "defaultLanguage");
+        firstArgumentList.add(2, "drops");
+        firstArgumentList.add(3, "language");
+        firstArgumentList.add(4, "removeCustomDrop");
+        firstArgumentList.add(5, "setHighWorth");
+        firstArgumentList.add(6, "setLowWorth");
+        firstArgumentList.add(7, "toggleCustomDrops");
+        firstArgumentList.add(8, "toggleDefaultDrops");
+        firstArgumentList.add(9, "toggleKM");
+        firstArgumentList.add(10, "toggleMoneyFromSpawnEggs");
+        firstArgumentList.add(11, "toggleMoneyFromSpawners");
+        firstArgumentList.add(12, "worth");
 
         Player pa = (Player) sender;
 
@@ -73,6 +74,9 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             if(!pa.hasPermission("m4m.command.mk.language")){
                 firstArgumentList.remove("language");
+            }
+            if(!pa.hasPermission("m4m.command.mk.defaultLanguage")){
+                firstArgumentList.remove("defaultLanguage");
             }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
@@ -157,7 +161,7 @@ public class MobWorthTabComplete implements TabCompleter {
                 }
             }
         }
-        if(args[0].equalsIgnoreCase("language")) {
+        if(args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("defaultLanguage") ) {
             List<String> languageList = new ArrayList<>();
             languageList.add("Chinese");
             languageList.add("English");

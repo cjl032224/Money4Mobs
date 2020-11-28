@@ -33,12 +33,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
+    public static String defaultLanguage = "English";
 
     @Override
     public void onEnable() {
         loadMobConfigManager();
         loadItemConfigManager();
         loadUserConfigManager();
+        defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
@@ -55,7 +57,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, defaultLanguage));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
