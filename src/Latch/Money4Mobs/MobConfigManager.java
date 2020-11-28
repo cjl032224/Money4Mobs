@@ -41,7 +41,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.2.17");
+            mobsCfg.set("version", "1.3.0");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("group-multiplier.level-1", 1);
@@ -113,4 +113,8 @@ public class MobConfigManager {
         return mobListFromConfig;
     }
 
+    public static void updateDefaultLanguage(String language) throws IOException {
+        mobsCfg.set("defaultLanguage", language);
+        mobsCfg.save(mobsFile);
+    }
 }
