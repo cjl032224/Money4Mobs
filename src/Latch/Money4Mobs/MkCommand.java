@@ -981,22 +981,22 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     String defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
                                     if (defaultLanguage.equalsIgnoreCase("French")){
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "n'est pas une langue valide.");
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas une langue valide.");
                                     }
                                     else if (defaultLanguage.equalsIgnoreCase("Spanish")){
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "no es un idioma válido.");
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es un idioma válido.");
                                     }
                                     else if (defaultLanguage.equalsIgnoreCase("Chinese")){
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的语言。");
                                     }
                                     else if (defaultLanguage.equalsIgnoreCase("Hindi")){
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "एक मान्य भाषा नहीं है।");
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भाषा नहीं है।");
                                     }
                                     else if (defaultLanguage.equalsIgnoreCase("Italian")){
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "non è una lingua valida.");
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è una lingua valida.");
                                     }
                                     else if (defaultLanguage.equalsIgnoreCase("German")){
-                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "ist keine gültige Sprache.");
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " ist keine gültige Sprache.");
                                     }
                                     else {
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid language.");
