@@ -33,14 +33,12 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
-    public static String defaultLanguage = "English";
 
     @Override
     public void onEnable() {
         loadMobConfigManager();
         loadItemConfigManager();
         loadUserConfigManager();
-        defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
@@ -50,6 +48,9 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
         }
+        if (MobConfigManager.mobsCfg.getString("defaultLanguage") == null) {
+            MobConfigManager.mobsCfg.set("defaultLanguage", "English");
+        }
         try {
             MobConfigManager.setMobListFromConfig();
         } catch (IOException e) {
@@ -57,7 +58,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, defaultLanguage));
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 

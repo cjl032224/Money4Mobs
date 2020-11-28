@@ -105,7 +105,7 @@ public abstract class MobKiller implements CommandExecutor {
                                             ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                     ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
                                 }
-                                else if (language.equalsIgnoreCase("Chinese")){
+                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                             ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                     ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));

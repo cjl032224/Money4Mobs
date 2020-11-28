@@ -163,7 +163,7 @@ public class MobWorthTabComplete implements TabCompleter {
         }
         if(args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("defaultLanguage") ) {
             List<String> languageList = new ArrayList<>();
-            languageList.add("Chinese");
+            languageList.add("Chinese_Simplified");
             languageList.add("English");
             languageList.add("French");
             languageList.add("German");
