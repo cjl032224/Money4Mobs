@@ -1,13 +1,13 @@
-version: 1.2.15
+version: 1.2.17
 spawners: false
 spawneggs: true
 group-multiplier:
-  operator: 1
   level-1: 1
   level-2: 1
   level-3: 1
   level-4: 1
   level-5: 1
+  operator: 1
 mobs:
   Bat:
     worth:
@@ -15,11 +15,6 @@ mobs:
       high: 10
     keepDefaultDrops: true
     customDrops: false
-    drops:
-      item-1:
-        name: ACACIA_BUTTON
-        amount: 2
-        chance: 22
   Bee:
     worth:
       low: 15
@@ -88,7 +83,12 @@ mobs:
       low: 100
       high: 100
     keepDefaultDrops: true
-    customDrops: false
+    customDrops: true
+    drops:
+      item-1:
+        name: GOLD_BLOCK
+        amount: 1
+        chance: 100
   Drowned:
     worth:
       low: 100
@@ -245,6 +245,10 @@ mobs:
       high: 25
     keepDefaultDrops: true
     customDrops: false
+  Player:
+    worth:
+      low: 25
+      high: 25
   PolarBear:
     worth:
       low: 250
@@ -368,14 +372,9 @@ mobs:
   Villager:
     worth:
       low: 5
-      high: 100
+      high: 5
     keepDefaultDrops: true
-    customDrops: true
-    drops:
-      item-1:
-        name: DIAMOND
-        amount: 10
-        chance: 100
+    customDrops: false
   Vindicator:
     worth:
       low: 45
