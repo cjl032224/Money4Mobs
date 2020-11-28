@@ -952,29 +952,55 @@ public class MkCommand implements CommandExecutor {
                     else if (args[0].equalsIgnoreCase("defaultLanguage")) {
                         if (player.hasPermission("m4m.command.mk.defaultLanguage") || player.isOp()) {
                             try {
-                                UserManager.updateUserDefaultLanguage(args[1]);
-                                MobConfigManager.updateDefaultLanguage(args[1]);
-                                if (args[1].equalsIgnoreCase("French")){
-                                    player.sendMessage(ChatColor.GREEN + "Changement de la langue par défaut des messages Money4Mobs en " + ChatColor.GOLD + "Français" + ChatColor.GREEN + ".");
-                                }
-                                else if (args[1].equalsIgnoreCase("Spanish")){
-                                    player.sendMessage(ChatColor.GREEN + "Se cambió el idioma predeterminado de los mensajes de Money4Mobs a " + ChatColor.GOLD + "español" + ChatColor.GREEN + ".");
-                                }
-                                else if (args[1].equalsIgnoreCase("Chinese")){
-                                    player.sendMessage(ChatColor.GREEN + "将Money4Mobs消息的默认语言更改为 " + ChatColor.GOLD + "中文");
-                                }
-                                else if (args[1].equalsIgnoreCase("Hindi")){
-                                    player.sendMessage(ChatColor.GREEN + "करने के लिए Money4Mobs संदेशों की डिफ़ॉल्ट भाषा बदल गई " + ChatColor.GOLD + "हिंदी");
-                                }
-                                else if (args[1].equalsIgnoreCase("Italian")){
-                                    player.sendMessage(ChatColor.GREEN + "Modificata la lingua predefinita dei messaggi di Money4Mobs in " + ChatColor.GOLD + "italiana" + ChatColor.GREEN + ".");
-                                }
-                                else if (args[1].equalsIgnoreCase("German")){
-                                    player.sendMessage(ChatColor.GREEN + "Die Standardsprache von Money4Mobs-Nachrichten wurde in geändert " + ChatColor.GOLD + "Deutsch" +
-                                            ChatColor.GREEN + ".");
+                                if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") || args[1].equalsIgnoreCase("Spanish") || args[1].equalsIgnoreCase("Chinese") || args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")  || args[1].equalsIgnoreCase("German") ){
+                                    UserManager.updateUserDefaultLanguage(args[1]);
+                                    MobConfigManager.updateDefaultLanguage(args[1]);
+                                    if (args[1].equalsIgnoreCase("French")){
+                                        player.sendMessage(ChatColor.GREEN + "Changement de la langue par défaut des messages Money4Mobs en " + ChatColor.GOLD + "Français" + ChatColor.GREEN + ".");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("Spanish")){
+                                        player.sendMessage(ChatColor.GREEN + "Se cambió el idioma predeterminado de los mensajes de Money4Mobs a " + ChatColor.GOLD + "español" + ChatColor.GREEN + ".");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("Chinese")){
+                                        player.sendMessage(ChatColor.GREEN + "将Money4Mobs消息的默认语言更改为 " + ChatColor.GOLD + "中文");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("Hindi")){
+                                        player.sendMessage(ChatColor.GREEN + "करने के लिए Money4Mobs संदेशों की डिफ़ॉल्ट भाषा बदल गई " + ChatColor.GOLD + "हिंदी");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("Italian")){
+                                        player.sendMessage(ChatColor.GREEN + "Modificata la lingua predefinita dei messaggi di Money4Mobs in " + ChatColor.GOLD + "italiana" + ChatColor.GREEN + ".");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("German")){
+                                        player.sendMessage(ChatColor.GREEN + "Die Standardsprache von Money4Mobs-Nachrichten wurde in geändert " + ChatColor.GOLD + "Deutsch" +
+                                                ChatColor.GREEN + ".");
+                                    }
+                                    else {
+                                        player.sendMessage(ChatColor.GREEN + "Changed default language of Money4Mobs messages to " + ChatColor.GOLD + "English" + ChatColor.GREEN + ".");
+                                    }
                                 }
                                 else {
-                                    player.sendMessage(ChatColor.GREEN + "Changed default language of Money4Mobs messages to " + ChatColor.GOLD + "English" + ChatColor.GREEN + ".");
+                                    String defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
+                                    if (defaultLanguage.equalsIgnoreCase("French")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "n'est pas une langue valide.");
+                                    }
+                                    else if (defaultLanguage.equalsIgnoreCase("Spanish")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "no es un idioma válido.");
+                                    }
+                                    else if (defaultLanguage.equalsIgnoreCase("Chinese")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的语言。");
+                                    }
+                                    else if (defaultLanguage.equalsIgnoreCase("Hindi")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "एक मान्य भाषा नहीं है।");
+                                    }
+                                    else if (defaultLanguage.equalsIgnoreCase("Italian")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "non è una lingua valida.");
+                                    }
+                                    else if (defaultLanguage.equalsIgnoreCase("German")){
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "ist keine gültige Sprache.");
+                                    }
+                                    else {
+                                        player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid language.");
+                                    }
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
