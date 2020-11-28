@@ -16,6 +16,7 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk toggleMoneyFromSpawnEggs | m4m.command.mk.spawneggs | Toggles if players get money from mobs spawned in with eggs. Defaults to false on first time load.
 /mk toggleMoneyFromSpawners | m4m.command.mk.spawners | Toggles if players get money from mobs spawned in from spawners. Defaults to false on first time load.
 /mk language [language] | m4m.command.mk.language | Changes language of messages for M4M per player.
+/mk defaultLanguage [language] | m4m.command.mk.defaultLanguage | Updates the default language of the server. Updates each user's language option with the given language
 
 ### Permissions for group specific multipliers - 5 levels plus Operator
 #### If group/player has multiple level permissions set, the highest level take precedent
