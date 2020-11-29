@@ -36,6 +36,10 @@ Error: ItemName drops do not exist for Ghasts.
 
 Removed ItemName drops for Ghasts.
 
+Error: Cannot add Custom Drops to Players.
+
 Added 5 ItemName to Ghast drops with a 10% chance of dropping.
 
 Error: ItemType is already present as a custom drop. 
+
+Error: (SelectedLanguage) is not a valid language.

@@ -60,11 +60,33 @@ public class UserManager {
         usersCfg.save(usersFile);
     }
 
+    public static List<UserModel> updateUsersOnReload() {
+        int counter = 1;
+        List<UserModel> um = new ArrayList<>();
+        usersCfg = YamlConfiguration.loadConfiguration(usersFile);
+        for(String users : usersCfg.getConfigurationSection("users").getKeys(false)) {
+            String userID = usersCfg.getString("users.user-" + counter + ".userId");
+            String language = usersCfg.getString("users.user-" + counter + ".language");
+            boolean showMessage = usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+            String userName = usersCfg.getString("users.user-" + counter + ".userName");
+            System.out.println("qqqqq: " + language);
+            um.add(new UserModel(userName, userID, showMessage, language ));
+            counter++;
+        }
+        System.out.println("LENGTH: " + um.size());
+        return um;
+    }
     public void createUsersConfig(){
         try {
             usersFile.createNewFile();
+            String defaultLanguage;
+            if (MobConfigManager.mobsCfg.getString("defaultLanguage") == null) {
+                defaultLanguage = "English";
+            } else {
+                defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
+            }
             for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, Money4Mobs.defaultLanguage));
+                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, defaultLanguage));
             }
             int i = 0;
             for (UserModel user : userList){
@@ -83,15 +105,12 @@ public class UserManager {
 
     public static void updateUserDefaultLanguage(String language) throws IOException {
         int i = 1;
-        for(String users : usersCfg.getConfigurationSection("users").getKeys(false)) {
+        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             usersCfg.set("users.user-" + i + ".language",language);
             i++;
         }
         usersCfg.save(usersFile);
     }
 
-    public static List<UserModel> getUserList(){
-        return userList;
-    }
 
 }
