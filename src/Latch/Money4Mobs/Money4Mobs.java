@@ -151,7 +151,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void callRewardMobKiller(EntityDeathEvent event){
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
-        if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp()) {
+        if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             loadConfig();
             MobKiller.rewardPlayerMoney(pa, e, econ);
         }
@@ -172,7 +172,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         ItemCfgm.setup();
     }
 
-    private static void loadUserConfigManager() {
+    static void loadUserConfigManager() {
         UserCfgm = new UserManager();
         UserCfgm.setup();
     }

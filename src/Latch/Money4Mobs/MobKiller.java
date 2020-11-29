@@ -1,7 +1,5 @@
 package Latch.Money4Mobs;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -14,8 +12,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,8 +29,6 @@ public abstract class MobKiller implements CommandExecutor {
     private static final List<MobSpawnedReason> msr = new ArrayList<>();
     private static Boolean giveMoney = false;
     private static String language = "";
-    private static final FileConfiguration userCfg = UserManager.usersCfg;
-    private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static Boolean showMessage = true;
 
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
@@ -55,11 +49,11 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void setLanguage(Player pa){
         int counter = 1;
-        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = userCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
             if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                language = userCfg.getString("users.user-" + counter + ".language");
+                language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
             }
             counter++;
         }
@@ -67,11 +61,11 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void displayKillMessage(Player pa){
         int counter = 1;
-        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = userCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
             if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                showMessage = userCfg.getBoolean("users.user-" + counter + ".showMessage");
+                showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
             }
             counter++;
         }
@@ -80,11 +74,11 @@ public abstract class MobKiller implements CommandExecutor {
     public static void sendKillMessage(Player pa, Economy econ){
         EconomyResponse r = econ.depositPlayer(pa, money);
         int counter = 1;
-        for(String users : userCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = userCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
+            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
             if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                showMessage = userCfg.getBoolean("users.user-" + counter + ".showMessage");
+                showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
             }
             if (pa.getUniqueId().toString().equals(userId)) {
                 if (showMessage) {
@@ -109,6 +103,11 @@ public abstract class MobKiller implements CommandExecutor {
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                             ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
                                                     ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                    pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
+                                            ChatColor.WHITE + "你獲得 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
+                                                    ChatColor.WHITE + " 身上金錢有 " + ChatColor.GREEN + "$" + df.format(balance)));
                                 }
                                 else if (language.equalsIgnoreCase("Hindi")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
@@ -196,7 +195,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
-        if (pa.hasPermission("m4m.rewardMoney") || pa.isOp()) {
+        if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
                     counter = 1;
@@ -235,16 +234,16 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
+
+
     public static void setRange(Entity e, Player pa){
-        double level1 = mobsCfg.getDouble("group-multiplier.level-1");
-        double level2 = mobsCfg.getDouble("group-multiplier.level-2");
-        double level3 = mobsCfg.getDouble("group-multiplier.level-3");
-        double level4 = mobsCfg.getDouble("group-multiplier.level-4");
-        double level5 = mobsCfg.getDouble("group-multiplier.level-5");
-        double operator = mobsCfg.getDouble("group-multiplier.operator");
+        double level1 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-1");
+        double level2 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-2");
+        double level3 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-3");
+        double level4 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-4");
+        double level5 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-5");
+        double operator = MobConfigManager.mobsCfg.getDouble("group-multiplier.operator");
         double multiplier = 1;
-
-
         if (pa.hasPermission("m4m.multiplier.level-5")) {
             multiplier = level5;
         }

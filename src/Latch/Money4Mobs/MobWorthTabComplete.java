@@ -22,19 +22,21 @@ public class MobWorthTabComplete implements TabCompleter {
         List<String> mobArrayList = new ArrayList<>();
         List<String> firstArgumentList = new ArrayList<>();
 
-        firstArgumentList.add(0, "addCustomDrop");
-        firstArgumentList.add(1, "defaultLanguage");
-        firstArgumentList.add(2, "drops");
-        firstArgumentList.add(3, "language");
-        firstArgumentList.add(4, "removeCustomDrop");
-        firstArgumentList.add(5, "setHighWorth");
-        firstArgumentList.add(6, "setLowWorth");
-        firstArgumentList.add(7, "toggleCustomDrops");
-        firstArgumentList.add(8, "toggleDefaultDrops");
-        firstArgumentList.add(9, "toggleKM");
-        firstArgumentList.add(10, "toggleMoneyFromSpawnEggs");
-        firstArgumentList.add(11, "toggleMoneyFromSpawners");
-        firstArgumentList.add(12, "worth");
+        firstArgumentList.add("addCustomDrop");
+        firstArgumentList.add("defaultLanguage");
+        firstArgumentList.add("drops");
+        firstArgumentList.add("language");
+        firstArgumentList.add("reload");
+        firstArgumentList.add("removeCustomDrop");
+        firstArgumentList.add("setHighWorth");
+        firstArgumentList.add("setLowWorth");
+        firstArgumentList.add("toggleCustomDrops");
+        firstArgumentList.add("toggleDefaultDrops");
+        firstArgumentList.add("toggleKM");
+        firstArgumentList.add("toggleMoneyFromSpawnEggs");
+        firstArgumentList.add("toggleMoneyFromSpawners");
+        firstArgumentList.add("worth");
+
 
         Player pa = (Player) sender;
 
@@ -77,6 +79,9 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             if(!pa.hasPermission("m4m.command.mk.defaultLanguage")){
                 firstArgumentList.remove("defaultLanguage");
+            }
+            if(!pa.hasPermission("m4m.command.mk.reload")){
+                firstArgumentList.remove("reload");
             }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
@@ -164,6 +169,7 @@ public class MobWorthTabComplete implements TabCompleter {
         if(args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("defaultLanguage") ) {
             List<String> languageList = new ArrayList<>();
             languageList.add("Chinese_Simplified");
+            languageList.add("Chinese_Traditional");
             languageList.add("English");
             languageList.add("French");
             languageList.add("German");
