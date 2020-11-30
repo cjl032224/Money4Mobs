@@ -35,6 +35,7 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add("toggleKM");
         firstArgumentList.add("toggleMoneyFromSpawnEggs");
         firstArgumentList.add("toggleMoneyFromSpawners");
+        firstArgumentList.add("toggleCustomKM");
         firstArgumentList.add("worth");
 
 

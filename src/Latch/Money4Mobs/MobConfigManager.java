@@ -41,9 +41,13 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.2");
+            mobsCfg.set("version", "1.3.3");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
+            mobsCfg.set("defaultLanguage", true);
+            mobsCfg.set("customMessageOption.overrideKillMessage", false);
+            mobsCfg.set("customMessageOption.customMessage", "%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have\n" +
+                    "    | %GOLD% $ %BALANCE% %GREEN% .");
             mobsCfg.set("group-multiplier.level-1", 1);
             mobsCfg.set("group-multiplier.level-2", 1);
             mobsCfg.set("group-multiplier.level-3", 1);

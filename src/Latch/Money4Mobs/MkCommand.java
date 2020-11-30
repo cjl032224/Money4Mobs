@@ -428,6 +428,80 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    else if (args[0].equalsIgnoreCase("toggleCustomKM")) {
+                        String bool = "";
+                        if (player.hasPermission("m4m.command.mk.toggleCustomKM") || player.isOp()) {
+                            boolean customKillMessage = MobConfigManager.mobsCfg.getBoolean("customMessageOption.overrideKillMessage");
+                            if (Boolean.TRUE.equals(customKillMessage)) {
+                                MobConfigManager.mobsCfg.set("customMessageOption.overrideKillMessage", false);
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "false";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage mis à " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "falso";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage ajustado a " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
+                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                    bool = "假";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage 設置 " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    bool = "असत्य";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage करने के लिए सेट " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    bool = "disattivi";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage impostato " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    bool = "falsch";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
+                                }
+                                else {
+                                    bool = "false";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage set to " + ChatColor.GOLD + bool);
+                                }
+                            } else {
+                                MobConfigManager.mobsCfg.set("customMessageOption.overrideKillMessage", true);
+                                if (language.equalsIgnoreCase("French")){
+                                    bool = "vrai";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage mis à " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "verdadero";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage ajustado a " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Simplified") || language.equalsIgnoreCase("Chinese_Traditional")){
+                                    bool = "真正";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage 設置 " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    bool = "सच";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage करने के लिए सेट " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    bool = "attivi";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage impostato " + ChatColor.GOLD + bool);
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    bool = "wahr";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
+                                }
+                                else {
+                                    bool = "true";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage set to " + ChatColor.GOLD + bool);
+                                }
+                            }
+                            try {
+                                mobsCfg.save(mobsFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 } else if (args.length == 2) {
                     if (args[0].equalsIgnoreCase("worth")) {
                         if (player.hasPermission("m4m.command.mk.worth") || player.isOp()) {
