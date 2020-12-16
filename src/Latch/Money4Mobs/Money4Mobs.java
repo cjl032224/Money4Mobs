@@ -36,20 +36,18 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        loadMobConfigManager();
+        try {
+            loadMobConfigManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         loadItemConfigManager();
         loadUserConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
-        if (MobConfigManager.mobsCfg.getInt("mobs.Bee.worth.low") == 0){
-            MobCfgm.createMobsConfig();
-        };
         ItemCfgm.createItemsConfig();
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
-        }
-        if (MobConfigManager.mobsCfg.getString("defaultLanguage") == null) {
-            MobConfigManager.mobsCfg.set("defaultLanguage", "English");
         }
         try {
             MobConfigManager.setMobListFromConfig();
@@ -162,7 +160,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         saveConfig();
     }
 
-    public static void loadMobConfigManager(){
+    public static void loadMobConfigManager() throws IOException {
         MobCfgm = new MobConfigManager();
         MobCfgm.setup();
     }
@@ -185,7 +183,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         return userList;
     }
 
-    public static void reloadConfigFiles(){
+    public static void reloadConfigFiles() throws IOException {
         loadMobConfigManager();
         loadItemConfigManager();
         loadUserConfigManager();

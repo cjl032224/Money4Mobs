@@ -18,32 +18,39 @@ public class MobConfigManager {
     public static File mobsFile;
 
     // Set up mobs.yml configuration file
-    public void setup(){
+    public void setup() throws IOException {
         // if the Mobs4Money folder does not exist, create the Mobs4Money folder
         if(!plugin.getDataFolder().exists()){
             plugin.getDataFolder().mkdir();
         }
         mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
+        mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
         //if the mobs.yml does not exist, create it
         if(!mobsFile.exists()){
             try {
                 mobsFile.createNewFile();
+                createMobsConfig(mobsCfg);
+                mobsCfg.save(mobsFile);
             }
             catch(IOException e){
                 System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
             }
+        } else {
+            if (mobsCfg.getString("defaultLanguage") == null) {
+                mobsCfg.set("defaultLanguage", "English");
+            }
+            mobsCfg.save(mobsFile);
         }
-        mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
     }
 
-    public void createMobsConfig(){
+    public void createMobsConfig(FileConfiguration mobsCfg){
         SetMobList sml = new SetMobList();
         List<MobModel> mobList = sml.getMobModel();
         try {
-            mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.2");
+            mobsCfg.set("version", "1.3.2b");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
+            mobsCfg.set("defaultLanguage", "English");
             mobsCfg.set("group-multiplier.level-1", 1);
             mobsCfg.set("group-multiplier.level-2", 1);
             mobsCfg.set("group-multiplier.level-3", 1);

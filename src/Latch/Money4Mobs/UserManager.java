@@ -69,11 +69,9 @@ public class UserManager {
             String language = usersCfg.getString("users.user-" + counter + ".language");
             boolean showMessage = usersCfg.getBoolean("users.user-" + counter + ".showMessage");
             String userName = usersCfg.getString("users.user-" + counter + ".userName");
-            System.out.println("qqqqq: " + language);
             um.add(new UserModel(userName, userID, showMessage, language ));
             counter++;
         }
-        System.out.println("LENGTH: " + um.size());
         return um;
     }
     public void createUsersConfig(){
