@@ -36,6 +36,7 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add("toggleMoneyFromSpawnEggs");
         firstArgumentList.add("toggleMoneyFromSpawners");
         firstArgumentList.add("toggleCustomKM");
+        firstArgumentList.add("toggleMoneyFromTamedWolves");
         firstArgumentList.add("worth");
 
 
@@ -80,6 +81,9 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             if(!pa.hasPermission("m4m.command.mk.defaultLanguage")){
                 firstArgumentList.remove("defaultLanguage");
+            }
+            if(!pa.hasPermission("m4m.command.mk.toggleMoneyFromTamedWolves")){
+                firstArgumentList.remove("toggleMoneyFromTamedWolves");
             }
             if(!pa.hasPermission("m4m.command.mk.reload")){
                 firstArgumentList.remove("reload");
