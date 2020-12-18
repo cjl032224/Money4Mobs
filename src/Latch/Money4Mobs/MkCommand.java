@@ -368,6 +368,123 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")) {
+                        String bool = "";
+                        if (player.hasPermission("m4m.command.mk.toggleMoneyFromTamedWolves") || player.isOp()) {
+                            boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
+                            if (Boolean.TRUE.equals(tamedWolvesGiveMoney)) {
+                                MobConfigManager.mobsCfg.set("tamedWolvesGiveMoney", false);
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "false";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "falso";
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
+                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                    bool = "假";
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    bool = "असत्य";
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    bool = "disattivi";
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    bool = "falsch";
+                                }
+                                else {
+                                    bool = "false";
+                                }
+                            } else {
+                                MobConfigManager.mobsCfg.set("tamedWolvesGiveMoney", true);
+                                assert language != null;
+                                if (language.equalsIgnoreCase("French") ){
+                                    bool = "vrai";
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    bool = "verdadero";
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
+                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                    bool = "真正";
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    bool = "सच";
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    bool = "attivi";
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    bool = "wahr";
+                                }
+                                else {
+                                    bool = "true";
+                                }
+                            }
+                            try {
+                                if (language.equalsIgnoreCase("French")){
+                                    player.sendMessage(ChatColor.GREEN + "L'argent récompensé par des foules tuées par des loups apprivoisés" +
+                                            ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
+                                else if (language.equalsIgnoreCase("Spanish")){
+                                    player.sendMessage(ChatColor.GREEN +  "Dinero recompensado por turbas asesinadas por lobos domesticados " +
+                                            ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                    player.sendMessage(ChatColor.GREEN + "从被驯服的狼杀死的小怪那里获得的奖励 " +
+                                            ChatColor.GOLD + bool + ChatColor.GREEN + "。");
+                                }
+                                else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                    player.sendMessage(ChatColor.GREEN + "從被馴服的狼殺死的小怪中獲得的獎勵 " +
+                                            ChatColor.GOLD + bool + ChatColor.GREEN + "。");
+                                }
+                                else if (language.equalsIgnoreCase("Hindi")){
+                                    player.sendMessage(ChatColor.GREEN + "नामित भेड़ियों द्वारा मारे गए मॉब से पुरस्कृत धन को सेट किया गया " +
+                                            ChatColor.GOLD + bool + ChatColor.GREEN + "।");
+                                }
+                                else if (language.equalsIgnoreCase("Italian")){
+                                    player.sendMessage(ChatColor.GREEN + "Denaro ricompensato da mob uccisi da lupi addomesticati impostati " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
+                                else if (language.equalsIgnoreCase("German")){
+                                    player.sendMessage(ChatColor.GREEN + "Geld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
+                                }
+                                else {
+                                    player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs killed by tamed wolves set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
+                                mobsCfg.save(mobsFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            assert language != null;
+                            if (language.equalsIgnoreCase("French")){
+                                player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
+                            }
+                            else if (language.equalsIgnoreCase("Spanish")){
+                                player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
+                            }
+                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                player.sendMessage(ChatColor.RED + "您无权访问此命令。");
+                            }
+                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
+                            }
+                            else if (language.equalsIgnoreCase("Hindi")){
+                                player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
+                            }
+                            else if (language.equalsIgnoreCase("Italian")){
+                                player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
+                            }
+                            else if (language.equalsIgnoreCase("German")){
+                                player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else {
+                                player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+                            }
+                        }
+                    }
                     else if (args[0].equalsIgnoreCase("reload")) {
                         String bool = "";
 
