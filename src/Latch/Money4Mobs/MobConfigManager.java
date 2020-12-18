@@ -52,7 +52,7 @@ public class MobConfigManager {
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
-            mobsCfg.set("defaultLanguage", true);
+            mobsCfg.set("defaultLanguage", "English");
             mobsCfg.set("customMessageOption.overrideKillMessage", false);
             mobsCfg.set("customMessageOption.customMessage", "%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .");
             mobsCfg.set("group-multiplier.level-1", 1);

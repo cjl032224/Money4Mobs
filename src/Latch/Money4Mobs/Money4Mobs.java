@@ -52,15 +52,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
         }
-        if (MobConfigManager.mobsCfg.getString("defaultLanguage") == null) {
-            MobConfigManager.mobsCfg.set("defaultLanguage", "English");
-        }
-        if (MobConfigManager.mobsCfg.getString("customMessageOption.overrideKillMessage") == null){
-            MobConfigManager.mobsCfg.set("customMessageOption.overrideKillMessage", false);
-        }
-        if (MobConfigManager.mobsCfg.getString("customMessageOption.customMessage") == null){
-            MobConfigManager.mobsCfg.set("customMessageOption.customMessage", "%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .");
-        }
         try {
             MobConfigManager.setMobListFromConfig();
         } catch (IOException e) {
