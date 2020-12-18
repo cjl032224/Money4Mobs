@@ -47,9 +47,10 @@ public class MobConfigManager {
         SetMobList sml = new SetMobList();
         List<MobModel> mobList = sml.getMobModel();
         try {
-            mobsCfg.set("version", "1.3.2b");
+            mobsCfg.set("version", "1.3.2c");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
+            mobsCfg.set("tamedWolvesGiveMoney", true);
             mobsCfg.set("defaultLanguage", "English");
             mobsCfg.set("group-multiplier.level-1", 1);
             mobsCfg.set("group-multiplier.level-2", 1);

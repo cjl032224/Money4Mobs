@@ -14,9 +14,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -33,6 +35,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
+    private static int entityId;
 
     @Override
     public void onEnable() {
@@ -146,18 +149,36 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
     }
 
+    @EventHandler
+    public void test(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Wolf) {
+            setIsTamedWolf(event.getEntity().getEntityId());
+        }
+    }
+
+    public int getIsTamedWolf() {
+        return entityId;
+    }
+
+    public void setIsTamedWolf(int entityId){
+        Money4Mobs.entityId = entityId;
+    }
+
     public void callRewardMobKiller(EntityDeathEvent event){
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
-            loadConfig();
-            MobKiller.rewardPlayerMoney(pa, e, econ);
+            boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
+            if (getIsTamedWolf() == 0) {
+                MobKiller.rewardPlayerMoney(pa, e, econ);
+            }
+            else {
+                if (!Boolean.FALSE.equals(tamedWolvesGiveMoney)) {
+                    MobKiller.rewardPlayerMoney(pa, e, econ);
+                }
+            }
         }
-    }
-
-    public void loadConfig() {
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        setIsTamedWolf(0);
     }
 
     public static void loadMobConfigManager() throws IOException {
