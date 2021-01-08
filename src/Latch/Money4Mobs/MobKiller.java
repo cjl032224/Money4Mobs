@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
@@ -80,6 +81,8 @@ public abstract class MobKiller implements CommandExecutor {
             if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
             }
+            boolean customMessage = true;
+            customMessage = MobConfigManager.mobsCfg.getBoolean("customMessageOption.overrideKillMessage");
             if (pa.getUniqueId().toString().equals(userId)) {
                 if (showMessage) {
                     if (r.amount != 0) {
@@ -88,7 +91,71 @@ public abstract class MobKiller implements CommandExecutor {
                             df.format(balance);
                             df.setRoundingMode(RoundingMode.UP);
                             assert language != null;
-                            if(Boolean.TRUE.equals(showMessage)){
+                            if (Boolean.TRUE.equals(showMessage) && Boolean.TRUE.equals(customMessage)) {
+                                String customMessageString = MobConfigManager.mobsCfg.getString("customMessageOption.customMessage");
+                                List<String> customArray = Arrays.asList(customMessageString.split(" "));
+                                List<String> colorArray = new ArrayList<>();
+                                colorArray.add("DARK_RED");
+                                colorArray.add("RED");
+                                colorArray.add("GOLD");
+                                colorArray.add("YELLOW");
+                                colorArray.add("DARK_GREEN");
+                                colorArray.add("GREEN");
+                                colorArray.add("AQUA");
+                                colorArray.add("DARK_AQUA");
+                                colorArray.add("DARK_BLUE");
+                                colorArray.add("BLUE");
+                                colorArray.add("LIGHT_PURPLE");
+                                colorArray.add("DARK_PURPLE");
+                                colorArray.add("WHITE");
+                                colorArray.add("GRAY");
+                                colorArray.add("DARK_GRAY");
+                                colorArray.add("BLACK");
+                                ChatColor holder;
+                                List<Object> object = new ArrayList<Object>();
+                                boolean test = false;
+                                for (String s: customArray){
+                                    test = false;
+                                    int count = StringUtils.countMatches(s, "%");
+                                    if (count == 2){
+                                        s = s.substring(s.indexOf("%") + 1);
+                                        s = s.substring(0, s.indexOf("%"));
+                                    }
+                                    for (String color : colorArray){
+                                        if (s.equals(color)){
+                                            test = true;
+                                            holder = ChatColor.valueOf(s);
+                                            object.add(holder);
+                                        }
+                                    }
+                                    if (s.equals("AMOUNT")){
+                                        test = true;
+                                        object.add(Math.round(r.amount));
+                                    }
+                                    if (s.equals("BALANCE")){
+                                        test = true;
+                                        object.add(df.format(balance));
+                                    }
+                                    if (s.equals("|")){
+                                        test = true;
+                                        object.add(" ");
+                                    }
+                                    if (Boolean.FALSE.equals(test)){
+                                        object.add(s);
+                                    }
+
+                                }
+                                String d = object.get(0).toString();
+                                int count = 1;
+                                for (Object wow: object){
+                                    if (count > 1){
+                                        d = new StringBuilder(d).append(wow).toString();
+                                    }
+                                    count++;
+                                }
+                                pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(d));
+                            }
+                            if(Boolean.TRUE.equals(showMessage) && Boolean.FALSE.equals(customMessage)){
                                 if (language.equalsIgnoreCase("French")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
                                             ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + Math.round(r.amount) + "$" +

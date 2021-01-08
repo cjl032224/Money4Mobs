@@ -86,10 +86,10 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event){
-        MobKiller.setEvent(event);
         try {
+            MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException ignore){
+        } catch (RuntimeException | NoClassDefFoundError ignore){
         }
     }
 

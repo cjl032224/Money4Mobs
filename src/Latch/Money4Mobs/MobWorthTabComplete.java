@@ -35,8 +35,8 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add("toggleKM");
         firstArgumentList.add("toggleMoneyFromSpawnEggs");
         firstArgumentList.add("toggleMoneyFromSpawners");
+        firstArgumentList.add("toggleCustomKM");
         firstArgumentList.add("toggleMoneyFromTamedWolves");
-
         firstArgumentList.add("worth");
 
 
@@ -87,6 +87,9 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             if(!pa.hasPermission("m4m.command.mk.reload")){
                 firstArgumentList.remove("reload");
+            }
+            if(!pa.hasPermission("m4m.command.mk.toggleCustomKM")){
+                firstArgumentList.remove("toggleCustomKM");
             }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
