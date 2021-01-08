@@ -6,6 +6,9 @@ spawners: false
 spawneggs: false
 tamedWolvesGiveMoney: true
 defaultLanguage: English
+customMessageOption:
+  overrideKillMessage: false
+  customMessage: '%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .'
 group-multiplier:
   level-1: 1
   level-2: 1
