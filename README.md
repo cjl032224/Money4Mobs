@@ -1,6 +1,7 @@
 # Money4Mobs
 ## Give money to players and custom drops when they kill a mob
 ### Permissions for M4M
+Link to default mobs.yml file ---> https://github.com/lakeboy93/Money4Mobs/blob/master/src/Latch/Money4Mobs/mobs.yml
 Command | Permission | Description
 ------ | ------- | -------
 Not Applicable | m4m.rewardMoney | Needed permission for players to receive money.
