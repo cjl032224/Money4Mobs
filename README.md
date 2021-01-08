@@ -18,6 +18,7 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk language [language] | m4m.command.mk.language | Changes language of messages for M4M per player.
 /mk defaultLanguage [language] | m4m.command.mk.defaultLanguage | Updates the default language of the server. Updates each user's language option with the given language
 /mk reload | m4m.command.mk.reload | Reloads M4M data with manually changed values in config files without needing to reload or restart the whole server
+/mk toggleMoneyFromTamedWolves | m4m.command.mk.toggleMoneyFromTamedWolves | Toggles if players receive money when their tamed wolf kills a mob
 
 ### Permissions for group specific multipliers - 5 levels plus Operator
 #### If group/player has multiple level permissions set, the highest level take precedent
