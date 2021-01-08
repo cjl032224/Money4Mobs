@@ -21,8 +21,8 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk reload | m4m.command.mk.reload | Reloads M4M data with manually changed values in config files without needing to reload or restart the whole server
 /mk toggleMoneyFromTamedWolves | m4m.command.mk.toggleMoneyFromTamedWolves | Toggles if players receive money when their tamed wolf kills a mob
 
-### Permissions for group specific multipliers - 5 levels plus Operator
-#### If group/player has multiple level permissions set, the highest level take precedent
+## Permissions for group specific multipliers - 5 levels plus Operator
+### If group/player has multiple level permissions set, the highest level take precedent
 Permission | Description
 ------------ | ------------
 m4m.multiplier.level-1 | Permission for level-1 multiplier
@@ -30,3 +30,16 @@ m4m.multiplier.level-2 | Permission for level-2 multiplier
 m4m.multiplier.level-3 | Permission for level-3 multiplier
 m4m.multiplier.level-4 | Permission for level-4 multiplier
 m4m.multiplier.level-5 | Permission for level-5 multiplier
+
+## How to set up a custom kill message
+#### To add spaces to your message, '|' symbol needs to be added. 
+#### Colors are the the default Minecraft colors and are uppercased and surrounded by '%' symbols
+#### In order to display the amount rewarded to the player upon mob kill, use '%AMOUNT%'
+#### In order to display the balance of the player after being rewarded the money, use '%BALANCE%'
+#### Each word or value needs to be separated by a space. Adding a space does not equate to a space in the result
+##### Examples
+1.) customMessage: '%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .'
+1 - Result) "Rewarded $10 and now have $100."
+2.) customMessage: '%GREEN% Rewarded %GOLD% $ %AMOUNT% | %GREEN% and | now have | %GOLD% $ %BALANCE% %GREEN% | .'
+2 - Result) "Rewarded$10 and nowhave $100 ."
+ 
