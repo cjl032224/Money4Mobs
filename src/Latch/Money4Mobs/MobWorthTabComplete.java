@@ -88,6 +88,9 @@ public class MobWorthTabComplete implements TabCompleter {
             if(!pa.hasPermission("m4m.command.mk.reload")){
                 firstArgumentList.remove("reload");
             }
+            if(!pa.hasPermission("m4m.command.mk.toggleCustomKM")){
+                firstArgumentList.remove("toggleCustomKM");
+            }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
             }
