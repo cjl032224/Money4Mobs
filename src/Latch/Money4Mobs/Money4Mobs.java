@@ -69,7 +69,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         // Optional: Add custom charts
         metrics.addCustomChart(new Metrics.SimplePie("chart_id", () -> "My value"));
 
-
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
         Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
         Objects.requireNonNull(this.getCommand("enc")).setExecutor(new EnchantCommand());
