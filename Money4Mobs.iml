@@ -21,7 +21,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/api/spigot-api-1.16.3-R0.1-20201017.202830-25-shaded.jar!/" />
+          <root url="jar://$MODULE_DIR$/api/Vault.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -30,10 +30,12 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/api/Vault.jar!/" />
+          <root url="jar://$MODULE_DIR$/api/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/api/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>

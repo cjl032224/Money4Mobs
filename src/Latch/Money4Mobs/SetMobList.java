@@ -38,7 +38,6 @@ public class SetMobList {
         mobList.add(new MobModel("Player", 25, 25, true, false, null));
         mobList.add(new MobModel("Rabbit", 15, 15, true, false, null));
         mobList.add(new MobModel("Sheep", 3, 3, true, false, null));
-        mobList.add(new MobModel("Shulker", 75, 75, true, false, null));
         mobList.add(new MobModel("Silverfish", 30, 30, true, false, null));
         mobList.add(new MobModel("Skeleton", 15, 15, true, false, null));
         mobList.add(new MobModel("SkeletonHorse", 150, 150, true, false, null));

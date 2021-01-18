@@ -71,8 +71,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
         Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
-        Objects.requireNonNull(this.getCommand("enc")).setExecutor(new EnchantCommand());
-        Objects.requireNonNull(this.getCommand("enc")).setTabCompleter(new EnchantTabComplete());
 
         sml.getMobModel();
     }
@@ -88,7 +86,8 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError ignore){
+        } catch (RuntimeException | NoClassDefFoundError e){
+            System.out.println("aasdasd: " + e + " --- " + event);
         }
     }
 
