@@ -18,12 +18,9 @@ public class SetMobList {
         mobList.add(new MobModel("Cat", 1, 1,  true,false, null));
         mobList.add(new MobModel("CaveSpider", 15, 15, true, false, null));
         mobList.add(new MobModel("Chicken", 2, 2, true, false, null));
-        mobList.add(new MobModel("Cod", 5, 5, false, true, null));
         mobList.add(new MobModel("Cow", 2, 2, false, true, null));
         mobList.add(new MobModel("Creeper", 25, 25, true, false, null));
-        mobList.add(new MobModel("Dolphin", 175, 175, true, false, null));
         mobList.add(new MobModel("Donkey", 100, 100, true, false, null));
-        mobList.add(new MobModel("Drowned", 100, 100, true, false, null));
         mobList.add(new MobModel("ElderGuardian", 300, 300, true, false, null));
         mobList.add(new MobModel("EnderDragon", 10000, 10000,  true, false, null));
         mobList.add(new MobModel("Enderman", 25, 25, true, false, null));
@@ -42,15 +39,12 @@ public class SetMobList {
         mobList.add(new MobModel("MushroomCow", 3, 3, true, false, null));
         mobList.add(new MobModel("Ocelot", 25, 25, true, false, null));
         mobList.add(new MobModel("Parrot", 100, 100, true, false, null));
-        mobList.add(new MobModel("Phantom", 45, 45, true, false, null));
         mobList.add(new MobModel("Pig", 3, 3, true, false, null));
         mobList.add(new MobModel("PigZombie", 45, 45, true, false, null));
         mobList.add(new MobModel("PiglinBrute", 75, 75, true, false, null));
         mobList.add(new MobModel("Player", 25, 25, true, false, null));
         mobList.add(new MobModel("PolarBear", 250, 250, true, false, null));
-        mobList.add(new MobModel("Pufferfish", 30, 30, true, false, null));
         mobList.add(new MobModel("Rabbit", 15, 15, true, false, null));
-        mobList.add(new MobModel("Salmon", 5, 5, true, false, null));
         mobList.add(new MobModel("Sheep", 3, 3, true, false, null));
         mobList.add(new MobModel("Shulker", 75, 75, true, false, null));
         mobList.add(new MobModel("Silverfish", 30, 30, true, false, null));
@@ -62,8 +56,6 @@ public class SetMobList {
         mobList.add(new MobModel("Squid", 10, 10, true, false, null));
         mobList.add(new MobModel("Stray", 25, 25, true, false, null));
         mobList.add(new MobModel("Strider", 50, 50, true, false, null));
-        mobList.add(new MobModel("TropicalFish", 5, 5, true, false, null));
-        mobList.add(new MobModel("Turtle", 20, 20, true, false, null));
         mobList.add(new MobModel("Vex", 125, 125, true, false, null));
         mobList.add(new MobModel("Villager", 5, 5, true, false, null));
         mobList.add(new MobModel("Vindicator", 45, 45, true, false, null));
