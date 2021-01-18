@@ -216,7 +216,7 @@ public abstract class MobKiller implements CommandExecutor {
 
         for (MobModel mobModel : mm) {
             if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
-                if (mobModel.getMobName().equals(name[1])) {
+                if (mobModel.getMobName().contains(name[1])) {
                     for (int j = 0; j < mobModel.getItems().size(); j++) {
                         int chance;
                         if (mobModel.getItems().get(j).getChance() == 0) {
@@ -340,7 +340,7 @@ public abstract class MobKiller implements CommandExecutor {
             }
             Integer lowWorth = mobModel.getLowWorth();
             Integer highWorth = mobModel.getHighWorth();
-            if (es.equals(entity)) {
+            if (es.contains(entity)) {
                 money = mobModel.getHighWorth();
                 money = (int) (Math.random() * (highWorth - lowWorth + 1) + lowWorth);
                 money = money * multiplier;
