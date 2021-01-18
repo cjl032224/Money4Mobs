@@ -29,7 +29,6 @@ public class SetMobList {
         mobList.add(new MobModel("Ghast", 30, 30, true, false, null));
         mobList.add(new MobModel("Giant", 1, 1, true, false, null));
         mobList.add(new MobModel("Guardian", 75, 75, true, false, null));
-        mobList.add(new MobModel("Hoglin", 50, 50, true, false, null));
         mobList.add(new MobModel("Husk", 30, 30, true, false, null));
         mobList.add(new MobModel("Illusioner", 250, 250, true, false, null));
         mobList.add(new MobModel("IronGolem", 10, 10, true, false, null));
@@ -41,7 +40,6 @@ public class SetMobList {
         mobList.add(new MobModel("Parrot", 100, 100, true, false, null));
         mobList.add(new MobModel("Pig", 3, 3, true, false, null));
         mobList.add(new MobModel("PigZombie", 45, 45, true, false, null));
-        mobList.add(new MobModel("PiglinBrute", 75, 75, true, false, null));
         mobList.add(new MobModel("Player", 25, 25, true, false, null));
         mobList.add(new MobModel("PolarBear", 250, 250, true, false, null));
         mobList.add(new MobModel("Rabbit", 15, 15, true, false, null));
