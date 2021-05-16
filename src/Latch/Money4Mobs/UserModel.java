@@ -7,12 +7,14 @@ public class UserModel {
     protected String userId;
     protected Boolean showMessage;
     protected String language;
+    protected String ipAddress;
 
-    public UserModel(String userName, String userId, Boolean showMessage, String language) {
+    public UserModel(String userName, String userId, Boolean showMessage, String language, String ipAddress) {
         this.userName = userName;
         this.userId = userId;
         this.showMessage = showMessage;
         this.language = language;
+        this.ipAddress = ipAddress;
     }
 
     public String getUserName(){
@@ -46,5 +48,14 @@ public class UserModel {
     public void setLanguage(String language){
         this.language = language;
     }
+
+    public String getIPAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress){
+        this.ipAddress = ipAddress;
+    }
+
 
 }

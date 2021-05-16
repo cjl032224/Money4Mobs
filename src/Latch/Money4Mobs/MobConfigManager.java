@@ -63,8 +63,8 @@ public class MobConfigManager {
             mobsCfg.set("group-multiplier.operator", 1);
             for (int i = 0; i < mobList.size(); i++){
                 String mobName = mobList.get(i).mobName;
-                Integer lowWorth = mobList.get(i).lowWorth;
-                Integer highWorth = mobList.get(i).highWorth;
+                Double lowWorth = mobList.get(i).lowWorth;
+                Double highWorth = mobList.get(i).highWorth;
                 mobsCfg.set("mobs." + mobName + ".worth.low", lowWorth);
                 mobsCfg.set("mobs." + mobName + ".worth.high", highWorth);
                 mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
@@ -93,8 +93,8 @@ public class MobConfigManager {
     public static void setMobListFromConfig() throws IOException {
         Integer counter1 = 0;
         for(String path : Objects.requireNonNull(mobsCfg.getConfigurationSection("mobs")).getKeys(false)) {
-            int lowWorth = mobsCfg.getInt("mobs." + path + ".worth.low");
-            int highWorth = mobsCfg.getInt("mobs." + path + ".worth.high");
+            Double lowWorth = mobsCfg.getDouble("mobs." + path + ".worth.low");
+            Double highWorth = mobsCfg.getDouble("mobs." + path + ".worth.high");
             Boolean customDrops = mobsCfg.getBoolean("mobs." + path + ".customDrops");
             Boolean keepDefaultDrops = mobsCfg.getBoolean("mobs." + path + ".keepDefaultDrops");
             Integer counter = 1;
@@ -107,6 +107,9 @@ public class MobConfigManager {
                     im.add(new ItemModel(name,amount,chance));
                     counter++;
                 }
+            }
+            if (!mobsCfg.getBoolean("mobs.Player.ipBan")){
+                mobsCfg.set("mobs.Player.ipBanFarming", false);
             }
             mobsCfg.set("mobs.Player.keepDefaultDrops", null);
             mobsCfg.set("mobs.Player.customDrops", null);

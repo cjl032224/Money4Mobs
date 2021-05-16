@@ -12,6 +12,8 @@ import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -35,12 +37,17 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
+    private static KillLogConfigManager KillLogCfgm;
+    public static FileConfiguration KillLogCfg;
     private static int entityId;
+    private File KillLogFile;
+    private static Money4Mobs Money4Mobs2 = Money4Mobs.getPlugin();
 
     @Override
     public void onEnable() {
         try {
             loadMobConfigManager();
+            loadKillLogConfigManager();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,6 +59,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
         }
+        if (!KillLogConfigManager.KillLogCfg.getBoolean("users.user-1")) {
+            KillLogFile = new File(plugin.getDataFolder(), "killLog.yml");
+            KillLogCfg = YamlConfiguration.loadConfiguration(KillLogConfigManager.KillLogFile);
+            KillLogCfgm.createKillLogConfig(KillLogCfg);
+        }
         try {
             MobConfigManager.setMobListFromConfig();
         } catch (IOException e) {
@@ -59,7 +71,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English", null));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
@@ -99,7 +111,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 count = 1;
             }
         }
-        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English");
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English", event.getPlayer().getAddress().toString());
         UserManager.addUserToList(um);
         if (count == 0){
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true ));
@@ -192,6 +204,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     static void loadUserConfigManager() {
         UserCfgm = new UserManager();
         UserCfgm.setup();
+    }
+
+    static void loadKillLogConfigManager() throws IOException {
+        KillLogCfgm = new KillLogConfigManager();
+        KillLogCfgm.setup();
     }
 
     public static List<Mobs4MoneyPlayer> getPlayerList(){

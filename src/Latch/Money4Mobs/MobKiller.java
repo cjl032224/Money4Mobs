@@ -89,7 +89,6 @@ public abstract class MobKiller implements CommandExecutor {
                         if (r.transactionSuccess()) {
                             Double balance = r.balance;
                             df.format(balance);
-                            df.setRoundingMode(RoundingMode.UP);
                             assert language != null;
                             if (Boolean.TRUE.equals(showMessage) && Boolean.TRUE.equals(customMessage)) {
                                 String customMessageString = MobConfigManager.mobsCfg.getString("customMessageOption.customMessage");
@@ -130,11 +129,11 @@ public abstract class MobKiller implements CommandExecutor {
                                     }
                                     if (s.equals("AMOUNT")){
                                         test = true;
-                                        object.add(Math.round(r.amount));
+                                        object.add(Math.round(r.amount * 100.0) / 100.0);
                                     }
                                     if (s.equals("BALANCE")){
                                         test = true;
-                                        object.add(df.format(balance));
+                                        object.add(Math.round(balance * 100.0) / 100);
                                     }
                                     if (s.equals("|")){
                                         test = true;
@@ -158,43 +157,43 @@ public abstract class MobKiller implements CommandExecutor {
                             if(Boolean.TRUE.equals(showMessage) && Boolean.FALSE.equals(customMessage)){
                                 if (language.equalsIgnoreCase("French")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + Math.round(r.amount) + "$" +
-                                                    ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + df.format(balance) + "$"));
+                                            ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + r.amount + "$" +
+                                                    ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + (Math.round(balance * 100.0) / 100.0)  + "$"));
                                 }
                                 else if (language.equalsIgnoreCase("Spanish")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + df.format(balance)));
+                                            ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
                                 }
                                 else if (language.equalsIgnoreCase("Chinese_Simplified")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + df.format(balance)));
+                                            ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
                                 }
                                 else if (language.equalsIgnoreCase("Chinese_Traditional")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "你獲得 " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " 身上金錢有 " + ChatColor.GREEN + "$" + df.format(balance)));
+                                            ChatColor.WHITE + "你獲得 " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " 身上金錢有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
                                 }
                                 else if (language.equalsIgnoreCase("Hindi")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + " है।"));
+                                            ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + " है।"));
                                 }
                                 else if (language.equalsIgnoreCase("Italian")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "Hai guadagnato " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " ed adesso hai " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + "."));
+                                            ChatColor.WHITE + "Hai guadagnato " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " ed adesso hai " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
                                 }
                                 else if (language.equalsIgnoreCase("German")){
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "Sie haben " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " erhalten und haben jetzt " + ChatColor.GREEN + "$" + df.format(balance) + ChatColor.WHITE + "."));
+                                            ChatColor.WHITE + "Sie haben " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " erhalten und haben jetzt " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
                                 }
                                 else {
                                     pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                            ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + Math.round(r.amount) +
-                                                    ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + df.format(balance)));
+                                            ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + r.amount +
+                                                    ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
                                 }
                             }
                         }
@@ -262,6 +261,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
+        String killerIP = pa.getAddress().getAddress().toString();
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
@@ -293,15 +293,23 @@ public abstract class MobKiller implements CommandExecutor {
                 }
             }
 
+            MobConfigManager.mobsCfg.getBoolean("mobs.Player.ipBan");
             if(e instanceof Player) {
                 giveMoney = true;
+                if (!pa.hasPermission("m4m.bypass.ipban")) {
+                    if(MobConfigManager.mobsCfg.getBoolean("mobs.Player.ipBanFarming")) {
+                        String entityIP = ((Player) e).getAddress().getAddress().toString();
+                        if (killerIP.equals(entityIP)) {
+                            giveMoney = false;
+                        }
+                    };
+                }
             }
+
         } else {
             giveMoney = false;
         }
     }
-
-
 
     public static void setRange(Entity e, Player pa){
         double level1 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-1");
@@ -338,11 +346,11 @@ public abstract class MobKiller implements CommandExecutor {
             if(e instanceof Player) {
                 es = "CraftPlayer";
             }
-            Integer lowWorth = mobModel.getLowWorth();
-            Integer highWorth = mobModel.getHighWorth();
+            Double lowWorth = mobModel.getLowWorth();
+            Double highWorth = mobModel.getHighWorth();
             if (es.equals(entity)) {
                 money = mobModel.getHighWorth();
-                money = (int) (Math.random() * (highWorth - lowWorth + 1) + lowWorth);
+                money = Math.round((Math.random() * (highWorth - lowWorth + 1) + lowWorth) * 100.0) / 100.0;
                 money = money * multiplier;
             }
         }
