@@ -12,6 +12,8 @@ import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -35,6 +37,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
+    public static FileConfiguration KillLogCfg;
     private static int entityId;
 
     @Override
@@ -59,7 +62,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English"));
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English", null));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
         }
 
@@ -99,7 +102,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 count = 1;
             }
         }
-        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English");
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English", event.getPlayer().getAddress().toString());
         UserManager.addUserToList(um);
         if (count == 0){
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true ));
