@@ -48,7 +48,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.4");
+            mobsCfg.set("version", "1.3.5");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);

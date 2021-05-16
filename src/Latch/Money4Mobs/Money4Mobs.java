@@ -37,17 +37,13 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
-    private static KillLogConfigManager KillLogCfgm;
     public static FileConfiguration KillLogCfg;
     private static int entityId;
-    private File KillLogFile;
-    private static Money4Mobs Money4Mobs2 = Money4Mobs.getPlugin();
 
     @Override
     public void onEnable() {
         try {
             loadMobConfigManager();
-            loadKillLogConfigManager();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,11 +54,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         ItemCfgm.createItemsConfig();
         if (!UserManager.usersCfg.getBoolean("users.user-1.showMessage")) {
             UserCfgm.createUsersConfig();
-        }
-        if (!KillLogConfigManager.KillLogCfg.getBoolean("users.user-1")) {
-            KillLogFile = new File(plugin.getDataFolder(), "killLog.yml");
-            KillLogCfg = YamlConfiguration.loadConfiguration(KillLogConfigManager.KillLogFile);
-            KillLogCfgm.createKillLogConfig(KillLogCfg);
         }
         try {
             MobConfigManager.setMobListFromConfig();
@@ -204,11 +195,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     static void loadUserConfigManager() {
         UserCfgm = new UserManager();
         UserCfgm.setup();
-    }
-
-    static void loadKillLogConfigManager() throws IOException {
-        KillLogCfgm = new KillLogConfigManager();
-        KillLogCfgm.setup();
     }
 
     public static List<Mobs4MoneyPlayer> getPlayerList(){

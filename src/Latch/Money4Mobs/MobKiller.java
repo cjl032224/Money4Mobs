@@ -350,8 +350,10 @@ public abstract class MobKiller implements CommandExecutor {
             Double highWorth = mobModel.getHighWorth();
             if (es.equals(entity)) {
                 money = mobModel.getHighWorth();
-                money = Math.round((Math.random() * (highWorth - lowWorth + 1) + lowWorth) * 100.0) / 100.0;
+                Random r = new Random();
+                money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
                 money = money * multiplier;
+                money = Math.round(money * 100.0) / 100.0;
             }
         }
     }
