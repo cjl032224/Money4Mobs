@@ -625,8 +625,8 @@ public class MkCommand implements CommandExecutor {
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     String mobName = mobModel.mobName;
-                                    Integer lowWorth = mobModel.lowWorth;
-                                    Integer highWorth = mobModel.highWorth;
+                                    Double lowWorth = mobModel.lowWorth;
+                                    Double highWorth = mobModel.highWorth;
                                     assert language != null;
                                     if (lowWorth.equals(highWorth)) {
                                         if (language.equalsIgnoreCase("French")){
@@ -1365,11 +1365,11 @@ public class MkCommand implements CommandExecutor {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     error = false;
                                     String mobName = mobModel.mobName;
-                                    Integer highWorth = mobModel.getHighWorth();
+                                    Double highWorth = mobModel.getHighWorth();
                                     try {
-                                        if (highWorth >= Integer.parseInt(args[2])) {
-                                            mobModel.setLowWorth(Integer.parseInt(args[2]));
-                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
+                                        if (highWorth >= Double.parseDouble(args[2])) {
+                                            mobModel.setLowWorth(Double.parseDouble(args[2]));
+                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
                                                 if (language.equalsIgnoreCase("French")){
@@ -1529,11 +1529,11 @@ public class MkCommand implements CommandExecutor {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     error = false;
                                     String mobName = mobModel.mobName;
-                                    Integer lowWorth = mobModel.getLowWorth();
+                                    Double lowWorth = mobModel.getLowWorth();
                                     try {
-                                        if (lowWorth <= Integer.parseInt(args[2])) {
-                                            mobModel.setHighWorth(Integer.parseInt(args[2]));
-                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Integer.parseInt(args[2]));
+                                        if (lowWorth <= Double.parseDouble(args[2])) {
+                                            mobModel.setHighWorth(Double.parseDouble(args[2]));
+                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
                                                 if (language.equalsIgnoreCase("French")){
