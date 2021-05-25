@@ -48,7 +48,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.5");
+            mobsCfg.set("version", "1.3.7");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
@@ -121,6 +121,33 @@ public class MobConfigManager {
             mobListFromConfig.get(counter1).setItems(im);
             counter1++;
         }
+        update137AddPiglin();
+        updatePluginVersion();
+
+    }
+
+    public static void updatePluginVersion() throws IOException {
+        if (mobsCfg.getString("version") != "1.3.7") {
+            mobsCfg.set("version", "1.3.7");
+        }
+        mobsCfg.save(mobsFile);
+    }
+
+    public static void update137AddPiglin() throws IOException {
+        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.low"))) {
+            mobsCfg.set("mobs.Piglin.worth.low", 25);
+        };
+        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.high"))) {
+            mobsCfg.set("mobs.Piglin.worth.high", 25);
+        };
+        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.Piglin.keepDefaultDrops", true);
+        };
+        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.customDrops"))) {
+            mobsCfg.set("mobs.Piglin.customDrops", false);
+        };
+        mobsCfg.save(mobsFile);
+
     }
 
     public static List<MobModel> getMobModelFromConfig() {
