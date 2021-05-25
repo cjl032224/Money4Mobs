@@ -1,4 +1,4 @@
-You were given $10 and now have $10 - MobKiller.java
+You were given $10 and now have $10
 
 MobKiller message on.
 MobKiller message off.
