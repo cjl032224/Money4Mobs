@@ -57,9 +57,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
         try {
             MobConfigManager.setMobListFromConfig();
+            loadMobConfigManager();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         for(OfflinePlayer p : getServer().getOfflinePlayers()) {
             userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English", null));
