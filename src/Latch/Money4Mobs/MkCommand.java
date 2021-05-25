@@ -67,6 +67,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller Nachricht" + ChatColor.GOLD + "aus.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.GREEN + "Сообщения плагина Mobkiller" + ChatColor.GOLD + "отключены.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
@@ -97,6 +100,9 @@ public class MkCommand implements CommandExecutor {
                                 }
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller Nachricht" + ChatColor.GOLD + "an.");
+                                }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.GREEN + "Сообщения плагина Mobkiller" + ChatColor.GOLD + "отключены.");
                                 }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
@@ -129,7 +135,10 @@ public class MkCommand implements CommandExecutor {
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
                             else if (language.equalsIgnoreCase("German")){
-                                player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                                player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl.");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -161,6 +170,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "falsch";
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "выключен";
+                                }
                                 else {
                                     bool = "false";
                                 }
@@ -185,6 +197,9 @@ public class MkCommand implements CommandExecutor {
                                 }
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "wahr";
+                                }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "включён";
                                 }
                                 else {
                                     bool = "true";
@@ -217,6 +232,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von mit Eiern hervorgebrachten Mobs belohnt wird, wird auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.GREEN + "Денежное вознаграждение за мобов заспавленных яйцами призыва " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs spawned with eggs is set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
@@ -246,6 +264,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -277,6 +298,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "falsch";
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "выключен";
+                                }
                                 else {
                                     bool = "false";
                                 }
@@ -301,6 +325,9 @@ public class MkCommand implements CommandExecutor {
                                 }
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "wahr";
+                                }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "включён";
                                 }
                                 else {
                                     bool = "true";
@@ -333,6 +360,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von Spawner-Mobs belohnt wird, wird auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.GREEN + "Денежная награда от создателей мобов установлена \u200B\u200Bв размере " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "Money rewarded from spawner mobs is set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
@@ -362,6 +392,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -394,6 +427,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "falsch";
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "выключен";
+                                }
                                 else {
                                     bool = "false";
                                 }
@@ -418,6 +454,9 @@ public class MkCommand implements CommandExecutor {
                                 }
                                 else if (language.equalsIgnoreCase("German")){
                                     bool = "wahr";
+                                }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "включён";
                                 }
                                 else {
                                     bool = "true";
@@ -450,6 +489,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.GREEN + "Деньги, полученные от мобов, убитых прирученными волками, установленными в " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "Money rewarded from mobs killed by tamed wolves set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
@@ -479,6 +521,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -510,6 +555,9 @@ public class MkCommand implements CommandExecutor {
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.AQUA + "Money4Mobs neu laden.");
                             }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.AQUA + "Перезагрузка Money4Mobs.");
+                            }
                             else {
                                 player.sendMessage(ChatColor.AQUA + "Reloading M4M");
                             }
@@ -539,6 +587,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs Reload abgeschlossen.");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.GOLD + "Перезагрузка Money4Mobs завершена.");
                             }
                             else {
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs Reload Complete.");
@@ -577,6 +628,10 @@ public class MkCommand implements CommandExecutor {
                                     bool = "falsch";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "выключен";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage установлен в " + ChatColor.GOLD + bool);
+                                }
                                 else {
                                     bool = "false";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage set to " + ChatColor.GOLD + bool);
@@ -607,6 +662,10 @@ public class MkCommand implements CommandExecutor {
                                     bool = "wahr";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    bool = "включён";
+                                    player.sendMessage(ChatColor.GREEN + "overrideKillMessage установлен в " + ChatColor.GOLD + bool);
+                                }
                                 else {
                                     bool = "true";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage set to " + ChatColor.GOLD + bool);
@@ -625,8 +684,8 @@ public class MkCommand implements CommandExecutor {
                             for (MobModel mobModel : mm) {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     String mobName = mobModel.mobName;
-                                    Integer lowWorth = mobModel.lowWorth;
-                                    Integer highWorth = mobModel.highWorth;
+                                    Double lowWorth = mobModel.lowWorth;
+                                    Double highWorth = mobModel.highWorth;
                                     assert language != null;
                                     if (lowWorth.equals(highWorth)) {
                                         if (language.equalsIgnoreCase("French")){
@@ -656,6 +715,10 @@ public class MkCommand implements CommandExecutor {
                                         else if (language.equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " sind " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "wert." );
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
+                                                    " стоят " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "." );
                                         }
                                         else {
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
@@ -697,6 +760,11 @@ public class MkCommand implements CommandExecutor {
                                                     + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " und " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "wert.");
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " стоят от "
+                                                    + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " до " +
+                                                    ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
+                                        }
                                         else {
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " are worth between "
                                                     + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " and " +
@@ -727,6 +795,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -762,6 +833,9 @@ public class MkCommand implements CommandExecutor {
                                             }
                                             else if (language.equalsIgnoreCase("German")){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " haben keine benutzerdefinierten Drops festgelegt.");
+                                            }
+                                            else if (language.equalsIgnoreCase("Russian")){
+                                                player.sendMessage(ChatColor.GREEN + "у " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " нет никакого Пользовательского дропа.");
                                             }
                                             else {
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " don't have any custom drops set.");
@@ -806,6 +880,11 @@ public class MkCommand implements CommandExecutor {
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ", " + ChatColor.GOLD + amount +
                                                         " " + itemName + ChatColor.GREEN + "fallen zu lassen.");
                                             }
+                                            else if (language.equalsIgnoreCase("Russian")){
+                                                player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " имееют " +
+                                                        ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ", " + ChatColor.GOLD + amount +
+                                                        " шанс уронить " + itemName + ChatColor.GREEN + ".");
+                                            }
                                             else {
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " have a " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping " + ChatColor.GOLD + amount +
@@ -834,6 +913,9 @@ public class MkCommand implements CommandExecutor {
                                         }
                                         else if (language.equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.GREEN + "Benutzerdefinierte Drops sind für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " nicht aktiviert.");
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")) {
+                                            player.sendMessage(ChatColor.GREEN + "ользовательский дроп не включен для " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                         }
                                         else {
                                             player.sendMessage(ChatColor.GREEN + "Custom drops are not enabled for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
@@ -864,6 +946,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -890,6 +975,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -927,6 +1015,9 @@ public class MkCommand implements CommandExecutor {
                                         else if (language.equalsIgnoreCase("German")){
                                             bool = "falsch";
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            bool = "выключен";
+                                        }
                                         else {
                                             bool = "false";
                                         }
@@ -952,6 +1043,9 @@ public class MkCommand implements CommandExecutor {
                                         }
                                         else if (language.equalsIgnoreCase("German")){
                                             bool = "wahr";
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            bool = "включён";
                                         }
                                         else {
                                             bool = "true";
@@ -986,6 +1080,10 @@ public class MkCommand implements CommandExecutor {
                                             player.sendMessage(ChatColor.GREEN + "Benutzerdefinierte Drops für " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "werden auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.GREEN + "Пользовательский дроп для " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "был " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                        }
                                         else {
                                             player.sendMessage(ChatColor.GREEN + "Custom drops for " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
@@ -1019,6 +1117,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -1045,6 +1146,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -1082,6 +1186,9 @@ public class MkCommand implements CommandExecutor {
                                         else if (language.equalsIgnoreCase("German")){
                                             bool = "falsch";
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            bool = "выключен";
+                                        }
                                         else {
                                             bool = "false";
                                         }
@@ -1107,6 +1214,9 @@ public class MkCommand implements CommandExecutor {
                                         }
                                         else if (language.equalsIgnoreCase("German")){
                                             bool = "wahr";
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            bool = "включён";
                                         }
                                         else {
                                             bool = "true";
@@ -1141,6 +1251,10 @@ public class MkCommand implements CommandExecutor {
                                             player.sendMessage(ChatColor.GREEN + "Standardabfälle für " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.GREEN + "По умолчанию для " + ChatColor.GOLD + mobName + "s " +
+                                                    ChatColor.GREEN + "дроп  " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
+                                        }
                                         else {
                                             player.sendMessage(ChatColor.GREEN + "Default drops for " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "set to " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
@@ -1174,6 +1288,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -1201,6 +1318,9 @@ public class MkCommand implements CommandExecutor {
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
+                            }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                             }
@@ -1211,7 +1331,7 @@ public class MkCommand implements CommandExecutor {
                             boolean success = false;
                             if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") || args[1].equalsIgnoreCase("Spanish")
                             || args[1].equalsIgnoreCase("Chinese_Simplified") || args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")
-                                    || args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional")){
+                                    || args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional") || args[1].equalsIgnoreCase("Russian")){
                                 int counter = 1;
                                 for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
                                     String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
@@ -1239,6 +1359,10 @@ public class MkCommand implements CommandExecutor {
                                         else if (args[1].equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.GREEN + "Money4Mobs - Nachrichten wurden in " + ChatColor.GOLD + "Deutsch" +
                                                     ChatColor.GREEN + " geändert.");
+                                        }
+                                        else if (args[1].equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.GREEN + "Изменены сообщения Money4Mobs на " + ChatColor.GOLD + "русский язык" +
+                                                    ChatColor.GREEN + ".");
                                         }
                                         else {
                                             player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + "English");
@@ -1285,6 +1409,9 @@ public class MkCommand implements CommandExecutor {
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
+                            }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                             }
@@ -1296,7 +1423,9 @@ public class MkCommand implements CommandExecutor {
                                 if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") ||
                                         args[1].equalsIgnoreCase("Spanish") || args[1].equalsIgnoreCase("Chinese_Simplified") ||
                                         args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")  ||
-                                        args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional")){
+                                        args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional") ||
+                                        args[1].equalsIgnoreCase("Russian"))
+                                {
                                     UserManager.updateUserDefaultLanguage(args[1]);
                                     MobConfigManager.updateDefaultLanguage(args[1]);
                                     if (args[1].equalsIgnoreCase("French")){
@@ -1319,6 +1448,10 @@ public class MkCommand implements CommandExecutor {
                                     }
                                     else if (args[1].equalsIgnoreCase("German")){
                                         player.sendMessage(ChatColor.GREEN + "Die Standardsprache von Money4Mobs-Nachrichten wurde in geändert " + ChatColor.GOLD + "Deutsch" +
+                                                ChatColor.GREEN + ".");
+                                    }
+                                    else if (args[1].equalsIgnoreCase("Russian")){
+                                        player.sendMessage(ChatColor.GREEN + "Изменен язык сообщений Money4Mobs по умолчанию на " + ChatColor.GOLD + "русский" +
                                                 ChatColor.GREEN + ".");
                                     }
                                     else {
@@ -1348,6 +1481,9 @@ public class MkCommand implements CommandExecutor {
                                     else if (defaultLanguage.equalsIgnoreCase("German")){
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " ist keine gültige Sprache.");
                                     }
+                                    else if (defaultLanguage.equalsIgnoreCase("Russian")){
+                                        player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не допустимый язык.");
+                                    }
                                     else {
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid language.");
                                     }
@@ -1365,11 +1501,11 @@ public class MkCommand implements CommandExecutor {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     error = false;
                                     String mobName = mobModel.mobName;
-                                    Integer highWorth = mobModel.getHighWorth();
+                                    Double highWorth = mobModel.getHighWorth();
                                     try {
-                                        if (highWorth >= Integer.parseInt(args[2])) {
-                                            mobModel.setLowWorth(Integer.parseInt(args[2]));
-                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Integer.parseInt(args[2]));
+                                        if (highWorth >= Double.parseDouble(args[2])) {
+                                            mobModel.setLowWorth(Double.parseDouble(args[2]));
+                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
                                                 if (language.equalsIgnoreCase("French")){
@@ -1400,6 +1536,10 @@ public class MkCommand implements CommandExecutor {
                                                     player.sendMessage(ChatColor.GREEN + "Der niedrige Wert für " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " wurde auf " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " festgelegt.");
                                                 }
+                                                else if (language.equalsIgnoreCase("Russian")) {
+                                                    player.sendMessage(ChatColor.GREEN + "Минимальная значение для " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " установлено " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " долларов.");
+                                                }
                                                 else {
                                                     player.sendMessage(ChatColor.GREEN + "Low worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
@@ -1427,11 +1567,12 @@ public class MkCommand implements CommandExecutor {
                                             }
                                             else if (language.equalsIgnoreCase("Italian")) {
                                                 player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Il valore elevato per " + mobName + "s è inferiore al valore che stai impostando.");
-
                                             }
                                             else if (language.equalsIgnoreCase("German")) {
                                                 player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Der hohe Wert für " + mobName + "s ist niedriger als der von Ihnen eingestellte Wert.");
-
+                                            }
+                                            else if (language.equalsIgnoreCase("Russian")) {
+                                                player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Высокое значение для " + mobName + "s ниже, чем значение, которое вы устанавливаете.");
                                             }
                                             else {
                                                 player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "High worth for " + mobName + "s is lower than the value you are setting.");
@@ -1459,6 +1600,9 @@ public class MkCommand implements CommandExecutor {
                                         }
                                         else if (language.equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk setLowWorth [mobName] [amount]");
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk setLowWorth [mobName] [amount]");
                                         }
                                         else {
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setLowWorth [mobName] [amount]");
@@ -1490,6 +1634,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -1517,6 +1664,9 @@ public class MkCommand implements CommandExecutor {
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
+                            }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
                             }
@@ -1529,11 +1679,11 @@ public class MkCommand implements CommandExecutor {
                                 if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                     error = false;
                                     String mobName = mobModel.mobName;
-                                    Integer lowWorth = mobModel.getLowWorth();
+                                    Double lowWorth = mobModel.getLowWorth();
                                     try {
-                                        if (lowWorth <= Integer.parseInt(args[2])) {
-                                            mobModel.setHighWorth(Integer.parseInt(args[2]));
-                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Integer.parseInt(args[2]));
+                                        if (lowWorth <= Double.parseDouble(args[2])) {
+                                            mobModel.setHighWorth(Double.parseDouble(args[2]));
+                                            MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
                                                 if (language.equalsIgnoreCase("French")){
@@ -1563,6 +1713,10 @@ public class MkCommand implements CommandExecutor {
                                                 else if (language.equalsIgnoreCase("German")) {
                                                     player.sendMessage(ChatColor.GREEN + "Der hohe Wert für " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " wurde auf " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " festgelegt.");
+                                                }
+                                                else if (language.equalsIgnoreCase("Russian")) {
+                                                    player.sendMessage(ChatColor.GREEN + "Максимальное значение для " + ChatColor.GOLD + mobName + "s" +
+                                                            ChatColor.GREEN + " установлено " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " долларов.");
                                                 }
                                                 else {
                                                     player.sendMessage(ChatColor.GREEN + "High worth for " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " has been set to " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
@@ -1596,6 +1750,9 @@ public class MkCommand implements CommandExecutor {
                                             else if (language.equalsIgnoreCase("German")) {
                                                 player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Der niedrige Wert für " + mobName + "s ist höher als der von Ihnen eingestellte Wert.");
                                             }
+                                            else if (language.equalsIgnoreCase("Russian")) {
+                                                player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Низкое значение для " + mobName + "s ниже, чем значение, которое вы устанавливаете.");
+                                            }
                                             else {
                                                 player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Low worth for " + mobName +
                                                         "s is higher than the value you are setting.");
@@ -1623,6 +1780,9 @@ public class MkCommand implements CommandExecutor {
                                         }
                                         else if (language.equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk setHighWorth [mobName] [amount]");
+                                        }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk setHighWorth [mobName] [amount]");
                                         }
                                         else {
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk setHighWorth [mobName] [amount]");
@@ -1653,6 +1813,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -1679,6 +1842,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -1741,8 +1907,11 @@ public class MkCommand implements CommandExecutor {
                                         else if (language.equalsIgnoreCase("German")){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " -Drops sind für " + ChatColor.GOLD + mobName + " nicht vorhanden.");
                                         }
+                                        else if (language.equalsIgnoreCase("Russian")){
+                                            player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " -Drops sind für " + ChatColor.GOLD + mobName + " nicht vorhanden.");
+                                        }
                                         else {
-                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " drops do not exist for " + ChatColor.GOLD + mobName + "s.");
+                                            player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[2] + ChatColor.GRAY + " капли не существуют для " + ChatColor.GOLD + mobName + "s.");
                                         }
                                     } else {
                                         try {
@@ -1766,7 +1935,10 @@ public class MkCommand implements CommandExecutor {
                                                 player.sendMessage(ChatColor.GREEN + "Hai rimosso " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " dai drop per " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
                                             else if (language.equalsIgnoreCase("German")){
-                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " wurden entfernt..");
+                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " wurden entfernt.");
+                                            }
+                                            else if (language.equalsIgnoreCase("Russian")){
+                                                player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " капли удалены из " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
                                             else {
                                                 player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " drops removed from " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
@@ -1801,6 +1973,9 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
+                                }
                                 else {
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
                                 }
@@ -1827,6 +2002,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");
@@ -1858,8 +2036,11 @@ public class MkCommand implements CommandExecutor {
                                 else if (language.equalsIgnoreCase("German")){
                                     player.sendMessage(ChatColor.RED + "Fehler: Spieler können keine benutzerdefinierten Drops hinzufügen.");
                                 }
+                                else if (language.equalsIgnoreCase("Russian")){
+                                    player.sendMessage(ChatColor.RED + "Ошибка: Spieler können keine benutzerdefinierten Drops hinzufügen.");
+                                }
                                 else {
-                                    player.sendMessage(ChatColor.RED + "Error: Cannot add Custom Drops to Players.");
+                                    player.sendMessage(ChatColor.RED + "Error: Невозможно добавить игрокам индивидуальные дропы.");
                                 }
                             }
                             else {
@@ -1932,6 +2113,10 @@ public class MkCommand implements CommandExecutor {
                                                                         player.sendMessage(ChatColor.GREEN + "Es wurden " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " zu " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + "-Drops hinzugefügt, mit einer " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " igen Chance zu fallen.");
                                                                     }
+                                                                    else if (language.equalsIgnoreCase("Russian")){
+                                                                        player.sendMessage(ChatColor.GREEN + "Добавлено " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " для выпадения " + ChatColor.GOLD +
+                                                                                mobModel.getMobName() + ChatColor.GREEN + " с " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " шансом выпадения.");
+                                                                    }
                                                                     else {
                                                                         player.sendMessage(ChatColor.GREEN + "Added " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " to " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + " drops with a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " chance of dropping.");                                                        }
@@ -1961,6 +2146,9 @@ public class MkCommand implements CommandExecutor {
                                                                 }
                                                                 else if (language.equalsIgnoreCase("German")){
                                                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk addCustomDrop [mobName] [amount] [chance]");
+                                                                }
+                                                                else if (language.equalsIgnoreCase("Russian")){
+                                                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
                                                                 else {
                                                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
@@ -1992,6 +2180,9 @@ public class MkCommand implements CommandExecutor {
                                                     else if (language.equalsIgnoreCase("German")) {
                                                         player.sendMessage(ChatColor.RED + "Fehler:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ist bereits als benutzerdefiniertes Drop vorhanden.");
                                                     }
+                                                    else if (language.equalsIgnoreCase("Russian")) {
+                                                        player.sendMessage(ChatColor.RED + "Ошибка:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " уже присутствует в виде кастомного дропа.");
+                                                    }
                                                     else {
                                                         player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " is already present as a custom drop.");
                                                     }
@@ -2020,6 +2211,9 @@ public class MkCommand implements CommandExecutor {
                                                 }
                                                 else if (language.equalsIgnoreCase("German")){
                                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
+                                                }
+                                                else if (language.equalsIgnoreCase("Russian")){
+                                                    player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                                 }
                                                 else {
                                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " is not a valid mob.");
@@ -2050,6 +2244,9 @@ public class MkCommand implements CommandExecutor {
                             }
                             else if (language.equalsIgnoreCase("German")){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl.");
+                            }
+                            else if (language.equalsIgnoreCase("Russian")){
+                                player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
                                 player.sendMessage(ChatColor.RED + "You do not have access to this command.");

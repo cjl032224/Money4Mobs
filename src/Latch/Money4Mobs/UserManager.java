@@ -69,7 +69,13 @@ public class UserManager {
             String language = usersCfg.getString("users.user-" + counter + ".language");
             boolean showMessage = usersCfg.getBoolean("users.user-" + counter + ".showMessage");
             String userName = usersCfg.getString("users.user-" + counter + ".userName");
-            um.add(new UserModel(userName, userID, showMessage, language ));
+            if (usersCfg.getString("users.user-" + counter + ".userName") != null){
+                String ipAddress = usersCfg.getString("users.user-" + counter + ".ipAddress");
+                um.add(new UserModel(userName, userID, showMessage, language, ipAddress));
+            }
+            else {
+                um.add(new UserModel(userName, userID, showMessage, language, null));
+            }
             counter++;
         }
         return um;
@@ -84,7 +90,7 @@ public class UserManager {
                 defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
             }
             for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, defaultLanguage));
+                userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, defaultLanguage, null));
             }
             int i = 0;
             for (UserModel user : userList){

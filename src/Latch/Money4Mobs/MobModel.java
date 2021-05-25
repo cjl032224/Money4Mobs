@@ -4,12 +4,12 @@ import java.util.List;
 
 public class MobModel {
     protected String mobName;
-    protected Integer lowWorth;
-    protected Integer highWorth;
+    protected Double lowWorth;
+    protected Double highWorth;
     protected Boolean customDrops;
     protected List<ItemModel> im;
     protected Boolean keepDefaultDrops;
-    public MobModel(String mobName, Integer lowWorth, Integer highWorth, Boolean keepDefaultDrops, Boolean customDrops, List<ItemModel> im) {
+    public MobModel(String mobName, Double lowWorth, Double highWorth, Boolean keepDefaultDrops, Boolean customDrops, List<ItemModel> im) {
         this.mobName = mobName;
         this.lowWorth = lowWorth;
         this.highWorth = highWorth;
@@ -23,19 +23,19 @@ public class MobModel {
         this.mobName = mobName;
     }
 
-    public Integer getLowWorth() {
+    public Double getLowWorth() {
         return lowWorth;
     }
 
-    public void setLowWorth(Integer lowWorth){
+    public void setLowWorth(Double lowWorth){
         this.lowWorth = lowWorth;
     }
 
-    public Integer getHighWorth() {
+    public Double getHighWorth() {
         return highWorth;
     }
 
-    public void setHighWorth(Integer highWorth){
+    public void setHighWorth(Double highWorth){
         this.highWorth = highWorth;
     }
 
