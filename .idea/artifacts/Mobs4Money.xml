@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="Mobs4Money">
-    <output-path>U:/Users/Latch/Documents/enderDragon/plugins</output-path>
+    <output-path>$PROJECT_DIR$/../../../enderDragon/plugins</output-path>
     <root id="archive" name="Mobs4Money.jar">
       <element id="module-output" name="Money4Mobs" />
     </root>
