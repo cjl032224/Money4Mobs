@@ -50,14 +50,13 @@ public class MkCommand implements CommandExecutor {
             if (commandSender instanceof ConsoleCommandSender || player2.getUniqueId().toString().equals(firstUserId)) {
                 if (player2 != null){
                     if(firstUserId.equalsIgnoreCase(player2.getUniqueId().toString())){
-
                         showMessage = UserManager.usersCfg.getBoolean("users.user-" + i + ".showMessage");
                         language = UserManager.usersCfg.getString("users.user-" + i + ".language");
                     }
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
-                        if (player.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
+                        if (player2.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
                             if (language == null){
                                 language = "English";
                             }
@@ -89,7 +88,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (i) + ".showMessage", false);
+                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", false);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -123,7 +122,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (i) + ".showMessage", true);
+                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", true);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
