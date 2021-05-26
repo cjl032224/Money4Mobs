@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -27,21 +28,35 @@ public class MkCommand implements CommandExecutor {
     private final Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        Player player = (Player) commandSender;
+        CommandSender player = commandSender;
+        Player player2 = null;
+        if (commandSender instanceof Player ){
+            player2 = (Player) commandSender;
+        }
+
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
         int firstCounter = 1;
         for(String firstUsers : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-            String firstUserId = UserManager.usersCfg.getString("users.user-" + firstCounter + ".userId");
-            assert firstUserId != null;
-            if(firstUserId.equalsIgnoreCase(player.getUniqueId().toString())){
-                showMessage = UserManager.usersCfg.getBoolean("users.user-" + firstCounter + ".showMessage");
-                language = UserManager.usersCfg.getString("users.user-" + firstCounter + ".language");
-            }
             firstCounter++;
-            if (player.getUniqueId().toString().equals(firstUserId)) {
+        }
+        if (player2 == null){
+            firstCounter = 1;
+        }
+        language = MobConfigManager.mobsCfg.getString("defaultLanguage");
+        for(int i = 1; i < firstCounter+1; i++) {
+
+            String firstUserId = UserManager.usersCfg.getString("users.user-" + i + ".userId");
+            assert firstUserId != null;
+            if (commandSender instanceof ConsoleCommandSender || player2.getUniqueId().toString().equals(firstUserId)) {
+                if (player2 != null){
+                    if(firstUserId.equalsIgnoreCase(player2.getUniqueId().toString())){
+                        showMessage = UserManager.usersCfg.getBoolean("users.user-" + i + ".showMessage");
+                        language = UserManager.usersCfg.getString("users.user-" + i + ".language");
+                    }
+                }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
-                        if (player.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
+                        if (player2.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
                             if (language == null){
                                 language = "English";
                             }
@@ -73,7 +88,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", false);
+                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", false);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -107,7 +122,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", true);
+                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", true);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -1336,51 +1351,55 @@ public class MkCommand implements CommandExecutor {
                                 for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
                                     String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
                                     assert userId != null;
-                                    if(userId.equalsIgnoreCase(player.getUniqueId().toString())){
-                                        assert language != null;
-                                        if (args[1].equalsIgnoreCase("French")){
-                                            player.sendMessage(ChatColor.GREEN + "Changement de la langue de en " + ChatColor.GOLD + "Français.");
+                                    if (player2 != null){
+                                        if(userId.equalsIgnoreCase(player2.getUniqueId().toString())){
+                                            assert language != null;
+                                            if (args[1].equalsIgnoreCase("French")){
+                                                player.sendMessage(ChatColor.GREEN + "Changement de la langue de en " + ChatColor.GOLD + "Français.");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Spanish")){
+                                                player.sendMessage(ChatColor.GREEN + "Se cambió el idioma de Money4Mobs al " + ChatColor.GOLD + "español.");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Chinese_Simplified")){
+                                                player.sendMessage(ChatColor.GREEN + "将Money4Mobs语言更改为 " + ChatColor.GOLD + "中文（简体).");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Chinese_Traditional")){
+                                                player.sendMessage(ChatColor.GREEN + "已將Money4Mobs消息更改為 " + ChatColor.GOLD + "中文（繁體).");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Hindi")){
+                                                player.sendMessage(ChatColor.GREEN + "बदलने के लिए Money4Mobs भाषा " + ChatColor.GOLD + "हिंदी");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Italian")){
+                                                player.sendMessage(ChatColor.GREEN + "Cambiato Money4Mobs alla lingua " + ChatColor.GOLD + "italiana.");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("German")){
+                                                player.sendMessage(ChatColor.GREEN + "Money4Mobs - Nachrichten wurden in " + ChatColor.GOLD + "Deutsch" +
+                                                        ChatColor.GREEN + " geändert.");
+                                            }
+                                            else if (args[1].equalsIgnoreCase("Russian")){
+                                                player.sendMessage(ChatColor.GREEN + "Изменены сообщения Money4Mobs на " + ChatColor.GOLD + "русский язык" +
+                                                        ChatColor.GREEN + ".");
+                                            }
+                                            else {
+                                                player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + "English");
+                                            }
+                                            success = true;
+                                            UserManager.usersCfg.set("users.user-" + counter + ".language", args[1]);
+                                            try {
+                                                UserManager.usersCfg.save(userFile);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                        else if (args[1].equalsIgnoreCase("Spanish")){
-                                            player.sendMessage(ChatColor.GREEN + "Se cambió el idioma de Money4Mobs al " + ChatColor.GOLD + "español.");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("Chinese_Simplified")){
-                                            player.sendMessage(ChatColor.GREEN + "将Money4Mobs语言更改为 " + ChatColor.GOLD + "中文（简体).");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("Chinese_Traditional")){
-                                            player.sendMessage(ChatColor.GREEN + "已將Money4Mobs消息更改為 " + ChatColor.GOLD + "中文（繁體).");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("Hindi")){
-                                            player.sendMessage(ChatColor.GREEN + "बदलने के लिए Money4Mobs भाषा " + ChatColor.GOLD + "हिंदी");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("Italian")){
-                                            player.sendMessage(ChatColor.GREEN + "Cambiato Money4Mobs alla lingua " + ChatColor.GOLD + "italiana.");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("German")){
-                                            player.sendMessage(ChatColor.GREEN + "Money4Mobs - Nachrichten wurden in " + ChatColor.GOLD + "Deutsch" +
-                                                    ChatColor.GREEN + " geändert.");
-                                        }
-                                        else if (args[1].equalsIgnoreCase("Russian")){
-                                            player.sendMessage(ChatColor.GREEN + "Изменены сообщения Money4Mobs на " + ChatColor.GOLD + "русский язык" +
-                                                    ChatColor.GREEN + ".");
-                                        }
-                                        else {
-                                            player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + "English");
-                                        }
-                                        success = true;
-                                        UserManager.usersCfg.set("users.user-" + counter + ".language", args[1]);
-                                        try {
-                                            UserManager.usersCfg.save(userFile);
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
+                                        counter++;
                                     }
-                                    counter++;
                                 }
                                 if (Boolean.TRUE.equals(success)){
                                     for (UserModel user : um){
-                                        if (user.getUserId().equalsIgnoreCase(player.getUniqueId().toString())) {
-                                            user.setLanguage(args[1]);
+                                        if (player2 != null){
+                                            if (user.getUserId().equalsIgnoreCase(player2.getUniqueId().toString())) {
+                                                user.setLanguage(args[1]);
+                                            }
                                         }
                                     }
                                 }
@@ -2048,8 +2067,8 @@ public class MkCommand implements CommandExecutor {
                                         if (args[1].equalsIgnoreCase(mobModel.mobName)) {
                                             try {
                                                 int itemPresent = 0;
-                                                for (int i = 0; i < mobModel.getItems().size(); i++) {
-                                                    if (mobModel.getItems().get(i).getItemName().equalsIgnoreCase(args[2])) {
+                                                for (int t = 0; t < mobModel.getItems().size(); t++) {
+                                                    if (mobModel.getItems().get(t).getItemName().equalsIgnoreCase(args[2])) {
                                                         itemPresent = 1;
                                                         break;
                                                     }
