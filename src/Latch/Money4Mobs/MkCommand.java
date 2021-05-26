@@ -43,16 +43,17 @@ public class MkCommand implements CommandExecutor {
             firstCounter = 1;
         }
         language = MobConfigManager.mobsCfg.getString("defaultLanguage");
-        for(int i = 0; i < firstCounter; i++) {
-            String firstUserId = UserManager.usersCfg.getString("users.user-" + firstCounter + ".userId");
+        for(int i = 1; i < firstCounter+1; i++) {
+
+            String firstUserId = UserManager.usersCfg.getString("users.user-" + i + ".userId");
             assert firstUserId != null;
-            if (player2 != null || (commandSender instanceof ConsoleCommandSender) || player2.getUniqueId().toString().equals(firstUserId)) {
+            if (commandSender instanceof ConsoleCommandSender || player2.getUniqueId().toString().equals(firstUserId)) {
                 if (player2 != null){
                     if(firstUserId.equalsIgnoreCase(player2.getUniqueId().toString())){
-                        showMessage = UserManager.usersCfg.getBoolean("users.user-" + firstCounter + ".showMessage");
-                        language = UserManager.usersCfg.getString("users.user-" + firstCounter + ".language");
+
+                        showMessage = UserManager.usersCfg.getBoolean("users.user-" + i + ".showMessage");
+                        language = UserManager.usersCfg.getString("users.user-" + i + ".language");
                     }
-                    firstCounter++;
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
@@ -88,7 +89,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", false);
+                                UserManager.usersCfg.set("users.user-" + (i) + ".showMessage", false);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -122,7 +123,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + (firstCounter - 1) + ".showMessage", true);
+                                UserManager.usersCfg.set("users.user-" + (i) + ".showMessage", true);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
