@@ -38,6 +38,10 @@ public abstract class MobKiller implements CommandExecutor {
     public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
         setLanguage(pa);
         giveMoneyCheck(pa,e);
+        boolean samePlayer = pa.getUniqueId().toString().equals(e.getUniqueId().toString());
+        if (Boolean.TRUE.equals(samePlayer)) {
+            giveMoney = false;
+        }
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e, pa);
             setDefaultDrops();
@@ -277,6 +281,12 @@ public abstract class MobKiller implements CommandExecutor {
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
         String killerIP = pa.getAddress().getAddress().toString();
+        System.out.println("player: " + pa.getUniqueId());
+        System.out.println("entity: " + e.getUniqueId());
+        boolean samePlayer = false;
+        if (pa.getUniqueId().toString().equals(e.getUniqueId().toString())){
+            samePlayer = true;
+        }
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
@@ -332,9 +342,49 @@ public abstract class MobKiller implements CommandExecutor {
         double level3 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-3");
         double level4 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-4");
         double level5 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-5");
+        double level6 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-6");
+        double level7 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-7");
+        double level8 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-8");
+        double level9 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-9");
+        double level10 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-10");
+        double level11 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-11");
+        double level12 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-12");
+        double level13 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-13");
+        double level14 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-14");
+        double level15 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-15");
         double operator = MobConfigManager.mobsCfg.getDouble("group-multiplier.operator");
         double multiplier = 1;
-        if (pa.hasPermission("m4m.multiplier.level-5")) {
+        if (pa.hasPermission("m4m.multiplier.level-15")) {
+            multiplier = level15;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-14")) {
+            multiplier = level14;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-13")) {
+            multiplier = level13;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-12")) {
+            multiplier = level12;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-11")) {
+            multiplier = level11;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-10")) {
+            multiplier = level10;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-9")) {
+            multiplier = level9;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-8")) {
+            multiplier = level8;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-7")) {
+            multiplier = level7;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-6")) {
+            multiplier = level6;
+        }
+        else if (pa.hasPermission("m4m.multiplier.level-5")) {
             multiplier = level5;
         }
         else if (pa.hasPermission("m4m.multiplier.level-4")) {
