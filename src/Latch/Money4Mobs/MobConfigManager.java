@@ -20,19 +20,18 @@ public class MobConfigManager {
     // Set up mobs.yml configuration file
     public void setup() throws IOException {
         // if the Mobs4Money folder does not exist, create the Mobs4Money folder
-        if(!plugin.getDataFolder().exists()){
+        if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
         }
         mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
         mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
         //if the mobs.yml does not exist, create it
-        if(!mobsFile.exists()){
+        if (!mobsFile.exists()) {
             try {
                 mobsFile.createNewFile();
                 createMobsConfig(mobsCfg);
                 mobsCfg.save(mobsFile);
-            }
-            catch(IOException e){
+            } catch (IOException e) {
                 System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
             }
         } else {
@@ -43,12 +42,12 @@ public class MobConfigManager {
         }
     }
 
-    public void createMobsConfig(FileConfiguration mobsCfg){
+    public void createMobsConfig(FileConfiguration mobsCfg) {
         SetMobList sml = new SetMobList();
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.8");
+            mobsCfg.set("version", "1.3.9");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
@@ -61,7 +60,7 @@ public class MobConfigManager {
             mobsCfg.set("group-multiplier.level-4", 1);
             mobsCfg.set("group-multiplier.level-5", 1);
             mobsCfg.set("group-multiplier.operator", 1);
-            for (int i = 0; i < mobList.size(); i++){
+            for (int i = 0; i < mobList.size(); i++) {
                 String mobName = mobList.get(i).mobName;
                 Double lowWorth = mobList.get(i).lowWorth;
                 Double highWorth = mobList.get(i).highWorth;
@@ -70,7 +69,7 @@ public class MobConfigManager {
                 mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
                 mobsCfg.set("mobs." + mobName + ".customDrops", false);
                 String air = "AIR";
-                if(i == 1){
+                if (i == 1) {
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.name", air);
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.amount", 5);
                     mobsCfg.set("mobs." + mobName + ".drops.item-1.chance", 100);
@@ -83,8 +82,7 @@ public class MobConfigManager {
             mobsCfg.set("mobs.Player.customDrops", null);
             mobsCfg.set("drops", null);
             mobsCfg.save(mobsFile);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
         }
     }
@@ -92,30 +90,30 @@ public class MobConfigManager {
     // Sets mob list from mobs.yml file
     public static void setMobListFromConfig() throws IOException {
         Integer counter1 = 0;
-        for(String path : Objects.requireNonNull(mobsCfg.getConfigurationSection("mobs")).getKeys(false)) {
+        for (String path : Objects.requireNonNull(mobsCfg.getConfigurationSection("mobs")).getKeys(false)) {
             Double lowWorth = mobsCfg.getDouble("mobs." + path + ".worth.low");
             Double highWorth = mobsCfg.getDouble("mobs." + path + ".worth.high");
             Boolean customDrops = mobsCfg.getBoolean("mobs." + path + ".customDrops");
             Boolean keepDefaultDrops = mobsCfg.getBoolean("mobs." + path + ".keepDefaultDrops");
             Integer counter = 1;
             List<ItemModel> im = new ArrayList<ItemModel>();
-            if(mobsCfg.getString("mobs." + path + ".drops.item-1.name") != null){
-                for(String items : mobsCfg.getConfigurationSection("mobs." + path + ".drops").getKeys(false)) {
+            if (mobsCfg.getString("mobs." + path + ".drops.item-1.name") != null) {
+                for (String items : mobsCfg.getConfigurationSection("mobs." + path + ".drops").getKeys(false)) {
                     String name = mobsCfg.getString("mobs." + path + ".drops.item-" + counter + ".name");
                     Integer amount = mobsCfg.getInt("mobs." + path + ".drops.item-" + counter + ".amount");
                     Integer chance = mobsCfg.getInt("mobs." + path + ".drops.item-" + counter + ".chance");
-                    im.add(new ItemModel(name,amount,chance));
+                    im.add(new ItemModel(name, amount, chance));
                     counter++;
                 }
             }
-            if (!mobsCfg.getBoolean("mobs.Player.ipBan")){
+            if (!mobsCfg.getBoolean("mobs.Player.ipBan")) {
                 mobsCfg.set("mobs.Player.ipBanFarming", false);
             }
             mobsCfg.set("mobs.Player.keepDefaultDrops", null);
             mobsCfg.set("mobs.Player.customDrops", null);
             mobsCfg.set("drops", null);
             mobsCfg.save(mobsFile);
-            mobListFromConfig.add(new MobModel(path,lowWorth, highWorth, keepDefaultDrops, customDrops, im));
+            mobListFromConfig.add(new MobModel(path, lowWorth, highWorth, keepDefaultDrops, customDrops, im));
             mobListFromConfig.get(counter1).setCustomDrops(customDrops);
             mobListFromConfig.get(counter1).setKeepDefaultDrops(keepDefaultDrops);
             mobListFromConfig.get(counter1).setItems(im);
@@ -127,25 +125,29 @@ public class MobConfigManager {
     }
 
     public static void updatePluginVersion() throws IOException {
-        if (mobsCfg.getString("version") != "1.3.8") {
-            mobsCfg.set("version", "1.3.8");
+        if (mobsCfg.getString("version") != "1.3.9") {
+            mobsCfg.set("version", "1.3.9");
         }
         mobsCfg.save(mobsFile);
     }
 
     public static void update137AddPiglin() throws IOException {
-        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.low"))) {
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.low"))) {
             mobsCfg.set("mobs.Piglin.worth.low", 25);
-        };
-        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.high"))) {
+        }
+        ;
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.high"))) {
             mobsCfg.set("mobs.Piglin.worth.high", 25);
-        };
-        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.keepDefaultDrops"))) {
+        }
+        ;
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.keepDefaultDrops"))) {
             mobsCfg.set("mobs.Piglin.keepDefaultDrops", true);
-        };
-        if(Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.customDrops"))) {
+        }
+        ;
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.customDrops"))) {
             mobsCfg.set("mobs.Piglin.customDrops", false);
-        };
+        }
+        ;
         mobsCfg.save(mobsFile);
 
     }
