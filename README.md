@@ -22,7 +22,7 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk toggleMoneyFromTamedWolves | m4m.command.mk.toggleMoneyFromTamedWolves | Toggles if players receive money when their tamed wolf kills a mob
 Not Applicable| m4m.bypass.ipBan | Allows a user to bypass the ipBan option for players on the same IP
 
-## Permissions for group specific multipliers - 5 levels plus Operator
+## Permissions for group specific multipliers - 15 levels plus Operator
 ### If group/player has multiple level permissions set, the highest level take precedent
 Permission | Description
 ------------ | ------------
@@ -31,6 +31,16 @@ m4m.multiplier.level-2 | Permission for level-2 multiplier
 m4m.multiplier.level-3 | Permission for level-3 multiplier
 m4m.multiplier.level-4 | Permission for level-4 multiplier
 m4m.multiplier.level-5 | Permission for level-5 multiplier
+m4m.multiplier.level-6 | Permission for level-6 multiplier
+m4m.multiplier.level-7 | Permission for level-7 multiplier
+m4m.multiplier.level-8 | Permission for level-8 multiplier
+m4m.multiplier.level-9 | Permission for level-9 multiplier
+m4m.multiplier.level-10 | Permission for level-10 multiplier
+m4m.multiplier.level-11 | Permission for level-11 multiplier
+m4m.multiplier.level-12 | Permission for level-12 multiplier
+m4m.multiplier.level-13 | Permission for level-13 multiplier
+m4m.multiplier.level-14 | Permission for level-14 multiplier
+m4m.multiplier.level-15 | Permission for level-15 multiplier
 
 ## How to set up a custom kill message
 To add spaces to your message, '|' symbol needs to be added. 
