@@ -283,12 +283,6 @@ public abstract class MobKiller implements CommandExecutor {
     public static void giveMoneyCheck(Player pa, Entity e){
         int counter = 0;
         String killerIP = pa.getAddress().getAddress().toString();
-        System.out.println("player: " + pa.getUniqueId());
-        System.out.println("entity: " + e.getUniqueId());
-        boolean samePlayer = false;
-        if (pa.getUniqueId().toString().equals(e.getUniqueId().toString())){
-            samePlayer = true;
-        }
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
