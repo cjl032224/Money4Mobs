@@ -1,6 +1,5 @@
 package Latch.Money4Mobs;
 
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -8,8 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -22,10 +19,26 @@ public class MkCommand implements CommandExecutor {
     private static final File mobsFile = MobConfigManager.mobsFile;
     private static final File userFile = UserManager.usersFile;
     private static final Material[] materials = Material.values();
-    private static String language = "";
     private static List<UserModel> um = UserManager.updateUsersOnReload();
     private static Boolean showMessage = true;
     private final Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
+
+    // Config file paths Constants
+    private static final String SHOW_MESSAGE = ".showMessage";
+    private static final String USERS_USER = "users.user-";
+    private static final String DEFAULT_LANGUAGE = "defaultLanguage";
+
+    // Language Constants
+    private static final String ENGLISH = "English";
+    private static final String FRENCH = "French";
+    private static final String SPANISH = "Spanish";
+    private static final String CHINESE_SIMPLIFIED = "Chinese_Simplified";
+    private static final String CHINESE_TRADITIONAL = "Chinese_Traditional";
+    private static final String HINDI = "Hindi";
+    private static final String ITALIAN = "Italian";
+    private static final String GERMAN = "German";
+    private static final String RUSSIAN = "Russian";
+
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         CommandSender player = commandSender;
@@ -33,7 +46,6 @@ public class MkCommand implements CommandExecutor {
         if (commandSender instanceof Player ){
             player2 = (Player) commandSender;
         }
-
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
         int firstCounter = 1;
         for(String firstUsers : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
@@ -42,87 +54,87 @@ public class MkCommand implements CommandExecutor {
         if (player2 == null){
             firstCounter = 1;
         }
-        language = MobConfigManager.mobsCfg.getString("defaultLanguage");
+        String language = MobConfigManager.mobsCfg.getString(DEFAULT_LANGUAGE);
         for(int i = 1; i < firstCounter+1; i++) {
 
-            String firstUserId = UserManager.usersCfg.getString("users.user-" + i + ".userId");
+            String firstUserId = UserManager.usersCfg.getString(USERS_USER + i + ".userId");
             assert firstUserId != null;
             if (commandSender instanceof ConsoleCommandSender || player2.getUniqueId().toString().equals(firstUserId)) {
                 if (player2 != null){
                     if(firstUserId.equalsIgnoreCase(player2.getUniqueId().toString())){
-                        showMessage = UserManager.usersCfg.getBoolean("users.user-" + i + ".showMessage");
-                        language = UserManager.usersCfg.getString("users.user-" + i + ".language");
+                        showMessage = UserManager.usersCfg.getBoolean(USERS_USER + i + SHOW_MESSAGE);
+                        language = UserManager.usersCfg.getString(USERS_USER + i + ".language");
                     }
                 }
                 if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("toggleKM")) {
                         if (player2.hasPermission("m4m.command.mk.toggleKM") || player.isOp()) {
                             if (language == null){
-                                language = "English";
+                                language = ENGLISH;
                             }
                             if (Boolean.TRUE.equals(showMessage)) {
-                                if (language.equalsIgnoreCase("French")) {
+                                if (language.equalsIgnoreCase(FRENCH)) {
                                     player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "désactivé.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.GREEN + "Mensaje de Mobkiller " + ChatColor.GOLD + "desactivado.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller 信息 " + ChatColor.GOLD + "关。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.GREEN + "擊殺訊息  關閉.");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller संदेश " + ChatColor.GOLD + "बंद।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.GREEN + "I messaggi di Mobkiller sono " + ChatColor.GOLD + "off.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller Nachricht" + ChatColor.GOLD + "aus.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Сообщения плагина Mobkiller" + ChatColor.GOLD + "отключены.");
                                 }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", false);
+                                UserManager.usersCfg.set(USERS_USER + i + "SHOW_MESSAGE", false);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             } else {
-                                if (language.equalsIgnoreCase("French")) {
+                                if (language.equalsIgnoreCase(FRENCH)) {
                                     player.sendMessage(ChatColor.GREEN + "Message MobKiller " + ChatColor.GOLD + "activé.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.GREEN + "Mensaje de Mobkiller " + ChatColor.GOLD + "en.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller 信息 " + ChatColor.GOLD + "上。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.GREEN + "擊殺訊息  開啟.");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller संदेश " + ChatColor.GOLD + "पर।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.GREEN + "I messaggi di Mobkiller sono " + ChatColor.GOLD + "on.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.GREEN + "Mobkiller Nachricht" + ChatColor.GOLD + "an.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Сообщения плагина Mobkiller" + ChatColor.GOLD + "отключены.");
                                 }
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                UserManager.usersCfg.set("users.user-" + i + ".showMessage", true);
+                                UserManager.usersCfg.set(USERS_USER + i + "SHOW_MESSAGE", true);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -131,28 +143,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl.");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -166,26 +178,26 @@ public class MkCommand implements CommandExecutor {
                             if (Boolean.TRUE.equals(spawnEgg)) {
                                 MobConfigManager.mobsCfg.set("spawneggs", false);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "false";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "falso";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "假";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "असत्य";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "disattivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "falsch";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "выключен";
                                 }
                                 else {
@@ -194,26 +206,26 @@ public class MkCommand implements CommandExecutor {
                             } else {
                                 MobConfigManager.mobsCfg.set("spawneggs", true);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "vrai";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "verdadero";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "真正";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "सच";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "attivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "wahr";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "включён";
                                 }
                                 else {
@@ -221,33 +233,33 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             try {
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.GREEN + "L'argent récompensé par les foules engendrées avec des œufs est défini sur " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.GREEN + "El dinero recompensado por las turbas generadas con huevos se establece en " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.GREEN + "从产卵的小怪那里获得的奖励被设置为 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.GREEN + "重生蛋生出的生物掉落金錢設置成 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.GREEN + "अंडे के साथ पैदा होने वाले मोब्स से पुरस्कृत धन निर्धारित है " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.GREEN + "I soldi che verranno ricevuti dalle uova sono " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von mit Eiern hervorgebrachten Mobs belohnt wird, wird auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Денежное вознаграждение за мобов заспавленных яйцами призыва " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
                                 else {
@@ -259,28 +271,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -294,26 +306,26 @@ public class MkCommand implements CommandExecutor {
                             if (Boolean.TRUE.equals(spawners)) {
                                 MobConfigManager.mobsCfg.set("spawners", false);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "false";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "falso";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "假";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "असत्य";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "disattivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "falsch";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "выключен";
                                 }
                                 else {
@@ -322,26 +334,26 @@ public class MkCommand implements CommandExecutor {
                             } else {
                                 MobConfigManager.mobsCfg.set("spawners", true);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "vrai";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "verdadero";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "真正";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "सच";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "attivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "wahr";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "включён";
                                 }
                                 else {
@@ -349,33 +361,33 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             try {
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.GREEN + "L'argent récompensé par les foules de géniteurs est fixé à " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.GREEN +  "El dinero recompensado por las turbas generadoras se establece en " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                     player.sendMessage(ChatColor.GREEN + "产卵小怪奖励的钱被设置为 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                     player.sendMessage(ChatColor.GREEN + "生怪磚生出的生物掉落金錢設置成 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.GREEN + "स्पॉर्नर मॉब से पुरस्कृत धनराशि निर्धारित की जाती है " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.GREEN + "I soldi che verranno ricevuti dagli spawner sono " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von Spawner-Mobs belohnt wird, wird auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Денежная награда от создателей мобов установлена \u200B\u200Bв размере " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
                                 else {
@@ -387,28 +399,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -423,26 +435,26 @@ public class MkCommand implements CommandExecutor {
                             if (Boolean.TRUE.equals(tamedWolvesGiveMoney)) {
                                 MobConfigManager.mobsCfg.set("tamedWolvesGiveMoney", false);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "false";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "falso";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "假";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "असत्य";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "disattivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "falsch";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "выключен";
                                 }
                                 else {
@@ -451,26 +463,26 @@ public class MkCommand implements CommandExecutor {
                             } else {
                                 MobConfigManager.mobsCfg.set("tamedWolvesGiveMoney", true);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "vrai";
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "verdadero";
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "真正";
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "सच";
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "attivi";
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "wahr";
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "включён";
                                 }
                                 else {
@@ -478,33 +490,33 @@ public class MkCommand implements CommandExecutor {
                                 }
                             }
                             try {
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.GREEN + "L'argent récompensé par des foules tuées par des loups apprivoisés" +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.GREEN +  "Dinero recompensado por turbas asesinadas por lobos domesticados " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                     player.sendMessage(ChatColor.GREEN + "从被驯服的狼杀死的小怪那里获得的奖励 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                     player.sendMessage(ChatColor.GREEN + "從被馴服的狼殺死的小怪中獲得的獎勵 " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.GREEN + "नामित भेड़ियों द्वारा मारे गए मॉब से पुरस्कृत धन को सेट किया गया " +
                                             ChatColor.GOLD + bool + ChatColor.GREEN + "।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Denaro ricompensato da mob uccisi da lupi addomesticati impostati " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.GREEN + "Geld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.GREEN + "Деньги, полученные от мобов, убитых прирученными волками, установленными в " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                 }
                                 else {
@@ -516,28 +528,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -549,28 +561,28 @@ public class MkCommand implements CommandExecutor {
                         String bool = "";
 
                         if (player.hasPermission("m4m.command.mk.reload") || player.isOp()) {
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.AQUA + "Recharger Money4Mobs.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.AQUA + "Recarga de Money4Mobs.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.AQUA + "重新加载Money4Mobs。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.AQUA + "重新加載Money4Mobs。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.AQUA + "Money4Mobs को पुनः लोड करना।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.AQUA + "Ricaricamento di Money4Mobs.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.AQUA + "Money4Mobs neu laden.");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.AQUA + "Перезагрузка Money4Mobs.");
                             }
                             else {
@@ -582,28 +594,28 @@ public class MkCommand implements CommandExecutor {
                             um.clear();
                             um = UserManager.updateUsersOnReload();
                             plugin.getPluginLoader().enablePlugin(plugin);
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.GOLD + "Le rechargement de Money4Mobs est terminé.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.GOLD + "Recarga de Money4Mobs completa.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs重新加载完成。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs重新加載完成。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs पुनः लोड पूरा करें।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.GOLD + "Ricarica Money4Mobs completata.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.GOLD + "Money4Mobs Reload abgeschlossen.");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.GOLD + "Перезагрузка Money4Mobs завершена.");
                             }
                             else {
@@ -618,32 +630,32 @@ public class MkCommand implements CommandExecutor {
                             if (Boolean.TRUE.equals(customKillMessage)) {
                                 MobConfigManager.mobsCfg.set("customMessageOption.overrideKillMessage", false);
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French") ){
+                                if (language.equalsIgnoreCase(FRENCH) ){
                                     bool = "false";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage mis à " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "falso";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage ajustado a " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                        language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "假";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage 設置 " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "असत्य";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage करने के लिए सेट " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "disattivi";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage impostato " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "falsch";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "выключен";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage установлен в " + ChatColor.GOLD + bool);
                                 }
@@ -653,31 +665,31 @@ public class MkCommand implements CommandExecutor {
                                 }
                             } else {
                                 MobConfigManager.mobsCfg.set("customMessageOption.overrideKillMessage", true);
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     bool = "vrai";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage mis à " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     bool = "verdadero";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage ajustado a " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified") || language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) || language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     bool = "真正";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage 設置 " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     bool = "सच";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage करने के लिए सेट " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     bool = "attivi";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage impostato " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     bool = "wahr";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage einstellen " + ChatColor.GOLD + bool);
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     bool = "включён";
                                     player.sendMessage(ChatColor.GREEN + "overrideKillMessage установлен в " + ChatColor.GOLD + bool);
                                 }
@@ -703,35 +715,35 @@ public class MkCommand implements CommandExecutor {
                                     Double highWorth = mobModel.highWorth;
                                     assert language != null;
                                     if (lowWorth.equals(highWorth)) {
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " valent " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " valen " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + "." );
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " 价值 " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "美元。" );
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " 價值金額 " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "。" );
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ChatColor.GOLD + "$" +
                                                     lowWorth.toString() + ChatColor.GREEN + "लायक हैं।" );
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " ha un valore di " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "." );
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " sind " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "wert." );
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " стоят " + ChatColor.GOLD + lowWorth.toString() + ChatColor.GREEN + "." );
                                         }
@@ -740,42 +752,42 @@ public class MkCommand implements CommandExecutor {
                                                     " are worth " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + ".");
                                         }
                                     } else {
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " valent entre " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " et " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " valen entre " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " y " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " 的价值在 " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " 到 " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "美元之间。");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     " 掉落金額 " + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " ~ " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "。");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN +
                                                     ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " और " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "के बीच का मूल्य है।");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ha un valore tra "
                                                     + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " e " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " sind zwischen "
                                                     + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " und " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + "wert.");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " стоят от "
                                                     + ChatColor.GOLD + "$" + lowWorth.toString() + ChatColor.GREEN + " до " +
                                                     ChatColor.GOLD + "$" + highWorth.toString() + ChatColor.GREEN + ".");
@@ -790,28 +802,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -828,28 +840,28 @@ public class MkCommand implements CommandExecutor {
                                     if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
                                         if (mobModel.getItems().size() == 0) {
                                             assert language != null;
-                                            if (language.equalsIgnoreCase("French")){
+                                            if (language.equalsIgnoreCase(FRENCH)){
                                                 player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " n'ont pas de set de gouttes personnalisé.");
                                             }
-                                            else if (language.equalsIgnoreCase("Spanish")){
+                                            else if (language.equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " no tiene ningún conjunto de gotas personalizado.");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " 没有设置任何下落。");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                                 player.sendMessage( ChatColor.GREEN + " 沒有設置自訂義掉落物品。");
                                             }
-                                            else if (language.equalsIgnoreCase("Hindi")){
+                                            else if (language.equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " में कोई ड्रॉप सेट नहीं है।");
                                             }
-                                            else if (language.equalsIgnoreCase("Italian")){
+                                            else if (language.equalsIgnoreCase(ITALIAN)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " non ha un Drop presonalizzato.");
                                             }
-                                            else if (language.equalsIgnoreCase("German")){
+                                            else if (language.equalsIgnoreCase(GERMAN)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " haben keine benutzerdefinierten Drops festgelegt.");
                                             }
-                                            else if (language.equalsIgnoreCase("Russian")){
+                                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                                 player.sendMessage(ChatColor.GREEN + "у " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " нет никакого Пользовательского дропа.");
                                             }
                                             else {
@@ -861,41 +873,41 @@ public class MkCommand implements CommandExecutor {
                                             Integer amount = mobModel.getItems().get(l).getAmount();
                                             Integer chance = mobModel.getItems().get(l).getChance();
                                             assert language != null;
-                                            if (language.equalsIgnoreCase("French")){
+                                            if (language.equalsIgnoreCase(FRENCH)){
                                                 player.sendMessage(ChatColor.GREEN + "Les " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ont " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " de chances de perdre " + ChatColor.GOLD + amount +
                                                         " " + itemName + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("Spanish")){
+                                            else if (language.equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.GREEN + "Los " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " tienen un " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " de probabilidad de soltar " + ChatColor.GOLD + amount +
                                                         " " + itemName + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " 恶魔有 " + ChatColor.GOLD + chance + "%" +
                                                         ChatColor.GREEN + " 的机会掉落 " + ChatColor.GOLD + amount + ChatColor.GREEN + " 个 " + ChatColor.GOLD + itemName +
                                                         ChatColor.GREEN + "。");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " 有 " + ChatColor.GOLD + chance + "%" +
                                                         ChatColor.GREEN + " 機率掉落 " + ChatColor.GOLD + amount + itemName +
                                                         ChatColor.GREEN + "。");
                                             }
-                                            else if (language.equalsIgnoreCase("Hindi")){
+                                            else if (language.equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " में " + ChatColor.GOLD + amount + " " +
                                                         itemName + ChatColor.GREEN + " छोड़ने का " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " मौका है।");
                                             }
-                                            else if (language.equalsIgnoreCase("Italian")){
+                                            else if (language.equalsIgnoreCase(ITALIAN)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " ha il " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " di chance che droppi " + ChatColor.GOLD + amount +
                                                         " " + itemName + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("German")){
+                                            else if (language.equalsIgnoreCase(GERMAN)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " haben eine Chance von " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ", " + ChatColor.GOLD + amount +
                                                         " " + itemName + ChatColor.GREEN + "fallen zu lassen.");
                                             }
-                                            else if (language.equalsIgnoreCase("Russian")){
+                                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                                 player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " имееют " +
                                                         ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ", " + ChatColor.GOLD + amount +
                                                         " шанс уронить " + itemName + ChatColor.GREEN + ".");
@@ -908,28 +920,28 @@ public class MkCommand implements CommandExecutor {
                                         }
                                     } else {
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.GREEN + "Les largages personnalisés sont activés pour les  " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.GREEN + "Las gotas personalizadas están habilitadas para " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " 未启用自定义放置。");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " 沒有開啟自訂義物品掉落。");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.GREEN + "कस्टम ड्रॉप " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " के लिए सक्षम नहीं हैं।");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.GREEN + "I Drop customizzati per " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " non sono abilitati.");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.GREEN + "Benutzerdefinierte Drops sind für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " nicht aktiviert.");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")) {
+                                        else if (language.equalsIgnoreCase(RUSSIAN)) {
                                             player.sendMessage(ChatColor.GREEN + "ользовательский дроп не включен для " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                         }
                                         else {
@@ -940,28 +952,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if (Boolean.TRUE.equals(error)) {
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -970,28 +982,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1011,26 +1023,26 @@ public class MkCommand implements CommandExecutor {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".customDrops", false);
                                         mobModel.setCustomDrops(false);
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French") ){
+                                        if (language.equalsIgnoreCase(FRENCH) ){
                                             bool = "false";
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             bool = "falso";
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                                language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                                language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             bool = "假";
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             bool = "असत्य";
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             bool = "disattivi";
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             bool = "falsch";
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             bool = "выключен";
                                         }
                                         else {
@@ -1040,26 +1052,26 @@ public class MkCommand implements CommandExecutor {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".customDrops", true);
                                         mobModel.setCustomDrops(true);
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French") ){
+                                        if (language.equalsIgnoreCase(FRENCH) ){
                                             bool = "vrai";
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             bool = "verdadero";
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                                language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                                language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             bool = "真正";
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             bool = "सच";
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             bool = "attivi";
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             bool = "wahr";
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             bool = "включён";
                                         }
                                         else {
@@ -1067,35 +1079,35 @@ public class MkCommand implements CommandExecutor {
                                         }
                                     }
                                     try {
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.GREEN + "Abandons personnalisés pour " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "définis sur " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.GREEN + "Gotas personalizadas para " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "configuradas en " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "的自定义掉落设置为 " + ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "自訂義掉落物已設置為 " + ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "के लिए कस्टम ड्रॉप्स " + ChatColor.GOLD + bool + ChatColor.GREEN + "।");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.GREEN + "I Drop customizzati per " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "sono ora " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.GREEN + "Benutzerdefinierte Drops für " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "werden auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.GREEN + "Пользовательский дроп для " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "был " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
@@ -1111,28 +1123,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if(Boolean.TRUE.equals(error)){
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -1141,28 +1153,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1182,26 +1194,26 @@ public class MkCommand implements CommandExecutor {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", false);
                                         mobModel.setKeepDefaultDrops(false);
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French") ){
+                                        if (language.equalsIgnoreCase(FRENCH) ){
                                             bool = "false";
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             bool = "falso";
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                                language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                                language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             bool = "假";
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             bool = "असत्य";
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             bool = "disattivi";
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             bool = "falsch";
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             bool = "выключен";
                                         }
                                         else {
@@ -1211,26 +1223,26 @@ public class MkCommand implements CommandExecutor {
                                         MobConfigManager.mobsCfg.set("mobs." + mobName + ".keepDefaultDrops", true);
                                         mobModel.setKeepDefaultDrops(true);
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French") ){
+                                        if (language.equalsIgnoreCase(FRENCH) ){
                                             bool = "vrai";
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             bool = "verdadero";
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified") ||
-                                                language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                                language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             bool = "真正";
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             bool = "सच";
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             bool = "attivi";
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             bool = "wahr";
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             bool = "включён";
                                         }
                                         else {
@@ -1238,35 +1250,35 @@ public class MkCommand implements CommandExecutor {
                                         }
                                     }
                                     try {
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.GREEN + "Les abandons par défaut pour les  " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "sont définis sur " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.GREEN + "Gotas predeterminadas para " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "configuradas en " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "的默认丢弃设置为 " + ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "的默認刪除設置為 " + ChatColor.GOLD + bool + ChatColor.GREEN + "。");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.GOLD + mobName + "s " + ChatColor.GREEN + "के लिए डिफ़ॉल्ट बूँदें " +
                                                     ChatColor.GOLD + bool + ChatColor.GREEN + "।");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.GREEN + "I Drop normali per " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "sono ora " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.GREEN + "Standardabfälle für " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "auf " + ChatColor.GOLD + bool + ChatColor.GREEN + " gesetzt.");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.GREEN + "По умолчанию для " + ChatColor.GOLD + mobName + "s " +
                                                     ChatColor.GREEN + "дроп  " + ChatColor.GOLD + bool + ChatColor.GREEN + ".");
                                         }
@@ -1282,28 +1294,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if (Boolean.TRUE.equals(error)) {
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -1312,28 +1324,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1344,47 +1356,47 @@ public class MkCommand implements CommandExecutor {
                     else if (args[0].equalsIgnoreCase("language")) {
                         if (player.hasPermission("m4m.command.mk.language") || player.isOp()) {
                             boolean success = false;
-                            if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") || args[1].equalsIgnoreCase("Spanish")
-                            || args[1].equalsIgnoreCase("Chinese_Simplified") || args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")
-                                    || args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional") || args[1].equalsIgnoreCase("Russian")){
+                            if(args[1].equalsIgnoreCase(ENGLISH) || args[1].equalsIgnoreCase(FRENCH) || args[1].equalsIgnoreCase(SPANISH)
+                            || args[1].equalsIgnoreCase(CHINESE_SIMPLIFIED) || args[1].equalsIgnoreCase(HINDI) || args[1].equalsIgnoreCase(ITALIAN)
+                                    || args[1].equalsIgnoreCase(GERMAN) || args[1].equalsIgnoreCase(CHINESE_TRADITIONAL) || args[1].equalsIgnoreCase(RUSSIAN)){
                                 int counter = 1;
                                 for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-                                    String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
+                                    String userId = UserManager.usersCfg.getString(USERS_USER + counter + ".userId");
                                     assert userId != null;
                                     if (player2 != null){
                                         if(userId.equalsIgnoreCase(player2.getUniqueId().toString())){
                                             assert language != null;
-                                            if (args[1].equalsIgnoreCase("French")){
+                                            if (args[1].equalsIgnoreCase(FRENCH)){
                                                 player.sendMessage(ChatColor.GREEN + "Changement de la langue de en " + ChatColor.GOLD + "Français.");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Spanish")){
+                                            else if (args[1].equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.GREEN + "Se cambió el idioma de Money4Mobs al " + ChatColor.GOLD + "español.");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (args[1].equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.GREEN + "将Money4Mobs语言更改为 " + ChatColor.GOLD + "中文（简体).");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Chinese_Traditional")){
+                                            else if (args[1].equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                 player.sendMessage(ChatColor.GREEN + "已將Money4Mobs消息更改為 " + ChatColor.GOLD + "中文（繁體).");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Hindi")){
+                                            else if (args[1].equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.GREEN + "बदलने के लिए Money4Mobs भाषा " + ChatColor.GOLD + "हिंदी");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Italian")){
+                                            else if (args[1].equalsIgnoreCase(ITALIAN)){
                                                 player.sendMessage(ChatColor.GREEN + "Cambiato Money4Mobs alla lingua " + ChatColor.GOLD + "italiana.");
                                             }
-                                            else if (args[1].equalsIgnoreCase("German")){
+                                            else if (args[1].equalsIgnoreCase(GERMAN)){
                                                 player.sendMessage(ChatColor.GREEN + "Money4Mobs - Nachrichten wurden in " + ChatColor.GOLD + "Deutsch" +
                                                         ChatColor.GREEN + " geändert.");
                                             }
-                                            else if (args[1].equalsIgnoreCase("Russian")){
+                                            else if (args[1].equalsIgnoreCase(RUSSIAN)){
                                                 player.sendMessage(ChatColor.GREEN + "Изменены сообщения Money4Mobs на " + ChatColor.GOLD + "русский язык" +
                                                         ChatColor.GREEN + ".");
                                             }
                                             else {
-                                                player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + "English");
+                                                player.sendMessage(ChatColor.GREEN + "Changed Money4Mobs messages to " + ChatColor.GOLD + ENGLISH);
                                             }
                                             success = true;
-                                            UserManager.usersCfg.set("users.user-" + counter + ".language", args[1]);
+                                            UserManager.usersCfg.set(USERS_USER + counter + ".language", args[1]);
                                             try {
                                                 UserManager.usersCfg.save(userFile);
                                             } catch (IOException e) {
@@ -1407,28 +1419,28 @@ public class MkCommand implements CommandExecutor {
 
                         } else {
                             assert language != null;
-                            if (args[1].equalsIgnoreCase("French")){
+                            if (args[1].equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (args[1].equalsIgnoreCase("Spanish")){
+                            else if (args[1].equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (args[1].equalsIgnoreCase("Chinese_Simplified")){
+                            else if (args[1].equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (args[1].equalsIgnoreCase("Hindi")){
+                            else if (args[1].equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1436,71 +1448,71 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
-                    else if (args[0].equalsIgnoreCase("defaultLanguage")) {
-                        if (player.hasPermission("m4m.command.mk.defaultLanguage") || player.isOp()) {
+                    else if (args[0].equalsIgnoreCase(DEFAULT_LANGUAGE)) {
+                        if (player.hasPermission("m4m.command.mk." + DEFAULT_LANGUAGE) || player.isOp()) {
                             try {
-                                if(args[1].equalsIgnoreCase("English") || args[1].equalsIgnoreCase("French") ||
-                                        args[1].equalsIgnoreCase("Spanish") || args[1].equalsIgnoreCase("Chinese_Simplified") ||
-                                        args[1].equalsIgnoreCase("Hindi") || args[1].equalsIgnoreCase("Italian")  ||
-                                        args[1].equalsIgnoreCase("German") || args[1].equalsIgnoreCase("Chinese_Traditional") ||
-                                        args[1].equalsIgnoreCase("Russian"))
+                                if(args[1].equalsIgnoreCase(ENGLISH) || args[1].equalsIgnoreCase(FRENCH) ||
+                                        args[1].equalsIgnoreCase(SPANISH) || args[1].equalsIgnoreCase(CHINESE_SIMPLIFIED) ||
+                                        args[1].equalsIgnoreCase(HINDI) || args[1].equalsIgnoreCase(ITALIAN)  ||
+                                        args[1].equalsIgnoreCase(GERMAN) || args[1].equalsIgnoreCase(CHINESE_TRADITIONAL) ||
+                                        args[1].equalsIgnoreCase(RUSSIAN))
                                 {
                                     UserManager.updateUserDefaultLanguage(args[1]);
                                     MobConfigManager.updateDefaultLanguage(args[1]);
-                                    if (args[1].equalsIgnoreCase("French")){
+                                    if (args[1].equalsIgnoreCase(FRENCH)){
                                         player.sendMessage(ChatColor.GREEN + "Changement de la langue par défaut des messages Money4Mobs en " + ChatColor.GOLD + "Français" + ChatColor.GREEN + ".");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Spanish")){
+                                    else if (args[1].equalsIgnoreCase(SPANISH)){
                                         player.sendMessage(ChatColor.GREEN + "Se cambió el idioma predeterminado de los mensajes de Money4Mobs a " + ChatColor.GOLD + "español" + ChatColor.GREEN + ".");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Chinese_Simplified")){
+                                    else if (args[1].equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                         player.sendMessage(ChatColor.GREEN + "将Money4Mobs消息的默认语言更改为 " + ChatColor.GOLD + "中文（简体)");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Chinese_Traditional")){
+                                    else if (args[1].equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                         player.sendMessage(ChatColor.GREEN + "將Money4Mobs消息的默認語言更改為 " + ChatColor.GOLD + "中文（繁體).");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Hindi")){
+                                    else if (args[1].equalsIgnoreCase(HINDI)){
                                         player.sendMessage(ChatColor.GREEN + "करने के लिए Money4Mobs संदेशों की डिफ़ॉल्ट भाषा बदल गई " + ChatColor.GOLD + "हिंदी");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Italian")){
+                                    else if (args[1].equalsIgnoreCase(ITALIAN)){
                                         player.sendMessage(ChatColor.GREEN + "Modificata la lingua predefinita dei messaggi di Money4Mobs in " + ChatColor.GOLD + "italiana" + ChatColor.GREEN + ".");
                                     }
-                                    else if (args[1].equalsIgnoreCase("German")){
+                                    else if (args[1].equalsIgnoreCase(GERMAN)){
                                         player.sendMessage(ChatColor.GREEN + "Die Standardsprache von Money4Mobs-Nachrichten wurde in geändert " + ChatColor.GOLD + "Deutsch" +
                                                 ChatColor.GREEN + ".");
                                     }
-                                    else if (args[1].equalsIgnoreCase("Russian")){
+                                    else if (args[1].equalsIgnoreCase(RUSSIAN)){
                                         player.sendMessage(ChatColor.GREEN + "Изменен язык сообщений Money4Mobs по умолчанию на " + ChatColor.GOLD + "русский" +
                                                 ChatColor.GREEN + ".");
                                     }
                                     else {
-                                        player.sendMessage(ChatColor.GREEN + "Changed default language of Money4Mobs messages to " + ChatColor.GOLD + "English" + ChatColor.GREEN + ".");
+                                        player.sendMessage(ChatColor.GREEN + "Changed default language of Money4Mobs messages to " + ChatColor.GOLD + ENGLISH + ChatColor.GREEN + ".");
                                     }
                                 }
                                 else {
-                                    String defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
-                                    if (defaultLanguage.equalsIgnoreCase("French")){
+                                    String defaultLanguage = MobConfigManager.mobsCfg.getString(DEFAULT_LANGUAGE);
+                                    if (defaultLanguage.equalsIgnoreCase(FRENCH)){
                                         player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas une langue valide.");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Spanish")){
+                                    else if (defaultLanguage.equalsIgnoreCase(SPANISH)){
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es un idioma válido.");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Chinese_Simplified")){
+                                    else if (defaultLanguage.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                         player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的语言。");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Chinese_Traditional")){
+                                    else if (defaultLanguage.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                         player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + "不是有效的語言。");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Hindi")){
+                                    else if (defaultLanguage.equalsIgnoreCase(HINDI)){
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भाषा नहीं है।");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Italian")){
+                                    else if (defaultLanguage.equalsIgnoreCase(ITALIAN)){
                                         player.sendMessage(ChatColor.RED + "ERRORE: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è una lingua valida.");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("German")){
+                                    else if (defaultLanguage.equalsIgnoreCase(GERMAN)){
                                         player.sendMessage(ChatColor.RED + "ERROR: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " ist keine gültige Sprache.");
                                     }
-                                    else if (defaultLanguage.equalsIgnoreCase("Russian")){
+                                    else if (defaultLanguage.equalsIgnoreCase(RUSSIAN)){
                                         player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не допустимый язык.");
                                     }
                                     else {
@@ -1527,35 +1539,35 @@ public class MkCommand implements CommandExecutor {
                                             MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.low", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
-                                                if (language.equalsIgnoreCase("French")){
+                                                if (language.equalsIgnoreCase(FRENCH)){
                                                     player.sendMessage(ChatColor.GREEN + "La faible valeur des " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " a été fixée à " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("Spanish")) {
+                                                else if (language.equalsIgnoreCase(SPANISH)) {
                                                     player.sendMessage(ChatColor.GREEN + "El valor bajo para " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " se ha establecido en " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " 的低值设置为 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " 最低掉落金額為 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Hindi")) {
+                                                else if (language.equalsIgnoreCase(HINDI)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " के लिए कम मूल्य " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "निर्धारित किया गया है।");
                                                 }
-                                                else if (language.equalsIgnoreCase("Italian")) {
+                                                else if (language.equalsIgnoreCase(ITALIAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Il minor valore per " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " e'' stato settato a " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("German")) {
+                                                else if (language.equalsIgnoreCase(GERMAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Der niedrige Wert für " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " wurde auf " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " festgelegt.");
                                                 }
-                                                else if (language.equalsIgnoreCase("Russian")) {
+                                                else if (language.equalsIgnoreCase(RUSSIAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Минимальная значение для " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " установлено " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " долларов.");
                                                 }
@@ -1568,29 +1580,29 @@ public class MkCommand implements CommandExecutor {
                                             }
                                         } else {
                                             assert language != null;
-                                            if (language.equalsIgnoreCase("French")) {
+                                            if (language.equalsIgnoreCase(FRENCH)) {
                                                 player.sendMessage(ChatColor.RED + "Errrur: " + ChatColor.GRAY + "La valeur élevée des " + mobName + "s est inférieure à la valeur que vous définissez.");
                                             }
-                                            else if (language.equalsIgnoreCase("Spanish")){
+                                            else if (language.equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY +
                                                         "El valor alto para " + mobName + "s es menor que el valor que está estableciendo.");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.RED + "错误 " + ChatColor.GRAY + mobName + "s 的高价值低于您设置的价值。");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                 player.sendMessage(ChatColor.RED + "錯誤 " + ChatColor.GRAY + mobName + "s 的最高掉落金額低於你設定的最低掉落金額.。");
                                             }
-                                            else if (language.equalsIgnoreCase("Hindi")){
+                                            else if (language.equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + mobName + "s के लिए उच्च मूल्य आपके द्वारा निर्धारित मूल्य से कम है।");
                                             }
-                                            else if (language.equalsIgnoreCase("Italian")) {
+                                            else if (language.equalsIgnoreCase(ITALIAN)) {
                                                 player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Il valore elevato per " + mobName + "s è inferiore al valore che stai impostando.");
                                             }
-                                            else if (language.equalsIgnoreCase("German")) {
+                                            else if (language.equalsIgnoreCase(GERMAN)) {
                                                 player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Der hohe Wert für " + mobName + "s ist niedriger als der von Ihnen eingestellte Wert.");
                                             }
-                                            else if (language.equalsIgnoreCase("Russian")) {
+                                            else if (language.equalsIgnoreCase(RUSSIAN)) {
                                                 player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Высокое значение для " + mobName + "s ниже, чем значение, которое вы устанавливаете.");
                                             }
                                             else {
@@ -1599,28 +1611,28 @@ public class MkCommand implements CommandExecutor {
                                         }
                                     } catch (NumberFormatException e){
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "像这样输入命令 -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "請像這樣輸入命令 -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + "इस तरह कमांड दर्ज करें -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Inserisci il comando come questo -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk setLowWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk setLowWorth [mobName] [amount]");
                                         }
                                         else {
@@ -1632,28 +1644,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if (Boolean.TRUE.equals(error)) {
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -1662,28 +1674,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1705,35 +1717,35 @@ public class MkCommand implements CommandExecutor {
                                             MobConfigManager.mobsCfg.set("mobs." + mobName + ".worth.high", Double.parseDouble(args[2]));
                                             try {
                                                 assert language != null;
-                                                if (language.equalsIgnoreCase("French")){
+                                                if (language.equalsIgnoreCase(FRENCH)){
                                                     player.sendMessage(ChatColor.GREEN + "La valeur élevée pour " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " a été fixée à " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("Spanish")) {
+                                                else if (language.equalsIgnoreCase(SPANISH)) {
                                                     player.sendMessage(ChatColor.GREEN + "El valor alto para " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " se ha establecido en " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " 的高价值已设置为 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " 最高掉落金額為 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Hindi")) {
+                                                else if (language.equalsIgnoreCase(HINDI)) {
                                                     player.sendMessage(ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " के लिए उच्च मूल्य " + ChatColor.GOLD + args[2] + ChatColor.GREEN + "निर्धारित किया गया है।");
                                                 }
-                                                else if (language.equalsIgnoreCase("Italian")) {
+                                                else if (language.equalsIgnoreCase(ITALIAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Il maggior valore per " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " e'' stato settato a " + ChatColor.GOLD + args[2] + ChatColor.GREEN + ".");
                                                 }
-                                                else if (language.equalsIgnoreCase("German")) {
+                                                else if (language.equalsIgnoreCase(GERMAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Der hohe Wert für " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " wurde auf " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " festgelegt.");
                                                 }
-                                                else if (language.equalsIgnoreCase("Russian")) {
+                                                else if (language.equalsIgnoreCase(RUSSIAN)) {
                                                     player.sendMessage(ChatColor.GREEN + "Максимальное значение для " + ChatColor.GOLD + mobName + "s" +
                                                             ChatColor.GREEN + " установлено " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " долларов.");
                                                 }
@@ -1746,30 +1758,30 @@ public class MkCommand implements CommandExecutor {
                                             }
                                         } else {
                                             assert language != null;
-                                            if (language.equalsIgnoreCase("French")) {
+                                            if (language.equalsIgnoreCase(FRENCH)) {
                                                 player.sendMessage(ChatColor.RED + "Errrur: " + ChatColor.GRAY + "La valeur faible pour les " + mobName +
                                                         "s est supérieure à la valeur que vous définissez.");
                                             }
-                                            else if (language.equalsIgnoreCase("Spanish")){
+                                            else if (language.equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY +
                                                         "El valor bajo para " + mobName + "s es mayor que el valor que está estableciendo.");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + mobName + "s 的低价值高于您设置的值。");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                 player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GRAY + mobName + "s 的最低掉落金額高於你設定的最高掉落金額。");
                                             }
-                                            else if (language.equalsIgnoreCase("Hindi")){
+                                            else if (language.equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + mobName + "s के लिए कम मूल्य आपके द्वारा निर्धारित मूल्य से अधिक है।");
                                             }
-                                            else if (language.equalsIgnoreCase("Italian")) {
+                                            else if (language.equalsIgnoreCase(ITALIAN)) {
                                                 player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Il valore basso per " + mobName + "s è superiore al valore che stai impostando.");
                                             }
-                                            else if (language.equalsIgnoreCase("German")) {
+                                            else if (language.equalsIgnoreCase(GERMAN)) {
                                                 player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Der niedrige Wert für " + mobName + "s ist höher als der von Ihnen eingestellte Wert.");
                                             }
-                                            else if (language.equalsIgnoreCase("Russian")) {
+                                            else if (language.equalsIgnoreCase(RUSSIAN)) {
                                                 player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Низкое значение для " + mobName + "s ниже, чем значение, которое вы устанавливаете.");
                                             }
                                             else {
@@ -1779,28 +1791,28 @@ public class MkCommand implements CommandExecutor {
                                         }
                                     } catch (NumberFormatException e){
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "像这样输入命令 -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GRAY + "請像這樣輸入命令 -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + "इस तरह कमांड दर्ज करें -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Inserisci il comando come questo -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk setHighWorth [mobName] [amount]");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk setHighWorth [mobName] [amount]");
                                         }
                                         else {
@@ -1811,28 +1823,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if (Boolean.TRUE.equals(error)) {
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -1841,28 +1853,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -1905,28 +1917,28 @@ public class MkCommand implements CommandExecutor {
                                     mobModel.setItems(itemList);
                                     if (Boolean.TRUE.equals(itemError)) {
                                         assert language != null;
-                                        if (language.equalsIgnoreCase("French")){
+                                        if (language.equalsIgnoreCase(FRENCH)){
                                             player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Les gouttes " +  ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'existent pas pour les " + ChatColor.GOLD + mobName + "s.");
                                         }
-                                        else if (language.equalsIgnoreCase("Spanish")){
+                                        else if (language.equalsIgnoreCase(SPANISH)){
                                             player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Las gotas de " +  ChatColor.GOLD + args[1] + ChatColor.GRAY + " no existen para las " + ChatColor.GOLD + mobName + "s.");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                        else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                             player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不存在 " + ChatColor.GOLD + mobName + "s " + ChatColor.GRAY + "滴。");
                                         }
-                                        else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                        else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                             player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + mobName + ChatColor.GRAY + " 沒有這個自訂義掉落物品 " + ChatColor.GOLD + args[1] + ChatColor.GREEN + ".");
                                         }
-                                        else if (language.equalsIgnoreCase("Hindi")){
+                                        else if (language.equalsIgnoreCase(HINDI)){
                                             player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " के लिए " + ChatColor.GOLD + mobName + "s " + ChatColor.GRAY + "ड्रॉप मौजूद नहीं है।");
                                         }
-                                        else if (language.equalsIgnoreCase("Italian")){
+                                        else if (language.equalsIgnoreCase(ITALIAN)){
                                             player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " drop non esistono per " + ChatColor.GOLD + mobName + "s.");
                                         }
-                                        else if (language.equalsIgnoreCase("German")){
+                                        else if (language.equalsIgnoreCase(GERMAN)){
                                             player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " -Drops sind für " + ChatColor.GOLD + mobName + " nicht vorhanden.");
                                         }
-                                        else if (language.equalsIgnoreCase("Russian")){
+                                        else if (language.equalsIgnoreCase(RUSSIAN)){
                                             player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " -Drops sind für " + ChatColor.GOLD + mobName + " nicht vorhanden.");
                                         }
                                         else {
@@ -1935,28 +1947,28 @@ public class MkCommand implements CommandExecutor {
                                     } else {
                                         try {
                                             assert language != null;
-                                            if (language.equalsIgnoreCase("French")){
+                                            if (language.equalsIgnoreCase(FRENCH)){
                                                 player.sendMessage(ChatColor.GREEN + "Suppression des gouttes " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " pour " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("Spanish")){
+                                            else if (language.equalsIgnoreCase(SPANISH)){
                                                 player.sendMessage(ChatColor.GREEN + "Se eliminaron las gotas de " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " para " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                 player.sendMessage(ChatColor.GREEN + "删除了 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " 的 " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "滴。");
                                             }
-                                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                 player.sendMessage(ChatColor.GREEN + "移除了 " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " 的 " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "掉落物。");
                                             }
-                                            else if (language.equalsIgnoreCase("Hindi")){
+                                            else if (language.equalsIgnoreCase(HINDI)){
                                                 player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " को " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + "के लिए हटा दिया जाता है।");
                                             }
-                                            else if (language.equalsIgnoreCase("Italian")){
+                                            else if (language.equalsIgnoreCase(ITALIAN)){
                                                 player.sendMessage(ChatColor.GREEN + "Hai rimosso " + ChatColor.GOLD + args[2] + ChatColor.GREEN + " dai drop per " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
-                                            else if (language.equalsIgnoreCase("German")){
+                                            else if (language.equalsIgnoreCase(GERMAN)){
                                                 player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " für " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + " wurden entfernt.");
                                             }
-                                            else if (language.equalsIgnoreCase("Russian")){
+                                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                                 player.sendMessage(ChatColor.GOLD + args[2] + ChatColor.GREEN + " капли удалены из " + ChatColor.GOLD + mobName + "s" + ChatColor.GREEN + ".");
                                             }
                                             else {
@@ -1971,28 +1983,28 @@ public class MkCommand implements CommandExecutor {
                             }
                             if (Boolean.TRUE.equals(mobError)) {
                                 assert language != null;
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                 }
                                 else {
@@ -2001,28 +2013,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl..");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {
@@ -2034,28 +2046,28 @@ public class MkCommand implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("addCustomDrop")) {
                         if (player.hasPermission("m4m.command.mk.addCustomDrop") || player.isOp()) {
                             if (args[1].equalsIgnoreCase("Player")){
-                                if (language.equalsIgnoreCase("French")){
+                                if (language.equalsIgnoreCase(FRENCH)){
                                     player.sendMessage(ChatColor.RED + "Erreur: impossible d'ajouter des gouttes personnalisées aux lecteurs.");
                                 }
-                                else if (language.equalsIgnoreCase("Spanish")){
+                                else if (language.equalsIgnoreCase(SPANISH)){
                                     player.sendMessage(ChatColor.RED + "Error: no se pueden agregar gotas personalizadas a los jugadores.");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                     player.sendMessage(ChatColor.RED + "错误：无法向播放器添加自定义放置。");
                                 }
-                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                     player.sendMessage(ChatColor.RED + "錯誤：無法向播放器添加自定義放置。");
                                 }
-                                else if (language.equalsIgnoreCase("Hindi")){
+                                else if (language.equalsIgnoreCase(HINDI)){
                                     player.sendMessage(ChatColor.RED + "त्रुटि: खिलाड़ियों को कस्टम ड्रॉप्स नहीं जोड़ सकते।");
                                 }
-                                else if (language.equalsIgnoreCase("Italian")){
+                                else if (language.equalsIgnoreCase(ITALIAN)){
                                     player.sendMessage(ChatColor.RED + "Errore: impossibile aggiungere drop personalizzati ai giocatori.");
                                 }
-                                else if (language.equalsIgnoreCase("German")){
+                                else if (language.equalsIgnoreCase(GERMAN)){
                                     player.sendMessage(ChatColor.RED + "Fehler: Spieler können keine benutzerdefinierten Drops hinzufügen.");
                                 }
-                                else if (language.equalsIgnoreCase("Russian")){
+                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                     player.sendMessage(ChatColor.RED + "Ошибка: Spieler können keine benutzerdefinierten Drops hinzufügen.");
                                 }
                                 else {
@@ -2104,35 +2116,35 @@ public class MkCommand implements CommandExecutor {
                                                                 MobConfigManager.mobsCfg.set("mobs." + mobModel.getMobName() + ".drops.item-" + counter2 + ".chance", chance);
                                                                 try {
                                                                     assert language != null;
-                                                                    if (language.equalsIgnoreCase("French")){
+                                                                    if (language.equalsIgnoreCase(FRENCH)){
                                                                         player.sendMessage(ChatColor.GREEN + "Ajout de " + ChatColor.GOLD + amount + " " + args[2] + " " +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + " aux gouttes avec " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de chances de tomber.");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Spanish")){
+                                                                    else if (language.equalsIgnoreCase(SPANISH)){
                                                                         player.sendMessage(ChatColor.GREEN + "Se agregaron " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " a " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + " gotas con un " + ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "de probabilidad de caer.");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                                                    else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                                         player.sendMessage(ChatColor.GREEN + "为" + ChatColor.GOLD + "" + args[2] + " 掉落增加了 " + ChatColor.GOLD + amount + mobModel.getMobName() +
                                                                                 ChatColor.GREEN + ", 掉落几率为 " + ChatColor.GOLD + chance + "%。");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                                                    else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                                         player.sendMessage(ChatColor.GREEN + "添加了 " + ChatColor.GOLD + amount + ChatColor.GREEN + " 個 " + args[2] + " 給 " + ChatColor.GOLD + mobModel.getMobName() +
                                                                                 ChatColor.GREEN + "並且有 " + ChatColor.GOLD + chance + "% 機率掉落。");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Hindi")){
+                                                                    else if (language.equalsIgnoreCase(HINDI)){
                                                                         player.sendMessage(ChatColor.GOLD + "" + amount + " " + args[2] + " " + mobModel.getMobName() + ChatColor.GREEN + " बूँदें छोड़ने के " +
                                                                                 ChatColor.GOLD + chance + "% " + ChatColor.GREEN + "संभावना के साथ जोड़ा गया।");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Italian")){
+                                                                    else if (language.equalsIgnoreCase(ITALIAN)){
                                                                         player.sendMessage(ChatColor.GREEN + "Aggiunto " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " per " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + " con la chance di drop impostata a " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + ".");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("German")){
+                                                                    else if (language.equalsIgnoreCase(GERMAN)){
                                                                         player.sendMessage(ChatColor.GREEN + "Es wurden " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " zu " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + "-Drops hinzugefügt, mit einer " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " igen Chance zu fallen.");
                                                                     }
-                                                                    else if (language.equalsIgnoreCase("Russian")){
+                                                                    else if (language.equalsIgnoreCase(RUSSIAN)){
                                                                         player.sendMessage(ChatColor.GREEN + "Добавлено " + ChatColor.GOLD + amount + " " + args[2] + ChatColor.GREEN + " для выпадения " + ChatColor.GOLD +
                                                                                 mobModel.getMobName() + ChatColor.GREEN + " с " + ChatColor.GOLD + chance + "%" + ChatColor.GREEN + " шансом выпадения.");
                                                                     }
@@ -2145,28 +2157,28 @@ public class MkCommand implements CommandExecutor {
                                                                 }
                                                             } catch (NumberFormatException e) {
                                                                 assert language != null;
-                                                                if (language.equalsIgnoreCase("French")){
+                                                                if (language.equalsIgnoreCase(FRENCH)){
                                                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GRAY + "Entrez une commande comme celle-ci -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Spanish")){
+                                                                else if (language.equalsIgnoreCase(SPANISH)){
                                                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GRAY + "Ingrese un comando como este -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GRAY + "像这样输入命令 -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GRAY + "請像這樣輸入命令 -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Hindi")){
+                                                                else if (language.equalsIgnoreCase(HINDI)){
                                                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GRAY + "इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Italian")){
+                                                                else if (language.equalsIgnoreCase(ITALIAN)){
                                                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GRAY + "Inserisci il comando come questo -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("German")){
+                                                                else if (language.equalsIgnoreCase(GERMAN)){
                                                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GRAY + "Geben Sie den Befehl so ein -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
-                                                                else if (language.equalsIgnoreCase("Russian")){
+                                                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GRAY + "Введите команду следующим образом -> /mk addCustomDrop [mobName] [amount] [chance]");
                                                                 }
                                                                 else {
@@ -2178,28 +2190,28 @@ public class MkCommand implements CommandExecutor {
                                                 }
                                                 else {
                                                     assert language != null;
-                                                    if (language.equalsIgnoreCase("French")) {
+                                                    if (language.equalsIgnoreCase(FRENCH)) {
                                                         player.sendMessage(ChatColor.RED + "Erreur:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ya está presente como una gota personalizada.");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Spanish")) {
+                                                    else if (language.equalsIgnoreCase(SPANISH)) {
                                                         player.sendMessage(ChatColor.RED + "Error:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " est déjà présent en tant que drop personnalisé.");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Chinese_Simplified")) {
+                                                    else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)) {
                                                         player.sendMessage(ChatColor.RED + "错误:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " 已作为自定义放置出现。");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Chinese_Traditional")) {
+                                                    else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)) {
                                                         player.sendMessage(ChatColor.RED + "錯誤:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " 已作為自定義放置出現。");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Hindi")) {
+                                                    else if (language.equalsIgnoreCase(HINDI)) {
                                                         player.sendMessage(ChatColor.RED + "त्रुटि:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " पहले से ही कस्टम ड्रॉप के रूप में मौजूद है।");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Italian")) {
+                                                    else if (language.equalsIgnoreCase(ITALIAN)) {
                                                         player.sendMessage(ChatColor.RED + "Errore:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " e'' gia'' presente come drop personalizzato.");
                                                     }
-                                                    else if (language.equalsIgnoreCase("German")) {
+                                                    else if (language.equalsIgnoreCase(GERMAN)) {
                                                         player.sendMessage(ChatColor.RED + "Fehler:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " ist bereits als benutzerdefiniertes Drop vorhanden.");
                                                     }
-                                                    else if (language.equalsIgnoreCase("Russian")) {
+                                                    else if (language.equalsIgnoreCase(RUSSIAN)) {
                                                         player.sendMessage(ChatColor.RED + "Ошибка:" + ChatColor.GOLD + args[2] + ChatColor.GRAY + " уже присутствует в виде кастомного дропа.");
                                                     }
                                                     else {
@@ -2210,28 +2222,28 @@ public class MkCommand implements CommandExecutor {
                                             }
                                             catch (IllegalArgumentException e){
                                                 assert language != null;
-                                                if (language.equalsIgnoreCase("French")){
+                                                if (language.equalsIgnoreCase(FRENCH)){
                                                     player.sendMessage(ChatColor.RED + "Erreur: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " n'est pas un mob valide.");
                                                 }
-                                                else if (language.equalsIgnoreCase("Spanish")){
+                                                else if (language.equalsIgnoreCase(SPANISH)){
                                                     player.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " no es una mafia válida.");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                                                else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                                     player.sendMessage(ChatColor.RED + "错误: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的暴民。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                                                else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                                     player.sendMessage(ChatColor.RED + "錯誤: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " 不是有效的生物。");
                                                 }
-                                                else if (language.equalsIgnoreCase("Hindi")){
+                                                else if (language.equalsIgnoreCase(HINDI)){
                                                     player.sendMessage(ChatColor.RED + "त्रुटि: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " एक मान्य भीड़ नहीं है।");
                                                 }
-                                                else if (language.equalsIgnoreCase("Italian")){
+                                                else if (language.equalsIgnoreCase(ITALIAN)){
                                                     player.sendMessage(ChatColor.RED + "Errore: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " non è un Mob valido.");
                                                 }
-                                                else if (language.equalsIgnoreCase("German")){
+                                                else if (language.equalsIgnoreCase(GERMAN)){
                                                     player.sendMessage(ChatColor.RED + "Fehler: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " sind keine gültigen Mobs.");
                                                 }
-                                                else if (language.equalsIgnoreCase("Russian")){
+                                                else if (language.equalsIgnoreCase(RUSSIAN)){
                                                     player.sendMessage(ChatColor.RED + "Ошибка: " + ChatColor.GOLD + args[1] + ChatColor.GRAY + " не является допустимым мобом.");
                                                 }
                                                 else {
@@ -2243,28 +2255,28 @@ public class MkCommand implements CommandExecutor {
                             }
                         } else {
                             assert language != null;
-                            if (language.equalsIgnoreCase("French")){
+                            if (language.equalsIgnoreCase(FRENCH)){
                                 player.sendMessage(ChatColor.RED + "Vous n'avez pas accès à cette commande.");
                             }
-                            else if (language.equalsIgnoreCase("Spanish")){
+                            else if (language.equalsIgnoreCase(SPANISH)){
                                 player.sendMessage(ChatColor.RED + "No tiene acceso a este comando.");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Simplified")){
+                            else if (language.equalsIgnoreCase(CHINESE_SIMPLIFIED)){
                                 player.sendMessage(ChatColor.RED + "您无权访问此命令。");
                             }
-                            else if (language.equalsIgnoreCase("Chinese_Traditional")){
+                            else if (language.equalsIgnoreCase(CHINESE_TRADITIONAL)){
                                 player.sendMessage(ChatColor.RED + "你沒有使用該指令的權限。");
                             }
-                            else if (language.equalsIgnoreCase("Hindi")){
+                            else if (language.equalsIgnoreCase(HINDI)){
                                 player.sendMessage(ChatColor.RED + "आपके पास इस आदेश तक पहुंच नहीं है।");
                             }
-                            else if (language.equalsIgnoreCase("Italian")){
+                            else if (language.equalsIgnoreCase(ITALIAN)){
                                 player.sendMessage(ChatColor.RED + "Non hai accesso a quel comando.");
                             }
-                            else if (language.equalsIgnoreCase("German")){
+                            else if (language.equalsIgnoreCase(GERMAN)){
                                 player.sendMessage(ChatColor.RED + "Sie haben keinen Zugriff auf diesen Befehl.");
                             }
-                            else if (language.equalsIgnoreCase("Russian")){
+                            else if (language.equalsIgnoreCase(RUSSIAN)){
                                 player.sendMessage(ChatColor.RED + "У вас нет доступа к этой команде.");
                             }
                             else {

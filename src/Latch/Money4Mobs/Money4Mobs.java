@@ -1,6 +1,7 @@
 package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Metrics;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,9 +64,9 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
 
-        for(OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(),true, "English", null));
-            playerList.add(new Mobs4MoneyPlayer(p.getName(), true ));
+        for (OfflinePlayer p : getServer().getOfflinePlayers()) {
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, "English", null));
+            playerList.add(new Mobs4MoneyPlayer(p.getName(), true));
         }
 
         int pluginId = 9484; // <-- Replace with the id of your plugin!
@@ -87,11 +88,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event){
+    public void onEntityDeath(EntityDeathEvent event) {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError ignore){
+        } catch (RuntimeException | NoClassDefFoundError ignore) {
         }
     }
 
@@ -103,16 +104,16 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 count = 1;
             }
         }
-        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true,"English", event.getPlayer().getAddress().toString());
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true, "English", event.getPlayer().getAddress().toString());
         UserManager.addUserToList(um);
-        if (count == 0){
-            playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true ));
+        if (count == 0) {
+            playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true));
         }
     }
 
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        if(!event.getSpawnReason().toString().equals("NATURAL")){
+        if (!event.getSpawnReason().toString().equals("NATURAL")) {
             try {
                 MobKiller.getSpawnReason(event);
             } catch (NoClassDefFoundError e) {
@@ -122,7 +123,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onLogout(PlayerQuitEvent event){
+    public void onLogout(PlayerQuitEvent event) {
         removePlayerOnLeave(event);
     }
 
@@ -142,7 +143,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         econ = value;
     }
 
-    public void removePlayerOnLeave(PlayerQuitEvent event){
+    public void removePlayerOnLeave(PlayerQuitEvent event) {
         Player pa = event.getPlayer();
         for (int i = 0; i < playerList.size(); i++) {
             if (pa.toString().equals(playerList.get(i).getPlayerName())) {
@@ -162,19 +163,18 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         return entityId;
     }
 
-    public void setIsTamedWolf(int entityId){
+    public void setIsTamedWolf(int entityId) {
         Money4Mobs.entityId = entityId;
     }
 
-    public void callRewardMobKiller(EntityDeathEvent event){
+    public void callRewardMobKiller(EntityDeathEvent event) {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
             if (getIsTamedWolf() == 0) {
                 MobKiller.rewardPlayerMoney(pa, e, econ);
-            }
-            else {
+            } else {
                 if (!Boolean.FALSE.equals(tamedWolvesGiveMoney)) {
                     MobKiller.rewardPlayerMoney(pa, e, econ);
                 }
@@ -188,7 +188,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MobCfgm.setup();
     }
 
-    public static void loadItemConfigManager(){
+    public static void loadItemConfigManager() {
         ItemCfgm = new ItemListManager();
         ItemCfgm.setup();
     }
@@ -198,7 +198,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         UserCfgm.setup();
     }
 
-    public static List<Mobs4MoneyPlayer> getPlayerList(){
+    public static List<Mobs4MoneyPlayer> getPlayerList() {
         return playerList;
     }
 
