@@ -100,7 +100,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "off.");
                                 }
-                                UserManager.usersCfg.set(USERS_USER + i + "SHOW_MESSAGE", false);
+                                UserManager.usersCfg.set(USERS_USER + i + SHOW_MESSAGE, false);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
@@ -134,7 +134,7 @@ public class MkCommand implements CommandExecutor {
                                 else {
                                     player.sendMessage(ChatColor.GREEN + "MobKiller message " + ChatColor.GOLD + "on.");
                                 }
-                                UserManager.usersCfg.set(USERS_USER + i + "SHOW_MESSAGE", true);
+                                UserManager.usersCfg.set(USERS_USER + i + SHOW_MESSAGE, true);
                                 try {
                                     UserManager.usersCfg.save(userFile);
                                 } catch (IOException e) {
