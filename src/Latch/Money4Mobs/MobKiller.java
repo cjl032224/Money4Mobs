@@ -404,6 +404,7 @@ public abstract class MobKiller implements CommandExecutor {
                 money = money * multiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
+
         }
     }
 

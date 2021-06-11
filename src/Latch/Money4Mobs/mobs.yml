@@ -1,7 +1,7 @@
 # This is the default mobs.yml config file
 # If you are having problems, compare your mobs.yml with this and
 # see if you are missing any options
-version: 1.3.10
+version: 1.4
 spawners: false
 spawneggs: false
 tamedWolvesGiveMoney: true
@@ -17,6 +17,12 @@ group-multiplier:
   level-5: 1
   operator: 1
 mobs:
+  Axolotl:
+    worth:
+      low: 25
+      high: 25
+    keepDefaultDrops: true
+    customDrops: false
   Bat:
     worth:
       low: 10
@@ -149,6 +155,18 @@ mobs:
     worth:
       low: 1
       high: 1
+    keepDefaultDrops: true
+    customDrops: false
+  GlowSquid:
+    worth:
+      low: 25
+      high: 25
+    keepDefaultDrops: true
+    customDrops: false
+  Goat:
+    worth:
+      low: 25
+      high: 25
     keepDefaultDrops: true
     customDrops: false
   Guardian:
@@ -421,6 +439,12 @@ mobs:
     keepDefaultDrops: true
     customDrops: false
   Wolf:
+    worth:
+      low: 25
+      high: 25
+    keepDefaultDrops: true
+    customDrops: false
+  Zoglin:
     worth:
       low: 25
       high: 25
