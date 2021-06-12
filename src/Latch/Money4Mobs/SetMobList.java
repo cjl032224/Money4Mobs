@@ -13,6 +13,7 @@ public class SetMobList {
     }
 
     public void setMobWorth(){
+        mobList.add(new MobModel("Axolotl", 5.0, 5.0, true, false, null));
         mobList.add(new MobModel("Bat", 10.0, 10.0, true, false, null));
         mobList.add(new MobModel("Bee", 15.0, 15.0, true, false, null));
         mobList.add(new MobModel("Blaze", 25.0, 25.0,  true,false, null));
@@ -33,6 +34,8 @@ public class SetMobList {
         mobList.add(new MobModel("Fox", 3.0, 3.0, true, false, null));
         mobList.add(new MobModel("Ghast", 30.0, 30.0, true, false, null));
         mobList.add(new MobModel("Giant", 1.0, 1.0, true, false, null));
+        mobList.add(new MobModel("GlowSquid", 5.0, 5.0, true, false, null));
+        mobList.add(new MobModel("Goat", 10.0, 10.0, true, false, null));
         mobList.add(new MobModel("Guardian", 75.0, 75.0, true, false, null));
         mobList.add(new MobModel("Hoglin", 50.0, 50.0, true, false, null));
         mobList.add(new MobModel("Husk", 30.0, 30.0, true, false, null));
@@ -79,11 +82,9 @@ public class SetMobList {
         mobList.add(new MobModel("Wither", 2500.0, 2500.0, true, false, null));
         mobList.add(new MobModel("WitherSkeleton", 45.0, 45.0, true, false, null));
         mobList.add(new MobModel("Wolf", 25.0, 25.0, true, false, null));
+        mobList.add(new MobModel("Zoglin", 25.0, 25.0, true, false, null));
         mobList.add(new MobModel("Zombie", 15.0, 25.0, true, false, null));
         mobList.add(new MobModel("ZombieHorse", 35.0, 35.0, true, false, null));
         mobList.add(new MobModel("ZombieVillager", 20.0, 20.0, true, false, null));
     }
-
-
-
 }
