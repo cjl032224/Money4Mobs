@@ -8,3 +8,4 @@
 | 1.14   | 1.3.10        | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.14---Money4Mobs-v1.3.10.jar)      |
 | 1.15      | 1.3.10      | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.15---Money4Mobs-v1.3.10.jar)  |
 | 1.16   | 1.3.10        | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.16---Money4Mobs-v1.3.10.jar)      |
+| 1.17   | 1.4      | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.17---Money4Mobs-v1.4.jar)      |
