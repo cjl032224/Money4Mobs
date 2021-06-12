@@ -15,16 +15,25 @@ public class ItemListManager {
     public File itemsFile;
     private static final Material[] m = Material.values();
 
+    public static FileConfiguration mobsCfg;
+    public static File mobsFile;
+
     // Set up mobs.yml configuration file
     public void setup(){
         // if the Mobs4Money folder does not exist, create the Mobs4Money folder
         if(!plugin.getDataFolder().exists()){
             plugin.getDataFolder().mkdir();
         }
+        mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
+        mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
+        Boolean createItemFile = false;
 
+        if (mobsCfg.getString("version") != "1.4.1") {
+            createItemFile = true;
+        }
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
         //if the mobs.yml does not exist, create it
-        if(!itemsFile.exists()){
+        if(!itemsFile.exists() || Boolean.TRUE.equals(createItemFile)){
             try {
                 itemsFile.createNewFile();
             }
@@ -39,7 +48,9 @@ public class ItemListManager {
         try {
             itemsFile.createNewFile();
             for (int i = 0; i < m.length; i++){
-                itemsCfg.set("items.name." + i, m[i].toString());
+                if (!m[i].toString().contains("CANDLE_CAKE")){
+                    itemsCfg.set("items.name." + i, m[i].toString());
+                }
             }
             itemsCfg.save(itemsFile);
         }

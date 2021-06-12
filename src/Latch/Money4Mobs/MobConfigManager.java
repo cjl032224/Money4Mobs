@@ -47,7 +47,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.3.10");
+            mobsCfg.set("version", "1.4.1");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
@@ -120,13 +120,14 @@ public class MobConfigManager {
             counter1++;
         }
         update137AddPiglin();
+        update14Add117Mobs();
         updatePluginVersion();
 
     }
 
     public static void updatePluginVersion() throws IOException {
-        if (mobsCfg.getString("version") != "1.3.10") {
-            mobsCfg.set("version", "1.3.10");
+        if (mobsCfg.getString("version") != "1.4.1") {
+            mobsCfg.set("version", "1.4.1");
         }
         mobsCfg.save(mobsFile);
     }
@@ -148,6 +149,63 @@ public class MobConfigManager {
             mobsCfg.set("mobs.Piglin.customDrops", false);
         }
         ;
+        mobsCfg.save(mobsFile);
+
+    }
+
+    public static void update14Add117Mobs() throws IOException {
+        // Axolotl
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Axolotl.worth.low"))) {
+            mobsCfg.set("mobs.Axolotl.worth.low", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Axolotl.worth.high"))) {
+            mobsCfg.set("mobs.Axolotl.worth.high", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Axolotl.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.Axolotl.keepDefaultDrops", true);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Axolotl.customDrops"))) {
+            mobsCfg.set("mobs.Axolotl.customDrops", false);
+        }
+        // Glow Squid
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.GlowSquid.worth.low"))) {
+            mobsCfg.set("mobs.GlowSquid.worth.low", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.GlowSquid.worth.high"))) {
+            mobsCfg.set("mobs.GlowSquid.worth.high", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.GlowSquid.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.GlowSquid.keepDefaultDrops", true);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.GlowSquid.customDrops"))) {
+            mobsCfg.set("mobs.GlowSquid.customDrops", false);
+        }
+        // Goat
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Goat.worth.low"))) {
+            mobsCfg.set("mobs.Goat.worth.low", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Goat.worth.high"))) {
+            mobsCfg.set("mobs.Goat.worth.high", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Goat.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.Goat.keepDefaultDrops", true);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Goat.customDrops"))) {
+            mobsCfg.set("mobs.Goat.customDrops", false);
+        }
+        // Zoglin
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Zoglin.worth.low"))) {
+            mobsCfg.set("mobs.Zoglin.worth.low", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Zoglin.worth.high"))) {
+            mobsCfg.set("mobs.Zoglin.worth.high", 25);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Zoglin.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.Zoglin.keepDefaultDrops", true);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Zoglin.customDrops"))) {
+            mobsCfg.set("mobs.Zoglin.customDrops", false);
+        }
         mobsCfg.save(mobsFile);
 
     }
