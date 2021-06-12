@@ -47,7 +47,7 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.4");
+            mobsCfg.set("version", "1.4.1");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
@@ -126,8 +126,8 @@ public class MobConfigManager {
     }
 
     public static void updatePluginVersion() throws IOException {
-        if (mobsCfg.getString("version") != "1.4") {
-            mobsCfg.set("version", 1.4);
+        if (mobsCfg.getString("version") != "1.4.1") {
+            mobsCfg.set("version", "1.4.1");
         }
         mobsCfg.save(mobsFile);
     }
