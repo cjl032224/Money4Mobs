@@ -55,7 +55,7 @@ public class ItemListManager {
             itemsCfg.save(itemsFile);
         }
         catch(IOException e){
-            System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
+            System.out.println(ChatColor.RED + "Could not create the items.yml file");
         }
     }
 

@@ -1,8 +1,7 @@
 package Latch.Money4Mobs;
 
-import Latch.Money4Mobs.Metrics;
+import Latch.Money4Mobs.Managers.MessagesConfigManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -40,6 +38,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static UserManager UserCfgm;
     public static FileConfiguration KillLogCfg;
     private static int entityId;
+    private static MessagesConfigManager MessagesCfgm;
 
     @Override
     public void onEnable() {
@@ -50,6 +49,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
         loadItemConfigManager();
         loadUserConfigManager();
+        try {
+            loadLanguageConfigManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         ItemCfgm.createItemsConfig();
@@ -199,6 +203,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         UserCfgm.setup();
     }
 
+    static void loadLanguageConfigManager() throws IOException {
+        MessagesCfgm = new MessagesConfigManager();
+        MessagesCfgm.setup();
+    }
+
     public static List<Mobs4MoneyPlayer> getPlayerList() {
         return playerList;
     }
@@ -211,5 +220,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadMobConfigManager();
         loadItemConfigManager();
         loadUserConfigManager();
+        loadLanguageConfigManager();
     }
 }
