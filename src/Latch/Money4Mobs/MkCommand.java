@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MkCommand implements CommandExecutor {
     private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
@@ -41,6 +42,7 @@ public class MkCommand implements CommandExecutor {
     private static final String DROPS_ITEMS = ".drops.item-";
     private static final String CUSTOM_DROPS = ".customDrops";
     private static final String KEEP_DEFAULT_DROPS = ".keepDefaultDrops";
+    Logger logger = Logger.getLogger(MkCommand.class.getName());
     // Language Constants
     private static final String ENGLISH = "English";
 
@@ -165,6 +167,7 @@ public class MkCommand implements CommandExecutor {
                     else if (args[0].equalsIgnoreCase("reload")) {
                         if (commandSender.hasPermission("m4m.command.mk.reload") || commandSender.isOp()) {
                             String reloadingMessage = MessagesConfigManager.messagesCfg.getString(MESSAGES + languageFormatted + ".reloadingMessage");
+                            logger.log(Level.INFO, reloadingMessage.substring(2));
                             convertMessage(reloadingMessage, commandSender, null, null, null, null, null, null);
                             plugin.getPluginLoader().disablePlugin(plugin);
                             mm.clear();
@@ -173,6 +176,7 @@ public class MkCommand implements CommandExecutor {
                             um = UserManager.updateUsersOnReload();
                             plugin.getPluginLoader().enablePlugin(plugin);
                             String reloadConfirmMessage = MessagesConfigManager.messagesCfg.getString(MESSAGES + languageFormatted + ".reloadConfirmMessage");
+                            logger.log(Level.INFO, reloadConfirmMessage.substring(2));
                             convertMessage(reloadConfirmMessage, commandSender, null, null, null, null, null, null);
                         }
                     }

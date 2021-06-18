@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.sun.jna.platform.win32.Wincon;
+import io.netty.util.concurrent.EventExecutorChooserFactory;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
@@ -16,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -121,8 +124,10 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!event.getSpawnReason().toString().equals("NATURAL")) {
             try {
                 MobKiller.getSpawnReason(event);
-            } catch (NoClassDefFoundError e) {
+            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException e) {
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue is with Paper and not Money4Mobs");
             }
         }
     }
