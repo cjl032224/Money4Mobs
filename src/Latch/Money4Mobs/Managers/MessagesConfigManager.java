@@ -84,12 +84,12 @@ public class MessagesConfigManager {
             messagesCfg.set("messages.french.addCustomDropAlreadyPresentErrorMessage", "&cErreur: &6%itemName% &7est déjà présent en tant que drop personnalisé");
             messagesCfg.set("messages.french.addCustomDropSuccessMessage", "&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une &6%chance% % &ade chance de tomber");
             messagesCfg.set("messages.french.removeCustomDropSuccessMessage", "&6%itemName% &agouttes supprimées de &6%mobName% &amobs");
-            messagesCfg.set("messages.french.customDropsDoNotExistErrorMessage", "&cErreur: &7Drops n''existent pas pour &6%mobName% &amobs");
+            messagesCfg.set("messages.french.customDropsDoNotExistErrorMessage", "&cErreur: &7Drops n'existent pas pour &6%mobName% &amobs");
             messagesCfg.set("messages.french.customDropsNotEnabledMessage", "&aLes largages personnalisés ne sont pas activés pour &6%mobName% &amobs");
             messagesCfg.set("messages.french.setLowWorthTooHighErrorMessage", "&cErreur: &7La valeur faible pour &6%mobName% &7mobs est supérieure à la valeur que vous définissez");
             messagesCfg.set("messages.french.setHighWorthTooLowErrorMessage", "&cErreur: &7Valeur élevée pour &6%mobName% &7mobs est inférieure à la valeur que vous définissez");
             messagesCfg.set("messages.french.mobDropInfoMessage", "&6%mobName% &amobs ont &6%chance% % &achance de laisser tomber &6%amount%  %itemName%");
-            messagesCfg.set("messages.french.customDropsNotSetMessage", "&6%mobName% &amobs n''ont pas de drop personnalisé défini");
+            messagesCfg.set("messages.french.customDropsNotSetMessage", "&6%mobName% &amobs n'ont pas de drop personnalisé défini");
             messagesCfg.set("messages.french.mobWorthMessage", "&6%mobName% &amobs valent &6%lowWorth% &adollar(s)");
             messagesCfg.set("messages.french.mobRangeWorthMessage", "&6%mobName% &amobs valent entre &6%lowWorth% &aet &6%highWorth% &adollars");
             messagesCfg.set("messages.french.setLowWorthSuccessMessage", "&aFaible valeur pour &6%mobName% &amobs a été défini sur &6%lowWorth% &adollar(s)");
@@ -143,7 +143,7 @@ public class MessagesConfigManager {
             messagesCfg.set("messages.german.eggSpawnRewardTrueMessage", "&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird, wird auf &6wahr gesetzt");
             messagesCfg.set("messages.german.eggSpawnRewardFalseMessage", "&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird, wird auf &6falsch gesetzt");
             messagesCfg.set("messages.german.spawnerSpawnRewardTrueMessage", "&aGeld, das von Spawner-Mobs belohnt wird, ist eingestellt auf &6wahr");
-            messagesCfg.set("messages.german.spawnerSpawnRewardFalseMessage", "aGeld, das von Spawner-Mobs belohnt wird, ist eingestellt auf &6falsch");
+            messagesCfg.set("messages.german.spawnerSpawnRewardFalseMessage", "&aGeld, das von Spawner-Mobs belohnt wird, ist eingestellt auf &6falsch");
             messagesCfg.set("messages.german.tamedWolvesRewardTrueMessage", "&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden, setzen auf &6wahr");
             messagesCfg.set("messages.german.tamedWolvesRewardFalseMessage", "&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden, setzen auf &6falsch");
             messagesCfg.set("messages.german.reloadingMessage", "&bMoney4Mobs Neuladen");
@@ -209,6 +209,81 @@ public class MessagesConfigManager {
             messagesCfg.set("messages.italian.defaultDropsFalseMessage", "&aGocce predefinite per &6%mobName% &amobs impostato &6falso");
             messagesCfg.set("messages.italian.customDropsTrueMessage", "&aDrop personalizzati per &6%mobName% &amobs impostato &6vero");
             messagesCfg.set("messages.italian.customDropsFalseMessage", "&aDrop personalizzati per &6%mobName% &amobs impostato &6falso");
+
+            // Russian
+            messagesCfg.set("messages.russian.mobKillerOnMessage", "&aСообщение MobKiller &6на");
+            messagesCfg.set("messages.russian.mobKillerOffMessage", "&aСообщение MobKiller &6выключенный");
+            messagesCfg.set("messages.russian.accessDeniedMessage", "&cУ вас нет доступа к этой команде");
+            messagesCfg.set("messages.russian.eggSpawnRewardTrueMessage", "&aДенежная награда от мобов, порожденных яйцами, установлена в размере &6правда");
+            messagesCfg.set("messages.russian.eggSpawnRewardFalseMessage", "&aДенежная награда от мобов, порожденных яйцами, установлена в размере &6ложный");
+            messagesCfg.set("messages.russian.spawnerSpawnRewardTrueMessage", "&aДенежная награда от создателей мобов установлена в размере &6правда");
+            messagesCfg.set("messages.russian.spawnerSpawnRewardFalseMessage", "&aДенежная награда от создателей мобов установлена в размере &6ложный");
+            messagesCfg.set("messages.russian.tamedWolvesRewardTrueMessage", "&aДеньги, полученные от мобов, убитых прирученными волками, установленными в &6правда");
+            messagesCfg.set("messages.russian.tamedWolvesRewardFalseMessage", "&aДеньги, полученные от мобов, убитых прирученными волками, установленными в &6ложный");
+            messagesCfg.set("messages.russian.reloadingMessage", "&bПополнение Money4Mobs");
+            messagesCfg.set("messages.russian.reloadConfirmMessage", "&6Money4Mobs Перезагрузка завершена");
+            messagesCfg.set("messages.russian.overrideKillMessageTrue", "&aoverrideKillMessage установлен в &6правда");
+            messagesCfg.set("messages.russian.overrideKillMessageFalse", "&aoverrideKillMessage установлен в &6ложный");
+            messagesCfg.set("messages.russian.setLowWorthCommandErrorMessage", "&cОшибка: &7Введите команду, подобную этой -> /mk setLowWorth [mob-название] [количество]");
+            messagesCfg.set("messages.russian.setHighWorthCommandErrorMessage", "&cОшибка: &7Введите команду, подобную этой -> /mk setHighWorth [mob-название] [количество]");
+            messagesCfg.set("messages.russian.addCustomDropsErrorMessage", "&cОшибка: Пользовательские дропы не могут быть добавлены игрокам");
+            messagesCfg.set("messages.russian.addCustomDropsCommandErrorMessage", "&cОшибка: &7Введите команду, подобную этой -> /mk addCustomDrop [mob-название] [количество] [шанс]");
+            messagesCfg.set("messages.russian.addCustomDropInvalidMobErrorMessage", "&cОшибка: &6%mobName% &7is not a valid mob");
+            messagesCfg.set("messages.russian.addCustomDropAlreadyPresentErrorMessage", "&cОшибка: &6%itemName% &7уже присутствует в виде кастомного дропа");
+            messagesCfg.set("messages.russian.addCustomDropSuccessMessage", "&aДобавлен &6%amount%  %itemName% &aк &6%mobName% &aпадает с &6%chance% % &aшанс упасть");
+            messagesCfg.set("messages.russian.removeCustomDropSuccessMessage", "&6%itemName%  &aкапли удалены из &6%mobName% &amobs");
+            messagesCfg.set("messages.russian.customDropsDoNotExistErrorMessage", "&cОшибка: &7Капли не существуют для &6%mobName% &amobs");
+            messagesCfg.set("messages.russian.customDropsNotEnabledMessage", "&aПользовательские сбросы не включены для &6%mobName% &amobs");
+            messagesCfg.set("messages.russian.setLowWorthTooHighErrorMessage", "&cОшибка: &7Низкая ценность для &6%mobName% %7mobs выше, чем значение, которое вы устанавливаете");
+            messagesCfg.set("messages.russian.setHighWorthTooLowErrorMessage", "&cОшибка: &7Высокая ценность для &6%mobName% &7mobs ниже установленного вами значения");
+            messagesCfg.set("messages.russian.mobDropInfoMessage", "&6%mobName% &amobs есть &6%chance% % &aшанс упасть &6%amount%  %itemName%");
+            messagesCfg.set("messages.russian.customDropsNotSetMessage", "&6%mobName% &amobs нет никаких настраиваемых дропов");
+            messagesCfg.set("messages.russian.mobWorthMessage", "&6%mobName% &amobs стоит &6%lowWorth% &aдоллар(ы)");
+            messagesCfg.set("messages.russian.mobRangeWorthMessage", "&6%mobName% &amobs стоят между &6%lowWorth% &aand &6%highWorth% &adollars");
+            messagesCfg.set("messages.russian.setLowWorthSuccessMessage", "&aНизкая ценность для &6%mobName% &amobs был установлен на &6%lowWorth% &aдоллар(ы)");
+            messagesCfg.set("messages.russian.setHighWorthSuccessMessage", "&aВысокая ценность для &6%mobName% &amobs был установлен на &6%highWorth% &aдоллар(ы)");
+            messagesCfg.set("messages.russian.defaultDropsTrueMessage", "&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6правда");
+            messagesCfg.set("messages.russian.defaultDropsFalseMessage", "&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6ложный");
+            messagesCfg.set("messages.russian.customDropsTrueMessage", "&aПользовательские дропы для &6%mobName% &amobs установлен в &6правда");
+            messagesCfg.set("messages.russian.customDropsFalseMessage", "&aПользовательские дропы для &6%mobName% &amobs установлен в &6ложный");
+
+            // Hindi
+            messagesCfg.set("messages.hindi.mobKillerOnMessage", "&aMobKiller संदेश &6पर");
+            messagesCfg.set("messages.hindi.mobKillerOffMessage", "&aMobKiller संदेश &6बंद");
+            messagesCfg.set("messages.hindi.accessDeniedMessage", "&cआपके पास इस आदेश तक पहुंच नहीं है");
+            messagesCfg.set("messages.hindi.eggSpawnRewardTrueMessage", "&aअंडे से पैदा हुई भीड़ से मिलने वाला इनाम इस पर सेट है &6सच");
+            messagesCfg.set("messages.hindi.eggSpawnRewardFalseMessage", "&aअंडे से पैदा हुई भीड़ से मिलने वाला इनाम इस पर सेट है &6असत्य");
+            messagesCfg.set("messages.hindi.spawnerSpawnRewardTrueMessage", "&aस्पॉनर मॉब से मिलने वाला इनाम इस पर सेट है &6सच");
+            messagesCfg.set("messages.hindi.spawnerSpawnRewardFalseMessage", "&aस्पॉनर मॉब से मिलने वाला इनाम इस पर सेट है &6असत्य");
+            messagesCfg.set("messages.hindi.tamedWolvesRewardTrueMessage", "&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला पैसा &6सच");
+            messagesCfg.set("messages.hindi.tamedWolvesRewardFalseMessage", "&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला पैसा &6असत्य");
+            messagesCfg.set("messages.hindi.reloadingMessage", "&bMoney4Mobs को पुनः लोड करना");
+            messagesCfg.set("messages.hindi.reloadConfirmMessage", "&6Money4Mobs पुनः लोड पूर्ण");
+            messagesCfg.set("messages.hindi.overrideKillMessageTrue", "&aoverrideKillMessage करने के लिए सेट &6सच");
+            messagesCfg.set("messages.hindi.overrideKillMessageFalse", "&aoverrideKillMessage करने के लिए सेट &6असत्य");
+            messagesCfg.set("messages.hindi.setLowWorthCommandErrorMessage", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setLowWorth [mob-नाम] [रकम]");
+            messagesCfg.set("messages.hindi.setHighWorthCommandErrorMessage", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setHighWorth [mob-नाम] [रकम]");
+            messagesCfg.set("messages.hindi.addCustomDropsErrorMessage", "&cत्रुटि: खिलाड़ियों में कस्टम ड्रॉप्स नहीं जोड़े जा सकते");
+            messagesCfg.set("messages.hindi.addCustomDropsCommandErrorMessage", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mob-नाम] [रकम] [मोका]");
+            messagesCfg.set("messages.hindi.addCustomDropInvalidMobErrorMessage", "&cत्रुटि: &6%mobName% &7वैध भीड़ नहीं है");
+            messagesCfg.set("messages.hindi.addCustomDropAlreadyPresentErrorMessage", "&cत्रुटि: &6%itemName% &7कस्टम ड्रॉप के रूप में पहले से मौजूद है");
+            messagesCfg.set("messages.hindi.addCustomDropSuccessMessage", "&aजोड़ा &6%amount%  %itemName% &aसेवा मेरे &6%mobName% &aए के साथ बूँदें &6%chance% % &aगिरने की संभावना");
+            messagesCfg.set("messages.hindi.removeCustomDropSuccessMessage", "&6%itemName%  &aसे हटाई गई बूंदें &6%mobName% &amobs");
+            messagesCfg.set("messages.hindi.customDropsDoNotExistErrorMessage", "&cत्रुटि: &7बूंदों के लिए मौजूद नहीं है &6%mobName% &amobs");
+            messagesCfg.set("messages.hindi.customDropsNotEnabledMessage", "&aइसके लिए कस्टम ड्रॉप सक्षम नहीं हैं &6%mobName% &amobs");
+            messagesCfg.set("messages.hindi.setLowWorthTooHighErrorMessage", "&cत्रुटि: &7कम मूल्य &6%mobName% %7mobs आपके द्वारा सेट किए जा रहे मान से अधिक है");
+            messagesCfg.set("messages.hindi.setHighWorthTooLowErrorMessage", "&cत्रुटि: &7उच्च मूल्य के लिए &6%mobName% &7mobs आपके द्वारा सेट किए जा रहे मान से कम है");
+            messagesCfg.set("messages.hindi.mobDropInfoMessage", "&6%mobName% &amobs लीजिये &6%chance% % &aगिरने की संभावना &6%amount%  %itemName%");
+            messagesCfg.set("messages.hindi.customDropsNotSetMessage", "&6%mobName% &amobs कोई कस्टम ड्रॉप सेट नहीं है");
+            messagesCfg.set("messages.hindi.mobWorthMessage", "&6%mobName% &amobs लायक हैं&6%lowWorth% &aडॉलर");
+            messagesCfg.set("messages.hindi.mobRangeWorthMessage", "&6%mobName% &amobs के बीच लायक हैं &6%lowWorth% &aand &6%highWorth% &aडॉलर");
+            messagesCfg.set("messages.hindi.setLowWorthSuccessMessage", "&aकम मूल्य &6%mobName% &amobs पर सेट किया गया है &6%lowWorth% &aडॉलर");
+            messagesCfg.set("messages.hindi.setHighWorthSuccessMessage", "&aउच्च मूल्य के लिए &6%mobName% &amobs पर सेट किया गया है &6%highWorth% &aडॉलर");
+            messagesCfg.set("messages.hindi.defaultDropsTrueMessage", "&aके लिए डिफ़ॉल्ट बूँदें &6%mobName% &amobs करने के लिए सेट &6सच");
+            messagesCfg.set("messages.hindi.defaultDropsFalseMessage", "&aके लिए डिफ़ॉल्ट बूँदें &6%mobName% &amobs करने के लिए सेट &6असत्य");
+            messagesCfg.set("messages.hindi.customDropsTrueMessage", "&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6सच");
+            messagesCfg.set("messages.hindi.customDropsFalseMessage", "&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6असत्य");
+
             messagesCfg.save(messagesFile);
 
         }
