@@ -173,6 +173,42 @@ public class MessagesConfigManager {
             messagesCfg.set("messages.german.customDropsTrueMessage", "&aBenutzerdefinierte Tropfen für &6%mobName% &amobs einstellen &6wahr");
             messagesCfg.set("messages.german.customDropsFalseMessage", "&aBenutzerdefinierte Tropfen für &6%mobName% &amobs einstellen &6falsch");
 
+            // Italian
+            messagesCfg.set("messages.italian.mobKillerOnMessage", "&aMessaggio MobKiller &6attivo");
+            messagesCfg.set("messages.italian.mobKillerOffMessage", "&aMessaggio MobKiller &6disattivato");
+            messagesCfg.set("messages.italian.accessDeniedMessage", "&cNon hai accesso a questo comando");
+            messagesCfg.set("messages.italian.eggSpawnRewardTrueMessage", "&aIl denaro ricompensato dai mob generati con le uova è impostato su &6vero");
+            messagesCfg.set("messages.italian.eggSpawnRewardFalseMessage", "&aIl denaro ricompensato dai mob generati con le uova è impostato su &6falso");
+            messagesCfg.set("messages.italian.spawnerSpawnRewardTrueMessage", "&aIl denaro ricompensato dai mob generatori è impostato su &6vero");
+            messagesCfg.set("messages.italian.spawnerSpawnRewardFalseMessage", "&aIl denaro ricompensato dai mob generatori è impostato su &6falso");
+            messagesCfg.set("messages.italian.tamedWolvesRewardTrueMessage", "&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati su &6vero");
+            messagesCfg.set("messages.italian.tamedWolvesRewardFalseMessage", "&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati su &6falso");
+            messagesCfg.set("messages.italian.reloadingMessage", "&bRicaricare Money4Mobs");
+            messagesCfg.set("messages.italian.reloadConfirmMessage", "&6Money4Mobs Ricarica completata");
+            messagesCfg.set("messages.italian.overrideKillMessageTrue", "&aoverrideKillMessage impostato &6vero");
+            messagesCfg.set("messages.italian.overrideKillMessageFalse", "&aoverrideKillMessage impostato &6falso");
+            messagesCfg.set("messages.italian.setLowWorthCommandErrorMessage", "&cErrore: &7Inserisci il comando in questo modo -> /mk setLowWorth [mobNome] [quantità]");
+            messagesCfg.set("messages.italian.setHighWorthCommandErrorMessage", "&cErrore: &7Inserisci il comando in questo modo -> /mk setHighWorth [mobNome] [quantità]");
+            messagesCfg.set("messages.italian.addCustomDropsErrorMessage", "&cErrore: Custom drops cannot be added to players");
+            messagesCfg.set("messages.italian.addCustomDropsCommandErrorMessage", "&cErrore: &7Inserisci il comando in questo modo -> /mk addCustomDrop [mobNome] [quantità] [opportunità]");
+            messagesCfg.set("messages.italian.addCustomDropInvalidMobErrorMessage", "&cErrore: &6%mobName% &7non è un mob valido");
+            messagesCfg.set("messages.italian.addCustomDropAlreadyPresentErrorMessage", "&cErrore: &6%itemName% &7è già presente come drop personalizzato");
+            messagesCfg.set("messages.italian.addCustomDropSuccessMessage", "&aAggiunto &6%amount%  %itemName% &aper &6%mobName% &agocce con a &6%chance% % &apossibilità di cadere");
+            messagesCfg.set("messages.italian.removeCustomDropSuccessMessage", "&6%itemName%  &agocce rimosse da &6%mobName% &amobs");
+            messagesCfg.set("messages.italian.customDropsDoNotExistErrorMessage", "&cErrore: &7Le gocce non esistono per &6%mobName% &amobs");
+            messagesCfg.set("messages.italian.customDropsNotEnabledMessage", "&aI drop personalizzati non sono abilitati per &6%mobName% &amobs");
+            messagesCfg.set("messages.italian.setLowWorthTooHighErrorMessage", "&cErrore: &7Valore basso per &6%mobName% %7mobs è superiore al valore che stai impostando");
+            messagesCfg.set("messages.italian.setHighWorthTooLowErrorMessage", "&cErrore: &7Grande valore per &6%mobName% &7mobs è inferiore al valore che stai impostando");
+            messagesCfg.set("messages.italian.mobDropInfoMessage", "&6%mobName% &amobs avere un &6%chance% % &apossibilità di cadere &6%amount%  %itemName%");
+            messagesCfg.set("messages.italian.customDropsNotSetMessage", "&6%mobName% &amobs non hai set di drop personalizzati");
+            messagesCfg.set("messages.italian.mobWorthMessage", "&6%mobName% &amobs valgono &6%lowWorth% &adollar(o/i)");
+            messagesCfg.set("messages.italian.mobRangeWorthMessage", "&6%mobName% &amobs valgono tra &6%lowWorth% &ae &6%highWorth% &adollari");
+            messagesCfg.set("messages.italian.setLowWorthSuccessMessage", "&aValore basso per &6%mobName% &amobs è stato impostato su &6%lowWorth% &adollar(o/i)");
+            messagesCfg.set("messages.italian.setHighWorthSuccessMessage", "&aGrande valore per &6%mobName% &amobs è stato impostato su &6%highWorth% &adollar(o/i)");
+            messagesCfg.set("messages.italian.defaultDropsTrueMessage", "&aGocce predefinite per &6%mobName% &amobs impostato &6vero");
+            messagesCfg.set("messages.italian.defaultDropsFalseMessage", "&aGocce predefinite per &6%mobName% &amobs impostato &6falso");
+            messagesCfg.set("messages.italian.customDropsTrueMessage", "&aDrop personalizzati per &6%mobName% &amobs impostato &6vero");
+            messagesCfg.set("messages.italian.customDropsFalseMessage", "&aDrop personalizzati per &6%mobName% &amobs impostato &6falso");
             messagesCfg.save(messagesFile);
 
         }
