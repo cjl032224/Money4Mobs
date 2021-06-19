@@ -227,29 +227,6 @@ public class MkCommand implements CommandExecutor {
                     convertMessage(reloadConfirmMessage, commandSender, null, null, null, null, null, null, null, reloadConfirmMessageLocation);
                 }
             }
-            else if (args[0].equalsIgnoreCase("toggleCustomKM")) {
-                if (commandSender.hasPermission("m4m.command.mk.toggleCustomKM") || commandSender.isOp()) {
-                    boolean customKillMessage = MobConfigManager.mobsCfg.getBoolean(OVERRIDE_KILL_MESSAGE);
-                    if (Boolean.TRUE.equals(customKillMessage)) {
-                        MobConfigManager.mobsCfg.set(OVERRIDE_KILL_MESSAGE, false);
-                        String overrideKillMessageFalse = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".overrideKillMessageFalse" + MESSAGE);
-                        String overrideKillMessageFalseLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".overrideKillMessageFalse" + LOCATION);
-                        assert overrideKillMessageFalse != null;
-                        convertMessage(overrideKillMessageFalse, commandSender, null, null, null, null, null, null, null, overrideKillMessageFalseLocation);
-                    } else {
-                        MobConfigManager.mobsCfg.set(OVERRIDE_KILL_MESSAGE, true);
-                        String overrideKillMessageTrue = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".overrideKillMessageTrue" + MESSAGE);
-                        String overrideKillMessageTrueLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".overrideKillMessageTrue" + LOCATION);
-                        assert overrideKillMessageTrue != null;
-                        convertMessage(overrideKillMessageTrue, commandSender, null, null, null, null, null, null, null, overrideKillMessageTrueLocation);
-                    }
-                    try {
-                        mobsCfg.save(mobsFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("worth")) {
                 if (commandSender.hasPermission("m4m.command.mk.worth") || commandSender.isOp()) {
