@@ -38,6 +38,7 @@ public class SetMobList {
         mobList.add(new MobModel("Goat", 10.0, 10.0, true, false, null));
         mobList.add(new MobModel("Guardian", 75.0, 75.0, true, false, null));
         mobList.add(new MobModel("Hoglin", 50.0, 50.0, true, false, null));
+        mobList.add(new MobModel("Horse", 20.0, 20.0, true, false, null));
         mobList.add(new MobModel("Husk", 30.0, 30.0, true, false, null));
         mobList.add(new MobModel("Illusioner", 250.0, 250.0, true, false, null));
         mobList.add(new MobModel("IronGolem", 10.0, 10.0, true, false, null));
