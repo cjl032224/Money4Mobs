@@ -127,7 +127,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             } catch (NoClassDefFoundError | NullPointerException | IllegalStateException e) {
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue is with Paper and not Money4Mobs");
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
             }
         }
     }
