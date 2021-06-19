@@ -39,8 +39,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.english.tamedWolvesRewardFalseMessage.message","&aMoney rewarded from mobs killed by tamed wolves set to &6false");
             messagesCfg.set("language.english.reloadingMessage.message","&bReloading Money4Mobs");
             messagesCfg.set("language.english.reloadConfirmMessage.message","&6Money4Mobs Reload Complete");
-            messagesCfg.set("language.english.overrideKillMessageTrue.message","&aoverrideKillMessage set to &6true");
-            messagesCfg.set("language.english.overrideKillMessageFalse.message","&aoverrideKillMessage set to &6false");
             messagesCfg.set("language.english.setLowWorthCommandErrorMessage.message","&cError: &7Enter command like this -> /mk setLowWorth [mobName] [amount]");
             messagesCfg.set("language.english.setHighWorthCommandErrorMessage.message","&cError: &7Enter command like this -> /mk setHighWorth [mobName] [amount]");
             messagesCfg.set("language.english.addCustomDropsErrorMessage.message","&cError: Custom drops cannot be added to players");
@@ -78,8 +76,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.english.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.english.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.english.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.english.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -118,8 +114,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.french.tamedWolvesRewardFalseMessage.message","&aMoney récompensé par des foules tuées par des loups apprivoisés réglé sur &6faux");
             messagesCfg.set("language.french.reloadingMessage.message","&bRecharger Money4Mobs");
             messagesCfg.set("language.french.reloadConfirmMessage.message","&6Money4Mobs Rechargement terminé");
-            messagesCfg.set("language.french.overrideKillMessageTrue.message","&aoverrideKillMessage défini sur &6vrai");
-            messagesCfg.set("language.french.overrideKillMessageFalse.message","&aoverrideKillMessage défini sur &6faux");
             messagesCfg.set("language.french.setLowWorthCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob] [montant]");
             messagesCfg.set("language.french.setHighWorthCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth [nom_mob] [montant]");
             messagesCfg.set("language.french.addCustomDropsErrorMessage.message","&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux joueurs");
@@ -157,8 +151,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.french.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.french.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.french.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.french.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -197,8 +189,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.spanish.tamedWolvesRewardFalseMessage.message","&aDinero otorgado por turbas asesinadas por lobos domesticados establecido en &6falso");
             messagesCfg.set("language.spanish.reloadingMessage.message","&bRecarga de Money4Mobs");
             messagesCfg.set("language.spanish.reloadConfirmMessage.message","&6Recarga completa de Money4Mobs");
-            messagesCfg.set("language.spanish.overrideKillMessageTrue.message","&aoverrideKillMessage establecido en &6verdadero");
-            messagesCfg.set("language.spanish.overrideKillMessageFalse.message","&aoverrideKillMessage establecido en &6falso");
             messagesCfg.set("language.spanish.setLowWorthCommandErrorMessage.message","&cError: &7ingrese un comando como este -> / mk setLowWorth  [nombre de mob] [monto]");
             messagesCfg.set("language.spanish.setHighWorthCommandErrorMessage.message","&cError: &7ingrese un comando como este -> /mk setHighWorth [nombre de mob] [monto]");
             messagesCfg.set("language.spanish.addCustomDropsErrorMessage.message","&cError: No se pueden agregar caídas personalizadas a las jugadoras");
@@ -236,8 +226,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.spanish.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.spanish.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.spanish.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.spanish.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -276,8 +264,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.german.tamedWolvesRewardFalseMessage.message","&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden, setzen auf &6falsch");
             messagesCfg.set("language.german.reloadingMessage.message","&bMoney4Mobs Neuladen");
             messagesCfg.set("language.german.reloadConfirmMessage.message","&6Money4Mobs Nachladen abgeschlossen");
-            messagesCfg.set("language.german.overrideKillMessageTrue.message","&aoverrideKillMessage einstellen &6wahr");
-            messagesCfg.set("language.german.overrideKillMessageFalse.message","&aoverrideKillMessage einstellen &6falsch");
             messagesCfg.set("language.german.setLowWorthCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setLowWorth [mobName] [menge]");
             messagesCfg.set("language.german.setHighWorthCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setHighWorth [mobName] [menge]");
             messagesCfg.set("language.german.addCustomDropsErrorMessage.message","&cError: Benutzerdefinierte Drops können Spielern nicht hinzugefügt werden");
@@ -315,8 +301,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.german.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.german.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.german.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.german.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -355,8 +339,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.italian.tamedWolvesRewardFalseMessage.message","&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati su &6falso");
             messagesCfg.set("language.italian.reloadingMessage.message","&bRicaricare Money4Mobs");
             messagesCfg.set("language.italian.reloadConfirmMessage.message","&6Money4Mobs Ricarica completata");
-            messagesCfg.set("language.italian.overrideKillMessageTrue.message","&aoverrideKillMessage impostato &6vero");
-            messagesCfg.set("language.italian.overrideKillMessageFalse.message","&aoverrideKillMessage impostato &6falso");
             messagesCfg.set("language.italian.setLowWorthCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk setLowWorth [mobNome] [quantità]");
             messagesCfg.set("language.italian.setHighWorthCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk setHighWorth [mobNome] [quantità]");
             messagesCfg.set("language.italian.addCustomDropsErrorMessage.message","&cErrore: Custom drops cannot be added to players");
@@ -394,8 +376,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.italian.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.italian.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.italian.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.italian.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -434,8 +414,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.tamedWolvesRewardFalseMessage.message","&aДеньги, полученные от мобов, убитых прирученными волками, установленными в &6ложный");
             messagesCfg.set("language.russian.reloadingMessage.message","&bПополнение Money4Mobs");
             messagesCfg.set("language.russian.reloadConfirmMessage.message","&6Money4Mobs Перезагрузка завершена");
-            messagesCfg.set("language.russian.overrideKillMessageTrue.message","&aoverrideKillMessage установлен в &6правда");
-            messagesCfg.set("language.russian.overrideKillMessageFalse.message","&aoverrideKillMessage установлен в &6ложный");
             messagesCfg.set("language.russian.setLowWorthCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk setLowWorth [mob-название] [количество]");
             messagesCfg.set("language.russian.setHighWorthCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk setHighWorth [mob-название] [количество]");
             messagesCfg.set("language.russian.addCustomDropsErrorMessage.message","&cОшибка: Пользовательские дропы не могут быть добавлены игрокам");
@@ -473,8 +451,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.russian.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.russian.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.russian.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -513,8 +489,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi.tamedWolvesRewardFalseMessage.message","&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला पैसा &6असत्य");
             messagesCfg.set("language.hindi.reloadingMessage.message","&bMoney4Mobs को पुनः लोड करना");
             messagesCfg.set("language.hindi.reloadConfirmMessage.message","&6Money4Mobs पुनः लोड पूर्ण");
-            messagesCfg.set("language.hindi.overrideKillMessageTrue.message","&aoverrideKillMessage करने के लिए सेट &6सच");
-            messagesCfg.set("language.hindi.overrideKillMessageFalse.message","&aoverrideKillMessage करने के लिए सेट &6असत्य");
             messagesCfg.set("language.hindi.setLowWorthCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setLowWorth [mob-नाम] [रकम]");
             messagesCfg.set("language.hindi.setHighWorthCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setHighWorth [mob-नाम] [रकम]");
             messagesCfg.set("language.hindi.addCustomDropsErrorMessage.message","&cत्रुटि: खिलाड़ियों में कस्टम ड्रॉप्स नहीं जोड़े जा सकते");
@@ -552,8 +526,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.hindi.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.hindi.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.hindi.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -592,8 +564,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.tamedWolvesRewardFalseMessage.message","&a被馴服的狼殺死的暴民獎勵的錢設置為 &6錯誤的");
             messagesCfg.set("language.chinese_traditional.reloadingMessage.message","&b重裝 Money4Mobs");
             messagesCfg.set("language.chinese_traditional.reloadConfirmMessage.message","&6Money4Mobs 重新加載完成");
-            messagesCfg.set("language.chinese_traditional.overrideKillMessageTrue.message","&aoverrideKillMessage 調成 &6真的");
-            messagesCfg.set("language.chinese_traditional.overrideKillMessageFalse.message","&aoverrideKillMessage 調成 &6錯誤的");
             messagesCfg.set("language.chinese_traditional.setLowWorthCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk setLowWorth [mob-名稱] [數量]");
             messagesCfg.set("language.chinese_traditional.setHighWorthCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk setHighWorth [mob-名稱] [數量]");
             messagesCfg.set("language.chinese_traditional.addCustomDropsErrorMessage.message","&c錯誤: Custom drops cannot be added to players");
@@ -631,8 +601,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_traditional.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_traditional.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.addCustomDropsErrorMessage.location",CHAT_MENU);
@@ -671,8 +639,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.tamedWolvesRewardFalseMessage.message","&a被驯服的狼杀死的暴民获得的金钱奖励 &6假");
             messagesCfg.set("language.chinese_simplified.reloadingMessage.message","&b重装 Money4Mobs");
             messagesCfg.set("language.chinese_simplified.reloadConfirmMessage.message","&6Money4Mobs 重新加载完成");
-            messagesCfg.set("language.chinese_simplified.overrideKillMessageTrue.message","&aoverrideKillMessage 调成 &6真的");
-            messagesCfg.set("language.chinese_simplified.overrideKillMessageFalse.message","&aoverrideKillMessage 调成 &6false");
             messagesCfg.set("language.chinese_simplified.setLowWorthCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk setLowWorth [mob-名称] [数量]");
             messagesCfg.set("language.chinese_simplified.setHighWorthCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk setHighWorth [mob-名称] [数量]");
             messagesCfg.set("language.chinese_simplified.addCustomDropsErrorMessage.message","&c错误: Custom drops cannot be added to players");
@@ -710,8 +676,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.reloadingMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.reloadConfirmMessage.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_simplified.overrideKillMessageTrue.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_simplified.overrideKillMessageFalse.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.setLowWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.addCustomDropsErrorMessage.location",CHAT_MENU);
