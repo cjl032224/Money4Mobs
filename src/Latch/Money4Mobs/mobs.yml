@@ -1,14 +1,8 @@
-# This is the default mobs.yml config file
-# If you are having problems, compare your mobs.yml with this and
-# see if you are missing any options
-version: 1.4.1
+version: 1.5.0
 spawners: false
 spawneggs: false
 tamedWolvesGiveMoney: true
-defaultLanguage: English
-customMessageOption:
-  overrideKillMessage: false
-  customMessage: '%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .'
+defaultLanguage: english
 group-multiplier:
   level-1: 1
   level-2: 1
@@ -16,23 +10,33 @@ group-multiplier:
   level-4: 1
   level-5: 1
   operator: 1
+actions-multipliers:
+  riding-horse:
+    multiplier: 1.0
+    isActive: false
+  riding-mule:
+    multiplier: 1.0
+    isActive: false
+  riding-donkey:
+    multiplier: 1.0
+    isActive: false
+  riding-strider:
+    multiplier: 1.0
+    isActive: false
+  riding-pig:
+    multiplier: 1.0
+    isActive: false
 mobs:
   Axolotl:
     worth:
-      low: 25
-      high: 25
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Bat:
     worth:
-      low: 10
-      high: 10
-    keepDefaultDrops: true
-    customDrops: false
-  Bee:
-    worth:
-      low: 15
-      high: 15
+      low: 10.0
+      high: 10.0
     keepDefaultDrops: true
     customDrops: false
     drops:
@@ -44,427 +48,434 @@ mobs:
         name: AIR
         amount: 10
         chance: 100
+  Bee:
+    worth:
+      low: 15.0
+      high: 15.0
+    keepDefaultDrops: true
+    customDrops: false
   Blaze:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Cat:
     worth:
-      low: 1
-      high: 1
+      low: 1.0
+      high: 1.0
     keepDefaultDrops: true
     customDrops: false
   CaveSpider:
     worth:
-      low: 15
-      high: 15
+      low: 15.0
+      high: 15.0
     keepDefaultDrops: true
     customDrops: false
   Chicken:
     worth:
-      low: 2
-      high: 2
+      low: 2.0
+      high: 2.0
     keepDefaultDrops: true
     customDrops: false
   Cod:
     worth:
-      low: 5
-      high: 5
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Cow:
     worth:
-      low: 2
-      high: 2
+      low: 2.0
+      high: 2.0
     keepDefaultDrops: true
     customDrops: false
   Creeper:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Dolphin:
     worth:
-      low: 175
-      high: 175
+      low: 175.0
+      high: 175.0
     keepDefaultDrops: true
     customDrops: false
   Donkey:
     worth:
-      low: 100
-      high: 100
+      low: 100.0
+      high: 100.0
     keepDefaultDrops: true
-    customDrops: true
-    drops:
-      item-1:
-        name: GOLD_BLOCK
-        amount: 1
-        chance: 100
+    customDrops: false
   Drowned:
     worth:
-      low: 100
-      high: 100
+      low: 100.0
+      high: 100.0
     keepDefaultDrops: true
     customDrops: false
   ElderGuardian:
     worth:
-      low: 300
-      high: 300
+      low: 300.0
+      high: 300.0
     keepDefaultDrops: true
     customDrops: false
   EnderDragon:
     worth:
-      low: 10000
-      high: 10000
+      low: 10000.0
+      high: 10000.0
     keepDefaultDrops: true
     customDrops: false
   Enderman:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Endermite:
     worth:
-      low: 300
-      high: 300
+      low: 300.0
+      high: 300.0
     keepDefaultDrops: true
     customDrops: false
   Evoker:
     worth:
-      low: 200
-      high: 200
+      low: 200.0
+      high: 200.0
     keepDefaultDrops: true
     customDrops: false
   Fox:
     worth:
-      low: 3
-      high: 3
+      low: 3.0
+      high: 3.0
     keepDefaultDrops: true
     customDrops: false
   Ghast:
     worth:
-      low: 30
-      high: 30
+      low: 30.0
+      high: 30.0
     keepDefaultDrops: true
     customDrops: false
   Giant:
     worth:
-      low: 1
-      high: 1
+      low: 1.0
+      high: 1.0
     keepDefaultDrops: true
     customDrops: false
   GlowSquid:
     worth:
-      low: 25
-      high: 25
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Goat:
     worth:
-      low: 25
-      high: 25
+      low: 10.0
+      high: 10.0
     keepDefaultDrops: true
     customDrops: false
   Guardian:
     worth:
-      low: 75
-      high: 75
+      low: 75.0
+      high: 75.0
     keepDefaultDrops: true
     customDrops: false
   Hoglin:
     worth:
-      low: 50
-      high: 50
+      low: 50.0
+      high: 50.0
+    keepDefaultDrops: true
+    customDrops: false
+  Horse:
+    worth:
+      low: 20.0
+      high: 20.0
     keepDefaultDrops: true
     customDrops: false
   Husk:
     worth:
-      low: 30
-      high: 30
+      low: 30.0
+      high: 30.0
     keepDefaultDrops: true
     customDrops: false
   Illusioner:
     worth:
-      low: 250
-      high: 250
+      low: 250.0
+      high: 250.0
     keepDefaultDrops: true
     customDrops: false
   IronGolem:
     worth:
-      low: 10
-      high: 10
+      low: 10.0
+      high: 10.0
     keepDefaultDrops: true
     customDrops: false
   Llama:
     worth:
-      low: 10
-      high: 10
+      low: 10.0
+      high: 10.0
     keepDefaultDrops: true
     customDrops: false
   MagmaCube:
     worth:
-      low: 12
-      high: 12
+      low: 12.0
+      high: 12.0
     keepDefaultDrops: true
     customDrops: false
   Mule:
     worth:
-      low: 30
-      high: 30
+      low: 30.0
+      high: 30.0
     keepDefaultDrops: true
     customDrops: false
   MushroomCow:
     worth:
-      low: 3
-      high: 3
+      low: 3.0
+      high: 3.0
     keepDefaultDrops: true
     customDrops: false
   Ocelot:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Panda:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Parrot:
     worth:
-      low: 100
-      high: 100
+      low: 100.0
+      high: 100.0
     keepDefaultDrops: true
     customDrops: false
   Phantom:
     worth:
-      low: 45
-      high: 45
+      low: 45.0
+      high: 45.0
     keepDefaultDrops: true
     customDrops: false
   Pig:
     worth:
-      low: 3
-      high: 3
+      low: 3.0
+      high: 3.0
     keepDefaultDrops: true
     customDrops: false
   Piglin:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   PigZombie:
     worth:
-      low: 45
-      high: 45
+      low: 45.0
+      high: 45.0
     keepDefaultDrops: true
     customDrops: false
   PiglinBrute:
     worth:
-      low: 75
-      high: 75
+      low: 75.0
+      high: 75.0
     keepDefaultDrops: true
     customDrops: false
   Pillager:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Player:
     worth:
-      low: 25
-      high: 25
-    ipBan: false
+      low: 25.0
+      high: 25.0
+    ipBanFarming: false
   PolarBear:
     worth:
-      low: 250
-      high: 250
+      low: 250.0
+      high: 250.0
     keepDefaultDrops: true
     customDrops: false
   Pufferfish:
     worth:
-      low: 30
-      high: 30
+      low: 30.0
+      high: 30.0
     keepDefaultDrops: true
     customDrops: false
   Rabbit:
     worth:
-      low: 15
-      high: 15
+      low: 15.0
+      high: 15.0
     keepDefaultDrops: true
     customDrops: false
   Ravager:
     worth:
-      low: 500
-      high: 500
+      low: 500.0
+      high: 500.0
     keepDefaultDrops: true
     customDrops: false
   Salmon:
     worth:
-      low: 5
-      high: 5
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Sheep:
     worth:
-      low: 3
-      high: 3
+      low: 3.0
+      high: 3.0
     keepDefaultDrops: true
     customDrops: false
   Shulker:
     worth:
-      low: 75
-      high: 75
+      low: 75.0
+      high: 75.0
     keepDefaultDrops: true
     customDrops: false
   Silverfish:
     worth:
-      low: 30
-      high: 30
+      low: 30.0
+      high: 30.0
     keepDefaultDrops: true
     customDrops: false
   Skeleton:
     worth:
-      low: 15
-      high: 15
+      low: 15.0
+      high: 15.0
     keepDefaultDrops: true
     customDrops: false
   SkeletonHorse:
     worth:
-      low: 150
-      high: 150
+      low: 150.0
+      high: 150.0
     keepDefaultDrops: true
     customDrops: false
   Slime:
     worth:
-      low: 12
-      high: 12
+      low: 12.0
+      high: 12.0
     keepDefaultDrops: true
     customDrops: false
   Snowman:
     worth:
-      low: 100
-      high: 100
+      low: 100.0
+      high: 100.0
     keepDefaultDrops: true
     customDrops: false
   Spider:
     worth:
-      low: 15
-      high: 15
+      low: 15.0
+      high: 15.0
     keepDefaultDrops: true
     customDrops: false
   Squid:
     worth:
-      low: 10
-      high: 10
+      low: 10.0
+      high: 10.0
     keepDefaultDrops: true
     customDrops: false
   Stray:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Strider:
     worth:
-      low: 50
-      high: 50
+      low: 50.0
+      high: 50.0
     keepDefaultDrops: true
     customDrops: false
   TraderLlama:
     worth:
-      low: 150
-      high: 150
+      low: 150.0
+      high: 150.0
     keepDefaultDrops: true
     customDrops: false
   TropicalFish:
     worth:
-      low: 5
-      high: 5
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Turtle:
     worth:
-      low: 20
-      high: 20
+      low: 20.0
+      high: 20.0
     keepDefaultDrops: true
     customDrops: false
   Vex:
     worth:
-      low: 125
-      high: 125
+      low: 125.0
+      high: 125.0
     keepDefaultDrops: true
     customDrops: false
   Villager:
     worth:
-      low: 5
-      high: 5
+      low: 5.0
+      high: 5.0
     keepDefaultDrops: true
     customDrops: false
   Vindicator:
     worth:
-      low: 45
-      high: 45
+      low: 45.0
+      high: 45.0
     keepDefaultDrops: true
     customDrops: false
   WanderingTrader:
     worth:
-      low: 120
-      high: 120
+      low: 120.0
+      high: 120.0
     keepDefaultDrops: true
     customDrops: false
   Witch:
     worth:
-      low: 60
-      high: 60
+      low: 60.0
+      high: 60.0
     keepDefaultDrops: true
     customDrops: false
   Wither:
     worth:
-      low: 2500
-      high: 2500
+      low: 2500.0
+      high: 2500.0
     keepDefaultDrops: true
     customDrops: false
   WitherSkeleton:
     worth:
-      low: 45
-      high: 45
+      low: 45.0
+      high: 45.0
     keepDefaultDrops: true
     customDrops: false
   Wolf:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Zoglin:
     worth:
-      low: 25
-      high: 25
+      low: 25.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   Zombie:
     worth:
-      low: 15
-      high: 25
+      low: 15.0
+      high: 25.0
     keepDefaultDrops: true
     customDrops: false
   ZombieHorse:
     worth:
-      low: 35
-      high: 35
+      low: 35.0
+      high: 35.0
     keepDefaultDrops: true
     customDrops: false
   ZombieVillager:
     worth:
-      low: 20
-      high: 20
+      low: 20.0
+      high: 20.0
     keepDefaultDrops: true
     customDrops: false
