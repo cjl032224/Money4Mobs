@@ -284,6 +284,80 @@ public class MessagesConfigManager {
             messagesCfg.set("messages.hindi.customDropsTrueMessage", "&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6सच");
             messagesCfg.set("messages.hindi.customDropsFalseMessage", "&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6असत्य");
 
+            // Chinese Traditional
+            messagesCfg.set("messages.chineseTraditional.mobKillerOnMessage", "&aMobKiller 信息 &6上");
+            messagesCfg.set("messages.chineseTraditional.mobKillerOffMessage", "&aMobKiller 信息 &6離開");
+            messagesCfg.set("messages.chineseTraditional.accessDeniedMessage", "&c您無權使用此命令");
+            messagesCfg.set("messages.chineseTraditional.eggSpawnRewardTrueMessage", "&a用雞蛋生成的怪物獎勵的金錢設置為 &6真的");
+            messagesCfg.set("messages.chineseTraditional.eggSpawnRewardFalseMessage", "&a用雞蛋生成的怪物獎勵的金錢設置為 &6錯誤的");
+            messagesCfg.set("messages.chineseTraditional.spawnerSpawnRewardTrueMessage", "&a從刷怪籠中獲得的金錢獎勵設置為 &6真的");
+            messagesCfg.set("messages.chineseTraditional.spawnerSpawnRewardFalseMessage", "&a從刷怪籠中獲得的金錢獎勵設置為 &6錯誤的");
+            messagesCfg.set("messages.chineseTraditional.tamedWolvesRewardTrueMessage", "&a被馴服的狼殺死的暴民獎勵的錢設置為 &6真的");
+            messagesCfg.set("messages.chineseTraditional.tamedWolvesRewardFalseMessage", "&a被馴服的狼殺死的暴民獎勵的錢設置為 &6錯誤的");
+            messagesCfg.set("messages.chineseTraditional.reloadingMessage", "&b重裝 Money4Mobs");
+            messagesCfg.set("messages.chineseTraditional.reloadConfirmMessage", "&6Money4Mobs 重新加載完成");
+            messagesCfg.set("messages.chineseTraditional.overrideKillMessageTrue", "&aoverrideKillMessage 調成 &6真的");
+            messagesCfg.set("messages.chineseTraditional.overrideKillMessageFalse", "&aoverrideKillMessage 調成 &6錯誤的");
+            messagesCfg.set("messages.chineseTraditional.setLowWorthCommandErrorMessage", "&c錯誤: &7像這樣輸入命令 -> /mk setLowWorth [mob-名稱] [數量]");
+            messagesCfg.set("messages.chineseTraditional.setHighWorthCommandErrorMessage", "&c錯誤: &7像這樣輸入命令 -> /mk setHighWorth [mob-名稱] [數量]");
+            messagesCfg.set("messages.chineseTraditional.addCustomDropsErrorMessage", "&c錯誤: Custom drops cannot be added to players");
+            messagesCfg.set("messages.chineseTraditional.addCustomDropsCommandErrorMessage", "&c錯誤: &7像這樣輸入命令 -> /mk addCustomDrop [mob-名稱] [數量] [機會]");
+            messagesCfg.set("messages.chineseTraditional.addCustomDropInvalidMobErrorMessage", "&c錯誤: &6%mobName% &7不是有效的");
+            messagesCfg.set("messages.chineseTraditional.addCustomDropAlreadyPresentErrorMessage", "&c錯誤: &6%itemName% &7已經作為自定義掉落存在");
+            messagesCfg.set("messages.chineseTraditional.addCustomDropSuccessMessage", "&a添加 &6%amount%  %itemName% &a至 &6%mobName% &a用一個滴 &6%chance% % &a掉線的機會");
+            messagesCfg.set("messages.chineseTraditional.removeCustomDropSuccessMessage", "&6%itemName%  &adrops 已經從...刪除 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseTraditional.customDropsDoNotExistErrorMessage", "&c錯誤: &7滴不存在 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseTraditional.customDropsNotEnabledMessage", "&a未啟用自定義放置 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseTraditional.setLowWorthTooHighErrorMessage", "&c錯誤: &7低價值 &6%mobName% %7mobs 高於您設置的值");
+            messagesCfg.set("messages.chineseTraditional.setHighWorthTooLowErrorMessage", "&cE錯誤: &7物超所值 &6%mobName% &7mobs 低於您設置的值");
+            messagesCfg.set("messages.chineseTraditional.mobDropInfoMessage", "&6%mobName% &amobs 有一個 &6%chance% % &a掉線的機會 &6%amount%  %itemName%");
+            messagesCfg.set("messages.chineseTraditional.customDropsNotSetMessage", "&6%mobName% &amobs 沒有任何自定義掉落設置");
+            messagesCfg.set("messages.chineseTraditional.mobWorthMessage", "&6%mobName% &amobs 值得 &6%lowWorth% &a美元");
+            messagesCfg.set("messages.chineseTraditional.mobRangeWorthMessage", "&6%mobName% &amobs 值得介於 &6%lowWorth% &a和 &6%highWorth% &a美元");
+            messagesCfg.set("messages.chineseTraditional.setLowWorthSuccessMessage", "&a低價值 &6%mobName% &amobs 已設置為 &6%lowWorth% &a美元");
+            messagesCfg.set("messages.chineseTraditional.setHighWorthSuccessMessage", "&a物超所值 &6%mobName% &amobs 已設置為 &6%highWorth% &a美元");
+            messagesCfg.set("messages.chineseTraditional.defaultDropsTrueMessage", "&a默認掉落 &6%mobName% &amobs 調成 &6真的");
+            messagesCfg.set("messages.chineseTraditional.defaultDropsFalseMessage", "&a默認掉落 &6%mobName% &amobs 調成 &6錯誤的");
+            messagesCfg.set("messages.chineseTraditional.customDropsTrueMessage", "&a自定義掉落 &6%mobName% &amobs 調成 &6真的");
+            messagesCfg.set("messages.chineseTraditional.customDropsFalseMessage", "&a自定義掉落 &6%mobName% &amobs 調成 &6錯誤的");
+
+            // Chinese Simplified
+            messagesCfg.set("messages.chineseSimplified.mobKillerOnMessage", "&aMobKiller 信息 &6上");
+            messagesCfg.set("messages.chineseSimplified.mobKillerOffMessage", "&aMobKiller 信息 &6离开");
+            messagesCfg.set("messages.chineseSimplified.accessDeniedMessage", "&c您无权使用此命令");
+            messagesCfg.set("messages.chineseSimplified.eggSpawnRewardTrueMessage", "&a用鸡蛋生成的怪物奖励的金钱设置为 &6真的");
+            messagesCfg.set("messages.chineseSimplified.eggSpawnRewardFalseMessage", "&a用鸡蛋生成的怪物奖励的金钱设置为 &6假");
+            messagesCfg.set("messages.chineseSimplified.spawnerSpawnRewardTrueMessage", "&a从刷怪笼中获得的金钱奖励设置为 &6真的");
+            messagesCfg.set("messages.chineseSimplified.spawnerSpawnRewardFalseMessage", "&a从刷怪笼中获得的金钱奖励设置为 &6假");
+            messagesCfg.set("messages.chineseSimplified.tamedWolvesRewardTrueMessage", "&aMoney rewarded from mobs killed by tamed wolves set to &6真的");
+            messagesCfg.set("messages.chineseSimplified.tamedWolvesRewardFalseMessage", "&a被驯服的狼杀死的暴民获得的金钱奖励 &6假");
+            messagesCfg.set("messages.chineseSimplified.reloadingMessage", "&b重装 Money4Mobs");
+            messagesCfg.set("messages.chineseSimplified.reloadConfirmMessage", "&6Money4Mobs 重新加载完成");
+            messagesCfg.set("messages.chineseSimplified.overrideKillMessageTrue", "&aoverrideKillMessage 调成 &6真的");
+            messagesCfg.set("messages.chineseSimplified.overrideKillMessageFalse", "&aoverrideKillMessage 调成 &6false");
+            messagesCfg.set("messages.chineseSimplified.setLowWorthCommandErrorMessage", "&c错误: &7像这样输入命令 -> /mk setLowWorth [mob-名称] [数量]");
+            messagesCfg.set("messages.chineseSimplified.setHighWorthCommandErrorMessage", "&c错误: &7像这样输入命令 -> /mk setHighWorth [mob-名称] [数量]");
+            messagesCfg.set("messages.chineseSimplified.addCustomDropsErrorMessage", "&c错误: Custom drops cannot be added to players");
+            messagesCfg.set("messages.chineseSimplified.addCustomDropsCommandErrorMessage", "&c错误: &7像这样输入命令 -> /mk addCustomDrop [mob-名称] [数量] [机会]");
+            messagesCfg.set("messages.chineseSimplified.addCustomDropInvalidMobErrorMessage", "&c错误: &6%mobName% &7不是有效的暴徒");
+            messagesCfg.set("messages.chineseSimplified.addCustomDropAlreadyPresentErrorMessage", "&c错误: &6%itemName% &7已经作为自定义掉落存在");
+            messagesCfg.set("messages.chineseSimplified.addCustomDropSuccessMessage", "&a添加 &6%amount%  %itemName% &a至 &6%mobName% &a用一个滴 &6%chance% % &a掉线的机会");
+            messagesCfg.set("messages.chineseSimplified.removeCustomDropSuccessMessage", "&6%itemName%  &a滴从 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseSimplified.customDropsDoNotExistErrorMessage", "&c错误: &7滴不存在 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseSimplified.customDropsNotEnabledMessage", "&a未启用自定义放置 &6%mobName% &amobs");
+            messagesCfg.set("messages.chineseSimplified.setLowWorthTooHighErrorMessage", "&c错误: &7低价值 &6%mobName% %7mobs 高于您设置的值");
+            messagesCfg.set("messages.chineseSimplified.setHighWorthTooLowErrorMessage", "&c错误: &7物超所值 &6%mobName% &7mobs 低于您设置的值");
+            messagesCfg.set("messages.chineseSimplified.mobDropInfoMessage", "&6%mobName% &amobs 有一个 &6%chance% % &a掉线的机会 &6%amount%  %itemName%");
+            messagesCfg.set("messages.chineseSimplified.customDropsNotSetMessage", "&6%mobName% &amobs 没有任何自定义掉落设置");
+            messagesCfg.set("messages.chineseSimplified.mobWorthMessage", "&6%mobName% &amobs 值得 &6%lowWorth% &a美元");
+            messagesCfg.set("messages.chineseSimplified.mobRangeWorthMessage", "&6%mobName% &amobs 值得介于 &6%lowWorth% &a和 &6%highWorth% &a美元");
+            messagesCfg.set("messages.chineseSimplified.setLowWorthSuccessMessage", "&a低价值 &6%mobName% &amobs 已设置为 &6%lowWorth% &a美元");
+            messagesCfg.set("messages.chineseSimplified.setHighWorthSuccessMessage", "&a物超所值 &6%mobName% &amobs 已设置为 &6%highWorth% &a美元");
+            messagesCfg.set("messages.chineseSimplified.defaultDropsTrueMessage", "&a默认掉落 &6%mobName% &amobs 调成 &6真的");
+            messagesCfg.set("messages.chineseSimplified.defaultDropsFalseMessage", "&a默认掉落 &6%mobName% &amobs 调成 &6假");
+            messagesCfg.set("messages.chineseSimplified.customDropsTrueMessage", "&a自定义掉落 &6%mobName% &amobs 调成 &6真的");
+            messagesCfg.set("messages.chineseSimplified.customDropsFalseMessage", "&a自定义掉落 &6%mobName% &amobs 调成 &6假");
+
             messagesCfg.save(messagesFile);
 
         }
