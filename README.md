@@ -87,4 +87,41 @@ Each word or value needs to be separated by a space. The color code should be be
            
         * 5 - Result) "$10 was taken and you now have $100"
         
- 
+ Message Name | Available Placeholders | Reason for Triggering Display
+------ | ------- | -------
+mobKillerOnMessage |  | 
+mobKillerOffMessage |  | 
+accessDeniedMessage |  | 
+eggSpawnRewardTrueMessage |  | 
+eggSpawnRewardFalseMessage |  | 
+spawnerSpawnRewardTrueMessage |  | 
+spawnerSpawnRewardFalseMessage |  | 
+tamedWolvesRewardTrueMessage |  | 
+tamedWolvesRewardFalseMessage |  | 
+reloadingMessage |  | 
+reloadConfirmMessage |  | 
+setLowWorthCommandErrorMessage |  | 
+setHighWorthCommandErrorMessage |  | 
+addCustomDropsErrorMessage |  | 
+addCustomDropsCommandErrorMessage |  | 
+addCustomDropInvalidMobErrorMessage | %mobName% | 
+addCustomDropAlreadyPresentErrorMessage | %itemName% | 
+addCustomDropSuccessMessage | %mobName%, %chance%, %amount%, %itemName  | 
+removeCustomDropSuccessMessage | %mobName% | 
+customDropsDoNotExistErrorMessage | %mobName% | 
+customDropsNotEnabledMessage | %mobName% | 
+setLowWorthTooHighErrorMessage | %mobName% | 
+setHighWorthTooLowErrorMessage | %mobName% | 
+mobDropInfoMessage | %mobName%, %chance%, %amount%, %itemName% | 
+customDropsNotSetMessage | %mobName% | 
+mobWorthMessage | %mobName%, %lowWorth% | 
+mobRangeWorthMessage | %mobName%, %lowWorth%, %highWorth% | 
+setLowWorthSuccessMessage | %mobName%, %lowWorth% | 
+setHighWorthSuccessMessage | %mobName%, %highWorth% | 
+defaultDropsTrueMessage | %mobName% | 
+defaultDropsFalseMessage | %mobName% | 
+customDropsTrueMessage | %mobName% | 
+customDropsFalseMessage | %mobName% | 
+languageChangeSuccessMessage |  | 
+moneyRewardedMessage | %amount%, %balance% | 
+moneySubtractedMessage | %amount%, %balance% | 
