@@ -4,21 +4,16 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.milkbowl.vault.chat.Chat;
+import Latch.Money4Mobs.Managers.MessagesConfigManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -37,10 +32,14 @@ public abstract class MobKiller implements CommandExecutor {
     private static String language = "";
     private static Boolean showMessage = true;
 
-    public static void rewardPlayerMoney(Player pa, Entity e, Economy econ) {
+    public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) {
         setLanguage(pa);
         giveMoneyCheck(pa,e);
-        boolean samePlayer = pa.getUniqueId().toString().equals(e.getUniqueId().toString());
+        Player player = null;
+        if (pa instanceof Player){
+            player = (Player) pa;
+        }
+        boolean samePlayer = player.getUniqueId().toString().equals(e.getUniqueId().toString());
         if (Boolean.TRUE.equals(samePlayer)) {
             giveMoney = false;
         }
@@ -57,25 +56,31 @@ public abstract class MobKiller implements CommandExecutor {
         ede = e;
     }
 
-    public static void setLanguage(Player pa){
+    public static void setLanguage(CommandSender pa){
         int counter = 1;
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
-            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
+            if (pa instanceof Player){
+                Player player = (Player) pa;
+                if(userId.equalsIgnoreCase(player.getUniqueId().toString())){
+                    language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
+                }
             }
             counter++;
         }
     }
 
-    public static void displayKillMessage(Player pa){
+    public static void displayKillMessage(CommandSender pa){
         int counter = 1;
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
-            if(userId.equalsIgnoreCase(pa.getUniqueId().toString())){
-                showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+            if (pa instanceof Player) {
+                Player player = (Player) pa;
+                if (userId.equalsIgnoreCase(player.getUniqueId().toString())) {
+                    showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+                }
             }
             counter++;
         }
@@ -88,190 +93,39 @@ public abstract class MobKiller implements CommandExecutor {
         p.getHandle().playerConnection.sendPacket(ppoc);
     }
 
-    public static void sendKillMessage(Player pa, Economy econ){
+    public static void sendKillMessage(CommandSender pa, Economy econ){
         EconomyResponse r = null;
-        if (Double.compare(money, 0.0) > 0.0) {
-            r = econ.depositPlayer(pa, money);
-        } else if (Double.compare(money, 0.0) < 0.0) {
-            r = econ.withdrawPlayer(pa, Math.abs(money));
+        Player player = null;
+        if (pa instanceof Player) {
+            player = (Player) pa;
         }
-
-
+        if (Double.compare(money, 0.0) > 0.0) {
+            r = econ.depositPlayer(player, money);
+        } else if (Double.compare(money, 0.0) < 0.0) {
+            r = econ.withdrawPlayer(player, Math.abs(money));
+        }
         int counter = 1;
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
-
-            boolean customMessage = true;
-            customMessage = MobConfigManager.mobsCfg.getBoolean("customMessageOption.overrideKillMessage");
-            if (pa.getUniqueId().toString().equals(userId)) {
+            if (player.getUniqueId().toString().equals(userId)) {
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+                language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
                 if (Boolean.TRUE.equals(showMessage)) {
                     if (r.amount != 0) {
                         if (r.transactionSuccess()) {
                             Double balance = r.balance;
                             df.format(balance);
-                            assert language != null;
-                            if (Boolean.TRUE.equals(showMessage) && Boolean.TRUE.equals(customMessage)) {
-                                String customMessageString = MobConfigManager.mobsCfg.getString("customMessageOption.customMessage");
-                                List<String> customArray = Arrays.asList(customMessageString.split(" "));
-                                List<String> colorArray = new ArrayList<>();
-                                colorArray.add("DARK_RED");
-                                colorArray.add("RED");
-                                colorArray.add("GOLD");
-                                colorArray.add("YELLOW");
-                                colorArray.add("DARK_GREEN");
-                                colorArray.add("GREEN");
-                                colorArray.add("AQUA");
-                                colorArray.add("DARK_AQUA");
-                                colorArray.add("DARK_BLUE");
-                                colorArray.add("BLUE");
-                                colorArray.add("LIGHT_PURPLE");
-                                colorArray.add("DARK_PURPLE");
-                                colorArray.add("WHITE");
-                                colorArray.add("GRAY");
-                                colorArray.add("DARK_GRAY");
-                                colorArray.add("BLACK");
-                                ChatColor holder;
-                                List<Object> object = new ArrayList<Object>();
-                                boolean test = false;
-                                for (String s: customArray){
-                                    test = false;
-                                    int count = StringUtils.countMatches(s, "%");
-                                    if (count == 2){
-                                        s = s.substring(s.indexOf("%") + 1);
-                                        s = s.substring(0, s.indexOf("%"));
-                                    }
-                                    for (String color : colorArray){
-                                        if (s.equals(color)){
-                                            test = true;
-                                            holder = ChatColor.valueOf(s);
-                                            object.add(holder);
-                                        }
-                                    }
-                                    if (s.equals("AMOUNT")){
-                                        test = true;
-                                        object.add(Math.round(r.amount * 100.0) / 100.0);
-                                    }
-                                    if (s.equals("BALANCE")){
-                                        test = true;
-                                        object.add(Math.round(balance * 100.0) / 100);
-                                    }
-                                    if (s.equals("|")){
-                                        test = true;
-                                        object.add(" ");
-                                    }
-                                    if (Boolean.FALSE.equals(test)){
-                                        object.add(s);
-                                    }
-
-                                }
-                                String d = object.get(0).toString();
-                                int count = 1;
-                                for (Object wow: object){
-                                    if (count > 1){
-                                        d = new StringBuilder(d).append(wow).toString();
-                                    }
-                                    count++;
-                                }
-                                sendActionBar(pa, d);
-                                //pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(d));
-                            }
-                            if(Boolean.TRUE.equals(showMessage) && Boolean.FALSE.equals(customMessage)){
-                                if (Double.compare(money, 0.0) > 0.0) {
-                                    if (language.equalsIgnoreCase("French")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Vous avez reçu " + ChatColor.GREEN + r.amount + "$" +
-                                                        ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + (Math.round(balance * 100.0) / 100.0)  + "$"));
-                                    }
-                                    else if (language.equalsIgnoreCase("Spanish")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Te dieron " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " y ahora tienes " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                    else if (language.equalsIgnoreCase("Chinese_Simplified")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "您获得了 " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " 现在有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                    else if (language.equalsIgnoreCase("Chinese_Traditional")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "你獲得 " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " 身上金錢有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                    else if (language.equalsIgnoreCase("Hindi")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "आपको " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " दिया गया है और अब आपके पास " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + " है।"));
-                                    }
-                                    else if (language.equalsIgnoreCase("Italian")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Hai guadagnato " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " ed adesso hai " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
-                                    }
-                                    else if (language.equalsIgnoreCase("German")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Sie haben " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " erhalten und haben jetzt " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
-                                    }
-                                    else if (language.equalsIgnoreCase("Russian")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Вы заработали " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " сейчас у вас баланс " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
-                                    }
-                                    else {
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "You were given " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " and now have " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                } else if (Double.compare(money, 0.0) < 0.0) {
-                                    if (language.equalsIgnoreCase("French")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " et vous avez maintenant " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                    else if (language.equalsIgnoreCase("Spanish")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Se llevaron " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + ". Ahora tienes " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                    else if (language.equalsIgnoreCase("Chinese_Simplified")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " 美元被拿走了. 你现在有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + " 美元."));
-                                    }
-                                    else if (language.equalsIgnoreCase("Chinese_Traditional")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " 美元被拿走了. 你現在有 " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + " 美元."));
-                                    }
-                                    else if (language.equalsIgnoreCase("Hindi")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " डॉलर लिए गए। अब आपके पास " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "।"));
-                                    }
-                                    else if (language.equalsIgnoreCase("Italian")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Sono stati presi " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + ". Ora hai " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
-                                    }
-                                    else if (language.equalsIgnoreCase("German")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " wurden genommen. Sie haben jetzt " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "."));
-                                    }
-                                    else if (language.equalsIgnoreCase("Russian")){
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.WHITE + "Взяли " + ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " долларов. Теперь у вас есть " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0) + ChatColor.WHITE + "долларов."));
-                                    }
-                                    else {
-                                        pa.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(
-                                                ChatColor.GREEN + "$" + r.amount +
-                                                        ChatColor.WHITE + " was taken. You now have " + ChatColor.GREEN + "$" + (Math.round(balance * 100.0) / 100.0)));
-                                    }
-                                }
-
+                            if (Double.compare(money, 0.0) > 0.0) {
+                                String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
+                                String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
+                                assert moneyRewardedMessage != null;
+                                MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
+                            } else {
+                                String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
+                                String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
+                                assert moneySubtractedMessage != null;
+                                MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
                             }
                         }
                     }
@@ -282,8 +136,7 @@ public abstract class MobKiller implements CommandExecutor {
 
     }
 
-    public static void setCustomDrops(Entity e, Player p){
-//        getLootingLevel();
+    public static void setCustomDrops(Entity e, CommandSender p){
         String es = e.toString();
         int randomNumber = rand.nextInt(100);
 
@@ -327,18 +180,13 @@ public abstract class MobKiller implements CommandExecutor {
         msr.add(new MobSpawnedReason(e.getSpawnReason().toString(), e.getEntity().getUniqueId().toString()));
     }
 
-//    public static void getLootingLevel(){
-//        Map<Enchantment, Integer> s = Objects.requireNonNull(ede.getEntity().getKiller()).getInventory().getItemInMainHand().getEnchantments();
-//        for (Map.Entry<Enchantment,Integer> entry : s.entrySet()){
-//            if (entry.getKey().toString().contains("looting")){
-//                Integer lootingLevel = entry.getValue();
-//            }
-//        }
-//    }
-
-    public static void giveMoneyCheck(Player pa, Entity e){
+    public static void giveMoneyCheck(CommandSender pa, Entity e){
         int counter = 0;
-        String killerIP = pa.getAddress().getAddress().toString();
+        Player player = null;
+        if (pa instanceof Player) {
+            player = (Player) pa;
+        }
+        String killerIP = player.getAddress().getAddress().toString();
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
@@ -388,7 +236,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void setRange(Entity e, Player pa){
+    public static void setRange(Entity e, CommandSender pa){
         double level1 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-1");
         double level2 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-2");
         double level3 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-3");
@@ -473,7 +321,38 @@ public abstract class MobKiller implements CommandExecutor {
                 money = money * multiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
+        }
+        double ridingHorseMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-horse.multiplier");
+        Boolean isRidingHorseActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-horse.isActive");
+        double ridingMuleMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-mule.multiplier");
+        Boolean isRidingMuleActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-mule.isActive");
+        double ridingDonkeyMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
+        Boolean isRidingDonkeyActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
+        double ridingStriderMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-strider.multiplier");
+        Boolean isRidingStriderActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-strider.isActive");
+        double ridingPigMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-pig.multiplier");
+        Boolean isRidingPigActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-pig.isActive");
 
+        if (pa instanceof Player){
+            Player player = (Player) pa;
+            if (player.getVehicle() != null) {
+                if (player.getVehicle().getName().equalsIgnoreCase("Horse") && Boolean.TRUE.equals(isRidingHorseActive)){
+                    money = money * ridingHorseMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Mule") && Boolean.TRUE.equals(isRidingMuleActive)){
+                    money = money * ridingMuleMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Donkey") && Boolean.TRUE.equals(isRidingDonkeyActive)){
+                    money = money * ridingDonkeyMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Strider") && Boolean.TRUE.equals(isRidingStriderActive)){
+                    money = money * ridingStriderMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Pig") && Boolean.TRUE.equals(isRidingPigActive)){
+                    money = money * ridingPigMultiplier;
+                }
+                money = Math.round(money * 100.0) / 100.0;
+            }
         }
     }
 

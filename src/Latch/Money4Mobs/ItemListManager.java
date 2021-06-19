@@ -28,7 +28,7 @@ public class ItemListManager {
         mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
         Boolean createItemFile = false;
 
-        if (mobsCfg.getString("version") != "1.4.1") {
+        if (mobsCfg.getString("version") != "1.5.0") {
             createItemFile = true;
         }
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
@@ -55,7 +55,7 @@ public class ItemListManager {
             itemsCfg.save(itemsFile);
         }
         catch(IOException e){
-            System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
+            System.out.println(ChatColor.RED + "Could not create the items.yml file");
         }
     }
 
