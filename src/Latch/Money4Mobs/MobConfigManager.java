@@ -47,13 +47,11 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set("version", "1.4.1");
+            mobsCfg.set("version", "1.5.0");
             mobsCfg.set("spawners", false);
             mobsCfg.set("spawneggs", false);
             mobsCfg.set("tamedWolvesGiveMoney", true);
-            mobsCfg.set("defaultLanguage", "English");
-            mobsCfg.set("customMessageOption.overrideKillMessage", false);
-            mobsCfg.set("customMessageOption.customMessage", " Rewarded | $ %AMOUNT% | and | now | have | $ %BALANCE% .");
+            mobsCfg.set("defaultLanguage", "english");
             mobsCfg.set("group-multiplier.level-1", 1);
             mobsCfg.set("group-multiplier.level-2", 1);
             mobsCfg.set("group-multiplier.level-3", 1);
@@ -121,13 +119,14 @@ public class MobConfigManager {
         }
         update137AddPiglin();
         update14Add117Mobs();
+        update150ActionsMultiplier();
         updatePluginVersion();
 
     }
 
     public static void updatePluginVersion() throws IOException {
-        if (mobsCfg.getString("version") != "1.4.1") {
-            mobsCfg.set("version", "1.4.1");
+        if (!mobsCfg.getString("version").equals("1.5.0")) {
+            mobsCfg.set("version", "1.5.0");
         }
         mobsCfg.save(mobsFile);
     }
@@ -136,19 +135,15 @@ public class MobConfigManager {
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.low"))) {
             mobsCfg.set("mobs.Piglin.worth.low", 25);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.high"))) {
             mobsCfg.set("mobs.Piglin.worth.high", 25);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.keepDefaultDrops"))) {
             mobsCfg.set("mobs.Piglin.keepDefaultDrops", true);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.customDrops"))) {
             mobsCfg.set("mobs.Piglin.customDrops", false);
         }
-        ;
         mobsCfg.save(mobsFile);
 
     }
@@ -210,12 +205,41 @@ public class MobConfigManager {
 
     }
 
+    public static void update150ActionsMultiplier() throws IOException {
+        if (Boolean.FALSE.equals(mobsCfg.isSet("actions-multipliers.riding-horse.multiplier"))) {
+            mobsCfg.set("actions-multipliers.riding-horse.multiplier", 1.0);
+            mobsCfg.set("actions-multipliers.riding-horse.isActive", false);
+            mobsCfg.set("actions-multipliers.riding-mule.multiplier", 1.0);
+            mobsCfg.set("actions-multipliers.riding-mule.isActive", false);
+            mobsCfg.set("actions-multipliers.riding-donkey.multiplier", 1.0);
+            mobsCfg.set("actions-multipliers.riding-donkey.isActive", false);
+            mobsCfg.set("actions-multipliers.riding-strider.multiplier", 1.0);
+            mobsCfg.set("actions-multipliers.riding-strider.isActive", false);
+            mobsCfg.set("actions-multipliers.riding-pig.multiplier", 1.0);
+            mobsCfg.set("actions-multipliers.riding-pig.isActive", false);
+        }
+        // Horse
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Horse.worth.low"))) {
+            mobsCfg.set("mobs.Horse.worth.low", 20);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Horse.worth.high"))) {
+            mobsCfg.set("mobs.Horse.worth.high", 20);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Horse.keepDefaultDrops"))) {
+            mobsCfg.set("mobs.Horse.keepDefaultDrops", true);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Horse.customDrops"))) {
+            mobsCfg.set("mobs.Horse.customDrops", false);
+        }
+
+        mobsCfg.set("customMessageOption.overrideKillMessage", null);
+        mobsCfg.set("customMessageOption.customMessage", null);
+
+        mobsCfg.save(mobsFile);
+    }
+
     public static List<MobModel> getMobModelFromConfig() {
         return mobListFromConfig;
     }
 
-    public static void updateDefaultLanguage(String language) throws IOException {
-        mobsCfg.set("defaultLanguage", language);
-        mobsCfg.save(mobsFile);
-    }
 }
