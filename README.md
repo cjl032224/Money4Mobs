@@ -89,39 +89,39 @@ Each word or value needs to be separated by a space. The color code should be be
         
  Message Name | Available Placeholders | Reason for Triggering Display
 ------ | ------- | -------
-mobKillerOnMessage |  | 
-mobKillerOffMessage |  | 
-accessDeniedMessage |  | 
-eggSpawnRewardTrueMessage |  | 
-eggSpawnRewardFalseMessage |  | 
-spawnerSpawnRewardTrueMessage |  | 
-spawnerSpawnRewardFalseMessage |  | 
-tamedWolvesRewardTrueMessage |  | 
-tamedWolvesRewardFalseMessage |  | 
-reloadingMessage |  | 
-reloadConfirmMessage |  | 
-setLowWorthCommandErrorMessage |  | 
-setHighWorthCommandErrorMessage |  | 
-addCustomDropsErrorMessage |  | 
-addCustomDropsCommandErrorMessage |  | 
-addCustomDropInvalidMobErrorMessage | %mobName% | 
-addCustomDropAlreadyPresentErrorMessage | %itemName% | 
-addCustomDropSuccessMessage | %mobName%, %chance%, %amount%, %itemName  | 
-removeCustomDropSuccessMessage | %mobName% | 
-customDropsDoNotExistErrorMessage | %mobName% | 
-customDropsNotEnabledMessage | %mobName% | 
-setLowWorthTooHighErrorMessage | %mobName% | 
-setHighWorthTooLowErrorMessage | %mobName% | 
-mobDropInfoMessage | %mobName%, %chance%, %amount%, %itemName% | 
-customDropsNotSetMessage | %mobName% | 
-mobWorthMessage | %mobName%, %lowWorth% | 
-mobRangeWorthMessage | %mobName%, %lowWorth%, %highWorth% | 
-setLowWorthSuccessMessage | %mobName%, %lowWorth% | 
-setHighWorthSuccessMessage | %mobName%, %highWorth% | 
-defaultDropsTrueMessage | %mobName% | 
-defaultDropsFalseMessage | %mobName% | 
-customDropsTrueMessage | %mobName% | 
-customDropsFalseMessage | %mobName% | 
-languageChangeSuccessMessage |  | 
-moneyRewardedMessage | %amount%, %balance% | 
-moneySubtractedMessage | %amount%, %balance% | 
+mobKillerOnMessage |  | /mk toggleKM - Turns on the display for the kill message
+mobKillerOffMessage |  | /mk toggleKM - Turns off the display for the kill message
+accessDeniedMessage |  | Occurs when a player does not have permission for a command
+eggSpawnRewardTrueMessage |  | /mk toggleMoneyFromSpawnEggs - When the 'spawneggs' property in mobs.yml gets set to true 
+eggSpawnRewardFalseMessage |  | /mk toggleMoneyFromSpawnEggs - When the 'spawneggs' property in mobs.yml gets set to false 
+spawnerSpawnRewardTrueMessage |  | /mk toggleMoneyFromSpawners - When the 'spawners' property in mobs.yml gets set to true 
+spawnerSpawnRewardFalseMessage |  | /mk toggleMoneyFromSpawners - When the 'spawners' property in mobs.yml gets set to false 
+tamedWolvesRewardTrueMessage |  | /mk toggleMoneyFromTamedWolves -  When the 'tamedWolvesGiveMoney' property in mobs.yml gets set to true 
+tamedWolvesRewardFalseMessage |  | /mk toggleMoneyFromTamedWolves -  When the 'tamedWolvesGiveMoney' property in mobs.yml gets set to false 
+reloadingMessage |  | /mk reload - Tells the command sender that Money4Mobs is reloading
+reloadConfirmMessage |  | /mk reload - Tells the command sender that Money4Mobs has completed reloading
+setLowWorthCommandErrorMessage |  | /mk setLowWorth - When a player improperly uses the command
+setHighWorthCommandErrorMessage |  | /mk setHighWorth - When a player improperly uses the command
+addCustomDropsErrorMessage |  |  /mk addCustomDrop - When a command sender tries to add a drop to a player
+addCustomDropsCommandErrorMessage |  | /mk addCustomDrop - When a player improperly uses the command
+addCustomDropInvalidMobErrorMessage | %mobName% | When a command sender inputs a mob that is invalid
+addCustomDropAlreadyPresentErrorMessage | %itemName% | /mk addCustomDrop - When a command sender tries to add a drop to a mob that is already present
+addCustomDropSuccessMessage | %mobName%, %chance%, %amount%, %itemName  | /mk addCustomDrop - When a command sender successfully adds a drop to a mob
+removeCustomDropSuccessMessage | %mobName% | /mk removeCustomDrop - When a command sender successfully removes a drop from a mob
+customDropsDoNotExistErrorMessage | %mobName% | /mk drops - When there are no drops present for the mob
+customDropsNotEnabledMessage | %mobName% | /mk drops - When the '[mobName].customDrops' property in mobs.yml is set to false
+setLowWorthTooHighErrorMessage | %mobName% | /mk setLowWorth - When the command sender tries to set a low worth that is higher than the high worth for that mob
+setHighWorthTooLowErrorMessage | %mobName% | /mk setHighWorth - When the command sender tries to set a high worth that is lower than the low worth for that mob
+mobDropInfoMessage | %mobName%, %chance%, %amount%, %itemName% | /mk drops - Displays the drop information for mobs on success
+customDropsNotSetMessage | %mobName% |  /mk drops - When the '[mobName].customDrops' property in mobs.yml is set to true, but no drops are present for that mob
+mobWorthMessage | %mobName%, %lowWorth% | /mk worth - Displays the worth of a mob when both the lowWorth and highWorth are the same amount
+mobRangeWorthMessage | %mobName%, %lowWorth%, %highWorth% | /mk worth - Displays the worth of a mob when the lowWorth and highWorth are a different amount than each other
+setLowWorthSuccessMessage | %mobName%, %lowWorth% | /mk setLowWorth - When the command sender successfully sets the lowWorth for that mob
+setHighWorthSuccessMessage | %mobName%, %highWorth% | /mk setHighWorth - When the command sender successfully sets the highWorth for that mob
+defaultDropsTrueMessage | %mobName% | /mk toggleDefaultDrops - When the '[mobName].keepDefaultDrops' property in mobs.yml gets set to true 
+defaultDropsFalseMessage | %mobName% | /mk toggleDefaultDrops - When the '[mobName].keepDefaultDrops' property in mobs.yml gets set to false
+customDropsTrueMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName].customDrops' property in mobs.yml gets set to true 
+customDropsFalseMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName].customDrops' property in mobs.yml gets set to false 
+languageChangeSuccessMessage |  | /mk language - When the command sender's language in the users.yml file is updated successfully
+moneyRewardedMessage | %amount%, %balance% | When a player kills a mob and the low worth is greater than 0
+moneySubtractedMessage | %amount%, %balance% | When a player kills a mob and the low worth is less than 0
