@@ -42,15 +42,15 @@ m4m.multiplier.level-14 | Permission for level-14 multiplier
 m4m.multiplier.level-15 | Permission for level-15 multiplier
 
 ## How to set up a custom message
-Colors are the the default Minecraft color codes, "&7, &a, &f"
-In order to display the amount rewarded to the player upon mob kill, use '%amount%'
-In order to display the balance of the player after being rewarded the money, use '%balance%'
-In order to display the low worth of a mob, use '%lowWorth%'
-In order to display the high worth of a mob, use '%highWorth'
-In order to display the mob name, use '%mobName%'
-In order to display the item name, use '%itemName%'
-In order to display the chance that an item has to drop, use '%chance%'
-
+* Colors are the the default Minecraft color codes, "&7, &a, &f"
+* In order to display the amount rewarded to the player upon mob kill, use '%amount%'
+* In order to display the balance of the player after being rewarded the money, use '%balance%'
+* In order to display the low worth of a mob, use '%lowWorth%'
+* In order to display the high worth of a mob, use '%highWorth'
+* In order to display the mob name, use '%mobName%'
+* In order to display the item name, use '%itemName%'
+* In order to display the chance that an item has to drop, use '%chance%'
+* If the default message does not already contain one of the placeholders, then the message will not display properly
 Each word or value needs to be separated by a space. The color code should be before the word or group of words, i.e., '&6Hello'
 #### Examples
  * 1.) 
