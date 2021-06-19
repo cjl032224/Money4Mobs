@@ -17,7 +17,6 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk toggleMoneyFromSpawnEggs | m4m.command.mk.spawneggs | Toggles if players get money from mobs spawned in with eggs. Defaults to false on first time load.
 /mk toggleMoneyFromSpawners | m4m.command.mk.spawners | Toggles if players get money from mobs spawned in from spawners. Defaults to false on first time load.
 /mk language [language] | m4m.command.mk.language | Changes language of messages for M4M per player.
-/mk defaultLanguage [language] | m4m.command.mk.defaultLanguage | Updates the default language of the server. Updates each user's language option with the given language
 /mk reload | m4m.command.mk.reload | Reloads M4M data with manually changed values in config files without needing to reload or restart the whole server
 /mk toggleMoneyFromTamedWolves | m4m.command.mk.toggleMoneyFromTamedWolves | Toggles if players receive money when their tamed wolf kills a mob
 Not Applicable| m4m.bypass.ipBan | Allows a user to bypass the ipBan option for players on the same IP
@@ -42,15 +41,47 @@ m4m.multiplier.level-13 | Permission for level-13 multiplier
 m4m.multiplier.level-14 | Permission for level-14 multiplier
 m4m.multiplier.level-15 | Permission for level-15 multiplier
 
-## How to set up a custom kill message
-To add spaces to your message, '|' symbol needs to be added. 
-Colors are the the default Minecraft colors and are uppercased and surrounded by '%' symbols
-In order to display the amount rewarded to the player upon mob kill, use '%AMOUNT%'
-In order to display the balance of the player after being rewarded the money, use '%BALANCE%'
-Each word or value needs to be separated by a space. Adding a space does not equate to a space in the result
+## How to set up a custom message
+Colors are the the default Minecraft color codes, "&7, &a, &f"
+In order to display the amount rewarded to the player upon mob kill, use '%amount%'
+In order to display the balance of the player after being rewarded the money, use '%balance%'
+In order to display the low worth of a mob, use '%lowWorth%'
+In order to display the high worth of a mob, use '%highWorth'
+In order to display the mob name, use '%mobName%'
+In order to display the item name, use '%itemName%'
+In order to display the chance that an item has to drop, use '%chance%'
+
+Each word or value needs to be separated by a space. The color code should be before the word or group of words, i.e., '&6Hello'
 #### Examples
-* 1.) customMessage: '%GREEN% Rewarded | %GOLD% $ %AMOUNT% | %GREEN% and | now | have | %GOLD% $ %BALANCE% %GREEN% .'
- * 1 - Result) "Rewarded $10 and now have $100."
-* 2.) customMessage: '%GREEN% Rewarded %GOLD% $ %AMOUNT% | %GREEN% and | now have | %GOLD% $ %BALANCE% %GREEN% | .'
- * 2 - Result) "Rewarded$10 and nowhave $100 ."
+ * 1.) 
+         customDropsTrueMessage:
+            message: '&aCustom drops for &6%mobName% &amobs set to &6true'
+            location: ChatMenu
+            
+        * 1- Result) "Custom drops for Ghast mobs set to true"
+ * 2.)
+         customDropsFalseMessage:
+            message: '&aCustom drops for &6%mobName% &amobs set to &6false'
+            location: ChatMenu
+            
+        * 2 - Result) "Custom drops for Ghast mobs set to false"
+ * 3.)
+         languageChangeSuccessMessage:
+           message: '&aChanged Money4Mobs messages to &6English'
+           location: ChatMenu
+           
+        * 3 - Result) "Changed Money4Mobs messages to English"
+ * 4.)
+         moneyRewardedMessage:
+           message: '&aYou were given &6$ %amount%  &aand now have &6$ %balance%'
+           location: ActionBar
+           
+       * 4 - Result) "Rewarded $10 and now have $100"
+ * 5.) 
+         moneySubtractedMessage:
+           message: '&6$ %amount%  &awas taken and you now have &6$ %balance%'
+           location: ActionBar
+           
+        * 5 - Result) "$10 was taken and you now have $100"
+        
  
