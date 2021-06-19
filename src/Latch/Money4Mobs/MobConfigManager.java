@@ -122,7 +122,6 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         updatePluginVersion();
-        update142AddCustomizableMessages();
 
     }
 
@@ -205,11 +204,6 @@ public class MobConfigManager {
         }
         mobsCfg.save(mobsFile);
 
-    }
-
-    public static void update142AddCustomizableMessages() throws IOException {
-        mobsCfg.set("defaultLanguage", null);
-        mobsCfg.save(mobsFile);
     }
 
     public static List<MobModel> getMobModelFromConfig() {

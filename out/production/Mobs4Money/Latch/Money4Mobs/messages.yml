@@ -1,78 +1,222 @@
 messages:
   english:
-    mobKillerOnMessage: '&aMobKiller message &6on'
-    mobKillerOffMessage: '&aMobKiller message &6off'
-    accessDeniedMessage: '&cYou do not have access to this command'
-    eggSpawnRewardTrueMessage: '&aMoney rewarded from mobs spawned with eggs is set to &6true'
-    eggSpawnRewardFalseMessage: '&aMoney rewarded from mobs spawned with eggs is set to &6false'
-    spawnerSpawnRewardTrueMessage: '&aMoney rewarded from spawner mobs is set to &6true'
-    spawnerSpawnRewardFalseMessage: '&aMoney rewarded from spawner mobs is set to &6false'
-    tamedWolvesRewardTrueMessage: '&aMoney rewarded from mobs killed by tamed wolves set to &6true'
-    tamedWolvesRewardFalseMessage: '&aMoney rewarded from mobs killed by tamed wolves set to &6false'
-    reloadingMessage: '&bReloading Money4Mobs'
-    reloadConfirmMessage: '&6Money4Mobs Reload Complete'
-    overrideKillMessageTrue: '&aoverrideKillMessage set to &6true'
-    overrideKillMessageFalse: '&aoverrideKillMessage set to &6false'
-    setLowWorthCommandErrorMessage: '&cError: &7Enter command like this -> /mk setLowWorth [mobName] [amount]'
-    setHighWorthCommandErrorMessage: '&cError: &7Enter command like this -> /mk setHighWorth [mobName] [amount]'
-    addCustomDropsErrorMessage: '&cError: Custom drops cannot be added to players'
-    addCustomDropsCommandErrorMessage: '&cError: &7Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]'
-    addCustomDropInvalidMobErrorMessage: '&cError: &6%mobName% &7is not a valid mob'
-    addCustomDropAlreadyPresentErrorMessage: '&cError: &6%itemName% &7is already present as a custom drop'
-    addCustomDropSuccessMessage: '&aAdded &6%amount%  %itemName% &ato &6%mobName% &adrops with a &6%chance% % &achance of dropping'
-    removeCustomDropSuccessMessage: '&6%itemName%  &adrops removed from &6%mobName% &amobs'
-    customDropsDoNotExistErrorMessage: '&cError: &7Drops do not exist for &6%mobName% &amobs'
-    customDropsNotEnabledMessage: '&aCustom drops are not enabled for &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cError: &7Low worth for &6%mobName% %7mobs is higher than the value you are setting'
-    setHighWorthTooLowErrorMessage: '&cError: &7High worth for &6%mobName% &7mobs is lower than the value you are setting'
-    mobDropInfoMessage: '&6%mobName% &amobs have a &6%chance% % &achance of dropping &6%amount%  %itemName%'
-    customDropsNotSetMessage: '&6%mobName% &amobs don''t have any custom drops set'
-    mobWorthMessage: '&6%mobName% &amobs are worth &6%lowWorth% &adollar(s)'
-    mobRangeWorthMessage: '&6%mobName% &amobs are worth between &6%lowWorth% &aand &6%highWorth% &adollars'
-    setLowWorthSuccessMessage: '&aLow worth for &6%mobName% &amobs has been set to &6%lowWorth% &adollar(s)'
-    setHighWorthSuccessMessage: '&aHigh worth for &6%mobName% &amobs has been set to &6%highWorth% &adollar(s)'
-    defaultDropsTrueMessage: '&aDefault drops for &6%mobName% &amobs set to &6true'
-    defaultDropsFalseMessage: '&aDefault drops for &6%mobName% &amobs set to &6false'
-    customDropsTrueMessage: '&aCustom drops for &6%mobName% &amobs set to &6true'
-    customDropsFalseMessage: '&aCustom drops for &6%mobName% &amobs set to &6false'
-    languageChangeSuccessMessage: '&aChanged Money4Mobs messages to &6English'
+    mobKillerOnMessage:
+      message: '&aMobKiller message &6on'
+      location: ChatMenu
+    mobKillerOffMessage:
+      message: '&aMobKiller message &6off'
+      location: ChatMenu
+    accessDeniedMessage:
+      message: '&cYou do not have access to this command'
+      location: ChatMenu
+    eggSpawnRewardTrueMessage:
+      message: '&aMoney rewarded from mobs spawned with eggs is set to &6true'
+      location: ChatMenu
+    eggSpawnRewardFalseMessage:
+      message: '&aMoney rewarded from mobs spawned with eggs is set to &6false'
+      location: ChatMenu
+    spawnerSpawnRewardTrueMessage:
+      message: '&aMoney rewarded from spawner mobs is set to &6true'
+      location: ChatMenu
+    spawnerSpawnRewardFalseMessage:
+      message: '&aMoney rewarded from spawner mobs is set to &6false'
+      location: ChatMenu
+    tamedWolvesRewardTrueMessage:
+      message: '&aMoney rewarded from mobs killed by tamed wolves set to &6true'
+      location: ChatMenu
+    tamedWolvesRewardFalseMessage:
+      message: '&aMoney rewarded from mobs killed by tamed wolves set to &6false'
+      location: ChatMenu
+    reloadingMessage:
+      message: '&bReloading Money4Mobs'
+      location: ChatMenu
+    reloadConfirmMessage:
+      message: '&6Money4Mobs Reload Complete'
+      location: ChatMenu
+    overrideKillMessageTrue:
+      message: '&aoverrideKillMessage set to &6true'
+      location: ChatMenu
+    overrideKillMessageFalse:
+      message: '&aoverrideKillMessage set to &6false'
+      location: ChatMenu
+    setLowWorthCommandErrorMessage:
+      message: '&cError: &7Enter command like this -> /mk setLowWorth [mobName] [amount]'
+      location: ChatMenu
+    setHighWorthCommandErrorMessage:
+      message: '&cError: &7Enter command like this -> /mk setHighWorth [mobName] [amount]'
+      location: ChatMenu
+    addCustomDropsErrorMessage:
+      message: '&cError: Custom drops cannot be added to players'
+      location: ChatMenu
+    addCustomDropsCommandErrorMessage:
+      message: '&cError: &7Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]'
+      location: ChatMenu
+    addCustomDropInvalidMobErrorMessage:
+      message: '&cError: &6%mobName% &7is not a valid mob'
+      location: ChatMenu
+    addCustomDropAlreadyPresentErrorMessage:
+      message: '&cError: &6%itemName% &7is already present as a custom drop'
+      location: ChatMenu
+    addCustomDropSuccessMessage:
+      message: '&aAdded &6%amount%  %itemName% &ato &6%mobName% &adrops with a &6%chance% % &achance of dropping'
+      location: ChatMenu
+    removeCustomDropSuccessMessage:
+      message: '&6%itemName%  &adrops removed from &6%mobName% &amobs'
+      location: ChatMenu
+    customDropsDoNotExistErrorMessage:
+      message: '&cError: &7Drops do not exist for &6%mobName% &amobs'
+      location: ChatMenu
+    customDropsNotEnabledMessage:
+      message: '&aCustom drops are not enabled for &6%mobName% &amobs'
+      location: ChatMenu
+    setLowWorthTooHighErrorMessage:
+      message: '&cError: &7Low worth for &6%mobName% &7mobs is higher than the value you are setting'
+      location: ChatMenu
+    setHighWorthTooLowErrorMessage:
+      message: '&cError: &7High worth for &6%mobName% &7mobs is lower than the value you are setting'
+      location: ChatMenu
+    mobDropInfoMessage:
+      message: '&6%mobName% &amobs have a &6%chance% % &achance of dropping &6%amount%  %itemName%'
+      location: ChatMenu
+    customDropsNotSetMessage:
+      message: '&6%mobName% &amobs don''t have any custom drops set'
+      location: ChatMenu
+    mobWorthMessage:
+      message: '&6%mobName% &amobs are worth &6%lowWorth% &adollar(s)'
+      location: ChatMenu
+    mobRangeWorthMessage:
+      message: '&6%mobName% &amobs are worth between &6%lowWorth% &aand &6%highWorth% &adollars'
+      location: ChatMenu
+    setLowWorthSuccessMessage:
+      message: '&aLow worth for &6%mobName% &amobs has been set to &6%lowWorth% &adollar(s)'
+      location: ChatMenu
+    setHighWorthSuccessMessage:
+      message: '&aHigh worth for &6%mobName% &amobs has been set to &6%highWorth% &adollar(s)'
+      location: ChatMenu
+    defaultDropsTrueMessage:
+      message: '&aDefault drops for &6%mobName% &amobs set to &6true'
+      location: ChatMenu
+    defaultDropsFalseMessage:
+      message: '&aDefault drops for &6%mobName% &amobs set to &6false'
+      location: ChatMenu
+    customDropsTrueMessage:
+      message: '&aCustom drops for &6%mobName% &amobs set to &6true'
+      location: ChatMenu
+    customDropsFalseMessage:
+      message: '&aCustom drops for &6%mobName% &amobs set to &6false'
+      location: ChatMenu
+    languageChangeSuccessMessage:
+      message: '&aChanged Money4Mobs messages to &6English'
+      location: ActionBar
   french:
-    mobKillerOnMessage: '&aMessage MobKiller &6activé'
-    mobKillerOffMessage: '&aMessage MobKiller &6désactivé'
-    accessDeniedMessage: '&cVous n''avez pas accès à cette commande'
-    eggSpawnRewardTrueMessage: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6vrai'
-    eggSpawnRewardFalseMessage: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6faux'
-    spawnerSpawnRewardTrueMessage: '&aMoney récompensé par les spawner mobs est défini sur &6vrai'
-    spawnerSpawnRewardFalseMessage: '&aL''argent attribué par les spawner mobs est défini sur &6faux'
-    tamedWolvesRewardTrueMessage: '&aL''argent récompensé des foules tuées par des loups apprivoisés est réglé sur &6vrai'
-    tamedWolvesRewardFalseMessage: '&aMoney récompensé par des foules tuées par des loups apprivoisés réglé sur &6faux'
-    reloadingMessage: '&bRecharger Money4Mobs'
-    reloadConfirmMessage: '&6Money4Mobs Rechargement terminé'
-    overrideKillMessageTrue: '&aoverrideKillMessage défini sur &6vrai'
-    overrideKillMessageFalse: '&aoverrideKillMessage défini sur &6faux'
-    setLowWorthCommandErrorMessage: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob] [montant]'
-    setHighWorthCommandErrorMessage: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth [nom_mob] [montant]'
-    addCustomDropsErrorMessage: '&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux joueurs'
-    addCustomDropsCommandErrorMessage: '&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop [nom_mob] [montant] [chance]'
-    addCustomDropInvalidMobErrorMessage: '&cErreur: &6%mobName% &7n''est pas un mob valide'
-    addCustomDropAlreadyPresentErrorMessage: '&cErreur: &6%itemName% &7est déjà présent en tant que drop personnalisé'
-    addCustomDropSuccessMessage: '&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une &6%chance% % &ade chance de tomber'
-    removeCustomDropSuccessMessage: '&6%itemName% &agouttes supprimées de &6%mobName% &amobs'
-    customDropsDoNotExistErrorMessage: '&cErreur: &7Drops n''''existent pas pour &6%mobName% &amobs'
-    customDropsNotEnabledMessage: '&aLes largages personnalisés ne sont pas activés pour &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cErreur: &7La valeur faible pour &6%mobName% &7mobs est supérieure à la valeur que vous définissez'
-    setHighWorthTooLowErrorMessage: '&cErreur: &7Valeur élevée pour &6%mobName% &7mobs est inférieure à la valeur que vous définissez'
-    mobDropInfoMessage: '&6%mobName% &amobs ont &6%chance% % &achance de laisser tomber &6%amount%  %itemName%'
-    customDropsNotSetMessage: '&6%mobName% &amobs n''''ont pas de drop personnalisé défini'
-    mobWorthMessage: '&6%mobName% &amobs valent &6%lowWorth% &adollar(s)'
-    mobRangeWorthMessage: '&6%mobName% &amobs valent entre &6%lowWorth% &aet &6%highWorth% &adollars'
-    setLowWorthSuccessMessage: '&aFaible valeur pour &6%mobName% &amobs a été défini sur &6%lowWorth% &adollar(s)'
-    setHighWorthSuccessMessage: '&aLa valeur élevée pour &6%mobName% &amobs a été définie sur &6%highWorth% &adollar(s)'
-    defaultDropsTrueMessage: '&aLes baisses par défaut pour &6% mob Name% et les mobs définis sur &6vrai'
-    defaultDropsFalseMessage: '&aLa valeur par défaut diminue pour &6%mobName% &amobs défini sur &6faux'
-    customDropsTrueMessage: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6vrai'
-    customDropsFalseMessage: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6faux'
-    languageChangeSuccessMessage: '&aMessages Money4Mobs modifiés en &6Français'
+    mobKillerOnMessage:
+      message: '&aMessage MobKiller &6activé'
+      location: ChatMenu
+    mobKillerOffMessage:
+      message: '&aMessage MobKiller &6désactivé'
+      location: ChatMenu
+    accessDeniedMessage:
+      message: '&cVous n''avez pas accès à cette commande'
+      location: ChatMenu
+    eggSpawnRewardTrueMessage:
+      message: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6vrai'
+      location: ChatMenu
+    eggSpawnRewardFalseMessage:
+      message: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6faux'
+      location: ChatMenu
+    spawnerSpawnRewardTrueMessage:
+      message: '&aMoney récompensé par les spawner mobs est défini sur &6vrai'
+      location: ChatMenu
+    spawnerSpawnRewardFalseMessage:
+      message: '&aL''argent attribué par les spawner mobs est défini sur &6faux'
+      location: ChatMenu
+    tamedWolvesRewardTrueMessage:
+      message: '&aL''argent récompensé des foules tuées par des loups apprivoisés est réglé sur &6vrai'
+      location: ChatMenu
+    tamedWolvesRewardFalseMessage:
+      message: '&aMoney récompensé par des foules tuées par des loups apprivoisés réglé sur &6faux'
+      location: ChatMenu
+    reloadingMessage:
+      message: '&bRecharger Money4Mobs'
+      location: ChatMenu
+    reloadConfirmMessage:
+      message: '&6Money4Mobs Rechargement terminé'
+      location: ChatMenu
+    overrideKillMessageTrue:
+      message: '&aoverrideKillMessage défini sur &6vrai'
+      location: ChatMenu
+    overrideKillMessageFalse:
+      message: '&aoverrideKillMessage défini sur &6faux'
+      location: ChatMenu
+    setLowWorthCommandErrorMessage:
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob] [montant]'
+      location: ChatMenu
+    setHighWorthCommandErrorMessage:
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth [nom_mob] [montant]'
+      location: ChatMenu
+    addCustomDropsErrorMessage:
+      message: '&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux joueurs'
+      location: ChatMenu
+    addCustomDropsCommandErrorMessage:
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop [nom_mob] [montant] [chance]'
+      location: ChatMenu
+    addCustomDropInvalidMobErrorMessage:
+      message: '&cErreur: &6%mobName% &7n''est pas un mob valide'
+      location: ChatMenu
+    addCustomDropAlreadyPresentErrorMessage:
+      message: '&cErreur: &6%itemName% &7est déjà présent en tant que drop personnalisé'
+      location: ChatMenu
+    addCustomDropSuccessMessage:
+      message: '&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une &6%chance% % &ade chance de tomber'
+      location: ChatMenu
+    removeCustomDropSuccessMessage:
+      message: '&6%itemName% &agouttes supprimées de &6%mobName% &amobs'
+      location: ChatMenu
+    customDropsDoNotExistErrorMessage:
+      message: '&cErreur: &7Drops n''existent pas pour &6%mobName% &amobs'
+      location: ChatMenu
+    customDropsNotEnabledMessage:
+      message: '&aLes largages personnalisés ne sont pas activés pour &6%mobName% &amobs'
+      location: ChatMenu
+    setLowWorthTooHighErrorMessage:
+      message: '&cErreur: &7La valeur faible pour &6%mobName% &7mobs est supérieure à la valeur que vous définissez'
+      location: ChatMenu
+    setHighWorthTooLowErrorMessage:
+      message: '&cErreur: &7Valeur élevée pour &6%mobName% &7mobs est inférieure à la valeur que vous définissez'
+      location: ChatMenu
+    mobDropInfoMessage:
+      message: '&6%mobName% &amobs ont &6%chance% % &achance de laisser tomber &6%amount%  %itemName%'
+      location: ChatMenu
+    customDropsNotSetMessage:
+      message: '&6%mobName% &amobs n''ont pas de drop personnalisé défini'
+      location: ChatMenu
+    mobWorthMessage:
+      message: '&6%mobName% &amobs valent &6%lowWorth% &adollar(s)'
+      location: ChatMenu
+    mobRangeWorthMessage:
+      message: '&6%mobName% &amobs valent entre &6%lowWorth% &aet &6%highWorth% &adollars'
+      location: ChatMenu
+    setLowWorthSuccessMessage:
+      message: '&aFaible valeur pour &6%mobName% &amobs a été défini sur &6%lowWorth% &adollar(s)'
+      location: ChatMenu
+    setHighWorthSuccessMessage:
+      message: '&aLa valeur élevée pour &6%mobName% &amobs a été définie sur &6%highWorth% &adollar(s)'
+      location: ChatMenu
+    defaultDropsTrueMessage:
+      message: '&aLes baisses par défaut pour &6% mob Name% et les mobs définis sur &6vrai'
+      location: ChatMenu
+    defaultDropsFalseMessage:
+      message: '&aLa valeur par défaut diminue pour &6%mobName% &amobs défini sur &6faux'
+      location: ChatMenu
+    customDropsTrueMessage:
+      message: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6vrai'
+      location: ChatMenu
+    customDropsFalseMessage:
+      message: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6faux'
+      location: ChatMenu
+    languageChangeSuccessMessage:
+      message: '&aMessages Money4Mobs modifiés en &6Français'
+      location: ActionBar
   spanish:
     mobKillerOnMessage: '&aMensaje de MobKiller &6en'
     mobKillerOffMessage: '&aMensaje de MobKiller &6desactivado'
@@ -97,7 +241,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName% &agotas eliminadas de &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&cError: &7Las gotas no existen para &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&aLas gotas personalizadas no están habilitadas para &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cError: &7Baja valor para &6%mobName% %7mobs es más alta que el valor que está configurando'
+    setLowWorthTooHighErrorMessage: '&cError: &7Baja valor para &6%mobName% &7mobs es más alta que el valor que está configurando'
     setHighWorthTooLowErrorMessage: '&7Alto valor para &6%mobName% &7mobs es menor que el valor que está estableciendo'
     mobDropInfoMessage: '&6%mobName% &amobs tener un &6%chance% % &aposibilidad de caer &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs no tengo ningún conjunto de gotas personalizado'
@@ -134,7 +278,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &atropfen entfernt von &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&cError: &7Tropfen gibt es nicht für &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&aBenutzerdefinierte Drops sind nicht aktiviert für &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cError: &7Niedriger Wert für &6%mobName% %7mobs ist höher als der von dir eingestellte Wert'
+    setLowWorthTooHighErrorMessage: '&cError: &7Niedriger Wert für &6%mobName% &7mobs ist höher als der von dir eingestellte Wert'
     setHighWorthTooLowErrorMessage: '&cError: &7Hoher Wert für &6%mobName% &7mobs ist niedriger als der von Ihnen eingestellte Wert'
     mobDropInfoMessage: '&6%mobName% &amobs habe einen &6%chance% % &achance fallen zu lassen &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs habe keine benutzerdefinierten Drops'
@@ -171,7 +315,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &agocce rimosse da &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&cErrore: &7Le gocce non esistono per &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&aI drop personalizzati non sono abilitati per &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cErrore: &7Valore basso per &6%mobName% %7mobs è superiore al valore che stai impostando'
+    setLowWorthTooHighErrorMessage: '&cErrore: &7Valore basso per &6%mobName% &7mobs è superiore al valore che stai impostando'
     setHighWorthTooLowErrorMessage: '&cErrore: &7Grande valore per &6%mobName% &7mobs è inferiore al valore che stai impostando'
     mobDropInfoMessage: '&6%mobName% &amobs avere un &6%chance% % &apossibilità di cadere &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs non hai set di drop personalizzati'
@@ -208,7 +352,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &aкапли удалены из &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&cОшибка: &7Капли не существуют для &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&aПользовательские сбросы не включены для &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cОшибка: &7Низкая ценность для &6%mobName% %7mobs выше, чем значение, которое вы устанавливаете'
+    setLowWorthTooHighErrorMessage: '&cОшибка: &7Низкая ценность для &6%mobName% &7mobs выше, чем значение, которое вы устанавливаете'
     setHighWorthTooLowErrorMessage: '&cОшибка: &7Высокая ценность для &6%mobName% &7mobs ниже установленного вами значения'
     mobDropInfoMessage: '&6%mobName% &amobs есть &6%chance% % &aшанс упасть &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs нет никаких настраиваемых дропов'
@@ -245,7 +389,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &aसे हटाई गई बूंदें &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&cत्रुटि: &7बूंदों के लिए मौजूद नहीं है &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&aइसके लिए कस्टम ड्रॉप सक्षम नहीं हैं &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&cत्रुटि: &7कम मूल्य &6%mobName% %7mobs आपके द्वारा सेट किए जा रहे मान से अधिक है'
+    setLowWorthTooHighErrorMessage: '&cत्रुटि: &7कम मूल्य &6%mobName% &7mobs आपके द्वारा सेट किए जा रहे मान से अधिक है'
     setHighWorthTooLowErrorMessage: '&cत्रुटि: &7उच्च मूल्य के लिए &6%mobName% &7mobs आपके द्वारा सेट किए जा रहे मान से कम है'
     mobDropInfoMessage: '&6%mobName% &amobs लीजिये &6%chance% % &aगिरने की संभावना &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs कोई कस्टम ड्रॉप सेट नहीं है'
@@ -282,7 +426,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &adrops 已經從...刪除 &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&c錯誤: &7滴不存在 &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&a未啟用自定義放置 &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&c錯誤: &7低價值 &6%mobName% %7mobs 高於您設置的值'
+    setLowWorthTooHighErrorMessage: '&c錯誤: &7低價值 &6%mobName%&7mobs 高於您設置的值'
     setHighWorthTooLowErrorMessage: '&cE錯誤: &7物超所值 &6%mobName% &7mobs 低於您設置的值'
     mobDropInfoMessage: '&6%mobName% &amobs 有一個 &6%chance% % &a掉線的機會 &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs 沒有任何自定義掉落設置'
@@ -319,7 +463,7 @@ messages:
     removeCustomDropSuccessMessage: '&6%itemName%  &a滴从 &6%mobName% &amobs'
     customDropsDoNotExistErrorMessage: '&c错误: &7滴不存在 &6%mobName% &amobs'
     customDropsNotEnabledMessage: '&a未启用自定义放置 &6%mobName% &amobs'
-    setLowWorthTooHighErrorMessage: '&c错误: &7低价值 &6%mobName% %7mobs 高于您设置的值'
+    setLowWorthTooHighErrorMessage: '&c错误: &7低价值 &6%mobName% &7mobs 高于您设置的值'
     setHighWorthTooLowErrorMessage: '&c错误: &7物超所值 &6%mobName% &7mobs 低于您设置的值'
     mobDropInfoMessage: '&6%mobName% &amobs 有一个 &6%chance% % &a掉线的机会 &6%amount%  %itemName%'
     customDropsNotSetMessage: '&6%mobName% &amobs 没有任何自定义掉落设置'
