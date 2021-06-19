@@ -466,7 +466,7 @@ public class MkCommand implements CommandExecutor {
                             } catch (NumberFormatException e){
                                 String setLowWorthCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthCommandErrorMessage" + MESSAGE );
                                 assert setLowWorthCommandErrorMessage != null;
-                                String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + "setHighWorthTooLowErrorMessage" + LOCATION);
+                                String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + LOCATION);
                                 convertMessage(setLowWorthCommandErrorMessage, commandSender, null, null, null, null, null, null, null, messageLocation);
                             }
                         }
