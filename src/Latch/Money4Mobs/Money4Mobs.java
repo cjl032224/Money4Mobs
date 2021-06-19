@@ -1,23 +1,24 @@
 package Latch.Money4Mobs;
 
-import Latch.Money4Mobs.Metrics;
+import Latch.Money4Mobs.Managers.MessagesConfigManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.sun.jna.platform.win32.Wincon;
+import io.netty.util.concurrent.EventExecutorChooserFactory;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -40,6 +41,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static UserManager UserCfgm;
     public static FileConfiguration KillLogCfg;
     private static int entityId;
+    private static MessagesConfigManager MessagesCfgm;
 
     @Override
     public void onEnable() {
@@ -50,6 +52,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
         loadItemConfigManager();
         loadUserConfigManager();
+        try {
+            loadLanguageConfigManager();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         ItemCfgm.createItemsConfig();
@@ -117,8 +124,10 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (!event.getSpawnReason().toString().equals("NATURAL")) {
             try {
                 MobKiller.getSpawnReason(event);
-            } catch (NoClassDefFoundError e) {
+            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException e) {
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
+                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
             }
         }
     }
@@ -199,6 +208,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         UserCfgm.setup();
     }
 
+    static void loadLanguageConfigManager() throws IOException {
+        MessagesCfgm = new MessagesConfigManager();
+        MessagesCfgm.setup();
+    }
+
     public static List<Mobs4MoneyPlayer> getPlayerList() {
         return playerList;
     }
@@ -211,5 +225,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadMobConfigManager();
         loadItemConfigManager();
         loadUserConfigManager();
+        loadLanguageConfigManager();
     }
 }
