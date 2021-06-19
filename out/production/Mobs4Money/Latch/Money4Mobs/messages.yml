@@ -35,6 +35,7 @@ messages:
     defaultDropsFalseMessage: '&aDefault drops for &6%mobName% &amobs set to &6false'
     customDropsTrueMessage: '&aCustom drops for &6%mobName% &amobs set to &6true'
     customDropsFalseMessage: '&aCustom drops for &6%mobName% &amobs set to &6false'
+    languageChangeSuccessMessage: '&aChanged Money4Mobs messages to &6English'
   french:
     mobKillerOnMessage: '&aMessage MobKiller &6activé'
     mobKillerOffMessage: '&aMessage MobKiller &6désactivé'
@@ -71,6 +72,7 @@ messages:
     defaultDropsFalseMessage: '&aLa valeur par défaut diminue pour &6%mobName% &amobs défini sur &6faux'
     customDropsTrueMessage: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6vrai'
     customDropsFalseMessage: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6faux'
+    languageChangeSuccessMessage: '&aMessages Money4Mobs modifiés en &6Français'
   spanish:
     mobKillerOnMessage: '&aMensaje de MobKiller &6en'
     mobKillerOffMessage: '&aMensaje de MobKiller &6desactivado'
@@ -107,6 +109,7 @@ messages:
     defaultDropsFalseMessage: '&aGotas predeterminadas para &6%mobName% &amobs ajustado a &6falso'
     customDropsTrueMessage: '&aGotas personalizadas para &6%mobName% &amobs ajustado a &6verdadero'
     customDropsFalseMessage: '&aGotas personalizadas para &6%mobName% &amobs ajustado a &6falso'
+    languageChangeSuccessMessage: '&aSe cambiaron los mensajes de Money4Mobs a &6Español'
   german:
     mobKillerOnMessage: '&aMobKiller nachricht &6am'
     mobKillerOffMessage: '&aMobKiller nachricht &6aus'
@@ -143,6 +146,7 @@ messages:
     defaultDropsFalseMessage: '&aStandardtropfen für &6%mobName% &amobs einstellen &6falsch'
     customDropsTrueMessage: '&aBenutzerdefinierte Tropfen für &6%mobName% &amobs einstellen &6wahr'
     customDropsFalseMessage: '&aBenutzerdefinierte Tropfen für &6%mobName% &amobs einstellen &6falsch'
+    languageChangeSuccessMessage: '&aMoney4Mobs-Nachrichten auf &6Deutsch &ageändert'
   italian:
     mobKillerOnMessage: '&aMessaggio MobKiller &6attivo'
     mobKillerOffMessage: '&aMessaggio MobKiller &6disattivato'
@@ -179,6 +183,7 @@ messages:
     defaultDropsFalseMessage: '&aGocce predefinite per &6%mobName% &amobs impostato &6falso'
     customDropsTrueMessage: '&aDrop personalizzati per &6%mobName% &amobs impostato &6vero'
     customDropsFalseMessage: '&aDrop personalizzati per &6%mobName% &amobs impostato &6falso'
+    languageChangeSuccessMessage: '&aMessaggi di Money4Mobs modificati in &6Italiano'
   russian:
     mobKillerOnMessage: '&aСообщение MobKiller &6на'
     mobKillerOffMessage: '&aСообщение MobKiller &6выключенный'
@@ -215,6 +220,7 @@ messages:
     defaultDropsFalseMessage: '&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6ложный'
     customDropsTrueMessage: '&aПользовательские дропы для &6%mobName% &amobs установлен в &6правда'
     customDropsFalseMessage: '&aПользовательские дропы для &6%mobName% &amobs установлен в &6ложный'
+    languageChangeSuccessMessage: '&aИзменены сообщения Money4Mobs на &6русский &aязык'
   hindi:
     mobKillerOnMessage: '&aMobKiller संदेश &6पर'
     mobKillerOffMessage: '&aMobKiller संदेश &6बंद'
@@ -251,6 +257,7 @@ messages:
     defaultDropsFalseMessage: '&aके लिए डिफ़ॉल्ट बूँदें &6%mobName% &amobs करने के लिए सेट &6असत्य'
     customDropsTrueMessage: '&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6सच'
     customDropsFalseMessage: '&aके लिए कस्टम बूँदें &6%mobName% &amobs करने के लिए सेट &6असत्य'
+    languageChangeSuccessMessage: '&aMoney4Mobs संदेशों को &6हिंदी &aमें बदल दिया'
   chineseTraditional:
     mobKillerOnMessage: '&aMobKiller 信息 &6上'
     mobKillerOffMessage: '&aMobKiller 信息 &6離開'
@@ -287,6 +294,7 @@ messages:
     defaultDropsFalseMessage: '&a默認掉落 &6%mobName% &amobs 調成 &6錯誤的'
     customDropsTrueMessage: '&a自定義掉落 &6%mobName% &amobs 調成 &6真的'
     customDropsFalseMessage: '&a自定義掉落 &6%mobName% &amobs 調成 &6錯誤的'
+    languageChangeSuccessMessage: '&a將 Money4Mobs 消息更改為繁體 &6中國傳統的'
   chineseSimplified:
     mobKillerOnMessage: '&aMobKiller 信息 &6上'
     mobKillerOffMessage: '&aMobKiller 信息 &6离开'
@@ -323,3 +331,4 @@ messages:
     defaultDropsFalseMessage: '&a默认掉落 &6%mobName% &amobs 调成 &6假'
     customDropsTrueMessage: '&a自定义掉落 &6%mobName% &amobs 调成 &6真的'
     customDropsFalseMessage: '&a自定义掉落 &6%mobName% &amobs 调成 &6假'
+    languageChangeSuccessMessage: '&a將 Money4Mobs 消息更改為簡體 &6簡體中文'

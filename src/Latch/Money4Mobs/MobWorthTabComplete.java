@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import Latch.Money4Mobs.Managers.MessagesConfigManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,7 +24,6 @@ public class MobWorthTabComplete implements TabCompleter {
         List<String> firstArgumentList = new ArrayList<>();
 
         firstArgumentList.add("addCustomDrop");
-        firstArgumentList.add("defaultLanguage");
         firstArgumentList.add("drops");
         firstArgumentList.add("language");
         firstArgumentList.add("reload");
@@ -78,9 +78,6 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             if(!pa.hasPermission("m4m.command.mk.language")){
                 firstArgumentList.remove("language");
-            }
-            if(!pa.hasPermission("m4m.command.mk.defaultLanguage")){
-                firstArgumentList.remove("defaultLanguage");
             }
             if(!pa.hasPermission("m4m.command.mk.toggleMoneyFromTamedWolves")){
                 firstArgumentList.remove("toggleMoneyFromTamedWolves");
@@ -176,15 +173,9 @@ public class MobWorthTabComplete implements TabCompleter {
         }
         if(args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("defaultLanguage") ) {
             List<String> languageList = new ArrayList<>();
-            languageList.add("Chinese_Simplified");
-            languageList.add("Chinese_Traditional");
-            languageList.add("English");
-            languageList.add("French");
-            languageList.add("German");
-            languageList.add("Hindi");
-            languageList.add("Italian");
-            languageList.add("Russian");
-            languageList.add("Spanish");
+            for (String items : MessagesConfigManager.messagesCfg.getConfigurationSection("messages").getKeys(false)){
+                languageList.add(items);
+            }
             try {
                 return StringUtil.copyPartialMatches(args[1], languageList, new ArrayList<>());
             } catch (ArrayIndexOutOfBoundsException ignore){

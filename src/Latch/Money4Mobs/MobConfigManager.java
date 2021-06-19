@@ -122,6 +122,7 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         updatePluginVersion();
+        update142AddCustomizableMessages();
 
     }
 
@@ -136,19 +137,15 @@ public class MobConfigManager {
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.low"))) {
             mobsCfg.set("mobs.Piglin.worth.low", 25);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.worth.high"))) {
             mobsCfg.set("mobs.Piglin.worth.high", 25);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.keepDefaultDrops"))) {
             mobsCfg.set("mobs.Piglin.keepDefaultDrops", true);
         }
-        ;
         if (Boolean.FALSE.equals(mobsCfg.isSet("mobs.Piglin.customDrops"))) {
             mobsCfg.set("mobs.Piglin.customDrops", false);
         }
-        ;
         mobsCfg.save(mobsFile);
 
     }
@@ -210,12 +207,13 @@ public class MobConfigManager {
 
     }
 
+    public static void update142AddCustomizableMessages() throws IOException {
+        mobsCfg.set("defaultLanguage", null);
+        mobsCfg.save(mobsFile);
+    }
+
     public static List<MobModel> getMobModelFromConfig() {
         return mobListFromConfig;
     }
 
-    public static void updateDefaultLanguage(String language) throws IOException {
-        mobsCfg.set("defaultLanguage", language);
-        mobsCfg.save(mobsFile);
-    }
 }
