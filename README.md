@@ -41,7 +41,10 @@ m4m.multiplier.level-13 | Permission for level-13 multiplier
 m4m.multiplier.level-14 | Permission for level-14 multiplier
 m4m.multiplier.level-15 | Permission for level-15 multiplier
 
+Link to default mobs.yml file ---> https://github.com/lakeboy93/Money4Mobs/blob/master/src/Latch/Money4Mobs/messages.yml
 ## How to set up a custom message
+* Messages go off of the language set in users.language and corresponds to the language.[language] 
+* * If the users language is english, then in the messages.yml file, the message layout needs to be language.english, not language.English. This option is case sensitive.
 * Colors are the the default Minecraft color codes, "&7, &a, &f"
 * In order to display the amount rewarded to the player upon mob kill, use '%amount%'
 * In order to display the balance of the player after being rewarded the money, use '%balance%'
