@@ -173,7 +173,7 @@ public class MobWorthTabComplete implements TabCompleter {
         }
         if(args[0].equalsIgnoreCase("language") || args[0].equalsIgnoreCase("defaultLanguage") ) {
             List<String> languageList = new ArrayList<>();
-            for (String items : MessagesConfigManager.messagesCfg.getConfigurationSection("messages").getKeys(false)){
+            for (String items : MessagesConfigManager.messagesCfg.getConfigurationSection("language").getKeys(false)){
                 languageList.add(items);
             }
             try {

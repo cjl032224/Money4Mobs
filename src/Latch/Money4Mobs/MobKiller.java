@@ -117,12 +117,12 @@ public abstract class MobKiller implements CommandExecutor {
                                 String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                                 String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                                 assert moneyRewardedMessage != null;
-                                MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, balance, moneyRewardedMessageLocation);
+                                MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
                             } else {
                                 String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                                 String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                                 assert moneySubtractedMessage != null;
-                                MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, balance, moneySubtractedMessageLocation);
+                                MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
                             }
                         }
                     }
@@ -328,7 +328,38 @@ public abstract class MobKiller implements CommandExecutor {
                 money = money * multiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
+        }
+        double ridingHorseMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-horse.multiplier");
+        Boolean isRidingHorseActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-horse.isActive");
+        double ridingMuleMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-mule.multiplier");
+        Boolean isRidingMuleActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-mule.isActive");
+        double ridingDonkeyMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
+        Boolean isRidingDonkeyActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
+        double ridingStriderMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-strider.multiplier");
+        Boolean isRidingStriderActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-strider.isActive");
+        double ridingPigMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-pig.multiplier");
+        Boolean isRidingPigActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-pig.isActive");
 
+        if (pa instanceof Player){
+            Player player = (Player) pa;
+            if (player.getVehicle() != null) {
+                if (player.getVehicle().getName().equalsIgnoreCase("Horse") && Boolean.TRUE.equals(isRidingHorseActive)){
+                    money = money * ridingHorseMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Mule") && Boolean.TRUE.equals(isRidingMuleActive)){
+                    money = money * ridingMuleMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Donkey") && Boolean.TRUE.equals(isRidingDonkeyActive)){
+                    money = money * ridingDonkeyMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Strider") && Boolean.TRUE.equals(isRidingStriderActive)){
+                    money = money * ridingStriderMultiplier;
+                }
+                if (player.getVehicle().getName().equalsIgnoreCase("Pig") && Boolean.TRUE.equals(isRidingPigActive)){
+                    money = money * ridingPigMultiplier;
+                }
+                money = Math.round(money * 100.0) / 100.0;
+            }
         }
     }
 

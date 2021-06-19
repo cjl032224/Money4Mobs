@@ -28,7 +28,7 @@ public class ItemListManager {
         mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
         Boolean createItemFile = false;
 
-        if (mobsCfg.getString("version") != "1.4.2") {
+        if (mobsCfg.getString("version") != "1.5.0") {
             createItemFile = true;
         }
         itemsFile = new File(plugin.getDataFolder(), "items.yml");

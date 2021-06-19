@@ -46,9 +46,9 @@ public class MkCommand implements CommandExecutor {
     private static final String LANGUAGE = "language.";
     private static final String LOCATION = ".location";
     private static final String MESSAGE = ".message";
+    private static final String DEFAULT_LANGUAGE = mobsCfg.getString("defaultLanguage").toLowerCase();
     private static int userNumber;
     Logger logger = Logger.getLogger(MkCommand.class.getName());
-
 
     // Language Constants
     private static final String ENGLISH = "English";
@@ -56,7 +56,7 @@ public class MkCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         String language = null;
         Player player2 = null;
-        player2 = getPlayer(commandSender, player2);
+        player2 = getPlayer(commandSender, null);
         List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
         int firstCounter = 1;
         for(String firstUsers : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
@@ -69,6 +69,7 @@ public class MkCommand implements CommandExecutor {
         if (player2 == null){
             firstCounter = 1;
         }
+
         for(int i = 1; i < firstCounter+1; i++) {
             String firstUserId = UserManager.usersCfg.getString(USERS_USER + i + ".userId");
             assert firstUserId != null;
@@ -81,6 +82,9 @@ public class MkCommand implements CommandExecutor {
                     }
                 }
             }
+        }
+        if (!(player2 instanceof Player)){
+            language = DEFAULT_LANGUAGE;
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("toggleKM")) {
@@ -112,10 +116,12 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
-                    String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
-                    assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    if (player2 instanceof Player) {
+                        String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
+                        String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
+                        assert accessDeniedMessage != null;
+                        convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    }
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs") || commandSender.isOp()) {
@@ -203,6 +209,7 @@ public class MkCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("reload")) {
                 if (commandSender.hasPermission("m4m.command.mk.reload") || commandSender.isOp()) {
                     String reloadingMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + MESSAGE);
+                    System.out.println("ere: " + reloadingMessage);
                     String reloadingMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + LOCATION);
                     assert reloadingMessage != null;
                     logger.log(Level.INFO, reloadingMessage.substring(2));
@@ -396,7 +403,7 @@ public class MkCommand implements CommandExecutor {
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
             } else if (args[0].equalsIgnoreCase("language")) {
-                if (commandSender.hasPermission("m4m.command.mk.language") || commandSender.isOp()) {
+                if (player2 instanceof Player && (commandSender.hasPermission("m4m.command.mk.language") || commandSender.isOp())) {
                     boolean success = false;
                     for (String languageOption : testList) {
                         if (args[1].equalsIgnoreCase(languageOption)) {
@@ -718,25 +725,6 @@ public class MkCommand implements CommandExecutor {
         return test;
     }
 
-    private static String getUserLanguage(CommandSender commandSender){
-        Player player;
-        String language = null;
-        if (commandSender instanceof Player) {
-            player = (Player) commandSender;
-            int counter = 1;
-            for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-                String userId = UserManager.usersCfg.getString(USERS_USER + counter + ".userId");
-                if (player.getUniqueId().toString().equals(userId)){
-                    language = UserManager.usersCfg.getString(USERS_USER + counter + ".language");
-                }
-                counter++;
-            }
-        } else {
-            language = MobConfigManager.mobsCfg.getString("defaultLanguage");
-        }
-        return language;
-    }
-
     private static boolean isColor(List<Object> object, boolean test, String s, String color) {
         if (s.contains(color)){
             test = true;
@@ -872,7 +860,6 @@ public class MkCommand implements CommandExecutor {
     private static void splitStringIntoArrayAndConvert(String[] customArray, List<String> colorArray, List<Object> object) {
         boolean test;
         for (String s: customArray){
-            test = false;
             test = iterateColorArray(colorArray, object, false, s);
             ifWordIsNotAColor(object, test, s);
         }
