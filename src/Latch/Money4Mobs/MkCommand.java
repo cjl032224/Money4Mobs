@@ -209,7 +209,6 @@ public class MkCommand implements CommandExecutor {
             else if (args[0].equalsIgnoreCase("reload")) {
                 if (commandSender.hasPermission("m4m.command.mk.reload") || commandSender.isOp()) {
                     String reloadingMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + MESSAGE);
-                    System.out.println("ere: " + reloadingMessage);
                     String reloadingMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + LOCATION);
                     assert reloadingMessage != null;
                     logger.log(Level.INFO, reloadingMessage.substring(2));
