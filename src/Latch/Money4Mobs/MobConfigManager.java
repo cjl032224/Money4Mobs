@@ -16,7 +16,7 @@ public class MobConfigManager {
     private static final List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.5.4";
+    public static final String VERSION_NUMBER = "1.5.5";
     private static final String VERSION = "version";
     private static final String MOBS = "mobs.";
     private static final String DROPS_ITEM = ".drops.item-";
@@ -47,6 +47,7 @@ public class MobConfigManager {
         update14Add117Mobs();
         update150ActionsMultiplier();
         update153UpdateChecker();
+        update155UpdateChecker();
         updatePluginVersion();
         mobsCfg.save(mobsFile);
     }
@@ -248,6 +249,17 @@ public class MobConfigManager {
         if (Boolean.FALSE.equals(mobsCfg.isSet("checkForUpdate"))) {
             mobsCfg.set("checkForUpdate", true);
         }
+        mobsCfg.save(mobsFile);
+    }
+
+    public static void update155UpdateChecker() throws IOException {
+        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.enablePercentageDrop"))) {
+            mobsCfg.set(MOBS + "Player.enablePercentageDrop", false);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.percentageDropAmount"))) {
+            mobsCfg.set(MOBS + "Player.percentageDropAmount", 0);
+        }
+
         mobsCfg.save(mobsFile);
     }
 
