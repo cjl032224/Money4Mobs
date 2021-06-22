@@ -403,7 +403,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.italian.moneySubtractedMessage.location",ACTION_BAR);
 
             // Russian
-            messagesCfg.set("language.russian.mobKillerOnMessage.message","&aСообщение MobKiller &6на");
+            messagesCfg.set("language.russian.mobKillerOnMessage.message","&aСообщение MobKiller &6включен");
             messagesCfg.set("language.russian.mobKillerOffMessage.message","&aСообщение MobKiller &6выключенный");
             messagesCfg.set("language.russian.accessDeniedMessage.message","&cУ вас нет доступа к этой команде");
             messagesCfg.set("language.russian.eggSpawnRewardTrueMessage.message","&aДенежная награда от мобов, порожденных яйцами, установлена в размере &6правда");
@@ -430,13 +430,13 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.customDropsNotSetMessage.message","&6%mobName% &amobs нет никаких настраиваемых дропов");
             messagesCfg.set("language.russian.mobWorthMessage.message","&6%mobName% &amobs стоит &6%lowWorth% &aдоллар(ы)");
             messagesCfg.set("language.russian.mobRangeWorthMessage.message","&6%mobName% &amobs стоят между &6%lowWorth% &aand &6%highWorth% &adollars");
-            messagesCfg.set("language.russian.setLowWorthSuccessMessage.message","&aНизкая ценность для &6%mobName% &amobs был установлен на &6%lowWorth% &aдоллар(ы)");
-            messagesCfg.set("language.russian.setHighWorthSuccessMessage.message","&aВысокая ценность для &6%mobName% &amobs был установлен на &6%highWorth% &aдоллар(ы)");
+            messagesCfg.set("language.russian.setLowWorthSuccessMessage.message","&aНизкая ценность для &6%mobName% &amobs был установлен включен &6%lowWorth% &aдоллар(ы)");
+            messagesCfg.set("language.russian.setHighWorthSuccessMessage.message","&aВысокая ценность для &6%mobName% &amobs был установлен включен &6%highWorth% &aдоллар(ы)");
             messagesCfg.set("language.russian.defaultDropsTrueMessage.message","&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6правда");
             messagesCfg.set("language.russian.defaultDropsFalseMessage.message","&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6ложный");
             messagesCfg.set("language.russian.customDropsTrueMessage.message","&aПользовательские дропы для &6%mobName% &amobs установлен в &6правда");
             messagesCfg.set("language.russian.customDropsFalseMessage.message","&aПользовательские дропы для &6%mobName% &amobs установлен в &6ложный");
-            messagesCfg.set("language.russian.languageChangeSuccessMessage.message","&aИзменены сообщения Money4Mobs на &6русский &aязык");
+            messagesCfg.set("language.russian.languageChangeSuccessMessage.message","&aИзменены сообщения Money4Mobs включен &6русский &aязык");
             messagesCfg.set("language.russian.moneyRewardedMessage.message","&aВам дали &6$ %amount%  &aи теперь есть &6$ %balance%");
             messagesCfg.set("language.russian.moneySubtractedMessage.message","&6$ %amount%  &aбыл взят, и теперь у вас есть &6$ %balance%");
             // Russian Message Location
