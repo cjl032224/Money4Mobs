@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -31,10 +32,11 @@ public abstract class MobKiller implements CommandExecutor {
     private static String language = "";
     private static Boolean showMessage = true;
     private static final Random r = new Random();
+    private static double percentageLost = 0;
 
     public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) {
         setLanguage(pa);
-        giveMoneyCheck(pa,e);
+        giveMoneyCheck(pa,e, econ);
         Player player = null;
         if (pa instanceof Player){
             player = (Player) pa;
@@ -181,13 +183,24 @@ public abstract class MobKiller implements CommandExecutor {
         msr.add(new MobSpawnedReason(e.getSpawnReason().toString(), e.getEntity().getUniqueId().toString()));
     }
 
-    public static void giveMoneyCheck(CommandSender pa, Entity e){
-        int counter = 0;
-        Player player = null;
-        if (pa instanceof Player) {
-            player = (Player) pa;
+
+    public static void getLootingLevel(){
+        Map<org.bukkit.enchantments.Enchantment, Integer> s = Objects.requireNonNull(ede.getEntity().getKiller()).getInventory().getItemInMainHand().getEnchantments();
+        for (Map.Entry<Enchantment, Integer> entry : s.entrySet()){
+            if (entry.getKey().toString().contains("looting")){
+                Integer lootingLevel = entry.getValue();
+            }
         }
-        String killerIP = player.getAddress().getAddress().toString();
+    }
+
+    public static void giveMoneyCheck(CommandSender pa, Entity e, Economy econ){
+        int counter = 0;
+        Player predator = null;
+        if (pa instanceof Player) {
+            predator = (Player) pa;
+        }
+        assert predator != null;
+        String killerIP = predator.getAddress().getAddress().toString();
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             for (MobSpawnedReason mobSpawnedReason : msr) {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
@@ -224,6 +237,24 @@ public abstract class MobKiller implements CommandExecutor {
                         if (killerIP.equals(entityIP)) {
                             giveMoney = false;
                         }
+                    }
+                } else {
+                    if(MobConfigManager.mobsCfg.getBoolean("mobs.Player.enablePercentageDrop")){
+                        giveMoney = false;
+                        percentageLost = MobConfigManager.mobsCfg.getDouble("mobs.Player.percentageDropAmount");
+                        Player prey = ((Player) e).getPlayer();
+                        double preyBalance = econ.getBalance(prey);
+                        double amountToSubtract = (preyBalance / 100) * percentageLost;
+                        econ.withdrawPlayer(prey, amountToSubtract);
+                        econ.depositPlayer(predator, amountToSubtract);
+                        String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".message");
+                        String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".location");
+                        assert playerKilledPlayerMessage != null;
+                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation);
+                        String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".message");
+                        String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".location");
+                        assert playerKilledByPlayerMessage != null;
+                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
                     }
                 }
             }
