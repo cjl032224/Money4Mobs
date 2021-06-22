@@ -2,23 +2,22 @@ package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.sun.jna.platform.win32.Wincon;
-import io.netty.util.concurrent.EventExecutorChooserFactory;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -28,6 +27,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
 
 public class Money4Mobs extends JavaPlugin implements Listener {
 
@@ -39,12 +39,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
-    public static FileConfiguration KillLogCfg;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
+    Boolean isUpdateAvailable = false;
+    Boolean checkForUpdate = true;
 
     @Override
     public void onEnable() {
+
         try {
             loadMobConfigManager();
         } catch (IOException e) {
@@ -86,6 +88,19 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
         Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
 
+        if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.isSet("checkForUpdate"))) {
+            checkForUpdate = MobConfigManager.mobsCfg.getBoolean("checkForUpdate");
+        }
+
+        new UpdateChecker(this, 85373).getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                System.out.println("[Money4Mobs] No new version available");
+            } else {
+                System.out.println("[Money4Mobs] New version available -> https://www.spigotmc.org/resources/money4mobs.85373");
+                isUpdateAvailable = true;
+            }
+        });
+
         sml.getMobModel();
     }
 
@@ -116,6 +131,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         UserManager.addUserToList(um);
         if (count == 0) {
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true));
+        }
+        if (Boolean.TRUE.equals(checkForUpdate)){
+            if (event.getPlayer().isOp() && Boolean.TRUE.equals(isUpdateAvailable)) {
+                event.getPlayer().sendMessage(ChatColor.RED + "[" + ChatColor.GOLD + "Money4Mobs" + ChatColor.RED + "] Update available -> " + ChatColor.AQUA + "https://www.spigotmc.org/resources/money4mobs.85373/.");
+            }
         }
     }
 
