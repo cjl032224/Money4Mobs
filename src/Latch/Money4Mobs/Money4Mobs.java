@@ -4,6 +4,9 @@ import Latch.Money4Mobs.Managers.MessagesConfigManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,7 +74,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         for (OfflinePlayer p : getServer().getOfflinePlayers()) {
             userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, "English", null));
