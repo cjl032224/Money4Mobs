@@ -1,7 +1,7 @@
 # This is the default mobs.yml config file
 # If you are having problems, compare your mobs.yml with this and
 # see if you are missing any options
-version: 1.5.4
+version: 1.5.5
 spawners: false
 spawneggs: true
 tamedWolvesGiveMoney: true
