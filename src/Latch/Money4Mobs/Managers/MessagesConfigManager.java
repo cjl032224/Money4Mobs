@@ -705,6 +705,47 @@ public class MessagesConfigManager {
             messagesCfg.save(messagesFile);
 
         }
+        update155PercentageLostPlayerKillPlayer();
         messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
+    }
+
+    public void update155PercentageLostPlayerKillPlayer() throws IOException {
+        if (Boolean.FALSE.equals(messagesCfg.isSet("language.english.playerKilledPlayerMessage.message"))) {
+            messagesCfg.set("language.english.playerKilledPlayerMessage.message", "&aYou were given &6$ %amount%  &aand now have &6$ %balance%");
+            messagesCfg.set("language.english.playerKilledByPlayerMessage.message","&6$ %amount%  &awas taken and you now have &6$ %balance%");
+            messagesCfg.set("language.english.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.english.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.french.playerKilledPlayerMessage.message","&aVous avez reçu &6$ %amount% &aet vous avez maintenant &6$ %balance%");
+            messagesCfg.set("language.french.playerKilledByPlayerMessage.message","&6$ %amount%  &aa été prise et vous avez maintenant &6$ %balance%");
+            messagesCfg.set("language.french.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.french.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.spanish.playerKilledPlayerMessage.message","&aLe dieron &6$ %amount%  &ay ahora tengo &6$ %balance%");
+            messagesCfg.set("language.spanish.playerKilledByPlayerMessage.message","&6$ %amount%  &afue tomado y ahora tienes &6$ %balance%");
+            messagesCfg.set("language.spanish.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.spanish.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.german.playerKilledPlayerMessage.message","&aSie wurden gegeben &6$ %amount%  &aund jetzt habe &6$ %balance%");
+            messagesCfg.set("language.german.playerKilledByPlayerMessage.message","&6$ %amount%  &awurde genommen und du hast jetzt &6$ %balance%");
+            messagesCfg.set("language.german.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.german.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.russian.playerKilledPlayerMessage.message","&aВам дали &6$ %amount%  &aи теперь есть &6$ %balance%");
+            messagesCfg.set("language.russian.playerKilledByPlayerMessage.message","&6$ %amount%  &aбыл взят, и теперь у вас есть &6$ %balance%");
+            messagesCfg.set("language.russian.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.russian.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.hindi.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.hindi.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.hindi.playerKilledPlayerMessage.message","&aतुमको दिया गया था &6$ %amount%  &aऔर अब है &6$ %balance%");
+            messagesCfg.set("language.hindi.playerKilledByPlayerMessage.message","&6$ %amount%  &aलिया गया था और अब आपके पास है &6$ %balance%");
+            messagesCfg.set("language.italian.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.italian.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.chinese_simplified.playerKilledPlayerMessage.message","&a你被给予 &6$ %amount%  &a现在有 &6$ %balance%");
+            messagesCfg.set("language.chinese_simplified.playerKilledByPlayerMessage.message","&6$ %amount%  &a被带走了，你现在有了 &6$ %balance%");
+            messagesCfg.set("language.chinese_simplified.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.chinese_simplified.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.chinese_traditional.playerKilledPlayerMessage.message","&a你被給予 &6$ %amount%  &a現在有 &6$ %balance%");
+            messagesCfg.set("language.chinese_traditional.playerKilledByPlayerMessage.message","&6$ %amount%  &a被帶走了，你現在有了 &6$ %balance%");
+            messagesCfg.set("language.chinese_traditional.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.chinese_traditional.playerKilledByPlayerMessage.location",ACTION_BAR);
+        }
+        messagesCfg.save(messagesFile);
     }
 }
