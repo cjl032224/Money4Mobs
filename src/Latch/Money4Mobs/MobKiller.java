@@ -33,6 +33,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static Boolean giveMoney = false;
     private static String language = "";
     private static Boolean showMessage = true;
+    private static final Random r = new Random();
 
     public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) {
         setLanguage(pa);
@@ -41,6 +42,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa instanceof Player){
             player = (Player) pa;
         }
+        assert player != null;
         boolean samePlayer = player.getUniqueId().toString().equals(e.getUniqueId().toString());
         if (Boolean.TRUE.equals(samePlayer)) {
             giveMoney = false;
@@ -110,6 +112,7 @@ public abstract class MobKiller implements CommandExecutor {
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
+            assert player != null;
             if (player.getUniqueId().toString().equals(userId)) {
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
                 language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
@@ -165,7 +168,6 @@ public abstract class MobKiller implements CommandExecutor {
                     }
                 }
             }
-
         }
     }
 
@@ -212,11 +214,7 @@ public abstract class MobKiller implements CommandExecutor {
                         }
                     } else if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER")) {
                         Boolean spawners = MobConfigManager.mobsCfg.getBoolean("spawners");
-                        if (Boolean.TRUE.equals(spawners)) {
-                            giveMoney = true;
-                        } else {
-                            giveMoney = false;
-                        }
+                        giveMoney = Boolean.TRUE.equals(spawners);
                     }
                 }
             }
@@ -239,7 +237,7 @@ public abstract class MobKiller implements CommandExecutor {
                         if (killerIP.equals(entityIP)) {
                             giveMoney = false;
                         }
-                    };
+                    }
                 }
             }
 
@@ -249,73 +247,18 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void setRange(Entity e, CommandSender pa){
-        double level1 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-1");
-        double level2 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-2");
-        double level3 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-3");
-        double level4 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-4");
-        double level5 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-5");
-        double level6 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-6");
-        double level7 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-7");
-        double level8 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-8");
-        double level9 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-9");
-        double level10 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-10");
-        double level11 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-11");
-        double level12 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-12");
-        double level13 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-13");
-        double level14 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-14");
-        double level15 = MobConfigManager.mobsCfg.getDouble("group-multiplier.level-15");
+        double levelMultiplier = 1;
+        List<String> levelList = new ArrayList<>();
+        levelList.addAll(MobConfigManager.mobsCfg.getConfigurationSection("group-multiplier").getKeys(false));
+        for (String level : levelList) {
+            if ( pa.hasPermission("m4m.multiplier." + level)){
+                levelMultiplier = MobConfigManager.mobsCfg.getDouble("group-multiplier."+level);
+            }
+        }
         double operator = MobConfigManager.mobsCfg.getDouble("group-multiplier.operator");
-        double multiplier = 1;
-        if (pa.hasPermission("m4m.multiplier.level-15")) {
-            multiplier = level15;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-14")) {
-            multiplier = level14;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-13")) {
-            multiplier = level13;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-12")) {
-            multiplier = level12;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-11")) {
-            multiplier = level11;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-10")) {
-            multiplier = level10;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-9")) {
-            multiplier = level9;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-8")) {
-            multiplier = level8;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-7")) {
-            multiplier = level7;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-6")) {
-            multiplier = level6;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-5")) {
-            multiplier = level5;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-4")) {
-            multiplier = level4;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-3")) {
-            multiplier = level3;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-2")) {
-            multiplier = level2;
-        }
-        else if (pa.hasPermission("m4m.multiplier.level-1")) {
-            multiplier = level1;
-        }
-        else {
-            multiplier = 1;
-        }
+
         if (pa.isOp()){
-            multiplier = operator;
+            levelMultiplier = operator;
         }
         for (MobModel mobModel : mm) {
             String entity = "Craft" + mobModel.getMobName();
@@ -328,12 +271,16 @@ public abstract class MobKiller implements CommandExecutor {
             Double highWorth = mobModel.getHighWorth();
             if (es.equals(entity)) {
                 money = mobModel.getHighWorth();
-                Random r = new Random();
                 money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
-                money = money * multiplier;
+                money = money * levelMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
         }
+
+        isRidingCheck(pa);
+    }
+
+    private static void isRidingCheck(CommandSender pa) {
         double ridingHorseMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-horse.multiplier");
         Boolean isRidingHorseActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-horse.isActive");
         double ridingMuleMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-mule.multiplier");
@@ -348,23 +295,19 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa instanceof Player){
             Player player = (Player) pa;
             if (player.getVehicle() != null) {
-                if (player.getVehicle().getName().equalsIgnoreCase("Horse") && Boolean.TRUE.equals(isRidingHorseActive)){
-                    money = money * ridingHorseMultiplier;
-                }
-                if (player.getVehicle().getName().equalsIgnoreCase("Mule") && Boolean.TRUE.equals(isRidingMuleActive)){
-                    money = money * ridingMuleMultiplier;
-                }
-                if (player.getVehicle().getName().equalsIgnoreCase("Donkey") && Boolean.TRUE.equals(isRidingDonkeyActive)){
-                    money = money * ridingDonkeyMultiplier;
-                }
-                if (player.getVehicle().getName().equalsIgnoreCase("Strider") && Boolean.TRUE.equals(isRidingStriderActive)){
-                    money = money * ridingStriderMultiplier;
-                }
-                if (player.getVehicle().getName().equalsIgnoreCase("Pig") && Boolean.TRUE.equals(isRidingPigActive)){
-                    money = money * ridingPigMultiplier;
-                }
+                isRidingMob(ridingHorseMultiplier, isRidingHorseActive, player, "Horse");
+                isRidingMob(ridingMuleMultiplier, isRidingMuleActive, player, "Mule");
+                isRidingMob(ridingDonkeyMultiplier, isRidingDonkeyActive, player, "Donkey");
+                isRidingMob(ridingStriderMultiplier, isRidingStriderActive, player, "Strider");
+                isRidingMob(ridingPigMultiplier, isRidingPigActive, player, "Pig");
                 money = Math.round(money * 100.0) / 100.0;
             }
+        }
+    }
+
+    private static void isRidingMob(double ridingHorseMultiplier, Boolean isRidingHorseActive, Player player, String horse) {
+        if (Objects.requireNonNull(player.getVehicle()).getName().equalsIgnoreCase(horse) && Boolean.TRUE.equals(isRidingHorseActive)) {
+            money = money * ridingHorseMultiplier;
         }
     }
 
