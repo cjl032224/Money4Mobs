@@ -1,17 +1,5 @@
 name: Money4Mobs
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-version: 1.4.1
-=======
-version: 1.5.0
->>>>>>> 8155c2b4325e78607f9eda6783a63fe15bdbbde9
-=======
-version: 1.5.2
->>>>>>> 8a315730272c373b91d605b3652b0b3d56ce96e2
-=======
 version: 1.5.3
->>>>>>> b653c8bf4be4368b6552453eac972284fcf1e452
 author: Latch
 main: Latch.Money4Mobs.Money4Mobs
 api-version: 1.12
