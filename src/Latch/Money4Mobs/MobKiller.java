@@ -279,8 +279,8 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         for (MobModel mobModel : mm) {
-            String entity = "Craft" + mobModel.getMobName();
-            String es = e.toString();
+            String entity = mobModel.getMobName();
+            String es = e.getName();
             if(e instanceof Player) {
                 es = "CraftPlayer";
             }
