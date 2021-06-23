@@ -40,7 +40,7 @@ public class MobConfigManager {
             }
         } else {
             if (mobsCfg.getString("defaultLanguage") == null) {
-                mobsCfg.set("defaultLanguage", "English");
+                mobsCfg.set("defaultLanguage", "english");
             }
         }
         update137AddPiglin();
