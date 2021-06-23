@@ -93,14 +93,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             checkForUpdate = MobConfigManager.mobsCfg.getBoolean("checkForUpdate");
         }
 
-        new UpdateChecker(this, 85373).getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                System.out.println("[Money4Mobs] No new version available");
-            } else {
-                System.out.println("[Money4Mobs] New version available -> https://www.spigotmc.org/resources/money4mobs.85373");
-                isUpdateAvailable = true;
-            }
-        });
+//        new UpdateChecker(this, 85373).getVersion(version -> {
+//            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+//                System.out.println("[Money4Mobs] No new version available");
+//            } else {
+//                System.out.println("[Money4Mobs] New version available -> https://www.spigotmc.org/resources/money4mobs.85373");
+//                isUpdateAvailable = true;
+//            }
+//        });
 
         sml.getMobModel();
     }

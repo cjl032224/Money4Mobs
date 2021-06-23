@@ -3,6 +3,8 @@ package Latch.Money4Mobs;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.apache.commons.codec.language.bm.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,6 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -827,10 +830,17 @@ public class MkCommand implements CommandExecutor {
 
         if (messageLocation.equalsIgnoreCase("ActionBar") && pa instanceof Player){
             Player player = (Player) pa;
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(completedMessage));
+            sendActionBar(player, completedMessage);
         } else if (messageLocation.equalsIgnoreCase("ChatMenu")) {
             pa.sendMessage(completedMessage);
         }
+    }
+
+    public static void sendActionBar(Player player, String message) {
+        CraftPlayer p = (CraftPlayer) player;
+        IChatBaseComponent cbc = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
+        PacketPlayOutChat ppoc = new PacketPlayOutChat(cbc, (byte) 2);
+        p.getHandle().playerConnection.sendPacket(ppoc);
     }
 
     private static void splitStringIntoArrayAndConvert(String[] customArray, List<String> colorArray, List<Object> object) {
