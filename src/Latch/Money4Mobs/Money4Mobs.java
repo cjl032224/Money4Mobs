@@ -76,8 +76,13 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for (OfflinePlayer p : getServer().getOfflinePlayers()) {
-            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, "English", null));
+            String language = MobConfigManager.mobsCfg.getString("defaultLanguage");
+            if (language == null){
+                language = "english";
+            }
+            userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, language, null));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true));
+
         }
 
         int pluginId = 9484; // <-- Replace with the id of your plugin!
@@ -120,7 +125,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 count = 1;
             }
         }
-        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true, "English", event.getPlayer().getAddress().toString());
+        String language = MobConfigManager.mobsCfg.getString("defaultLanguage");
+        if (language == null){
+            language = "english";
+        }
+        UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true, language, event.getPlayer().getAddress().toString());
         UserManager.addUserToList(um);
         if (count == 0) {
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true));
