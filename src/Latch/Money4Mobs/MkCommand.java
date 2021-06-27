@@ -1,11 +1,12 @@
 package Latch.Money4Mobs;
 
+import Latch.Money4Mobs.Managers.ConfigFileManager;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Managers.UserManager;
+
 import net.minecraft.server.v1_9_R2.IChatBaseComponent;
 import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
-import org.apache.commons.codec.language.bm.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -27,6 +28,8 @@ import java.util.logging.Logger;
 public class MkCommand implements CommandExecutor {
     private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static final File mobsFile = MobConfigManager.mobsFile;
+    private static final FileConfiguration configCfg = ConfigFileManager.configCfg;
+    private static final File configFile = ConfigFileManager.configFile;
     private static final File userFile = UserManager.usersFile;
     private static final Material[] materials = Material.values();
     private static List<UserModel> um = UserManager.updateUsersOnReload();
@@ -50,7 +53,7 @@ public class MkCommand implements CommandExecutor {
     private static final String LANGUAGE = "language.";
     private static final String LOCATION = ".location";
     private static final String MESSAGE = ".message";
-    private static final String DEFAULT_LANGUAGE = mobsCfg.getString("defaultLanguage").toLowerCase();
+    private static final String DEFAULT_LANGUAGE = configCfg.getString("defaultLanguage").toLowerCase();
     private static int userNumber;
     Logger logger = Logger.getLogger(MkCommand.class.getName());
 
@@ -129,22 +132,22 @@ public class MkCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs") || commandSender.isOp()) {
-                    boolean spawnEgg = MobConfigManager.mobsCfg.getBoolean(SPAWN_EGGS);
+                    boolean spawnEgg = configCfg.getBoolean(SPAWN_EGGS);
                     if (Boolean.TRUE.equals(spawnEgg)) {
-                        MobConfigManager.mobsCfg.set(SPAWN_EGGS, false);
+                        configCfg.set(SPAWN_EGGS, false);
                         String eggSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + MESSAGE);
                         String eggSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + LOCATION);
                         assert eggSpawnRewardFalseMessage != null;
                         convertMessage(eggSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(SPAWN_EGGS, true);
+                        configCfg.set(SPAWN_EGGS, true);
                         String eggSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + MESSAGE);
                         String eggSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + LOCATION);
                         assert eggSpawnRewardTrueMessage != null;
                         convertMessage(eggSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -156,22 +159,22 @@ public class MkCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawners") || commandSender.isOp()) {
-                    boolean spawners = MobConfigManager.mobsCfg.getBoolean(SPAWNERS);
+                    boolean spawners = configCfg.getBoolean(SPAWNERS);
                     if (Boolean.TRUE.equals(spawners)) {
-                        MobConfigManager.mobsCfg.set(SPAWNERS, false);
+                        configCfg.set(SPAWNERS, false);
                         String spawnerSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + MESSAGE);
                         String spawnerSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + LOCATION);
                         assert spawnerSpawnRewardFalseMessage != null;
                         convertMessage(spawnerSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(SPAWNERS, true);
+                        configCfg.set(SPAWNERS, true);
                         String spawnerSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + MESSAGE);
                         String spawnerSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + LOCATION);
                         assert spawnerSpawnRewardTrueMessage != null;
                         convertMessage(spawnerSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -184,22 +187,22 @@ public class MkCommand implements CommandExecutor {
             }
             else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromTamedWolves") || commandSender.isOp()) {
-                    boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean(TAMED_WOLVES_GIVE_MONEY);
+                    boolean tamedWolvesGiveMoney = configCfg.getBoolean(TAMED_WOLVES_GIVE_MONEY);
                     if (Boolean.TRUE.equals(tamedWolvesGiveMoney)) {
-                        MobConfigManager.mobsCfg.set(TAMED_WOLVES_GIVE_MONEY, false);
+                        configCfg.set(TAMED_WOLVES_GIVE_MONEY, false);
                         String tamedWolvesRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + MESSAGE);
                         String tamedWolvesRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + LOCATION);
                         assert tamedWolvesRewardFalseMessage != null;
                         convertMessage(tamedWolvesRewardFalseMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(TAMED_WOLVES_GIVE_MONEY, true);
+                        configCfg.set(TAMED_WOLVES_GIVE_MONEY, true);
                         String tamedWolvesRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + MESSAGE);
                         String tamedWolvesRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + LOCATION);
                         assert tamedWolvesRewardTrueMessage != null;
                         convertMessage(tamedWolvesRewardTrueMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -593,12 +596,16 @@ public class MkCommand implements CommandExecutor {
                                 String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                                     try {
                                         int itemPresent = 0;
-                                        for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
-                                            if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." + drop + ".name").equals(args[2])) {
+                                        try {
+                                            for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
+                                                if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." + drop + ".name").equals(args[2])) {
                                                     itemPresent = 1;
                                                     break;
 
+                                                }
                                             }
+                                        } catch (NullPointerException ignored){
+
                                         }
                                         if (itemPresent == 0){
                                             Material m = Material.valueOf(args[2].toUpperCase());
