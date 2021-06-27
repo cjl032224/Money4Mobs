@@ -1,5 +1,9 @@
-package Latch.Money4Mobs;
+package Latch.Money4Mobs.Managers;
 
+import Latch.Money4Mobs.ItemModel;
+import Latch.Money4Mobs.MobModel;
+import Latch.Money4Mobs.Money4Mobs;
+import Latch.Money4Mobs.SetMobList;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,17 +42,10 @@ public class MobConfigManager {
             } catch (IOException e) {
                 System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
             }
-        } else {
-            if (mobsCfg.getString("defaultLanguage") == null) {
-                mobsCfg.set("defaultLanguage", "English");
-            }
         }
         update137AddPiglin();
         update14Add117Mobs();
-        update150ActionsMultiplier();
-        update153UpdateChecker();
         update155UpdateChecker();
-        updatePluginVersion();
         mobsCfg.save(mobsFile);
     }
 
@@ -57,17 +54,6 @@ public class MobConfigManager {
         List<MobModel> mobList = sml.getMobModel();
         try {
             mobsFile.createNewFile();
-            mobsCfg.set(VERSION, VERSION_NUMBER);
-            mobsCfg.set("spawners", false);
-            mobsCfg.set("spawneggs", false);
-            mobsCfg.set("tamedWolvesGiveMoney", true);
-            mobsCfg.set("defaultLanguage", "english");
-            mobsCfg.set("group-multiplier.level-1", 1);
-            mobsCfg.set("group-multiplier.level-2", 1);
-            mobsCfg.set("group-multiplier.level-3", 1);
-            mobsCfg.set("group-multiplier.level-4", 1);
-            mobsCfg.set("group-multiplier.level-5", 1);
-            mobsCfg.set("group-multiplier.operator", 1);
             for (int i = 0; i < mobList.size(); i++) {
                 String mobName = mobList.get(i).mobName;
                 Double lowWorth = mobList.get(i).lowWorth;
@@ -86,9 +72,6 @@ public class MobConfigManager {
                     mobsCfg.set(MOBS + mobName + ".drops.item-2.chance", 100);
                 }
             }
-            mobsCfg.set(MOBS + "Player.keepDefaultDrops", null);
-            mobsCfg.set(MOBS + "Player.customDrops", null);
-            mobsCfg.set("drops", null);
             mobsCfg.save(mobsFile);
         } catch (IOException e) {
             System.out.println(ChatColor.RED + "Could not create the mobs.yml file");
@@ -129,13 +112,6 @@ public class MobConfigManager {
         }
 
 
-    }
-
-    public static void updatePluginVersion() throws IOException {
-        if (!Objects.equals(mobsCfg.getString(VERSION), VERSION_NUMBER)) {
-            mobsCfg.set(VERSION, VERSION_NUMBER);
-        }
-        mobsCfg.save(mobsFile);
     }
 
     public static void update137AddPiglin() throws IOException {
@@ -212,18 +188,12 @@ public class MobConfigManager {
 
     }
 
-    public static void update150ActionsMultiplier() throws IOException {
-        if (Boolean.FALSE.equals(mobsCfg.isSet("actions-multipliers.riding-horse.multiplier"))) {
-            mobsCfg.set("actions-multipliers.riding-horse.multiplier", 1.0);
-            mobsCfg.set("actions-multipliers.riding-horse.isActive", false);
-            mobsCfg.set("actions-multipliers.riding-mule.multiplier", 1.0);
-            mobsCfg.set("actions-multipliers.riding-mule.isActive", false);
-            mobsCfg.set("actions-multipliers.riding-donkey.multiplier", 1.0);
-            mobsCfg.set("actions-multipliers.riding-donkey.isActive", false);
-            mobsCfg.set("actions-multipliers.riding-strider.multiplier", 1.0);
-            mobsCfg.set("actions-multipliers.riding-strider.isActive", false);
-            mobsCfg.set("actions-multipliers.riding-pig.multiplier", 1.0);
-            mobsCfg.set("actions-multipliers.riding-pig.isActive", false);
+    public static void update155UpdateChecker() throws IOException {
+        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.enablePercentageDrop"))) {
+            mobsCfg.set(MOBS + "Player.enablePercentageDrop", false);
+        }
+        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.percentageDropAmount"))) {
+            mobsCfg.set(MOBS + "Player.percentageDropAmount", 0);
         }
         // Horse
         if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Horse.worth.low"))) {
@@ -237,27 +207,6 @@ public class MobConfigManager {
         }
         if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Horse.customDrops"))) {
             mobsCfg.set(MOBS + "Horse.customDrops", false);
-        }
-
-        mobsCfg.set("customMessageOption.overrideKillMessage", null);
-        mobsCfg.set("customMessageOption.customMessage", null);
-
-        mobsCfg.save(mobsFile);
-    }
-
-    public static void update153UpdateChecker() throws IOException {
-        if (Boolean.FALSE.equals(mobsCfg.isSet("checkForUpdate"))) {
-            mobsCfg.set("checkForUpdate", true);
-        }
-        mobsCfg.save(mobsFile);
-    }
-
-    public static void update155UpdateChecker() throws IOException {
-        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.enablePercentageDrop"))) {
-            mobsCfg.set(MOBS + "Player.enablePercentageDrop", false);
-        }
-        if (Boolean.FALSE.equals(mobsCfg.isSet(MOBS + "Player.percentageDropAmount"))) {
-            mobsCfg.set(MOBS + "Player.percentageDropAmount", 0);
         }
 
         mobsCfg.save(mobsFile);
