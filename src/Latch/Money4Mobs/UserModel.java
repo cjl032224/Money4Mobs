@@ -3,11 +3,11 @@ package Latch.Money4Mobs;
 import java.util.UUID;
 
 public class UserModel {
-    protected String userName;
-    protected String userId;
-    protected Boolean showMessage;
-    protected String language;
-    protected String ipAddress;
+    public String userName;
+    public String userId;
+    public Boolean showMessage;
+    public String language;
+    public String ipAddress;
 
     public UserModel(String userName, String userId, Boolean showMessage, String language, String ipAddress) {
         this.userName = userName;
