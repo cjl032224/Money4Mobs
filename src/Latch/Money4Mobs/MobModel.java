@@ -3,12 +3,12 @@ package Latch.Money4Mobs;
 import java.util.List;
 
 public class MobModel {
-    protected String mobName;
-    protected Double lowWorth;
-    protected Double highWorth;
-    protected Boolean customDrops;
-    protected List<ItemModel> im;
-    protected Boolean keepDefaultDrops;
+    public String mobName;
+    public Double lowWorth;
+    public Double highWorth;
+    public Boolean customDrops;
+    public List<ItemModel> im;
+    public Boolean keepDefaultDrops;
     public MobModel(String mobName, Double lowWorth, Double highWorth, Boolean keepDefaultDrops, Boolean customDrops, List<ItemModel> im) {
         this.mobName = mobName;
         this.lowWorth = lowWorth;

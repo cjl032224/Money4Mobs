@@ -1,5 +1,7 @@
-package Latch.Money4Mobs;
+package Latch.Money4Mobs.Managers;
 
+import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Money4Mobs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,8 +17,8 @@ public class ItemListManager {
     public File itemsFile;
     private static final Material[] m = Material.values();
 
-    public static FileConfiguration mobsCfg;
-    public static File mobsFile;
+    public static FileConfiguration configCfg;
+    public static File configFile;
 
     // Set up mobs.yml configuration file
     public void setup(){
@@ -24,11 +26,10 @@ public class ItemListManager {
         if(!plugin.getDataFolder().exists()){
             plugin.getDataFolder().mkdir();
         }
-        mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
-        mobsCfg = YamlConfiguration.loadConfiguration(mobsFile);
+        configFile = new File(plugin.getDataFolder(), "config.yml");
+        configCfg = YamlConfiguration.loadConfiguration(configFile);
         boolean createItemFile = false;
-
-        if (!mobsCfg.getString("version").equals(MobConfigManager.VERSION_NUMBER)) {
+        if (!configCfg.getString("version").equals(ConfigFileManager.VERSION_NUMBER)) {
             createItemFile = true;
         }
         itemsFile = new File(plugin.getDataFolder(), "items.yml");
