@@ -20,8 +20,6 @@ public class MobConfigManager {
     private static final List<MobModel> mobListFromConfig = new ArrayList<MobModel>();
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.0";
-    private static final String VERSION = "version";
     private static final String MOBS = "mobs.";
     private static final String DROPS_ITEM = ".drops.item-";
 
