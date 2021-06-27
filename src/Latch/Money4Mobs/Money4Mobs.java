@@ -97,6 +97,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.isSet("checkForUpdate"))) {
             checkForUpdate = MobConfigManager.mobsCfg.getBoolean("checkForUpdate");
         }
+
         sml.getMobModel();
     }
 
@@ -111,7 +112,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError ignore) {
+        } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
         }
     }
 
@@ -197,7 +198,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         Money4Mobs.entityId = entityId;
     }
 
-    public void callRewardMobKiller(EntityDeathEvent event) {
+    public void callRewardMobKiller(EntityDeathEvent event) throws IOException {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {

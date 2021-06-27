@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -9,7 +10,9 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.command.CommandSender;
@@ -34,7 +37,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static final Random r = new Random();
     private static double percentageLost = 0;
 
-    public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) {
+    public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) throws IOException {
         setLanguage(pa);
         giveMoneyCheck(pa,e, econ);
         Player player = null;
@@ -102,12 +105,8 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa instanceof Player) {
             player = (Player) pa;
         }
-        if (Double.compare(money, 0.0) > 0.0) {
-            r = econ.depositPlayer(player, money);
-        } else if (Double.compare(money, 0.0) < 0.0) {
-            r = econ.withdrawPlayer(player, Math.abs(money));
-        }
         int counter = 1;
+
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -116,22 +115,25 @@ public abstract class MobKiller implements CommandExecutor {
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
                 language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
                 if (Boolean.TRUE.equals(showMessage)) {
-                    if (r.amount != 0) {
-                        if (r.transactionSuccess()) {
-                            Double balance = r.balance;
-                            df.format(balance);
-                            if (Double.compare(money, 0.0) > 0.0) {
-                                String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
-                                String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
-                                assert moneyRewardedMessage != null;
-                                MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
-                            } else {
-                                String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
-                                String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
-                                assert moneySubtractedMessage != null;
-                                MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(r.amount * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
-                            }
+                    if (money != 0) {
+                        Double balance = econ.getBalance(player);
+                        df.format(balance);
+                        if (Double.compare(money, 0.0) > 0.0) {
+                            econ.depositPlayer(player, money);
+                            balance = econ.getBalance(player);
+                            String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
+                            String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
+                            assert moneyRewardedMessage != null;
+                            MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
+                        } else {
+                            econ.withdrawPlayer(player, Math.abs(money));
+                            String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
+                            String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
+                            assert moneySubtractedMessage != null;
+                            MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
+
                         }
+
                     }
                 }
             }
@@ -141,26 +143,28 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void setCustomDrops(Entity e, CommandSender p){
-        String es = e.toString();
+        getLootingLevel();
         int randomNumber = rand.nextInt(100);
-
-        MobConfigManager.mobsCfg.getBoolean("spawneggs");
-        String[] name = es.split("Craft");
-
-        for (MobModel mobModel : mm) {
-            if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
-                if (mobModel.getMobName().contains(name[1])) {
-                    for (int j = 0; j < mobModel.getItems().size(); j++) {
-                        int chance;
-                        if (mobModel.getItems().get(j).getChance() == 0) {
+        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (mobObject.equalsIgnoreCase(e.getName())) {
+                String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
+                boolean customDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".customDrops");
+                if (Boolean.TRUE.equals(customDrops)){
+                    int numberOfDrops = 0;
+                    for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
+                        numberOfDrops++;
+                    }
+                    int counter = 1;
+                    for (int l = 0; l < numberOfDrops; l++) {
+                        String itemName = MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops.item-" + counter + ".name");
+                        int amount = MobConfigManager.mobsCfg.getInt("mobs." + mobName + ".drops.item-" + counter + ".amount");
+                        double chance = MobConfigManager.mobsCfg.getDouble("mobs." + mobName + ".drops.item-" + counter + ".chance");
+                        counter++;
+                        if (chance == 0){
                             chance = 100;
-                        } else {
-                            chance = mobModel.getItems().get(j).getChance();
                         }
                         if (randomNumber <= chance) {
-                            String itemName = mobModel.getItems().get(j).getItemName();
                             Material m = Material.valueOf(itemName);
-                            Integer amount = mobModel.getItems().get(j).getAmount();
                             ede.getDrops().add(new ItemStack(m, amount));
                         }
                     }
@@ -170,10 +174,11 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void setDefaultDrops() {
-        for (MobModel mobModel : mm) {
-            if (ede.getEntity().getName().equalsIgnoreCase(mobModel.mobName)) {
-                if (!Boolean.TRUE.equals(mobModel.getKeepDefaultDrops())) {
-                    ede.getDrops().clear();
+        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (mobObject.equalsIgnoreCase(ede.getEntity().getName())) {
+                boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobObject + ".keepDefaultDrops/");
+                if (!Boolean.TRUE.equals(defaultDrops)) {
+                     ede.getDrops().clear();
                 }
             }
         }
@@ -264,9 +269,10 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void setRange(Entity e, CommandSender pa){
+    public static void setRange(Entity e, CommandSender pa) throws IOException {
         double levelMultiplier = 1;
         List<String> levelList = new ArrayList<>();
+        Money4Mobs.loadMobConfigManager();
         levelList.addAll(MobConfigManager.mobsCfg.getConfigurationSection("group-multiplier").getKeys(false));
         for (String level : levelList) {
             if ( pa.hasPermission("m4m.multiplier." + level)){
@@ -278,23 +284,29 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa.isOp()){
             levelMultiplier = operator;
         }
-        for (MobModel mobModel : mm) {
-            String entity = "Craft" + mobModel.getMobName();
-            String es = e.toString();
-            if(e instanceof Player) {
-                es = "CraftPlayer";
-            }
-
-            Double lowWorth = mobModel.getLowWorth();
-            Double highWorth = mobModel.getHighWorth();
-            if (es.equals(entity)) {
-                money = mobModel.getHighWorth();
-                money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
-                money = money * levelMultiplier;
-                money = Math.round(money * 100.0) / 100.0;
+        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (mobObject.equalsIgnoreCase(e.getName())){
+                double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
+                double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
+                if (lowWorth == highWorth){
+                    money = lowWorth;
+                } else {
+                    money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
+                    money = money * levelMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else if (e instanceof Player) {
+                double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs.Player.worth.low");
+                double highWorth = MobConfigManager.mobsCfg.getDouble("mobs.Player.worth.high");
+                if (lowWorth == highWorth){
+                    money = lowWorth;
+                } else {
+                    money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
+                    money = money * levelMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
             }
         }
-
         isRidingCheck(pa);
     }
 
