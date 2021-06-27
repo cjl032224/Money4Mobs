@@ -121,15 +121,13 @@ public class MobWorthTabComplete implements TabCompleter {
                 }
             }
             else {
-                for (MobModel mobModel : mobsList) {
-                    if (mobModel.getMobName().equalsIgnoreCase(args[1])) {
-                        if (StringUtils.isNotBlank(args[1])) {
+                for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                    if (StringUtils.isNotBlank(args[1]) && mobObject.equalsIgnoreCase(args[1])) {
                             try {
                                 return StringUtil.copyPartialMatches(args[2], itemList, new ArrayList<>());
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                                 //
                             }
-                        }
                     }
                 }
             }
@@ -150,12 +148,12 @@ public class MobWorthTabComplete implements TabCompleter {
                 }
             }
             else {
-                List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
-                for (MobModel mobModel : mm) {
-                    if (mobModel.getMobName().equalsIgnoreCase(args[1])) {
+                String mobName = args[1].substring(0, 1).toUpperCase() + args[1].substring(1);
+                for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                    if (mobObject.equalsIgnoreCase(args[1])) {
                         itemList.clear();
-                        for (int k = 0; k < mobModel.getItems().size(); k++) {
-                            itemList.add(mobModel.getItems().get(k).getItemName());
+                        for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
+                            itemList.add(MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops." + drop + ".name"));
                         }
                     }
                 }
