@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import Latch.Money4Mobs.Managers.ConfigFileManager;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -11,8 +12,14 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
+
+import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Managers.UserManager;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
+
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.command.CommandSender;
@@ -38,6 +45,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static double percentageLost = 0;
 
     public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) throws IOException {
+        Money4Mobs.loadConfigFileManager();
         setLanguage(pa);
         giveMoneyCheck(pa,e, econ);
         Player player = null;
@@ -49,10 +57,10 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(samePlayer)) {
             giveMoney = false;
         }
+        setDefaultDrops();
+        setCustomDrops(e,pa);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e, pa);
-            setDefaultDrops();
-            setCustomDrops(e, pa);
             displayKillMessage(pa);
             sendKillMessage(pa, econ);
         }
@@ -176,7 +184,7 @@ public abstract class MobKiller implements CommandExecutor {
     public static void setDefaultDrops() {
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (mobObject.equalsIgnoreCase(ede.getEntity().getName())) {
-                boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobObject + ".keepDefaultDrops/");
+                boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobObject + ".keepDefaultDrops");
                 if (!Boolean.TRUE.equals(defaultDrops)) {
                      ede.getDrops().clear();
                 }
@@ -198,7 +206,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void giveMoneyCheck(CommandSender pa, Entity e, Economy econ){
+    public static void giveMoneyCheck(CommandSender pa, Entity e, Economy econ) throws IOException {
         int counter = 0;
         Player predator = null;
         if (pa instanceof Player) {
@@ -211,14 +219,14 @@ public abstract class MobKiller implements CommandExecutor {
                 if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
                     counter = 1;
                     if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")) {
-                        Boolean spawnEggs = MobConfigManager.mobsCfg.getBoolean("spawneggs");
+                        Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
                         if (Boolean.TRUE.equals(spawnEggs)) {
                             giveMoney = true;
                         } else {
                             giveMoney = false;
                         }
                     } else if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER")) {
-                        Boolean spawners = MobConfigManager.mobsCfg.getBoolean("spawners");
+                        Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
                         giveMoney = Boolean.TRUE.equals(spawners);
                     }
                 }
@@ -273,13 +281,14 @@ public abstract class MobKiller implements CommandExecutor {
         double levelMultiplier = 1;
         List<String> levelList = new ArrayList<>();
         Money4Mobs.loadMobConfigManager();
-        levelList.addAll(MobConfigManager.mobsCfg.getConfigurationSection("group-multiplier").getKeys(false));
+        Money4Mobs.loadConfigFileManager();
+        levelList.addAll(ConfigFileManager.configCfg.getConfigurationSection("group-multiplier").getKeys(false));
         for (String level : levelList) {
             if ( pa.hasPermission("m4m.multiplier." + level)){
-                levelMultiplier = MobConfigManager.mobsCfg.getDouble("group-multiplier."+level);
+                levelMultiplier = ConfigFileManager.configCfg.getDouble("group-multiplier."+level);
             }
         }
-        double operator = MobConfigManager.mobsCfg.getDouble("group-multiplier.operator");
+        double operator = ConfigFileManager.configCfg.getDouble("group-multiplier.operator");
 
         if (pa.isOp()){
             levelMultiplier = operator;
@@ -292,7 +301,6 @@ public abstract class MobKiller implements CommandExecutor {
                     money = lowWorth;
                 } else {
                     money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
-                    money = money * levelMultiplier;
                     money = Math.round(money * 100.0) / 100.0;
                 }
             } else if (e instanceof Player) {
@@ -302,43 +310,234 @@ public abstract class MobKiller implements CommandExecutor {
                     money = lowWorth;
                 } else {
                     money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
-                    money = money * levelMultiplier;
                     money = Math.round(money * 100.0) / 100.0;
                 }
             }
         }
-        isRidingCheck(pa);
+
+        double distance = getDistanceFromKiller(e, pa);
+
+        boolean isMultiplierAggregate = ConfigFileManager.configCfg.getBoolean("actions-multipliers.isMultipliersAggregate");
+        double moneySaved = money;
+        if (Boolean.TRUE.equals(isMultiplierAggregate)){
+            isFallDamageMultiplier(moneySaved);
+            isProjectileMultiplierPresent(moneySaved);
+            isLongDistanceMultiplier(distance, moneySaved);
+            isNoWeaponMultiplier(pa, moneySaved);
+            isRidingHorseMultiplier(moneySaved, pa);
+            isRidingDonkeyMultiplier(moneySaved, pa);
+            isRidingMuleMultiplier(moneySaved, pa);
+            isRidingPigMultiplier(moneySaved, pa);
+            isRidingStriderMultiplier(moneySaved, pa);
+        } else {
+            getHighestPriority(e, pa);
+        }
+
+        money = money * levelMultiplier;
     }
 
-    private static void isRidingCheck(CommandSender pa) {
-        double ridingHorseMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-horse.multiplier");
-        Boolean isRidingHorseActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-horse.isActive");
-        double ridingMuleMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-mule.multiplier");
-        Boolean isRidingMuleActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-mule.isActive");
-        double ridingDonkeyMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
-        Boolean isRidingDonkeyActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
-        double ridingStriderMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-strider.multiplier");
-        Boolean isRidingStriderActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-strider.isActive");
-        double ridingPigMultiplier = MobConfigManager.mobsCfg.getDouble("actions-multipliers.riding-pig.multiplier");
-        Boolean isRidingPigActive = MobConfigManager.mobsCfg.getBoolean("actions-multipliers.riding-pig.isActive");
-
+    private static double getDistanceFromKiller(Entity e, CommandSender pa) {
+        double distance = 0;
         if (pa instanceof Player){
             Player player = (Player) pa;
-            if (player.getVehicle() != null) {
-                isRidingMob(ridingHorseMultiplier, isRidingHorseActive, player, "Horse");
-                isRidingMob(ridingMuleMultiplier, isRidingMuleActive, player, "Mule");
-                isRidingMob(ridingDonkeyMultiplier, isRidingDonkeyActive, player, "Donkey");
-                isRidingMob(ridingStriderMultiplier, isRidingStriderActive, player, "Strider");
-                isRidingMob(ridingPigMultiplier, isRidingPigActive, player, "Pig");
-                money = Math.round(money * 100.0) / 100.0;
+            int predatorXLocation = player.getLocation().getBlockX();
+            int predatorYLocation = player.getLocation().getBlockY();
+            int predatorZLocation = player.getLocation().getBlockZ();
+            int preyXLocation = e.getLocation().getBlockX();
+            int preyYLocation = e.getLocation().getBlockY();
+            int preyZLocation = e.getLocation().getBlockZ();
+            distance = Math.sqrt(Math.pow(preyXLocation-predatorXLocation, 2) + Math.pow(preyYLocation-predatorYLocation, 2) + Math.pow(preyZLocation-predatorZLocation, 2));
+        }
+        return distance;
+    }
+
+    private static void isFallDamageMultiplier(double moneySaved) {
+        double fallDamageMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.fallDamage.multiplier");
+        Boolean isFallDamageActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.fallDamage.isActive");
+        if (ede.getEntity().getLastDamageCause().getCause().toString().equals("FALL") && Boolean.TRUE.equals(isFallDamageActive)){
+            money = money * fallDamageMultiplier;
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isProjectileMultiplierPresent(double moneySaved) {
+        double projectileMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.projectile.multiplier");
+        Boolean isProjectileActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.projectile.isActive");
+        if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isProjectileActive)){
+            money = money * projectileMultiplier;
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isLongDistanceMultiplier(double distance, double moneySaved) {
+        double distanceMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.longDistance.multiplier");
+        Boolean isDistanceMultiplierActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.longDistance.isActive");
+        double distanceLength = ConfigFileManager.configCfg.getDouble("actions-multipliers.longDistance.distance");
+        if (Boolean.TRUE.equals(isDistanceMultiplierActive) && distance >= distanceLength){
+            money = money * distanceMultiplier;
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isNoWeaponMultiplier(CommandSender pa, double moneySaved) {
+        if (pa instanceof Player) {
+            Player player = (Player) pa;
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("ENTITY_ATTACK")) {
+                String itemInHand = player.getInventory().getItemInMainHand().getType().toString();
+                if (!itemInHand.contains("HOE") && !itemInHand.contains("SWORD") && !itemInHand.contains("AXE") && !itemInHand.contains("SHOVEL") && !itemInHand.contains("SHIELD") && !itemInHand.contains("BOW") && !itemInHand.contains("TRIDENT") && !itemInHand.contains("CROSSBOW") && !itemInHand.contains("FISHING_ROD")){
+                    double noWeaponMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.noWeapon.multiplier");
+                    Boolean isNoWeaponMultiplierActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.noWeapon.isActive");
+                    if (Boolean.TRUE.equals(isNoWeaponMultiplierActive)){
+                        money = money * noWeaponMultiplier;
+                        money = Math.round(money * 100.0) / 100.0;
+                    }
+                }
             }
         }
     }
 
-    private static void isRidingMob(double ridingHorseMultiplier, Boolean isRidingHorseActive, Player player, String horse) {
-        if (Objects.requireNonNull(player.getVehicle()).getName().equalsIgnoreCase(horse) && Boolean.TRUE.equals(isRidingHorseActive)) {
-            money = money * ridingHorseMultiplier;
+    private static void isRidingHorseMultiplier(double moneySaved, CommandSender pa) {
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Horse")) {
+            double ridingHorseMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-horse.multiplier");
+            Boolean isRidingHorseActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-horse.isActive");
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingHorseActive)) {
+                money = money * ridingHorseMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
         }
+    }
+
+    private static void isRidingMuleMultiplier(double moneySaved, CommandSender pa) {
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Mule")) {
+            double ridingMuleMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-mule.multiplier");
+            Boolean isRidingMuleActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-mule.isActive");
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingMuleActive)) {
+                money = money * ridingMuleMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isRidingDonkeyMultiplier(double moneySaved, CommandSender pa) {
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Donkey")){
+            double ridingDonkeyMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
+            Boolean isRidingDonkeyActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingDonkeyActive)){
+                money = money * ridingDonkeyMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isRidingStriderMultiplier(double moneySaved, CommandSender pa) {
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Strider")){
+            double ridingStriderMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-strider.multiplier");
+            Boolean isRidingStriderActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-strider.isActive");
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingStriderActive)){
+                money = money * ridingStriderMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static void isRidingPigMultiplier(double moneySaved, CommandSender pa) {
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Pig")){
+            double ridingPigMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-pig.multiplier");
+            Boolean isRidingPigActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-pig.isActive");
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingPigActive)){
+                money = money * ridingPigMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
+    private static boolean ifPlayerOnVehicle(CommandSender pa) {
+        boolean isRiding = false;
+        if (pa instanceof Player){
+            Player player = (Player) pa;
+            if (player.getVehicle() != null) {
+                isRiding = true;
+            }
+        }
+        return isRiding;
+    }
+
+    private static String getVehicle(CommandSender pa) {
+        String vehicle = null;
+        if (pa instanceof Player){
+            Player player = (Player) pa;
+            if (player.getVehicle() != null) {
+                vehicle = player.getVehicle().getName();
+            }
+        }
+        return vehicle;
+    }
+
+    private static double getHighestPriority(Entity e, CommandSender pa) {
+        double multiplier = 1;
+        int priority = 0;
+        String actionMultiplierString = null;
+        double moneySaved = money;
+        for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
+            if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive")){
+                priority = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority");
+                multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
+                actionMultiplierString = actionMultiplier;
+            }
+        }
+        for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
+            if (getVehicle(pa) != null && actionMultiplier.contains(getVehicle(pa).toLowerCase())) {
+                multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
+                actionMultiplierString = actionMultiplier;
+            }
+        }
+
+        try {
+            switch (Objects.requireNonNull(actionMultiplierString)) {
+                case "fallDamage":
+                    isFallDamageMultiplier(moneySaved);
+                    break;
+                case "projectile":
+                    isProjectileMultiplierPresent(moneySaved);
+                    break;
+                case "longDistance":
+                    isLongDistanceMultiplier(getDistanceFromKiller(e, pa), moneySaved);
+                    break;
+                case "noWeapon":
+                    isNoWeaponMultiplier(pa, moneySaved);
+                    break;
+                case "riding-horse":
+                    isRidingHorseMultiplier(moneySaved, pa);
+                    break;
+                case "riding-mule":
+                    isRidingMuleMultiplier(moneySaved, pa);
+                    break;
+                case "riding-donkey":
+                    isRidingDonkeyMultiplier(moneySaved, pa);
+                    break;
+                case "riding-strider":
+                    isRidingStriderMultiplier(moneySaved, pa);
+                    break;
+                case "riding-pig":
+                    isRidingPigMultiplier(moneySaved, pa);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(actionMultiplierString));
+            }
+        } catch (NullPointerException ignored) {
+
+        }
+        return multiplier;
     }
 
 
