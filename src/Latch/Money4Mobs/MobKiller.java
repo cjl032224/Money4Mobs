@@ -510,8 +510,6 @@ public abstract class MobKiller implements CommandExecutor {
         for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
             for (int i = 0; i < multiplierList.size(); i++){
                 if (multiplierList.get(i).equals(actionMultiplier)){
-                    System.out.println("test1: " + actionMultiplier);
-                    System.out.println("here: " + multiplierList.toString());
                     if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive"))){
                         priority = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority");
                         multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
