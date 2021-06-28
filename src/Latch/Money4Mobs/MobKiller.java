@@ -305,21 +305,19 @@ public abstract class MobKiller implements CommandExecutor {
         double distance = getDistanceFromKiller(e, pa);
 
         boolean isMultiplierAggregate = ConfigFileManager.configCfg.getBoolean("actions-multipliers.isMultipliersAggregate");
-        double moneySaved = money;
         if (Boolean.TRUE.equals(isMultiplierAggregate)){
-            isFallDamageMultiplier(moneySaved);
-            isProjectileMultiplierPresent(moneySaved);
-            isLongDistanceMultiplier(distance, moneySaved);
-            isNoWeaponMultiplier(pa, moneySaved);
-            isRidingHorseMultiplier(moneySaved, pa);
-            isRidingDonkeyMultiplier(moneySaved, pa);
-            isRidingMuleMultiplier(moneySaved, pa);
-            isRidingPigMultiplier(moneySaved, pa);
-            isRidingStriderMultiplier(moneySaved, pa);
+            isFallDamageMultiplier(money);
+            isProjectileMultiplierPresent(money);
+            isLongDistanceMultiplier(distance, money);
+            isNoWeaponMultiplier(pa, money);
+            isRidingHorseMultiplier(money, pa);
+            isRidingDonkeyMultiplier(money, pa);
+            isRidingMuleMultiplier(money, pa);
+            isRidingPigMultiplier(money, pa);
+            isRidingStriderMultiplier(money, pa);
         } else {
             getHighestPriority(e, pa);
         }
-
         money = money * levelMultiplier;
     }
 
