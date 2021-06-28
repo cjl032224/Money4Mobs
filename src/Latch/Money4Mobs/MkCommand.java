@@ -1,9 +1,11 @@
 package Latch.Money4Mobs;
 
+import Latch.Money4Mobs.Managers.ConfigFileManager;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
+import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Managers.UserManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.apache.commons.codec.language.bm.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -24,9 +26,12 @@ import java.util.logging.Logger;
 public class MkCommand implements CommandExecutor {
     private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static final File mobsFile = MobConfigManager.mobsFile;
+    private static final FileConfiguration configCfg = ConfigFileManager.configCfg;
+    private static final File configFile = ConfigFileManager.configFile;
     private static final File userFile = UserManager.usersFile;
     private static final Material[] materials = Material.values();
     private static List<UserModel> um = UserManager.updateUsersOnReload();
+    private static List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
     private static Boolean showMessage = true;
     private static final Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
 
@@ -38,7 +43,7 @@ public class MkCommand implements CommandExecutor {
     private static final String SPAWNERS = "spawners";
     private static final String TAMED_WOLVES_GIVE_MONEY = "tamedWolvesGiveMoney";
     private static final String OVERRIDE_KILL_MESSAGE = "customMessageOption.overrideKillMessage";
-    private static final String ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE = ".addCustomDropInvalidMobErrorMessage";
+    private static final String INVALID_MOB_ERROR_MESSAGE = ".invalidMobErrorMessage";
     private static final String MOBS = "mobs.";
     private static final String DROPS_ITEMS = ".drops.item-";
     private static final String CUSTOM_DROPS = ".customDrops";
@@ -46,12 +51,12 @@ public class MkCommand implements CommandExecutor {
     private static final String LANGUAGE = "language.";
     private static final String LOCATION = ".location";
     private static final String MESSAGE = ".message";
-    private static final String DEFAULT_LANGUAGE = mobsCfg.getString("defaultLanguage").toLowerCase();
+    private static final String DEFAULT_LANGUAGE = configCfg.getString("defaultLanguage").toLowerCase();
     private static int userNumber;
     Logger logger = Logger.getLogger(MkCommand.class.getName());
 
     // Language Constants
-    private static final String ENGLISH = "English";
+    private static final String ENGLISH = "english";
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         String language = null;
@@ -87,7 +92,26 @@ public class MkCommand implements CommandExecutor {
             language = DEFAULT_LANGUAGE;
         }
         if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("toggleKM")) {
+            if (args[0].equalsIgnoreCase("worth")){
+                commandErrorMessage(commandSender, language, ".worthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setHighWorth")){
+                commandErrorMessage(commandSender, language, ".setHighWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setLowWorth")){
+                commandErrorMessage(commandSender, language, ".setLowWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("drops")){
+                commandErrorMessage(commandSender, language, ".dropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addCustomDrop")){
+                commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeCustomDrop")){
+                commandErrorMessage(commandSender, language, ".removeCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleCustomDrops")){
+                commandErrorMessage(commandSender, language, ".toggleCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")){
+                commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("language")){
+                commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
+            }
+            else if (args[0].equalsIgnoreCase("toggleKM")) {
                 if (player2 != null && (player2.hasPermission("m4m.command.mk.toggleKM") || commandSender.isOp())) {
                     if (language == null){
                         language = ENGLISH;
@@ -125,22 +149,22 @@ public class MkCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawnEggs") || commandSender.isOp()) {
-                    boolean spawnEgg = MobConfigManager.mobsCfg.getBoolean(SPAWN_EGGS);
+                    boolean spawnEgg = configCfg.getBoolean(SPAWN_EGGS);
                     if (Boolean.TRUE.equals(spawnEgg)) {
-                        MobConfigManager.mobsCfg.set(SPAWN_EGGS, false);
+                        configCfg.set(SPAWN_EGGS, false);
                         String eggSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + MESSAGE);
                         String eggSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + LOCATION);
                         assert eggSpawnRewardFalseMessage != null;
                         convertMessage(eggSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(SPAWN_EGGS, true);
+                        configCfg.set(SPAWN_EGGS, true);
                         String eggSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + MESSAGE);
                         String eggSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + LOCATION);
                         assert eggSpawnRewardTrueMessage != null;
                         convertMessage(eggSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -152,22 +176,22 @@ public class MkCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawners") || commandSender.isOp()) {
-                    boolean spawners = MobConfigManager.mobsCfg.getBoolean(SPAWNERS);
+                    boolean spawners = configCfg.getBoolean(SPAWNERS);
                     if (Boolean.TRUE.equals(spawners)) {
-                        MobConfigManager.mobsCfg.set(SPAWNERS, false);
+                        configCfg.set(SPAWNERS, false);
                         String spawnerSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + MESSAGE);
                         String spawnerSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + LOCATION);
                         assert spawnerSpawnRewardFalseMessage != null;
                         convertMessage(spawnerSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(SPAWNERS, true);
+                        configCfg.set(SPAWNERS, true);
                         String spawnerSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + MESSAGE);
                         String spawnerSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + LOCATION);
                         assert spawnerSpawnRewardTrueMessage != null;
                         convertMessage(spawnerSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -180,22 +204,22 @@ public class MkCommand implements CommandExecutor {
             }
             else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromTamedWolves") || commandSender.isOp()) {
-                    boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean(TAMED_WOLVES_GIVE_MONEY);
+                    boolean tamedWolvesGiveMoney = configCfg.getBoolean(TAMED_WOLVES_GIVE_MONEY);
                     if (Boolean.TRUE.equals(tamedWolvesGiveMoney)) {
-                        MobConfigManager.mobsCfg.set(TAMED_WOLVES_GIVE_MONEY, false);
+                        configCfg.set(TAMED_WOLVES_GIVE_MONEY, false);
                         String tamedWolvesRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + MESSAGE);
                         String tamedWolvesRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + LOCATION);
                         assert tamedWolvesRewardFalseMessage != null;
                         convertMessage(tamedWolvesRewardFalseMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardFalseMessageLocation);
                     } else {
-                        MobConfigManager.mobsCfg.set(TAMED_WOLVES_GIVE_MONEY, true);
+                        configCfg.set(TAMED_WOLVES_GIVE_MONEY, true);
                         String tamedWolvesRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + MESSAGE);
                         String tamedWolvesRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + LOCATION);
                         assert tamedWolvesRewardTrueMessage != null;
                         convertMessage(tamedWolvesRewardTrueMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardTrueMessageLocation);
                     }
                     try {
-                        mobsCfg.save(mobsFile);
+                        configCfg.save(configFile);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -208,17 +232,26 @@ public class MkCommand implements CommandExecutor {
             }
             else if (args[0].equalsIgnoreCase("reload")) {
                 if (commandSender.hasPermission("m4m.command.mk.reload") || commandSender.isOp()) {
+                    try {
+                        Money4Mobs.reloadConfigFiles();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     String reloadingMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + MESSAGE);
                     String reloadingMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + LOCATION);
                     assert reloadingMessage != null;
                     logger.log(Level.INFO, reloadingMessage.substring(2));
                     convertMessage(reloadingMessage, commandSender, null, null, null, null, null, null, null, reloadingMessageLocation);
-                    plugin.getPluginLoader().disablePlugin(plugin);
                     mm.clear();
-                    mm = MobConfigManager.getMobModelFromConfig();
+                    try {
+                        Money4Mobs.loadMobConfigManager();
+                        Money4Mobs.loadUserConfigManager();
+                        Money4Mobs.loadLanguageConfigManager();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     um.clear();
                     um = UserManager.updateUsersOnReload();
-                    plugin.getPluginLoader().enablePlugin(plugin);
                     String reloadConfirmMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadConfirmMessage" + MESSAGE);
                     String reloadConfirmMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadConfirmMessage" + LOCATION);
                     assert reloadConfirmMessage != null;
@@ -227,13 +260,34 @@ public class MkCommand implements CommandExecutor {
                 }
             }
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("worth")) {
+            if (args[0].equalsIgnoreCase("setHighWorth")){
+                commandErrorMessage(commandSender, language, ".setHighWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setLowWorth")){
+                commandErrorMessage(commandSender, language, ".setLowWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addCustomDrop")){
+                commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeCustomDrop")){
+                commandErrorMessage(commandSender, language, ".removeCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleKM")){
+                commandErrorMessage(commandSender, language, ".toggleKMCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnEggsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnersCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("reload")){
+                commandErrorMessage(commandSender, language, ".reloadCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
+            }
+            else if (args[0].equalsIgnoreCase("worth")) {
                 if (commandSender.hasPermission("m4m.command.mk.worth") || commandSender.isOp()) {
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                            String mobName = mobModel.mobName;
-                            Double lowWorth = mobModel.lowWorth;
-                            Double highWorth = mobModel.highWorth;
+                    boolean invalidMob = true;
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
+                            invalidMob = false;
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
+                            Double lowWorth = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + ".worth.low");
+                            Double highWorth = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + ".worth.high");
                             assert language != null;
                             if (lowWorth.equals(highWorth)) {
                                 String mobWorthMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobWorthMessage" + MESSAGE);
@@ -248,6 +302,12 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    if (Boolean.TRUE.equals(invalidMob)) {
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
+                        assert addCustomDropInvalidMobErrorMessage != null;
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                    }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
@@ -257,22 +317,39 @@ public class MkCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("drops")) {
                 if (commandSender.hasPermission("m4m.command.mk.drops") || commandSender.isOp()) {
                     boolean error = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
+
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                             error = false;
-                            String mobName = mobModel.mobName;
-                            if (Boolean.TRUE.equals(mobModel.getCustomDrops())) {
-                                if (mobModel.getItems().isEmpty()) {
+                            boolean customDrops = MobConfigManager.mobsCfg.getBoolean(MOBS + mobName + ".customDrops");
+                            if (Boolean.TRUE.equals(customDrops)) {
+                                int numberOfDrops = 0;
+                                try {
+                                    for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
+                                        numberOfDrops++;
+                                    }
+                                } catch (NullPointerException ignored) {
+
+                                }
+                                if (numberOfDrops == 0) {
                                     String customDropsNotSetMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotSetMessage" + MESSAGE);
                                     String customDropsNotSetMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotSetMessage" + LOCATION);
                                     assert customDropsNotSetMessage != null;
                                     convertMessage(customDropsNotSetMessage, commandSender, mobName, null, null, null, null, null, null, customDropsNotSetMessageLocation);
-                                }
-                                for (int l = 0; l < mobModel.getItems().size(); l++) {
-                                    String mobDropInfoMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + MESSAGE);
-                                    String mobDropInfoMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + LOCATION);
-                                    assert mobDropInfoMessage != null;
-                                    convertMessage(mobDropInfoMessage, commandSender, mobName, mobModel.getItems().get(l).getItemName(), mobModel.getItems().get(l).getChance(), Double.valueOf(mobModel.getItems().get(l).getAmount()), null, null, null, mobDropInfoMessageLocation);
+                                } else {
+                                    int counter = 1;
+                                    for (int l = 0; l < numberOfDrops; l++) {
+                                        String itemName = MobConfigManager.mobsCfg.getString(MOBS + mobName + DROPS_ITEMS + counter + ".name");
+                                        Double amount = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + DROPS_ITEMS + counter + ".amount");
+                                        double chance = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + DROPS_ITEMS + counter + ".chance");
+                                        String mobDropInfoMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + MESSAGE);
+                                        String mobDropInfoMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + LOCATION);
+                                        assert mobDropInfoMessage != null;
+                                        convertMessage(mobDropInfoMessage, commandSender, mobName, itemName, (int) chance, amount, null, null, null, mobDropInfoMessageLocation);
+                                        counter++;
+
+                                    }
                                 }
                             } else {
                                 String customDropsNotEnabledMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotEnabledMessage" + MESSAGE);
@@ -283,8 +360,8 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (Boolean.TRUE.equals(error)) {
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -297,21 +374,19 @@ public class MkCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleCustomDrops") || commandSender.isOp()) {
                     boolean error = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                            String mobName = mobModel.mobName;
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
                             error = false;
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                             boolean customDrops = MobConfigManager.mobsCfg.getBoolean(MOBS + mobName + CUSTOM_DROPS);
                             if (Boolean.TRUE.equals(customDrops)) {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + CUSTOM_DROPS, false);
-                                mobModel.setCustomDrops(false);
                                 String customDropsFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsFalseMessage" + MESSAGE);
                                 String customDropsFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsFalseMessage" + LOCATION);
                                 assert customDropsFalseMessage != null;
                                 convertMessage(customDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, customDropsFalseMessageLocation);
                             } else {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + CUSTOM_DROPS, true);
-                                mobModel.setCustomDrops(true);
                                 String customDropsTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsTrueMessage" + MESSAGE);
                                 String customDropsTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsTrueMessage" + LOCATION);
                                 assert customDropsTrueMessage != null;
@@ -325,8 +400,8 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if(Boolean.TRUE.equals(error)){
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -339,21 +414,19 @@ public class MkCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleDefaultDrops") || commandSender.isOp()) {
                     boolean error = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
                             error = false;
-                            String mobName = mobModel.mobName;
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                             boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean(MOBS + mobName + KEEP_DEFAULT_DROPS);
                             if (Boolean.TRUE.equals(defaultDrops)) {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + KEEP_DEFAULT_DROPS, false);
-                                mobModel.setKeepDefaultDrops(false);
                                 String defaultDropsFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsFalseMessage" + MESSAGE);
                                 String defaultDropsFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsFalseMessage" + LOCATION);
                                 assert defaultDropsFalseMessage != null;
                                 convertMessage(defaultDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, defaultDropsFalseMessageLocation);
                             } else {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + KEEP_DEFAULT_DROPS, true);
-                                mobModel.setKeepDefaultDrops(true);
                                 String defaultDropsTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsTrueMessage" + MESSAGE);
                                 String defaultDropsTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsTrueMessage" + LOCATION);
                                 assert defaultDropsTrueMessage != null;
@@ -367,8 +440,8 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (Boolean.TRUE.equals(error)) {
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -380,7 +453,7 @@ public class MkCommand implements CommandExecutor {
                 }
             } else if (args[0].equalsIgnoreCase("language")) {
                 if (player2 instanceof Player && (commandSender.hasPermission("m4m.command.mk.language") || commandSender.isOp())) {
-                    boolean success = false;
+                    boolean isValidLanguage = false;
                     for (String languageOption : testList) {
                         if (args[1].equalsIgnoreCase(languageOption)) {
                             int counter = 1;
@@ -390,7 +463,7 @@ public class MkCommand implements CommandExecutor {
                                 if (player2 != null){
                                     if(userId.equalsIgnoreCase(player2.getUniqueId().toString())){
                                         UserManager.usersCfg.set(USERS_USER + counter + ".language", args[1]);
-                                        success = true;
+                                        isValidLanguage = true;
                                         try {
                                             UserManager.usersCfg.save(userFile);
                                         } catch (IOException e) {
@@ -411,6 +484,12 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
+                    if (Boolean.FALSE.equals(isValidLanguage)) {
+                        String invalidLanguageMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".invalidLanguageErrorMessage" + MESSAGE);
+                        String invalidLanguageMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".invalidLanguageErrorMessage" + LOCATION);
+                        assert invalidLanguageMessage != null;
+                        convertMessage(invalidLanguageMessage, commandSender, args[1], null, null, null, null, null, null, invalidLanguageMessageLocation);
+                    }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
@@ -420,26 +499,44 @@ public class MkCommand implements CommandExecutor {
             }
         }
         else if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("setLowWorth")) {
+            boolean invalidMob = true;
+            if (args[0].equalsIgnoreCase("addCustomDrop")){
+                commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleKM")){
+                commandErrorMessage(commandSender, language, ".toggleKMCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("worth")){
+                commandErrorMessage(commandSender, language, ".worthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("drops")){
+                commandErrorMessage(commandSender, language, ".dropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("language")){
+                commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnEggsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnersCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("reload")){
+                commandErrorMessage(commandSender, language, ".reloadCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setLowWorth")) {
                 if (commandSender.hasPermission("m4m.command.mk.setLowWorth") || commandSender.isOp()) {
-                    boolean error = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                            error = false;
-                            String mobName = mobModel.mobName;
-                            Double highWorth = mobModel.getHighWorth();
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
+                            invalidMob = false;
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
+                            double highWorth = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + ".worth.high");
                             try {
                                 if (highWorth >= Double.parseDouble(args[2])) {
-                                    mobModel.setLowWorth(Double.parseDouble(args[2]));
                                     MobConfigManager.mobsCfg.set(MOBS + mobName + ".worth.low", Double.parseDouble(args[2]));
                                     setLowWorthSuccessMessage(commandSender, args[2], mobName, "english");
+                                    MobConfigManager.mobsCfg.save(mobsFile);
                                 } else {
                                     String setHighWorthTooLowErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + MESSAGE);
                                     String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + LOCATION);
                                     assert setHighWorthTooLowErrorMessage != null;
                                     convertMessage(setHighWorthTooLowErrorMessage, commandSender, mobName, null, null, null, null, null, null, messageLocation);
                                 }
-                            } catch (NumberFormatException e){
+                            } catch (NumberFormatException | IOException e){
                                 String setLowWorthCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthCommandErrorMessage" + MESSAGE );
                                 assert setLowWorthCommandErrorMessage != null;
                                 String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + LOCATION);
@@ -447,9 +544,9 @@ public class MkCommand implements CommandExecutor {
                             }
                         }
                     }
-                    if (Boolean.TRUE.equals(error)) {
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                    if (Boolean.TRUE.equals(invalidMob)) {
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -460,18 +557,18 @@ public class MkCommand implements CommandExecutor {
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
             }
-            if (args[0].equalsIgnoreCase("setHighWorth")) {
+            else if (args[0].equalsIgnoreCase("setHighWorth")) {
                 if (commandSender.hasPermission("m4m.command.mk.setHighWorth") || commandSender.isOp()) {
                     boolean error = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
                             error = false;
-                            String mobName = mobModel.mobName;
-                            Double lowWorth = mobModel.getLowWorth();
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
+                            double lowWorth = MobConfigManager.mobsCfg.getDouble(MOBS + mobName + ".worth.low");
                             try {
                                 if (lowWorth <= Double.parseDouble(args[2])) {
-                                    mobModel.setHighWorth(Double.parseDouble(args[2]));
                                     MobConfigManager.mobsCfg.set(MOBS + mobName + ".worth.high", Double.parseDouble(args[2]));
+                                    MobConfigManager.mobsCfg.save(mobsFile);
                                     setHighWorthSuccessMessage(commandSender, args[2], mobName, language);
                                 } else {
                                     String setLowWorthTooHighErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthTooHighErrorMessage" + MESSAGE);
@@ -479,7 +576,7 @@ public class MkCommand implements CommandExecutor {
                                     assert setLowWorthTooHighErrorMessage != null;
                                     convertMessage(setLowWorthTooHighErrorMessage, commandSender, mobName, null, null, null, null, null, null, setLowWorthTooHighErrorMessageLocation);
                                 }
-                            } catch (NumberFormatException e){
+                            } catch (NumberFormatException | IOException e){
                                 String setHighWorthCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthCommandErrorMessage" + MESSAGE);
                                 String setHighWorthCommandErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthCommandErrorMessage" + LOCATION);
                                 assert setHighWorthCommandErrorMessage != null;
@@ -488,8 +585,8 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (Boolean.TRUE.equals(error)) {
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -500,39 +597,26 @@ public class MkCommand implements CommandExecutor {
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
             }
-            if (args[0].equalsIgnoreCase("removeCustomDrop")) {
+            else if (args[0].equalsIgnoreCase("removeCustomDrop")) {
                 if (commandSender.hasPermission("m4m.command.mk.removeCustomDrop") || commandSender.isOp()) {
                     List<ItemModel> itemList = new ArrayList<>();
                     boolean itemError = true;
                     boolean mobError = true;
-                    for (MobModel mobModel : mm) {
-                        if (args[1].equalsIgnoreCase(mobModel.mobName)) {
-                            String mobName = mobModel.mobName;
+                    for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (mobObject.equalsIgnoreCase(args[1])) {
+                            String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                             mobError = false;
-                            for (int k = 0; k < mobModel.getItems().size(); k++) {
-                                itemList.add(new ItemModel(mobModel.getItems().get(k).getItemName(), mobModel.getItems().get(k).getAmount(), mobModel.getItems().get(k).getChance()));
-                                MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + (k + 1), null);
-                                try {
-                                    MobConfigManager.mobsCfg.save(mobsFile);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            for (int k = 0; k < itemList.size(); k++) {
-                                if (args[2].equalsIgnoreCase(itemList.get(k).getItemName())) {
+                            for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
+                                if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." +drop + ".name").equals(args[2])){
                                     itemError = false;
-                                    itemList.remove(k);
+                                    MobConfigManager.mobsCfg.set(MOBS + mobName + ".drops." +drop, null);
+                                    try {
+                                        MobConfigManager.mobsCfg.save(mobsFile);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
-                            int counter = 1;
-                            for (ItemModel itemModel : itemList) {
-                                MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter + ".name", itemModel.getItemName());
-                                MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter + ".amount", itemModel.getAmount());
-                                MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter + ".chance", itemModel.getChance());
-                                counter++;
-                            }
-                            mobModel.getItems().clear();
-                            mobModel.setItems(itemList);
                             if (Boolean.TRUE.equals(itemError)) {
                                 String customDropsDoNotExistErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + MESSAGE);
                                 String customDropsDoNotExistErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + LOCATION);
@@ -552,8 +636,8 @@ public class MkCommand implements CommandExecutor {
                         }
                     }
                     if (Boolean.TRUE.equals(mobError)) {
-                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                     }
@@ -565,7 +649,34 @@ public class MkCommand implements CommandExecutor {
                 }
             }
         } else if (args.length == 5) {
-            if (args[0].equalsIgnoreCase("addCustomDrop")) {
+            if (args[0].equalsIgnoreCase("toggleKM")){
+                commandErrorMessage(commandSender, language, ".toggleKMCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("worth")){
+                commandErrorMessage(commandSender, language, ".worthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("drops")){
+                commandErrorMessage(commandSender, language, ".dropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("language")){
+                commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnEggsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnersCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("reload")){
+                commandErrorMessage(commandSender, language, ".reloadCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setHighWorth")){
+                commandErrorMessage(commandSender, language, ".setHighWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setLowWorth")){
+                commandErrorMessage(commandSender, language, ".setLowWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeCustomDrop")){
+                commandErrorMessage(commandSender, language, ".removeCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleCustomDrops")){
+                commandErrorMessage(commandSender, language, ".toggleCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")){
+                commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
+            }
+            else if (args[0].equalsIgnoreCase("addCustomDrop")) {
                 if (commandSender.hasPermission("m4m.command.mk.addCustomDrop") || commandSender.isOp()) {
                     if (args[1].equalsIgnoreCase("Player")){
                         String addCustomDropsErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsErrorMessage" + MESSAGE);
@@ -574,15 +685,21 @@ public class MkCommand implements CommandExecutor {
                         convertMessage(addCustomDropsErrorMessage, commandSender, null, null, null, null, null, null, null, addCustomDropsErrorMessageLocation);
                     }
                     else {
-                            for (MobModel mobModel : mm) {
-                                if (args[1].equalsIgnoreCase(mobModel.mobName)) {
+                        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                            if (mobObject.equalsIgnoreCase(args[1])) {
+                                String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                                     try {
                                         int itemPresent = 0;
-                                        for (int t = 0; t < mobModel.getItems().size(); t++) {
-                                            if (mobModel.getItems().get(t).getItemName().equalsIgnoreCase(args[2])) {
-                                                itemPresent = 1;
-                                                break;
+                                        try {
+                                            for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
+                                                if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." + drop + ".name").equals(args[2])) {
+                                                    itemPresent = 1;
+                                                    break;
+
+                                                }
                                             }
+                                        } catch (NullPointerException ignored){
+
                                         }
                                         if (itemPresent == 0){
                                             Material m = Material.valueOf(args[2].toUpperCase());
@@ -599,24 +716,14 @@ public class MkCommand implements CommandExecutor {
                                                             chance = 100;
                                                         }
                                                         int counter2 = 0;
-                                                        List<ItemModel> im = new ArrayList<>();
-                                                        for (int l = 0; l < mobModel.getItems().size(); l++) {
-                                                            String currentItemName = mobModel.getItems().get(l).getItemName();
-                                                            int currentItemAmount = mobModel.getItems().get(l).getAmount();
-                                                            int currentItemChance = mobModel.getItems().get(l).getChance();
-                                                            im.add(new ItemModel(currentItemName, currentItemAmount, currentItemChance));
-                                                            counter2++;
-                                                        }
-                                                        im.add(new ItemModel(args[2], amount, chance));
-                                                        mobModel.setItems(im);
                                                         counter2++;
-                                                        MobConfigManager.mobsCfg.set(MOBS + mobModel.getMobName() + DROPS_ITEMS + counter2 + ".name", args[2]);
-                                                        MobConfigManager.mobsCfg.set(MOBS + mobModel.getMobName() + DROPS_ITEMS + counter2 + ".amount", amount);
-                                                        MobConfigManager.mobsCfg.set(MOBS + mobModel.getMobName() + DROPS_ITEMS + counter2 + ".chance", chance);
+                                                        MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter2 + ".name", args[2]);
+                                                        MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter2 + ".amount", amount);
+                                                        MobConfigManager.mobsCfg.set(MOBS + mobName + DROPS_ITEMS + counter2 + ".chance", chance);
                                                         String addCustomDropSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropSuccessMessage" + MESSAGE);
                                                         String addCustomDropSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropSuccessMessage" + LOCATION);
                                                         assert addCustomDropSuccessMessage != null;
-                                                        convertMessage(addCustomDropSuccessMessage, commandSender, mobModel.getMobName(), args[2], chance, (double) amount, null, null, null, addCustomDropSuccessMessageLocation);
+                                                        convertMessage(addCustomDropSuccessMessage, commandSender, mobName, args[2], chance, (double) amount, null, null, null, addCustomDropSuccessMessageLocation);
                                                         MobConfigManager.mobsCfg.save(mobsFile);
                                                     } catch (NumberFormatException e) {
                                                         String addCustomDropsCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsCommandErrorMessage" + MESSAGE);
@@ -638,8 +745,8 @@ public class MkCommand implements CommandExecutor {
 
                                     }
                                     catch (IllegalArgumentException e){
-                                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + MESSAGE);
-                                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ADD_CUSTOM_DROP_INVALID_ERROR_MESSAGE + LOCATION);
+                                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                                         assert addCustomDropInvalidMobErrorMessage != null;
                                         convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
                                     }
@@ -653,9 +760,46 @@ public class MkCommand implements CommandExecutor {
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
             }
+        } else {
+            if (args[0].equalsIgnoreCase("toggleKM")){
+                commandErrorMessage(commandSender, language, ".toggleKMCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("worth")){
+                commandErrorMessage(commandSender, language, ".worthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("drops")){
+                commandErrorMessage(commandSender, language, ".dropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("language")){
+                commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnEggsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromSpawnersCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("reload")){
+                commandErrorMessage(commandSender, language, ".reloadCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")){
+                commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setHighWorth")){
+                commandErrorMessage(commandSender, language, ".setHighWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("setLowWorth")){
+                commandErrorMessage(commandSender, language, ".setLowWorthCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeCustomDrop")){
+                commandErrorMessage(commandSender, language, ".removeCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleCustomDrops")){
+                commandErrorMessage(commandSender, language, ".toggleCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")){
+                commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addCustomDrop")){
+                commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            }
         }
      return true;
 }
+
+    private void commandErrorMessage(CommandSender commandSender, String language, String error) {
+        String errorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + error + MESSAGE);
+        String errorLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + error + LOCATION);
+        assert errorMessage != null;
+        convertMessage(errorMessage, commandSender, null, null, null, null, null, null, null, errorLocation);
+    }
 
     private void setLowWorthSuccessMessage(CommandSender commandSender, String arg, String mobName, String language) {
         try {
@@ -793,6 +937,9 @@ public class MkCommand implements CommandExecutor {
         for (Object word: object){
             if (count > 1){
                 if (word.toString().equalsIgnoreCase("%mobName%")){
+                    word = mobName;
+                }
+                if (word.toString().equalsIgnoreCase("%language%")){
                     word = mobName;
                 }
                 if (word.toString().equalsIgnoreCase("%itemName%")){

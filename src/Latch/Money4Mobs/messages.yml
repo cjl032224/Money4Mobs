@@ -33,12 +33,6 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs Reload Complete'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage set to &6true'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage set to &6false'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
       message: '&cError: &7Enter command like this -> /mk setLowWorth [mobName] [amount]'
       location: ChatMenu
@@ -49,16 +43,15 @@ language:
       message: '&cError: Custom drops cannot be added to players'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cError: &7Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cError: &6%mobName% &7is not a valid mob'
+      message: '&cError: &7Enter command like this -> /mk addCustomDrop [mobName]
+        [itemName] [amount] [chance]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cError: &6%itemName% &7is already present as a custom drop'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aAdded &6%amount%  %itemName% &ato &6%mobName% &adrops with a &6%chance% % &achance of dropping'
+      message: '&aAdded &6%amount%  %itemName% &ato &6%mobName% &adrops with a &6%chance%
+        % &achance of dropping'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName% &adrops removed from &6%mobName% &amobs'
@@ -70,10 +63,12 @@ language:
       message: '&aCustom drops are not enabled for &6%mobName% &amobs'
       location: ChatMenu
     setLowWorthTooHighErrorMessage:
-      message: '&cError: &7Low worth for &6%mobName% &7mobs is higher than the value you are setting'
+      message: '&cError: &7Low worth for &6%mobName% &7mobs is higher than the value
+        you are setting'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cError: &7High worth for &6%mobName% &7mobs is lower than the value you are setting'
+      message: '&cError: &7High worth for &6%mobName% &7mobs is lower than the value
+        you are setting'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs have a &6%chance% % &achance of dropping &6%amount%  %itemName%'
@@ -85,13 +80,15 @@ language:
       message: '&6%mobName% &amobs are worth &6%lowWorth% &adollar(s)'
       location: ChatMenu
     mobRangeWorthMessage:
-      message: '&6%mobName% &amobs are worth between &6%lowWorth% &aand &6%highWorth% &adollars'
+      message: '&6%mobName% &amobs are worth between &6%lowWorth% &aand &6%highWorth%
+        &adollars'
       location: ChatMenu
     setLowWorthSuccessMessage:
       message: '&aLow worth for &6%mobName% &amobs has been set to &6%lowWorth% &adollar(s)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aHigh worth for &6%mobName% &amobs has been set to &6%highWorth% &adollar(s)'
+      message: '&aHigh worth for &6%mobName% &amobs has been set to &6%highWorth%
+        &adollar(s)'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aDefault drops for &6%mobName% &amobs set to &6true'
@@ -114,6 +111,49 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &awas taken and you now have &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&aYou were given &6$ %amount%  &aand now have &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &awas taken and you now have &6$ %balance%'
+      location: ActionBar
+    invalidMobErrorMessage:
+      message: '&cError: &6%mobName% &7is not a valid mob'
+      location: ChatMenu
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk removeCustomDrop [mobName]
+        [itemName]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleCustomDrops [mobName]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleDefaultDrops [mobName]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk worth [mobName]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk drops [mobName]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk language [language]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Enter command like this -> /mk reload'
   french:
     mobKillerOnMessage:
       message: '&aMessage MobKiller &6activé'
@@ -125,10 +165,12 @@ language:
       message: '&cVous n''avez pas accès à cette commande'
       location: ChatMenu
     eggSpawnRewardTrueMessage:
-      message: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6vrai'
+      message: '&aL''argent attribué par les monstres engendrés avec des œufs est
+        défini sur &6vrai'
       location: ChatMenu
     eggSpawnRewardFalseMessage:
-      message: '&aL''argent attribué par les monstres engendrés avec des œufs est défini sur &6faux'
+      message: '&aL''argent attribué par les monstres engendrés avec des œufs est
+        défini sur &6faux'
       location: ChatMenu
     spawnerSpawnRewardTrueMessage:
       message: '&aMoney récompensé par les spawner mobs est défini sur &6vrai'
@@ -137,10 +179,12 @@ language:
       message: '&aL''argent attribué par les spawner mobs est défini sur &6faux'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aL''argent récompensé des foules tuées par des loups apprivoisés est réglé sur &6vrai'
+      message: '&aL''argent récompensé des foules tuées par des loups apprivoisés
+        est réglé sur &6vrai'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aMoney récompensé par des foules tuées par des loups apprivoisés réglé sur &6faux'
+      message: '&aMoney récompensé par des foules tuées par des loups apprivoisés
+        réglé sur &6faux'
       location: ChatMenu
     reloadingMessage:
       message: '&bRecharger Money4Mobs'
@@ -148,32 +192,28 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs Rechargement terminé'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage défini sur &6vrai'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage défini sur &6faux'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
-      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob] [montant]'
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob]
+        [montant]'
       location: ChatMenu
     setHighWorthCommandErrorMessage:
-      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth [nom_mob] [montant]'
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth
+        [nom_mob] [montant]'
       location: ChatMenu
     addCustomDropsErrorMessage:
-      message: '&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux joueurs'
+      message: '&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux
+        joueurs'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop [nom_mob] [montant] [chance]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cErreur: &6%mobName% &7n''est pas un mob valide'
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop
+        [nom_mob] [object-nom] [montant] [chance]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cErreur: &6%itemName% &7est déjà présent en tant que drop personnalisé'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une &6%chance% % &ade chance de tomber'
+      message: '&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une
+        &6%chance% % &ade chance de tomber'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName% &agouttes supprimées de &6%mobName% &amobs'
@@ -182,13 +222,16 @@ language:
       message: '&cErreur: &7Drops n''existent pas pour &6%mobName% &amobs'
       location: ChatMenu
     customDropsNotEnabledMessage:
-      message: '&aLes largages personnalisés ne sont pas activés pour &6%mobName% &amobs'
+      message: '&aLes largages personnalisés ne sont pas activés pour &6%mobName%
+        &amobs'
       location: ChatMenu
     setLowWorthTooHighErrorMessage:
-      message: '&cErreur: &7La valeur faible pour &6%mobName% &7mobs est supérieure à la valeur que vous définissez'
+      message: '&cErreur: &7La valeur faible pour &6%mobName% &7mobs est supérieure
+        à la valeur que vous définissez'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cErreur: &7Valeur élevée pour &6%mobName% &7mobs est inférieure à la valeur que vous définissez'
+      message: '&cErreur: &7Valeur élevée pour &6%mobName% &7mobs est inférieure à
+        la valeur que vous définissez'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs ont &6%chance% % &achance de laisser tomber &6%amount%  %itemName%'
@@ -203,16 +246,20 @@ language:
       message: '&6%mobName% &amobs valent entre &6%lowWorth% &aet &6%highWorth% &adollars'
       location: ChatMenu
     setLowWorthSuccessMessage:
-      message: '&aFaible valeur pour &6%mobName% &amobs a été défini sur &6%lowWorth% &adollar(s)'
+      message: '&aFaible valeur pour &6%mobName% &amobs a été défini sur &6%lowWorth%
+        &adollar(s)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aLa valeur élevée pour &6%mobName% &amobs a été définie sur &6%highWorth% &adollar(s)'
+      message: '&aLa valeur élevée pour &6%mobName% &amobs a été définie sur &6%highWorth%
+        &adollar(s)'
       location: ChatMenu
     defaultDropsTrueMessage:
-      message: '&aLes baisses par défaut pour &6% mob Name% et les mobs définis sur &6vrai'
+      message: '&aLes baisses par défaut pour &6% mob Name% et les mobs définis sur
+        &6vrai'
       location: ChatMenu
     defaultDropsFalseMessage:
-      message: '&aLa valeur par défaut diminue pour &6%mobName% &amobs défini sur &6faux'
+      message: '&aLa valeur par défaut diminue pour &6%mobName% &amobs défini sur
+        &6faux'
       location: ChatMenu
     customDropsTrueMessage:
       message: '&aDécharges personnalisées pour &6%mobName% &amobs défini sur &6vrai'
@@ -229,6 +276,48 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &aa été prise et vous avez maintenant &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&aVous avez reçu &6$ %amount% &aet vous avez maintenant &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &aa été prise et vous avez maintenant &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk removeCustomDrop
+        [nom_mob] [object-nom]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleCustomDrops
+        [nom_mob]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleDefaultDrops
+        [nom_mob]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk worth [nom_mob]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk drops [nom_mob]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk language [langue]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk reload'
   spanish:
     mobKillerOnMessage:
       message: '&aMensaje de MobKiller &6en'
@@ -240,22 +329,28 @@ language:
       message: '&cNo tienes acceso a este comando'
       location: ChatMenu
     eggSpawnRewardTrueMessage:
-      message: '&aEl dinero recompensado por las turbas generadas con huevos se establece en &6verdadero'
+      message: '&aEl dinero recompensado por las turbas generadas con huevos se establece
+        en &6verdadero'
       location: ChatMenu
     eggSpawnRewardFalseMessage:
-      message: '&aEl dinero recompensado por las turbas generadas con huevos se establece en &6falso'
+      message: '&aEl dinero recompensado por las turbas generadas con huevos se establece
+        en &6falso'
       location: ChatMenu
     spawnerSpawnRewardTrueMessage:
-      message: '&aEl dinero recompensado por las turbas generadoras se establece en &6verdadero'
+      message: '&aEl dinero recompensado por las turbas generadoras se establece en
+        &6verdadero'
       location: ChatMenu
     spawnerSpawnRewardFalseMessage:
-      message: '&aEl dinero recompensado por las turbas generadoras se establece en &6falso'
+      message: '&aEl dinero recompensado por las turbas generadoras se establece en
+        &6falso'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aDinero recompensado por turbas asesinadas por lobos domesticados establecido en &6verdadero'
+      message: '&aDinero recompensado por turbas asesinadas por lobos domesticados
+        establecido en &6verdadero'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aDinero otorgado por turbas asesinadas por lobos domesticados establecido en &6falso'
+      message: '&aDinero otorgado por turbas asesinadas por lobos domesticados establecido
+        en &6falso'
       location: ChatMenu
     reloadingMessage:
       message: '&bRecarga de Money4Mobs'
@@ -263,32 +358,27 @@ language:
     reloadConfirmMessage:
       message: '&6Recarga completa de Money4Mobs'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage establecido en &6verdadero'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage establecido en &6falso'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
-      message: '&cError: &7ingrese un comando como este -> / mk setLowWorth  [nombre de mob] [monto]'
+      message: '&cError: &7ingrese un comando como este -> / mk setLowWorth  [nombre
+        de mob] [monto]'
       location: ChatMenu
     setHighWorthCommandErrorMessage:
-      message: '&cError: &7ingrese un comando como este -> /mk setHighWorth [nombre de mob] [monto]'
+      message: '&cError: &7ingrese un comando como este -> /mk setHighWorth [nombre
+        de mob] [monto]'
       location: ChatMenu
     addCustomDropsErrorMessage:
       message: '&cError: No se pueden agregar caídas personalizadas a las jugadoras'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cError: &7ingrese un comando como este -> /mk addCustomDrop [nombre de mob] [monto] [oportunidad]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cError: &6%mobName% &7no es una mafia válida'
+      message: '&cError: &7ingrese un comando como este -> /mk addCustomDrop [nombre
+        de mob] [articulo-nombre] [monto] [oportunidad]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cError: &6%itemName% &7ya está presente como una gota personalizada'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aSe agregó &6%amount% %itemName% &aa &6%mobName% &agotas con un &6%chance% &ade posibilidad de caer'
+      message: '&aSe agregó &6%amount% %itemName% &aa &6%mobName% &agotas con un &6%chance%
+        &ade posibilidad de caer'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName% &agotas eliminadas de &6%mobName% &amobs'
@@ -300,10 +390,12 @@ language:
       message: '&aLas gotas personalizadas no están habilitadas para &6%mobName% &amobs'
       location: ChatMenu
     setLowWorthTooHighErrorMessage:
-      message: '&cError: &7Baja valor para &6%mobName% &7mobs es más alta que el valor que está configurando'
+      message: '&cError: &7Baja valor para &6%mobName% &7mobs es más alta que el valor
+        que está configurando'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&7Alto valor para &6%mobName% &7mobs es menor que el valor que está estableciendo'
+      message: '&7Alto valor para &6%mobName% &7mobs es menor que el valor que está
+        estableciendo'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs tener un &6%chance% % &aposibilidad de caer &6%amount%  %itemName%'
@@ -318,10 +410,12 @@ language:
       message: '&6%mobName% &amobs valen entre &6%lowWorth% &ay &6%highWorth% &adolares'
       location: ChatMenu
     setLowWorthSuccessMessage:
-      message: '&aBaja valor para &6%mobName% &amobs se ha establecido en &6%lowWorth% &adólar(s)'
+      message: '&aBaja valor para &6%mobName% &amobs se ha establecido en &6%lowWorth%
+        &adólar(s)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aAlto valor para &6%mobName% &amobs se ha establecido en &6%highWorth% &adólar(s)'
+      message: '&aAlto valor para &6%mobName% &amobs se ha establecido en &6%highWorth%
+        &adólar(s)'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aGotas predeterminadas para &6%mobName% &amobs ajustado a &6verdadero'
@@ -344,6 +438,48 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &afue tomado y ahora tienes &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&aLe dieron &6$ %amount%  &ay ahora tengo &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &afue tomado y ahora tienes &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk removeCustomDrop [nombre
+        de mob] [articulo-nombre]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleCustomDrops [nombre
+        de mob]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleDefaultDrops
+        [nombre de mob]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk worth [nombre de mob]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk drops [nombre de mob]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk language [idioma]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7ingrese un comando como este -> /mk reload'
   german:
     mobKillerOnMessage:
       message: '&aMobKiller nachricht &6am'
@@ -355,10 +491,12 @@ language:
       message: '&cSie haben keinen Zugriff auf diesen Befehl'
       location: ChatMenu
     eggSpawnRewardTrueMessage:
-      message: '&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird, wird auf &6wahr gesetzt'
+      message: '&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird,
+        wird auf &6wahr gesetzt'
       location: ChatMenu
     eggSpawnRewardFalseMessage:
-      message: '&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird, wird auf &6falsch gesetzt'
+      message: '&aGeld, das von Mobs, die mit Eiern gespawnt wurden, belohnt wird,
+        wird auf &6falsch gesetzt'
       location: ChatMenu
     spawnerSpawnRewardTrueMessage:
       message: '&aGeld, das von Spawner-Mobs belohnt wird, ist eingestellt auf &6wahr'
@@ -367,10 +505,12 @@ language:
       message: '&aGeld, das von Spawner-Mobs belohnt wird, ist eingestellt auf &6falsch'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden, setzen auf &6wahr'
+      message: '&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet
+        wurden, setzen auf &6wahr'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet wurden, setzen auf &6falsch'
+      message: '&aGeld, das von Mobs belohnt wird, die von gezähmten Wölfen getötet
+        wurden, setzen auf &6falsch'
       location: ChatMenu
     reloadingMessage:
       message: '&bMoney4Mobs Neuladen'
@@ -378,32 +518,29 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs Nachladen abgeschlossen'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage einstellen &6wahr'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage einstellen &6falsch'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
-      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setLowWorth [mobName] [menge]'
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setLowWorth
+        [mobName] [menge]'
       location: ChatMenu
     setHighWorthCommandErrorMessage:
-      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setHighWorth [mobName] [menge]'
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setHighWorth
+        [mobName] [menge]'
       location: ChatMenu
     addCustomDropsErrorMessage:
-      message: '&cError: Benutzerdefinierte Drops können Spielern nicht hinzugefügt werden'
+      message: '&cError: Benutzerdefinierte Drops können Spielern nicht hinzugefügt
+        werden'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk addCustomDrop [mobName] [menge] [chance]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cError: &6%mobName% &7ist kein gültiger mob'
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk addCustomDrop
+        [mobName] [artikelname] [menge] [chance]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
-      message: '&cError: &6%itemName% &7ist bereits als benutzerdefinierter Tropfen vorhanden'
+      message: '&cError: &6%itemName% &7ist bereits als benutzerdefinierter Tropfen
+        vorhanden'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aAdded &6%amount%  %itemName% &azu &6%mobName% &a fällt mit a&6%chance% % &achance zu fallen'
+      message: '&aAdded &6%amount%  %itemName% &azu &6%mobName% &a fällt mit a&6%chance%
+        % &achance zu fallen'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName%  &atropfen entfernt von &6%mobName% &amobs'
@@ -419,10 +556,12 @@ language:
         von dir eingestellte Wert'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cError: &7Hoher Wert für &6%mobName% &7mobs ist niedriger als der von Ihnen eingestellte Wert'
+      message: '&cError: &7Hoher Wert für &6%mobName% &7mobs ist niedriger als der
+        von Ihnen eingestellte Wert'
       location: ChatMenu
     mobDropInfoMessage:
-      message: '&6%mobName% &amobs habe einen &6%chance% % &achance fallen zu lassen &6%amount%  %itemName%'
+      message: '&6%mobName% &amobs habe einen &6%chance% % &achance fallen zu lassen
+        &6%amount%  %itemName%'
       location: ChatMenu
     customDropsNotSetMessage:
       message: '&6%mobName% &amobs habe keine benutzerdefinierten Drops'
@@ -431,13 +570,16 @@ language:
       message: '&6%mobName% &amobs sind es wert &6%lowWorth% &adollar(s)'
       location: ChatMenu
     mobRangeWorthMessage:
-      message: '&6%mobName% &amobs sind es wert zwischen &6%lowWorth% &aund &6%highWorth% &adollars'
+      message: '&6%mobName% &amobs sind es wert zwischen &6%lowWorth% &aund &6%highWorth%
+        &adollars'
       location: ChatMenu
     setLowWorthSuccessMessage:
-      message: '&aNiedriger Wert für &6%mobName% &amobs wurde eingestellt auf &6%lowWorth% &adollar(s)'
+      message: '&aNiedriger Wert für &6%mobName% &amobs wurde eingestellt auf &6%lowWorth%
+        &adollar(s)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aHoher Wert für &6%mobName% &amobs wurde eingestellt auf &6%highWorth% &adollar(s)'
+      message: '&aHoher Wert für &6%mobName% &amobs wurde eingestellt auf &6%highWorth%
+        &adollar(s)'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aStandardtropfen für &6%mobName% &amobs einstellen &6wahr'
@@ -460,6 +602,48 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &awurde genommen und du hast jetzt &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&aSie wurden gegeben &6$ %amount%  &aund jetzt habe &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &awurde genommen und du hast jetzt &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk removeCustomDrop
+        [mobName] [artikelname]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleCustomDrops
+        [mobName]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein ->/mk toggleDefaultDrops
+        [mobName]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk worth [mobName]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk drops [mobName]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk language [sprache]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk reload'
   italian:
     mobKillerOnMessage:
       message: '&aMessaggio MobKiller &6attivo'
@@ -471,10 +655,12 @@ language:
       message: '&cNon hai accesso a questo comando'
       location: ChatMenu
     eggSpawnRewardTrueMessage:
-      message: '&aIl denaro ricompensato dai mob generati con le uova è impostato su &6vero'
+      message: '&aIl denaro ricompensato dai mob generati con le uova è impostato
+        su &6vero'
       location: ChatMenu
     eggSpawnRewardFalseMessage:
-      message: '&aIl denaro ricompensato dai mob generati con le uova è impostato su &6falso'
+      message: '&aIl denaro ricompensato dai mob generati con le uova è impostato
+        su &6falso'
       location: ChatMenu
     spawnerSpawnRewardTrueMessage:
       message: '&aIl denaro ricompensato dai mob generatori è impostato su &6vero'
@@ -483,10 +669,12 @@ language:
       message: '&aIl denaro ricompensato dai mob generatori è impostato su &6falso'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati su &6vero'
+      message: '&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati
+        su &6vero'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati su &6falso'
+      message: '&aDenaro ricompensato da mob uccisi da lupi addomesticati impostati
+        su &6falso'
       location: ChatMenu
     reloadingMessage:
       message: '&bRicaricare Money4Mobs'
@@ -494,32 +682,27 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs Ricarica completata'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage impostato &6vero'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage impostato &6falso'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
-      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk setLowWorth [mobNome] [quantità]'
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk setLowWorth
+        [mobNome] [quantità]'
       location: ChatMenu
     setHighWorthCommandErrorMessage:
-      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk setHighWorth [mobNome] [quantità]'
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk setHighWorth
+        [mobNome] [quantità]'
       location: ChatMenu
     addCustomDropsErrorMessage:
       message: '&cErrore: Custom drops cannot be added to players'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk addCustomDrop [mobNome] [quantità] [opportunità]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cErrore: &6%mobName% &7non è un mob valido'
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk addCustomDrop
+        [mobNome] [nome dell''elemento] [quantità] [opportunità]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cErrore: &6%itemName% &7è già presente come drop personalizzato'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aAggiunto &6%amount%  %itemName% &aper &6%mobName% &agocce con a &6%chance% % &apossibilità di cadere'
+      message: '&aAggiunto &6%amount%  %itemName% &aper &6%mobName% &agocce con a
+        &6%chance% % &apossibilità di cadere'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName%  &agocce rimosse da &6%mobName% &amobs'
@@ -531,10 +714,12 @@ language:
       message: '&aI drop personalizzati non sono abilitati per &6%mobName% &amobs'
       location: ChatMenu
     setLowWorthTooHighErrorMessage:
-      message: '&cErrore: &7Valore basso per &6%mobName% &7mobs è superiore al valore che stai impostando'
+      message: '&cErrore: &7Valore basso per &6%mobName% &7mobs è superiore al valore
+        che stai impostando'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cErrore: &7Grande valore per &6%mobName% &7mobs è inferiore al valore che stai impostando'
+      message: '&cErrore: &7Grande valore per &6%mobName% &7mobs è inferiore al valore
+        che stai impostando'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs avere un &6%chance% % &apossibilità di cadere &6%amount%  %itemName%'
@@ -549,10 +734,12 @@ language:
       message: '&6%mobName% &amobs valgono tra &6%lowWorth% &ae &6%highWorth% &adollari'
       location: ChatMenu
     setLowWorthSuccessMessage:
-      message: '&aValore basso per &6%mobName% &amobs è stato impostato su &6%lowWorth% &adollar(o/i)'
+      message: '&aValore basso per &6%mobName% &amobs è stato impostato su &6%lowWorth%
+        &adollar(o/i)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aGrande valore per &6%mobName% &amobs è stato impostato su &6%highWorth% &adollar(o/i)'
+      message: '&aGrande valore per &6%mobName% &amobs è stato impostato su &6%highWorth%
+        &adollar(o/i)'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aGocce predefinite per &6%mobName% &amobs impostato &6vero'
@@ -575,9 +762,49 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &aè stato preso e ora hai &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk removeCustomDrop
+        [mobName] [nome dell''elemento]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleCustomDrops
+        [mobName]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleDefaultDrops
+        [mobName]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk worth [mobName]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk drops [mobName]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk language [linguaggio]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7Inserisci il comando in questo modo -> /mk reload'
   russian:
     mobKillerOnMessage:
-      message: '&aСообщение MobKiller &6на'
+      message: '&aСообщение MobKiller &6включен'
       location: ChatMenu
     mobKillerOffMessage:
       message: '&aСообщение MobKiller &6выключенный'
@@ -586,10 +813,12 @@ language:
       message: '&cУ вас нет доступа к этой команде'
       location: ChatMenu
     eggSpawnRewardTrueMessage:
-      message: '&aДенежная награда от мобов, порожденных яйцами, установлена в размере &6правда'
+      message: '&aДенежная награда от мобов, порожденных яйцами, установлена в размере
+        &6правда'
       location: ChatMenu
     eggSpawnRewardFalseMessage:
-      message: '&aДенежная награда от мобов, порожденных яйцами, установлена в размере &6ложный'
+      message: '&aДенежная награда от мобов, порожденных яйцами, установлена в размере
+        &6ложный'
       location: ChatMenu
     spawnerSpawnRewardTrueMessage:
       message: '&aДенежная награда от создателей мобов установлена в размере &6правда'
@@ -598,10 +827,12 @@ language:
       message: '&aДенежная награда от создателей мобов установлена в размере &6ложный'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aДеньги, полученные от мобов, убитых прирученными волками, установленными в &6правда'
+      message: '&aДеньги, полученные от мобов, убитых прирученными волками, установленными
+        в &6правда'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aДеньги, полученные от мобов, убитых прирученными волками, установленными в &6ложный'
+      message: '&aДеньги, полученные от мобов, убитых прирученными волками, установленными
+        в &6ложный'
       location: ChatMenu
     reloadingMessage:
       message: '&bПополнение Money4Mobs'
@@ -609,32 +840,27 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs Перезагрузка завершена'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage установлен в &6правда'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage установлен в &6ложный'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
-      message: '&cОшибка: &7Введите команду, подобную этой -> /mk setLowWorth [mob-название] [количество]'
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk setLowWorth [mob-название]
+        [количество]'
       location: ChatMenu
     setHighWorthCommandErrorMessage:
-      message: '&cОшибка: &7Введите команду, подобную этой -> /mk setHighWorth [mob-название] [количество]'
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk setHighWorth [mob-название]
+        [количество]'
       location: ChatMenu
     addCustomDropsErrorMessage:
       message: '&cОшибка: Пользовательские дропы не могут быть добавлены игрокам'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cОшибка: &7Введите команду, подобную этой -> /mk addCustomDrop [mob-название] [количество] [шанс]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cОшибка: &6%mobName% &7is not a valid mob'
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk addCustomDrop [mob-название]
+        [название предмета] [количество] [шанс]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cОшибка: &6%itemName% &7уже присутствует в виде кастомного дропа'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aДобавлен &6%amount%  %itemName% &aк &6%mobName% &aпадает с &6%chance% % &aшанс упасть'
+      message: '&aДобавлен &6%amount%  %itemName% &aк &6%mobName% &aпадает с &6%chance%
+        % &aшанс упасть'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName%  &aкапли удалены из &6%mobName% &amobs'
@@ -650,7 +876,8 @@ language:
         которое вы устанавливаете'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cОшибка: &7Высокая ценность для &6%mobName% &7mobs ниже установленного вами значения'
+      message: '&cОшибка: &7Высокая ценность для &6%mobName% &7mobs ниже установленного
+        вами значения'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs есть &6%chance% % &aшанс упасть &6%amount%  %itemName%'
@@ -665,10 +892,12 @@ language:
       message: '&6%mobName% &amobs стоят между &6%lowWorth% &aand &6%highWorth% &adollars'
       location: ChatMenu
     setLowWorthSuccessMessage:
-      message: '&aНизкая ценность для &6%mobName% &amobs был установлен на &6%lowWorth% &aдоллар(ы)'
+      message: '&aНизкая ценность для &6%mobName% &amobs был установлен включен &6%lowWorth%
+        &aдоллар(ы)'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aВысокая ценность для &6%mobName% &amobs был установлен на &6%highWorth% &aдоллар(ы)'
+      message: '&aВысокая ценность для &6%mobName% &amobs был установлен включен &6%highWorth%
+        &aдоллар(ы)'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aПо умолчанию выпадает для &6%mobName% &amobs установлен в &6правда'
@@ -683,7 +912,7 @@ language:
       message: '&aПользовательские дропы для &6%mobName% &amobs установлен в &6ложный'
       location: ChatMenu
     languageChangeSuccessMessage:
-      message: '&aИзменены сообщения Money4Mobs на &6русский &aязык'
+      message: '&aИзменены сообщения Money4Mobs включен &6русский &aязык'
       location: ChatMenu
     moneyRewardedMessage:
       message: '&aВам дали &6$ %amount%  &aи теперь есть &6$ %balance%'
@@ -691,6 +920,48 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &aбыл взят, и теперь у вас есть &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&aВам дали &6$ %amount%  &aи теперь есть &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &aбыл взят, и теперь у вас есть &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk removeCustomDrop
+        [mob-название] [название предмета]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleCustomDrops
+        [mob-название]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleDefaultDrops
+        [mob-название]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk worth [mob-название]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk drops [mob-название]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk language [язык]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cОшибка: &7Введите команду, подобную этой -> /mk reload'
   hindi:
     mobKillerOnMessage:
       message: '&aMobKiller संदेश &6पर'
@@ -714,22 +985,18 @@ language:
       message: '&aस्पॉनर मॉब से मिलने वाला इनाम इस पर सेट है &6असत्य'
       location: ChatMenu
     tamedWolvesRewardTrueMessage:
-      message: '&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला पैसा &6सच'
+      message: '&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला
+        पैसा &6सच'
       location: ChatMenu
     tamedWolvesRewardFalseMessage:
-      message: '&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला पैसा &6असत्य'
+      message: '&aपालतू भेड़ियों द्वारा मारे गए भीड़ से इनाम के तौर पर दिया जाने वाला
+        पैसा &6असत्य'
       location: ChatMenu
     reloadingMessage:
       message: '&bMoney4Mobs को पुनः लोड करना'
       location: ChatMenu
     reloadConfirmMessage:
       message: '&6Money4Mobs पुनः लोड पूर्ण'
-      location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage करने के लिए सेट &6सच'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage करने के लिए सेट &6असत्य'
       location: ChatMenu
     setLowWorthCommandErrorMessage:
       message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setLowWorth [mob-नाम] [रकम]'
@@ -741,16 +1008,15 @@ language:
       message: '&cत्रुटि: खिलाड़ियों में कस्टम ड्रॉप्स नहीं जोड़े जा सकते'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mob-नाम] [रकम] [मोका]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&cत्रुटि: &6%mobName% &7वैध भीड़ नहीं है'
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mob-नाम]
+        [वस्तु का नाम] [रकम] [मोका]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&cत्रुटि: &6%itemName% &7कस्टम ड्रॉप के रूप में पहले से मौजूद है'
       location: ChatMenu
     addCustomDropSuccessMessage:
-      message: '&aजोड़ा &6%amount%  %itemName% &aसेवा मेरे &6%mobName% &aए के साथ बूँदें &6%chance% % &aगिरने की संभावना'
+      message: '&aजोड़ा &6%amount%  %itemName% &aसेवा मेरे &6%mobName% &aए के साथ
+        बूँदें &6%chance% % &aगिरने की संभावना'
       location: ChatMenu
     removeCustomDropSuccessMessage:
       message: '&6%itemName%  &aसे हटाई गई बूंदें &6%mobName% &amobs'
@@ -766,7 +1032,8 @@ language:
         मान से अधिक है'
       location: ChatMenu
     setHighWorthTooLowErrorMessage:
-      message: '&cत्रुटि: &7उच्च मूल्य के लिए &6%mobName% &7mobs आपके द्वारा सेट किए जा रहे मान से कम है'
+      message: '&cत्रुटि: &7उच्च मूल्य के लिए &6%mobName% &7mobs आपके द्वारा सेट किए
+        जा रहे मान से कम है'
       location: ChatMenu
     mobDropInfoMessage:
       message: '&6%mobName% &amobs लीजिये &6%chance% % &aगिरने की संभावना &6%amount%  %itemName%'
@@ -778,13 +1045,15 @@ language:
       message: '&6%mobName% &amobs लायक हैं&6%lowWorth% &aडॉलर'
       location: ChatMenu
     mobRangeWorthMessage:
-      message: '&6%mobName% &amobs के बीच लायक हैं &6%lowWorth% &aand &6%highWorth% &aडॉलर'
+      message: '&6%mobName% &amobs के बीच लायक हैं &6%lowWorth% &aand &6%highWorth%
+        &aडॉलर'
       location: ChatMenu
     setLowWorthSuccessMessage:
       message: '&aकम मूल्य &6%mobName% &amobs पर सेट किया गया है &6%lowWorth% &aडॉलर'
       location: ChatMenu
     setHighWorthSuccessMessage:
-      message: '&aउच्च मूल्य के लिए &6%mobName% &amobs पर सेट किया गया है &6%highWorth% &aडॉलर'
+      message: '&aउच्च मूल्य के लिए &6%mobName% &amobs पर सेट किया गया है &6%highWorth%
+        &aडॉलर'
       location: ChatMenu
     defaultDropsTrueMessage:
       message: '&aके लिए डिफ़ॉल्ट बूँदें &6%mobName% &amobs करने के लिए सेट &6सच'
@@ -807,6 +1076,46 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &aलिया गया था और अब आपके पास है &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      location: ActionBar
+      message: '&aतुमको दिया गया था &6$ %amount%  &aऔर अब है &6$ %balance%'
+    playerKilledByPlayerMessage:
+      location: ActionBar
+      message: '&6$ %amount%  &aलिया गया था और अब आपके पास है &6$ %balance%'
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk removeCustomDrop [mob-नाम]
+        [वस्तु का नाम]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleCustomDrops [mob-नाम]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleDefaultDrops [mob-नाम]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk worth [mob-नाम]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk drops [mob-नाम]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk language [भाषा: हिन्दी]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk reload'
   chinese_traditional:
     mobKillerOnMessage:
       message: '&aMobKiller 信息 &6上'
@@ -841,12 +1150,6 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs 重新加載完成'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage 調成 &6真的'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage 調成 &6錯誤的'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
       message: '&c錯誤: &7像這樣輸入命令 -> /mk setLowWorth [mob-名稱] [數量]'
       location: ChatMenu
@@ -857,10 +1160,7 @@ language:
       message: '&c錯誤: Custom drops cannot be added to players'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&c錯誤: &7像這樣輸入命令 -> /mk addCustomDrop [mob-名稱] [數量] [機會]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&c錯誤: &6%mobName% &7不是有效的'
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk addCustomDrop [mob-名稱] [项目名称] [數量] [機會]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&c錯誤: &6%itemName% &7已經作為自定義掉落存在'
@@ -922,6 +1222,45 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &a被帶走了，你現在有了 &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&a你被給予 &6$ %amount%  &a現在有 &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &a被帶走了，你現在有了 &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk removeCustomDrop [mob-名稱] [項目名稱]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleCustomDrops [mob-名稱]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleDefaultDrops [mob-名稱]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk worth [mob-名稱]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk drops [mob-名稱]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk language [語]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7像這樣輸入命令 -> /mk reload'
   chinese_simplified:
     mobKillerOnMessage:
       message: '&aMobKiller 信息 &6上'
@@ -956,12 +1295,6 @@ language:
     reloadConfirmMessage:
       message: '&6Money4Mobs 重新加载完成'
       location: ChatMenu
-    overrideKillMessageTrue:
-      message: '&aoverrideKillMessage 调成 &6真的'
-      location: ChatMenu
-    overrideKillMessageFalse:
-      message: '&aoverrideKillMessage 调成 &6false'
-      location: ChatMenu
     setLowWorthCommandErrorMessage:
       message: '&c错误: &7像这样输入命令 -> /mk setLowWorth [mob-名称] [数量]'
       location: ChatMenu
@@ -972,10 +1305,7 @@ language:
       message: '&c错误: Custom drops cannot be added to players'
       location: ChatMenu
     addCustomDropsCommandErrorMessage:
-      message: '&c错误: &7像这样输入命令 -> /mk addCustomDrop [mob-名称] [数量] [机会]'
-      location: ChatMenu
-    addCustomDropInvalidMobErrorMessage:
-      message: '&c错误: &6%mobName% &7不是有效的暴徒'
+      message: '&c错误: &7像这样输入命令 -> /mk addCustomDrop [mob-名称] [项目名称] [数量] [机会]'
       location: ChatMenu
     addCustomDropAlreadyPresentErrorMessage:
       message: '&c错误: &6%itemName% &7已经作为自定义掉落存在'
@@ -1037,3 +1367,42 @@ language:
     moneySubtractedMessage:
       message: '&6$ %amount%  &a被带走了，你现在有了 &6$ %balance%'
       location: ActionBar
+    playerKilledPlayerMessage:
+      message: '&a你被给予 &6$ %amount%  &a现在有 &6$ %balance%'
+      location: ActionBar
+    playerKilledByPlayerMessage:
+      message: '&6$ %amount%  &a被带走了，你现在有了 &6$ %balance%'
+      location: ActionBar
+    removeCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk removeCustomDrop [mob-名称] [项目名称]'
+    toggleCustomDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleCustomDrops [mob-名称]'
+    toggleDefaultDropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleDefaultDrops [mob-名称]'
+    worthCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk worth [mob-名称]'
+    dropsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk drops [mob-名称]'
+    languageCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk language [语]'
+    toggleKMCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleKM'
+    toggleMoneyFromSpawnEggsCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleMoneyFromSpawnEggs'
+    toggleMoneyFromSpawnersCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleMoneyFromSpawners'
+    toggleMoneyFromTamedWolvesCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk toggleMoneyFromTamedWolves'
+    reloadCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7像这样输入命令 -> /mk reload'

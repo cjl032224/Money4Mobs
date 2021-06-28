@@ -1,6 +1,7 @@
 package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
+import Latch.Money4Mobs.Managers.MobConfigManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,9 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MobWorthTabComplete implements TabCompleter {
     private static SetMobList mobModelList = new SetMobList();
@@ -115,21 +114,18 @@ public class MobWorthTabComplete implements TabCompleter {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
                         return StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>());
-                    } catch (ArrayIndexOutOfBoundsException e){
-                        //
+                    } catch (ArrayIndexOutOfBoundsException ignored){
                     }
                 }
             }
             else {
-                for (MobModel mobModel : mobsList) {
-                    if (mobModel.getMobName().equalsIgnoreCase(args[1])) {
-                        if (StringUtils.isNotBlank(args[1])) {
+                for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                    if (StringUtils.isNotBlank(args[1]) && mobObject.equalsIgnoreCase(args[1])) {
                             try {
                                 return StringUtil.copyPartialMatches(args[2], itemList, new ArrayList<>());
                             } catch (ArrayIndexOutOfBoundsException ignored) {
                                 //
                             }
-                        }
                     }
                 }
             }
@@ -144,18 +140,17 @@ public class MobWorthTabComplete implements TabCompleter {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
                         return StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>());
-                    } catch (ArrayIndexOutOfBoundsException e ){
-                        //
+                    } catch (ArrayIndexOutOfBoundsException ignored){
                     }
                 }
             }
             else {
-                List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
-                for (MobModel mobModel : mm) {
-                    if (mobModel.getMobName().equalsIgnoreCase(args[1])) {
+                String mobName = args[1].substring(0, 1).toUpperCase() + args[1].substring(1);
+                for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                    if (mobObject.equalsIgnoreCase(args[1])) {
                         itemList.clear();
-                        for (int k = 0; k < mobModel.getItems().size(); k++) {
-                            itemList.add(mobModel.getItems().get(k).getItemName());
+                        for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
+                            itemList.add(MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops." + drop + ".name"));
                         }
                     }
                 }
@@ -174,8 +169,7 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             try {
                 return StringUtil.copyPartialMatches(args[1], languageList, new ArrayList<>());
-            } catch (ArrayIndexOutOfBoundsException ignore){
-
+            } catch (ArrayIndexOutOfBoundsException ignored){
             }
         }
         return StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>());

@@ -1,5 +1,7 @@
-package Latch.Money4Mobs;
+package Latch.Money4Mobs.Managers;
 
+import Latch.Money4Mobs.Money4Mobs;
+import Latch.Money4Mobs.UserModel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -85,9 +87,9 @@ public class UserManager {
             usersFile.createNewFile();
             String defaultLanguage;
             if (MobConfigManager.mobsCfg.getString("defaultLanguage") == null) {
-                defaultLanguage = "English";
+                defaultLanguage = "english";
             } else {
-                defaultLanguage = MobConfigManager.mobsCfg.getString("defaultLanguage");
+                defaultLanguage = ConfigFileManager.configCfg.getString("defaultLanguage");
             }
             for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
                 userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, defaultLanguage, null));

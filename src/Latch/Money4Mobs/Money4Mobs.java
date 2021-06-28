@@ -1,12 +1,9 @@
 package Latch.Money4Mobs;
 
-import Latch.Money4Mobs.Managers.MessagesConfigManager;
+import Latch.Money4Mobs.Managers.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +14,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -43,6 +39,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
     private static Latch.Money4Mobs.MobSpawnedReasonManager MobReasonCfgm;
+    private static ConfigFileManager ConfigCfgm;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
     Boolean isUpdateAvailable = false;
@@ -56,14 +53,15 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loadItemConfigManager();
         loadUserConfigManager();
         loadMobReasonConfigManager();
         try {
             loadLanguageConfigManager();
+            loadConfigFileManager();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        loadItemConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
         ItemCfgm.createItemsConfig();
@@ -78,7 +76,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
 
         for (OfflinePlayer p : getServer().getOfflinePlayers()) {
-            String language = MobConfigManager.mobsCfg.getString("defaultLanguage");
+            String language = ConfigFileManager.configCfg.getString("defaultLanguage");
             if (language == null){
                 language = "english";
             }
@@ -123,7 +121,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError ignore) {
+        } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
         }
     }
 
@@ -228,7 +226,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         Money4Mobs.entityId = entityId;
     }
 
-    public void callRewardMobKiller(EntityDeathEvent event) {
+    public void callRewardMobKiller(EntityDeathEvent event) throws IOException {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
@@ -268,6 +266,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MobReasonCfgm.setup();
     }
 
+    static void loadConfigFileManager() throws IOException {
+        ConfigCfgm = new ConfigFileManager();
+        ConfigCfgm.setup();
+    }
+
     public static List<Mobs4MoneyPlayer> getPlayerList() {
         return playerList;
     }
@@ -282,5 +285,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadUserConfigManager();
         loadLanguageConfigManager();
         loadMobReasonConfigManager();
+        loadConfigFileManager();
     }
 }
