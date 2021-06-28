@@ -114,8 +114,7 @@ public class MobWorthTabComplete implements TabCompleter {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
                         return StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>());
-                    } catch (ArrayIndexOutOfBoundsException e){
-                        //
+                    } catch (ArrayIndexOutOfBoundsException ignored){
                     }
                 }
             }
@@ -141,8 +140,7 @@ public class MobWorthTabComplete implements TabCompleter {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
                         return StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>());
-                    } catch (ArrayIndexOutOfBoundsException e ){
-                        //
+                    } catch (ArrayIndexOutOfBoundsException ignored){
                     }
                 }
             }
@@ -171,8 +169,7 @@ public class MobWorthTabComplete implements TabCompleter {
             }
             try {
                 return StringUtil.copyPartialMatches(args[1], languageList, new ArrayList<>());
-            } catch (ArrayIndexOutOfBoundsException ignore){
-
+            } catch (ArrayIndexOutOfBoundsException ignored){
             }
         }
         return StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>());
