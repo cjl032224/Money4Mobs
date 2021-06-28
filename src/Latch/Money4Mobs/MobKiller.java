@@ -7,6 +7,7 @@ import java.util.*;
 import Latch.Money4Mobs.Managers.ConfigFileManager;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
 
+import Latch.Money4Mobs.MobSpawnedReasonManager;
 import Latch.Money4Mobs.Managers.MobConfigManager;
 import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
@@ -15,6 +16,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -201,24 +203,20 @@ public abstract class MobKiller implements CommandExecutor {
         assert predator != null;
         String killerIP = predator.getAddress().getAddress().toString();
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
-            for (MobSpawnedReason mobSpawnedReason : msr) {
-                if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
-                    counter = 1;
-                    if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")) {
+            int numberOfMobs = 1;
+            FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
+            Money4Mobs.loadConfigFileManager();
+            for(String firstUsers : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
+                if (mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".mobUUID").equalsIgnoreCase(e.getUniqueId().toString())){
+                    if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
                         Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
-                        if (Boolean.TRUE.equals(spawnEggs)) {
-                            giveMoney = true;
-                        } else {
-                            giveMoney = false;
-                        }
-                    } else if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER")) {
+                        giveMoney = Boolean.TRUE.equals(spawnEggs);
+                    } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
                         Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
                         giveMoney = Boolean.TRUE.equals(spawners);
                     }
                 }
-            }
-            if(counter == 0){
-                giveMoney = true;
+                numberOfMobs++;
             }
             List<Mobs4MoneyPlayer> pl = Money4Mobs.getPlayerList();
             for (int i = 0; i < Money4Mobs.getPlayerList().size(); i++){
@@ -280,7 +278,7 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            if (mobObject.equalsIgnoreCase(e.getName())){
+            if (mobObject.equalsIgnoreCase(e.getName().replace(" ", ""))){
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
