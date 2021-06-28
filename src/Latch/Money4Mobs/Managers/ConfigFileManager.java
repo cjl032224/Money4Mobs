@@ -16,7 +16,7 @@ public class ConfigFileManager {
     public static File configFile;
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.1";
+    public static final String VERSION_NUMBER = "1.6.2";
     private static final String VERSION = "version";
 
     // Set up mobs.yml configuration file
