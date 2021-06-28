@@ -33,7 +33,7 @@ m4m.multiplier.level-4 | Permission for level-4 multiplier
 m4m.multiplier.level-5 | Permission for level-5 multiplier
 
 ## These level multipliers can be updated and more multipliers are able to be added
-## Example in mobs.yml -
+## Example in config.yml -
 #### group-multiplier:
   #### level-1: 1.0 
   #### superbad: 1.5
@@ -129,3 +129,18 @@ customDropsFalseMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName
 languageChangeSuccessMessage |  | /mk language - When the command sender's language in the users.yml file is updated successfully
 moneyRewardedMessage | %amount%, %balance% | When a player kills a mob and the low worth is greater than 0
 moneySubtractedMessage | %amount%, %balance% | When a player kills a mob and the low worth is less than 0
+
+Action Multipliers in config.yml when 'isMultipliersAggregate' is false will take the highest priority multiplier that fit the conditions
+Action Multipliers in config.yml when 'isMultipliersAggregate' is true will multiply all active multipliers that fit the conditions
+ Multiplier | Condition for Triggering | Additional Comments
+------ | ------- | -------
+riding-horse | If a player kills a mob whilst riding a horse | 
+riding-mule | If a player kills a mob whilst riding a mule | 
+riding-donkey | If a player kills a mob whilst riding a donkey | 
+riding-strider | If a player kills a mob whilst riding a strider | 
+riding-pig | If a player kills a mob whilst riding a pig | 
+fallDamage| If a player kills a mob with fall damage |
+longDistance| If a player kills a mob equal or greater than the distance set in longDistance.distance | Distance is set in blocks away from player
+projectile| If a player kills a mob with a bow or crossbow |
+noWeapon| If a player kills a mob without a weapon | If a player beats a mob to death with an item that is not a weapon or tool, i.e. (Hoe, Sword, Shield, Trident, etc)
+
