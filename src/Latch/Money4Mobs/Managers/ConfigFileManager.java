@@ -16,7 +16,7 @@ public class ConfigFileManager {
     public static File configFile;
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.2";
+    public static final String VERSION_NUMBER = "1.6.3";
     private static final String VERSION = "version";
 
     // Set up mobs.yml configuration file
@@ -245,7 +245,7 @@ public class ConfigFileManager {
         mobsCfg.set("drops", null);
 
         actionMultiplierSetterV1();
-
+        addMountedMobKilledMultiplier();
         configCfg.save(configFile);
         mobsCfg.save(mobsFile);
     }
@@ -312,6 +312,14 @@ public class ConfigFileManager {
             configCfg.set("actions-multipliers.noWeapon.multiplier", 1.0);
             configCfg.set("actions-multipliers.noWeapon.isActive", false);
             configCfg.set("actions-multipliers.noWeapon.priority", 1);
+        }
+    }
+
+    public static void addMountedMobKilledMultiplier() {
+        if (Boolean.FALSE.equals(configCfg.isSet("actions-multipliers.mountedMob.multiplier"))){
+            configCfg.set("actions-multipliers.mountedMob.multiplier", 1.0);
+            configCfg.set("actions-multipliers.mountedMob.isActive", false);
+            configCfg.set("actions-multipliers.mountedMob.priority", 1);
         }
     }
 }
