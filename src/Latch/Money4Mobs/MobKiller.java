@@ -13,7 +13,6 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -315,6 +314,7 @@ public abstract class MobKiller implements CommandExecutor {
             isRidingMuleMultiplier(money, pa);
             isRidingPigMultiplier(money, pa);
             isRidingStriderMultiplier(money, pa);
+            isPreyRidingMultiplier(money, pa, e);
         } else {
             getHighestPriority(e, pa);
         }
@@ -445,6 +445,19 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
+    private static void isPreyRidingMultiplier(double moneySaved, CommandSender pa, Entity e) {
+        if (Boolean.TRUE.equals(isPreyIsOnVehicle(e))){
+            double preyRidingMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.mountedMob.multiplier");
+            Boolean isPreyRidingActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.mountedMob.isActive");
+            if (Boolean.TRUE.equals(isPreyRidingActive)){
+                money = money * preyRidingMultiplier;
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } else {
+            money = Math.round(money * 100.0) / 100.0;
+        }
+    }
+
     private static boolean ifPlayerOnVehicle(CommandSender pa) {
         boolean isRiding = false;
         if (pa instanceof Player){
@@ -452,6 +465,14 @@ public abstract class MobKiller implements CommandExecutor {
             if (player.getVehicle() != null) {
                 isRiding = true;
             }
+        }
+        return isRiding;
+    }
+
+    private static boolean isPreyIsOnVehicle(Entity e) {
+        boolean isRiding = false;
+        if (e.getVehicle() != null) {
+            isRiding = true;
         }
         return isRiding;
     }
@@ -498,7 +519,9 @@ public abstract class MobKiller implements CommandExecutor {
             String vehicle = getVehicle(pa).toLowerCase();
             multiplierList.add("riding-" + vehicle);
         }
-
+        if (Boolean.TRUE.equals(isPreyIsOnVehicle(e))){
+            multiplierList.add("mountedMob");
+        }
     }
 
     private static double getHighestPriority(Entity e, CommandSender pa) {
@@ -546,6 +569,9 @@ public abstract class MobKiller implements CommandExecutor {
                     break;
                 case "riding-pig":
                     isRidingPigMultiplier(moneySaved, pa);
+                    break;
+                case "mountedMob":
+                    isPreyRidingMultiplier(moneySaved, pa, e);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(actionMultiplierString));
