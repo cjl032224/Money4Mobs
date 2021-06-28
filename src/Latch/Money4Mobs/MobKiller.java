@@ -36,6 +36,8 @@ public abstract class MobKiller implements CommandExecutor {
     private static Boolean showMessage = true;
     private static final Random r = new Random();
     private static double percentageLost = 0;
+    private static List<String> multiplierList = new ArrayList<>();
+    private static double distance = 0;
 
     public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) throws IOException {
         Money4Mobs.loadConfigFileManager();
@@ -302,26 +304,23 @@ public abstract class MobKiller implements CommandExecutor {
         double distance = getDistanceFromKiller(e, pa);
 
         boolean isMultiplierAggregate = ConfigFileManager.configCfg.getBoolean("actions-multipliers.isMultipliersAggregate");
-        double moneySaved = money;
         if (Boolean.TRUE.equals(isMultiplierAggregate)){
-            isFallDamageMultiplier(moneySaved);
-            isProjectileMultiplierPresent(moneySaved);
-            isLongDistanceMultiplier(distance, moneySaved);
-            isNoWeaponMultiplier(pa, moneySaved);
-            isRidingHorseMultiplier(moneySaved, pa);
-            isRidingDonkeyMultiplier(moneySaved, pa);
-            isRidingMuleMultiplier(moneySaved, pa);
-            isRidingPigMultiplier(moneySaved, pa);
-            isRidingStriderMultiplier(moneySaved, pa);
+            isFallDamageMultiplier(money);
+            isProjectileMultiplierPresent(money);
+            isLongDistanceMultiplier(distance, money);
+            isNoWeaponMultiplier(pa, money);
+            isRidingHorseMultiplier(money, pa);
+            isRidingDonkeyMultiplier(money, pa);
+            isRidingMuleMultiplier(money, pa);
+            isRidingPigMultiplier(money, pa);
+            isRidingStriderMultiplier(money, pa);
         } else {
             getHighestPriority(e, pa);
         }
-
         money = money * levelMultiplier;
     }
 
     private static double getDistanceFromKiller(Entity e, CommandSender pa) {
-        double distance = 0;
         if (pa instanceof Player){
             Player player = (Player) pa;
             int predatorXLocation = player.getLocation().getBlockX();
@@ -384,7 +383,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Horse")) {
             double ridingHorseMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-horse.multiplier");
             Boolean isRidingHorseActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-horse.isActive");
-            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingHorseActive)) {
+            if (Boolean.TRUE.equals(isRidingHorseActive)) {
                 money = money * ridingHorseMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
@@ -397,7 +396,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Mule")) {
             double ridingMuleMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-mule.multiplier");
             Boolean isRidingMuleActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-mule.isActive");
-            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingMuleActive)) {
+            if (Boolean.TRUE.equals(isRidingMuleActive)) {
                 money = money * ridingMuleMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
@@ -410,7 +409,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Donkey")){
             double ridingDonkeyMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
             Boolean isRidingDonkeyActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
-            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingDonkeyActive)){
+            if (Boolean.TRUE.equals(isRidingDonkeyActive)){
                 money = money * ridingDonkeyMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
@@ -423,7 +422,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Strider")){
             double ridingStriderMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-strider.multiplier");
             Boolean isRidingStriderActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-strider.isActive");
-            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingStriderActive)){
+            if (Boolean.TRUE.equals(isRidingStriderActive)){
                 money = money * ridingStriderMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
@@ -436,7 +435,7 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Pig")){
             double ridingPigMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-pig.multiplier");
             Boolean isRidingPigActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-pig.isActive");
-            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isRidingPigActive)){
+            if (Boolean.TRUE.equals(isRidingPigActive)){
                 money = money * ridingPigMultiplier;
                 money = Math.round(money * 100.0) / 100.0;
             }
@@ -467,25 +466,57 @@ public abstract class MobKiller implements CommandExecutor {
         return vehicle;
     }
 
+    private static void multiplierList(Entity e, CommandSender pa){
+        multiplierList = new ArrayList<>();
+        Boolean isFallDamageActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.fallDamage.isActive");
+        if (ede.getEntity().getLastDamageCause().getCause().toString().equals("FALL") && Boolean.TRUE.equals(isFallDamageActive)){
+            multiplierList.add("fallDamage");
+        }
+        Boolean isProjectileActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.projectile.isActive");
+        if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isProjectileActive)){
+            multiplierList.add("projectile");
+        }
+        Boolean isDistanceMultiplierActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.longDistance.isActive");
+        double distanceLength = ConfigFileManager.configCfg.getDouble("actions-multipliers.longDistance.distance");
+        if (Boolean.TRUE.equals(isDistanceMultiplierActive) && getDistanceFromKiller(e, pa) >= distanceLength) {
+            multiplierList.add("longDistance");
+        }
+        if (pa instanceof Player) {
+            Player player = (Player) pa;
+            if (ede.getEntity().getLastDamageCause().getCause().toString().equals("ENTITY_ATTACK")) {
+                String itemInHand = player.getInventory().getItemInMainHand().getType().toString();
+                if (!itemInHand.contains("HOE") && !itemInHand.contains("SWORD") && !itemInHand.contains("AXE") && !itemInHand.contains("SHOVEL") && !itemInHand.contains("SHIELD") && !itemInHand.contains("BOW") && !itemInHand.contains("TRIDENT") && !itemInHand.contains("CROSSBOW") && !itemInHand.contains("FISHING_ROD")) {
+                    Boolean isNoWeaponMultiplierActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.noWeapon.isActive");
+                    if (Boolean.TRUE.equals(isNoWeaponMultiplierActive)) {
+                        multiplierList.add("noWeapon");
+                    }
+                }
+            }
+        }
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa))){
+            String vehicle = getVehicle(pa).toLowerCase();
+            multiplierList.add("riding-" + vehicle);
+        }
+
+    }
+
     private static double getHighestPriority(Entity e, CommandSender pa) {
         double multiplier = 1;
         int priority = 0;
         String actionMultiplierString = null;
         double moneySaved = money;
+        multiplierList(e, pa);
         for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
-            if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive")){
-                priority = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority");
-                multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
-                actionMultiplierString = actionMultiplier;
+            for (int i = 0; i < multiplierList.size(); i++){
+                if (multiplierList.get(i).equals(actionMultiplier)){
+                    if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive"))){
+                        priority = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority");
+                        multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
+                        actionMultiplierString = actionMultiplier;
+                    }
+                }
             }
         }
-        for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
-            if (getVehicle(pa) != null && actionMultiplier.contains(getVehicle(pa).toLowerCase())) {
-                multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
-                actionMultiplierString = actionMultiplier;
-            }
-        }
-
         try {
             switch (Objects.requireNonNull(actionMultiplierString)) {
                 case "fallDamage":
