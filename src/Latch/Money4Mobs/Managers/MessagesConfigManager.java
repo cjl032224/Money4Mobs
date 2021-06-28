@@ -7,6 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessagesConfigManager {
 
@@ -42,8 +44,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.english.setLowWorthCommandErrorMessage.message","&cError: &7Enter command like this -> /mk setLowWorth [mobName] [amount]");
             messagesCfg.set("language.english.setHighWorthCommandErrorMessage.message","&cError: &7Enter command like this -> /mk setHighWorth [mobName] [amount]");
             messagesCfg.set("language.english.addCustomDropsErrorMessage.message","&cError: Custom drops cannot be added to players");
-            messagesCfg.set("language.english.addCustomDropsCommandErrorMessage.message","&cError: &7Enter command like this -> /mk addCustomDrop [mobName] [amount] [chance]");
-            messagesCfg.set("language.english.addCustomDropInvalidMobErrorMessage.message","&cError: &6%mobName% &7is not a valid mob");
+            messagesCfg.set("language.english.addCustomDropsCommandErrorMessage.message","&cError: &7Enter command like this -> /mk addCustomDrop [mobName] [itemName] [amount] [chance]");
             messagesCfg.set("language.english.addCustomDropAlreadyPresentErrorMessage.message","&cError: &6%itemName% &7is already present as a custom drop");
             messagesCfg.set("language.english.addCustomDropSuccessMessage.message","&aAdded &6%amount%  %itemName% &ato &6%mobName% &adrops with a &6%chance% % &achance of dropping");
             messagesCfg.set("language.english.removeCustomDropSuccessMessage.message","&6%itemName% &adrops removed from &6%mobName% &amobs");
@@ -80,7 +81,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.english.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.english.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.english.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -117,8 +117,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.french.setLowWorthCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk setLowWorth [nom_mob] [montant]");
             messagesCfg.set("language.french.setHighWorthCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk setHighWorth [nom_mob] [montant]");
             messagesCfg.set("language.french.addCustomDropsErrorMessage.message","&cErreur: Les drops personnalisés ne peuvent pas être ajoutés aux joueurs");
-            messagesCfg.set("language.french.addCustomDropsCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop [nom_mob] [montant] [chance]");
-            messagesCfg.set("language.french.addCustomDropInvalidMobErrorMessage.message","&cErreur: &6%mobName% &7n'est pas un mob valide");
+            messagesCfg.set("language.french.addCustomDropsCommandErrorMessage.message","&cErreur: &7Entrez la commande comme celle-ci -> /mk addCustomDrop [nom_mob] [object-nom] [montant] [chance]");
             messagesCfg.set("language.french.addCustomDropAlreadyPresentErrorMessage.message","&cErreur: &6%itemName% &7est déjà présent en tant que drop personnalisé");
             messagesCfg.set("language.french.addCustomDropSuccessMessage.message","&aAjout de &6%amount%  %itemName% &aà &6%mobName% &agouttes avec une &6%chance% % &ade chance de tomber");
             messagesCfg.set("language.french.removeCustomDropSuccessMessage.message","&6%itemName% &agouttes supprimées de &6%mobName% &amobs");
@@ -155,7 +154,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.french.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.french.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.french.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -192,8 +190,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.spanish.setLowWorthCommandErrorMessage.message","&cError: &7ingrese un comando como este -> / mk setLowWorth  [nombre de mob] [monto]");
             messagesCfg.set("language.spanish.setHighWorthCommandErrorMessage.message","&cError: &7ingrese un comando como este -> /mk setHighWorth [nombre de mob] [monto]");
             messagesCfg.set("language.spanish.addCustomDropsErrorMessage.message","&cError: No se pueden agregar caídas personalizadas a las jugadoras");
-            messagesCfg.set("language.spanish.addCustomDropsCommandErrorMessage.message","&cError: &7ingrese un comando como este -> /mk addCustomDrop [nombre de mob] [monto] [oportunidad]");
-            messagesCfg.set("language.spanish.addCustomDropInvalidMobErrorMessage.message","&cError: &6%mobName% &7no es una mafia válida");
+            messagesCfg.set("language.spanish.addCustomDropsCommandErrorMessage.message","&cError: &7ingrese un comando como este -> /mk addCustomDrop [nombre de mob] [articulo-nombre] [monto] [oportunidad]");
             messagesCfg.set("language.spanish.addCustomDropAlreadyPresentErrorMessage.message","&cError: &6%itemName% &7ya está presente como una gota personalizada");
             messagesCfg.set("language.spanish.addCustomDropSuccessMessage.message","&aSe agregó &6%amount% %itemName% &aa &6%mobName% &agotas con un &6%chance% &ade posibilidad de caer");
             messagesCfg.set("language.spanish.removeCustomDropSuccessMessage.message","&6%itemName% &agotas eliminadas de &6%mobName% &amobs");
@@ -230,7 +227,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.spanish.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.spanish.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.spanish.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -267,8 +263,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.german.setLowWorthCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setLowWorth [mobName] [menge]");
             messagesCfg.set("language.german.setHighWorthCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk setHighWorth [mobName] [menge]");
             messagesCfg.set("language.german.addCustomDropsErrorMessage.message","&cError: Benutzerdefinierte Drops können Spielern nicht hinzugefügt werden");
-            messagesCfg.set("language.german.addCustomDropsCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk addCustomDrop [mobName] [menge] [chance]");
-            messagesCfg.set("language.german.addCustomDropInvalidMobErrorMessage.message","&cError: &6%mobName% &7ist kein gültiger mob");
+            messagesCfg.set("language.german.addCustomDropsCommandErrorMessage.message","&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk addCustomDrop [mobName] [artikelname] [menge] [chance]");
             messagesCfg.set("language.german.addCustomDropAlreadyPresentErrorMessage.message","&cError: &6%itemName% &7ist bereits als benutzerdefinierter Tropfen vorhanden");
             messagesCfg.set("language.german.addCustomDropSuccessMessage.message","&aAdded &6%amount%  %itemName% &azu &6%mobName% &a fällt mit a&6%chance% % &achance zu fallen");
             messagesCfg.set("language.german.removeCustomDropSuccessMessage.message","&6%itemName%  &atropfen entfernt von &6%mobName% &amobs");
@@ -305,7 +300,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.german.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.german.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.german.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -342,8 +336,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.italian.setLowWorthCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk setLowWorth [mobNome] [quantità]");
             messagesCfg.set("language.italian.setHighWorthCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk setHighWorth [mobNome] [quantità]");
             messagesCfg.set("language.italian.addCustomDropsErrorMessage.message","&cErrore: Custom drops cannot be added to players");
-            messagesCfg.set("language.italian.addCustomDropsCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk addCustomDrop [mobNome] [quantità] [opportunità]");
-            messagesCfg.set("language.italian.addCustomDropInvalidMobErrorMessage.message","&cErrore: &6%mobName% &7non è un mob valido");
+            messagesCfg.set("language.italian.addCustomDropsCommandErrorMessage.message","&cErrore: &7Inserisci il comando in questo modo -> /mk addCustomDrop [mobNome] [nome dell'elemento] [quantità] [opportunità]");
             messagesCfg.set("language.italian.addCustomDropAlreadyPresentErrorMessage.message","&cErrore: &6%itemName% &7è già presente come drop personalizzato");
             messagesCfg.set("language.italian.addCustomDropSuccessMessage.message","&aAggiunto &6%amount%  %itemName% &aper &6%mobName% &agocce con a &6%chance% % &apossibilità di cadere");
             messagesCfg.set("language.italian.removeCustomDropSuccessMessage.message","&6%itemName%  &agocce rimosse da &6%mobName% &amobs");
@@ -380,7 +373,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.italian.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.italian.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.italian.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -417,8 +409,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.setLowWorthCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk setLowWorth [mob-название] [количество]");
             messagesCfg.set("language.russian.setHighWorthCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk setHighWorth [mob-название] [количество]");
             messagesCfg.set("language.russian.addCustomDropsErrorMessage.message","&cОшибка: Пользовательские дропы не могут быть добавлены игрокам");
-            messagesCfg.set("language.russian.addCustomDropsCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk addCustomDrop [mob-название] [количество] [шанс]");
-            messagesCfg.set("language.russian.addCustomDropInvalidMobErrorMessage.message","&cОшибка: &6%mobName% &7is not a valid mob");
+            messagesCfg.set("language.russian.addCustomDropsCommandErrorMessage.message","&cОшибка: &7Введите команду, подобную этой -> /mk addCustomDrop [mob-название] [название предмета] [количество] [шанс]");
             messagesCfg.set("language.russian.addCustomDropAlreadyPresentErrorMessage.message","&cОшибка: &6%itemName% &7уже присутствует в виде кастомного дропа");
             messagesCfg.set("language.russian.addCustomDropSuccessMessage.message","&aДобавлен &6%amount%  %itemName% &aк &6%mobName% &aпадает с &6%chance% % &aшанс упасть");
             messagesCfg.set("language.russian.removeCustomDropSuccessMessage.message","&6%itemName%  &aкапли удалены из &6%mobName% &amobs");
@@ -455,7 +446,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.russian.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.russian.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -492,8 +482,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi.setLowWorthCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setLowWorth [mob-नाम] [रकम]");
             messagesCfg.set("language.hindi.setHighWorthCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk setHighWorth [mob-नाम] [रकम]");
             messagesCfg.set("language.hindi.addCustomDropsErrorMessage.message","&cत्रुटि: खिलाड़ियों में कस्टम ड्रॉप्स नहीं जोड़े जा सकते");
-            messagesCfg.set("language.hindi.addCustomDropsCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mob-नाम] [रकम] [मोका]");
-            messagesCfg.set("language.hindi.addCustomDropInvalidMobErrorMessage.message","&cत्रुटि: &6%mobName% &7वैध भीड़ नहीं है");
+            messagesCfg.set("language.hindi.addCustomDropsCommandErrorMessage.message","&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addCustomDrop [mob-नाम] [वस्तु का नाम] [रकम] [मोका]");
             messagesCfg.set("language.hindi.addCustomDropAlreadyPresentErrorMessage.message","&cत्रुटि: &6%itemName% &7कस्टम ड्रॉप के रूप में पहले से मौजूद है");
             messagesCfg.set("language.hindi.addCustomDropSuccessMessage.message","&aजोड़ा &6%amount%  %itemName% &aसेवा मेरे &6%mobName% &aए के साथ बूँदें &6%chance% % &aगिरने की संभावना");
             messagesCfg.set("language.hindi.removeCustomDropSuccessMessage.message","&6%itemName%  &aसे हटाई गई बूंदें &6%mobName% &amobs");
@@ -530,7 +519,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.hindi.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.hindi.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -567,8 +555,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.setLowWorthCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk setLowWorth [mob-名稱] [數量]");
             messagesCfg.set("language.chinese_traditional.setHighWorthCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk setHighWorth [mob-名稱] [數量]");
             messagesCfg.set("language.chinese_traditional.addCustomDropsErrorMessage.message","&c錯誤: Custom drops cannot be added to players");
-            messagesCfg.set("language.chinese_traditional.addCustomDropsCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk addCustomDrop [mob-名稱] [數量] [機會]");
-            messagesCfg.set("language.chinese_traditional.addCustomDropInvalidMobErrorMessage.message","&c錯誤: &6%mobName% &7不是有效的");
+            messagesCfg.set("language.chinese_traditional.addCustomDropsCommandErrorMessage.message","&c錯誤: &7像這樣輸入命令 -> /mk addCustomDrop [mob-名稱] [项目名称] [數量] [機會]");
             messagesCfg.set("language.chinese_traditional.addCustomDropAlreadyPresentErrorMessage.message","&c錯誤: &6%itemName% &7已經作為自定義掉落存在");
             messagesCfg.set("language.chinese_traditional.addCustomDropSuccessMessage.message","&a添加 &6%amount%  %itemName% &a至 &6%mobName% &a用一個滴 &6%chance% % &a掉線的機會");
             messagesCfg.set("language.chinese_traditional.removeCustomDropSuccessMessage.message","&6%itemName%  &adrops 已經從...刪除 &6%mobName% &amobs");
@@ -605,7 +592,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_traditional.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_traditional.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -642,8 +628,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.setLowWorthCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk setLowWorth [mob-名称] [数量]");
             messagesCfg.set("language.chinese_simplified.setHighWorthCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk setHighWorth [mob-名称] [数量]");
             messagesCfg.set("language.chinese_simplified.addCustomDropsErrorMessage.message","&c错误: Custom drops cannot be added to players");
-            messagesCfg.set("language.chinese_simplified.addCustomDropsCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk addCustomDrop [mob-名称] [数量] [机会]");
-            messagesCfg.set("language.chinese_simplified.addCustomDropInvalidMobErrorMessage.message","&c错误: &6%mobName% &7不是有效的暴徒");
+            messagesCfg.set("language.chinese_simplified.addCustomDropsCommandErrorMessage.message","&c错误: &7像这样输入命令 -> /mk addCustomDrop [mob-名称] [项目名称] [数量] [机会]");
             messagesCfg.set("language.chinese_simplified.addCustomDropAlreadyPresentErrorMessage.message","&c错误: &6%itemName% &7已经作为自定义掉落存在");
             messagesCfg.set("language.chinese_simplified.addCustomDropSuccessMessage.message","&a添加 &6%amount%  %itemName% &a至 &6%mobName% &a用一个滴 &6%chance% % &a掉线的机会");
             messagesCfg.set("language.chinese_simplified.removeCustomDropSuccessMessage.message","&6%itemName%  &a滴从 &6%mobName% &amobs");
@@ -680,7 +665,6 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.setHighWorthCommandErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.addCustomDropsErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
-            messagesCfg.set("language.chinese_simplified.addCustomDropInvalidMobErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.addCustomDropSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.removeCustomDropSuccessMessage.location",CHAT_MENU);
@@ -705,7 +689,10 @@ public class MessagesConfigManager {
             messagesCfg.save(messagesFile);
 
         }
+
         update155PercentageLostPlayerKillPlayer();
+        add163CommandErrorMessages();
+        messagesCfg.save(messagesFile);
         messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
     }
 
@@ -746,6 +733,217 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.playerKilledPlayerMessage.location",ACTION_BAR);
             messagesCfg.set("language.chinese_traditional.playerKilledByPlayerMessage.location",ACTION_BAR);
         }
+        renameCustomDropsMessage();
         messagesCfg.save(messagesFile);
+    }
+
+    public static void renameCustomDropsMessage(){
+        if (!MessagesConfigManager.messagesCfg.isSet("language.english.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.english.invalidMobErrorMessage.message", "&cError: &6%mobName% &7is not a valid mob");
+            messagesCfg.set("language.english.invalidMobErrorMessage.location", CHAT_MENU);
+        }else {
+            messagesCfg.set("language.english.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.english.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.english.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.english.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.english.addCustomDropInvalidMobErrorMessage", null);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.french.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.french.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.french.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.french.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.french.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.french.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.french.invalidMobErrorMessage.message", "&cErreur: &6%mobName% &7n'est pas un mob valide");
+            messagesCfg.set("language.french.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.spanish.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.spanish.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.spanish.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.spanish.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.spanish.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.spanish.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.spanish.invalidMobErrorMessage.message", "&cError: &6%mobName% &7no es una mafia válida");
+            messagesCfg.set("language.spanish.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.german.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.german.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.german.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.german.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.german.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.german.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.german.invalidMobErrorMessage.message", "&cError: &6%mobName% &7ist kein gültiger mob");
+            messagesCfg.set("language.german.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.italian.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.italian.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.italian.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.italian.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.italian.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.italian.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.italian.invalidMobErrorMessage.message", "&cErrore: &6%mobName% &7non è un mob valido");
+            messagesCfg.set("language.italian.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.russian.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.russian.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.russian.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.russian.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.russian.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.russian.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.russian.invalidMobErrorMessage.message", "&cОшибка: &6%mobName% &7is not a valid mob");
+            messagesCfg.set("language.russian.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.hindi.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.hindi.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.hindi.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.hindi.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.hindi.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.hindi.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.hindi.invalidMobErrorMessage.message", "&cत्रुटि: &6%mobName% &7वैध भीड़ नहीं है");
+            messagesCfg.set("language.hindi.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.chinese_traditional.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.chinese_traditional.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.chinese_traditional.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.chinese_traditional.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.chinese_traditional.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.chinese_traditional.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.chinese_traditional.invalidMobErrorMessage.message", "&c錯誤: &6%mobName% &7不是有效的");
+            messagesCfg.set("language.chinese_traditional.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.chinese_simplified.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.chinese_simplified.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.chinese_simplified.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.chinese_simplified.addCustomDropInvalidMobErrorMessage", null);
+        } else {
+            messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.message", "&c错误: &6%mobName% &7不是有效的暴徒");
+            messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.location", CHAT_MENU);
+        }
+    }
+
+    public static void add163CommandErrorMessages() {
+        if (Boolean.FALSE.equals(messagesCfg.isSet("language.english.removeCustomDropsCommandErrorMessage.message"))) {
+            List<String> languageList = new ArrayList<>();
+            languageList.add("english");
+            languageList.add("french");
+            languageList.add("spanish");
+            languageList.add("german");
+            languageList.add("italian");
+            languageList.add("russian");
+            languageList.add("hindi");
+            languageList.add("chinese_traditional");
+            languageList.add("chinese_simplified");
+            for (String language : languageList){
+                messagesCfg.set("language." + language  + ".removeCustomDropsCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleCustomDropsCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleDefaultDropsCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".worthCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".dropsCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".languageCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleKMCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleMoneyFromSpawnEggsCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleMoneyFromSpawnersCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".toggleMoneyFromTamedWolvesCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language  + ".reloadCommandErrorMessage.location", CHAT_MENU);
+            }
+            messagesCfg.set("language.english.removeCustomDropsCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk removeCustomDrop [mobName] [itemName]");
+            messagesCfg.set("language.english.toggleCustomDropsCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleCustomDrops [mobName]");
+            messagesCfg.set("language.english.toggleDefaultDropsCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleDefaultDrops [mobName]");
+            messagesCfg.set("language.english.worthCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk worth [mobName]");
+            messagesCfg.set("language.english.dropsCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk drops [mobName]");
+            messagesCfg.set("language.english.languageCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk language [language]");
+            messagesCfg.set("language.english.toggleKMCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleKM");
+            messagesCfg.set("language.english.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.english.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.english.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.english.reloadCommandErrorMessage.message", "&cError: &7Enter command like this -> /mk reload");
+
+            messagesCfg.set("language.french.removeCustomDropsCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk removeCustomDrop [nom_mob] [object-nom]");
+            messagesCfg.set("language.french.toggleCustomDropsCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleCustomDrops [nom_mob]");
+            messagesCfg.set("language.french.toggleDefaultDropsCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleDefaultDrops [nom_mob]");
+            messagesCfg.set("language.french.worthCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk worth [nom_mob]");
+            messagesCfg.set("language.french.dropsCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk drops [nom_mob]");
+            messagesCfg.set("language.french.languageCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk language [langue]");
+            messagesCfg.set("language.french.toggleKMCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleKM");
+            messagesCfg.set("language.french.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.french.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.french.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.french.reloadCommandErrorMessage.message", "&cErreur: &7Entrez la commande comme celle-ci -> /mk reload");
+
+            messagesCfg.set("language.german.removeCustomDropsCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk removeCustomDrop [mobName] [artikelname]");
+            messagesCfg.set("language.german.toggleCustomDropsCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleCustomDrops [mobName]");
+            messagesCfg.set("language.german.toggleDefaultDropsCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein ->/mk toggleDefaultDrops [mobName]");
+            messagesCfg.set("language.german.worthCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk worth [mobName]");
+            messagesCfg.set("language.german.dropsCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk drops [mobName]");
+            messagesCfg.set("language.german.languageCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk language [sprache]");
+            messagesCfg.set("language.german.toggleKMCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleKM");
+            messagesCfg.set("language.german.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.german.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.german.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.german.reloadCommandErrorMessage.message", "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk reload");
+
+            messagesCfg.set("language.spanish.removeCustomDropsCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk removeCustomDrop [nombre de mob] [articulo-nombre]");
+            messagesCfg.set("language.spanish.toggleCustomDropsCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleCustomDrops [nombre de mob]");
+            messagesCfg.set("language.spanish.toggleDefaultDropsCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleDefaultDrops [nombre de mob]");
+            messagesCfg.set("language.spanish.worthCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk worth [nombre de mob]");
+            messagesCfg.set("language.spanish.dropsCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk drops [nombre de mob]");
+            messagesCfg.set("language.spanish.languageCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk language [idioma]");
+            messagesCfg.set("language.spanish.toggleKMCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleKM");
+            messagesCfg.set("language.spanish.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.spanish.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.spanish.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.spanish.reloadCommandErrorMessage.message", "&cError: &7ingrese un comando como este -> /mk reload");
+
+            messagesCfg.set("language.italian.removeCustomDropsCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk removeCustomDrop [mobName] [nome dell'elemento]");
+            messagesCfg.set("language.italian.toggleCustomDropsCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleCustomDrops [mobName]");
+            messagesCfg.set("language.italian.toggleDefaultDropsCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleDefaultDrops [mobName]");
+            messagesCfg.set("language.italian.worthCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk worth [mobName]");
+            messagesCfg.set("language.italian.dropsCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk drops [mobName]");
+            messagesCfg.set("language.italian.languageCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk language [linguaggio]");
+            messagesCfg.set("language.italian.toggleKMCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleKM");
+            messagesCfg.set("language.italian.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.italian.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.italian.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.italian.reloadCommandErrorMessage.message", "&cErrore: &7Inserisci il comando in questo modo -> /mk reload");
+
+            messagesCfg.set("language.hindi.removeCustomDropsCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk removeCustomDrop [mob-नाम] [वस्तु का नाम]");
+            messagesCfg.set("language.hindi.toggleCustomDropsCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleCustomDrops [mob-नाम]");
+            messagesCfg.set("language.hindi.toggleDefaultDropsCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleDefaultDrops [mob-नाम]");
+            messagesCfg.set("language.hindi.worthCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk worth [mob-नाम]");
+            messagesCfg.set("language.hindi.dropsCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk drops [mob-नाम]");
+            messagesCfg.set("language.hindi.languageCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk language [भाषा: हिन्दी]");
+            messagesCfg.set("language.hindi.toggleKMCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleKM");
+            messagesCfg.set("language.hindi.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.hindi.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.hindi.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.hindi.reloadCommandErrorMessage.message", "&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk reload");
+
+            messagesCfg.set("language.chinese_traditional.removeCustomDropsCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk removeCustomDrop [mob-名稱] [項目名稱]");
+            messagesCfg.set("language.chinese_traditional.toggleCustomDropsCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleCustomDrops [mob-名稱]");
+            messagesCfg.set("language.chinese_traditional.toggleDefaultDropsCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleDefaultDrops [mob-名稱]");
+            messagesCfg.set("language.chinese_traditional.worthCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk worth [mob-名稱]");
+            messagesCfg.set("language.chinese_traditional.dropsCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk drops [mob-名稱]");
+            messagesCfg.set("language.chinese_traditional.languageCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk language [語]");
+            messagesCfg.set("language.chinese_traditional.toggleKMCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleKM");
+            messagesCfg.set("language.chinese_traditional.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.chinese_traditional.toggleMoneyFromSpawnersCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.chinese_traditional.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.chinese_traditional.reloadCommandErrorMessage.message", "&c錯誤: &7像這樣輸入命令 -> /mk reload");
+
+            messagesCfg.set("language.chinese_simplified.removeCustomDropsCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk removeCustomDrop [mob-名称] [项目名称]");
+            messagesCfg.set("language.chinese_simplified.toggleCustomDropsCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleCustomDrops [mob-名称]");
+            messagesCfg.set("language.chinese_simplified.toggleDefaultDropsCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleDefaultDrops [mob-名称]");
+            messagesCfg.set("language.chinese_simplified.worthCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk worth [mob-名称]");
+            messagesCfg.set("language.chinese_simplified.dropsCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk drops [mob-名称]");
+            messagesCfg.set("language.chinese_simplified.languageCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk language [语]");
+            messagesCfg.set("language.chinese_simplified.toggleKMCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleKM");
+            messagesCfg.set("language.chinese_simplified.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.chinese_simplified.toggleMoneyFromSpawnersCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.chinese_simplified.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.chinese_simplified.reloadCommandErrorMessage.message", "&c错误: &7像这样输入命令 -> /mk reload");
+
+            messagesCfg.set("language.russian.removeCustomDropsCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk removeCustomDrop [mob-название] [название предмета]");
+            messagesCfg.set("language.russian.toggleCustomDropsCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleCustomDrops [mob-название]");
+            messagesCfg.set("language.russian.toggleDefaultDropsCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleDefaultDrops [mob-название]");
+            messagesCfg.set("language.russian.worthCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk worth [mob-название]");
+            messagesCfg.set("language.russian.dropsCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk drops [mob-название]");
+            messagesCfg.set("language.russian.languageCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk language [язык]");
+            messagesCfg.set("language.russian.toggleKMCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleKM");
+            messagesCfg.set("language.russian.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.russian.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.russian.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.russian.reloadCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk reload");
+        }
     }
 }
