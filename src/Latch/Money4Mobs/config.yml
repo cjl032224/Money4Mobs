@@ -1,4 +1,4 @@
-version: 1.6.2
+version: 1.6.3
 checkForUpdate: true
 spawneggs: true
 spawners: false
@@ -47,6 +47,10 @@ actions-multipliers:
     isActive: false
     priority: 1
   noWeapon:
+    multiplier: 1.0
+    isActive: false
+    priority: 1
+  mountedMob:
     multiplier: 1.0
     isActive: false
     priority: 1

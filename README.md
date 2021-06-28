@@ -33,7 +33,7 @@ m4m.multiplier.level-4 | Permission for level-4 multiplier
 m4m.multiplier.level-5 | Permission for level-5 multiplier
 
 ## These level multipliers can be updated and more multipliers are able to be added
-## Example in mobs.yml -
+## Example in config.yml -
 #### group-multiplier:
   #### level-1: 1.0 
   #### superbad: 1.5
@@ -104,11 +104,8 @@ tamedWolvesRewardTrueMessage |  | /mk toggleMoneyFromTamedWolves -  When the 'ta
 tamedWolvesRewardFalseMessage |  | /mk toggleMoneyFromTamedWolves -  When the 'tamedWolvesGiveMoney' property in mobs.yml gets set to false 
 reloadingMessage |  | /mk reload - Tells the command sender that Money4Mobs is reloading
 reloadConfirmMessage |  | /mk reload - Tells the command sender that Money4Mobs has completed reloading
-setLowWorthCommandErrorMessage |  | /mk setLowWorth - When a player improperly uses the command
-setHighWorthCommandErrorMessage |  | /mk setHighWorth - When a player improperly uses the command
 addCustomDropsErrorMessage |  |  /mk addCustomDrop - When a command sender tries to add a drop to a player
-addCustomDropsCommandErrorMessage |  | /mk addCustomDrop - When a player improperly uses the command
-addCustomDropInvalidMobErrorMessage | %mobName% | When a command sender inputs a mob that is invalid
+invalidMobErrorMessage | %mobName% | When a command sender inputs a mob that is invalid
 addCustomDropAlreadyPresentErrorMessage | %itemName% | /mk addCustomDrop - When a command sender tries to add a drop to a mob that is already present
 addCustomDropSuccessMessage | %mobName%, %chance%, %amount%, %itemName  | /mk addCustomDrop - When a command sender successfully adds a drop to a mob
 removeCustomDropSuccessMessage | %mobName% | /mk removeCustomDrop - When a command sender successfully removes a drop from a mob
@@ -129,3 +126,34 @@ customDropsFalseMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName
 languageChangeSuccessMessage |  | /mk language - When the command sender's language in the users.yml file is updated successfully
 moneyRewardedMessage | %amount%, %balance% | When a player kills a mob and the low worth is greater than 0
 moneySubtractedMessage | %amount%, %balance% | When a player kills a mob and the low worth is less than 0
+removeCustomDropsCommandErrorMessage | | /mk removeCustomDrop - When a player improperly uses the command
+toggleCustomDropsCommandErrorMessage | | /mk toggleCustomDrops - When a player improperly uses the command
+toggleDefaultDropsCommandErrorMessage | | /mk toggleDefaultDrops - When a player improperly uses the command
+worthCommandErrorMessage | | /mk worth - When a player improperly uses the command
+dropsCommandErrorMessage | |  /mk drops - When a player improperly uses the command
+languageCommandErrorMessage | | /mk language - When a player improperly uses the command
+toggleKMCommandErrorMessage | | /mk toggleKM - When a player improperly uses the command
+toggleMoneyFromSpawnEggsCommandErrorMessage | | /mk toggleMoneyFromSpawnEggs - When a player improperly uses the command
+toggleMoneyFromSpawnersCommandErrorMessage | | /mk toggleMoneyFromSpawners - When a player improperly uses the command
+toggleMoneyFromTamedWolvesCommandErrorMessage | | /mk toggleMoneyFromTamedWolves - When a player improperly uses the command
+reloadCommandErrorMessage | | /reload- When a player improperly uses the command
+setLowWorthCommandErrorMessage |  | /mk setLowWorth - When a player improperly uses the command
+setHighWorthCommandErrorMessage |  | /mk setHighWorth - When a player improperly uses the command
+addCustomDropsCommandErrorMessage |  | /mk addCustomDrop - When a player improperly uses the command
+
+Action Multipliers in config.yml when 'isMultipliersAggregate' is false will take the highest priority multiplier that fit the conditions
+Action Multipliers in config.yml when 'isMultipliersAggregate' is true will multiply all active multipliers that fit the conditions
+ Multiplier | Condition for Triggering | Additional Comments
+------ | ------- | -------
+riding-horse | If a player kills a mob whilst riding a horse | 
+riding-mule | If a player kills a mob whilst riding a mule | 
+riding-donkey | If a player kills a mob whilst riding a donkey | 
+riding-strider | If a player kills a mob whilst riding a strider | 
+riding-pig | If a player kills a mob whilst riding a pig | 
+fallDamage| If a player kills a mob with fall damage |
+longDistance| If a player kills a mob equal or greater than the distance set in longDistance.distance | Distance is set in blocks away from player
+projectile| If a player kills a mob with a bow or crossbow |
+noWeapon| If a player kills a mob without a weapon | If a player beats a mob to death with an item that is not a weapon or tool, i.e. (Hoe, Sword, Shield, Trident, etc)
+mountedMob| If a player kills a mob that is mounted, i.e, spider jockey | This is only for the mob riding the other mob. So skeleton on a spider and not the spider
+
+
