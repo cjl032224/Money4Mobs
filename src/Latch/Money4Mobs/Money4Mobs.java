@@ -117,11 +117,15 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event) {
+    public void onEntityDeath(EntityDeathEvent event) throws IOException {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
         } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+        }
+        if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
+            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
+            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.save(Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile);
         }
     }
 
