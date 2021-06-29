@@ -1,7 +1,6 @@
 package Latch.Money4Mobs;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -14,16 +13,22 @@ import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public abstract class MobKiller implements CommandExecutor {
 
@@ -33,7 +38,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static double money = 0;
     private static final List<MobSpawnedReason> msr = new ArrayList<>();
-    private static Boolean giveMoney = false;
+    private static Boolean giveMoney = true;
     private static String language = "";
     private static Boolean showMessage = true;
     private static final Random r = new Random();
@@ -41,25 +46,24 @@ public abstract class MobKiller implements CommandExecutor {
     private static List<String> multiplierList = new ArrayList<>();
     private static double distance = 0;
 
-    public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) throws IOException {
+    public static void rewardPlayerMoney(CommandSender pa, Entity e) throws IOException, ParseException {
+
         Money4Mobs.loadConfigFileManager();
         setLanguage(pa);
-        giveMoneyCheck(pa,e, econ);
+        //giveMoneyCheck(pa,e);
         Player player = null;
         if (pa instanceof Player){
             player = (Player) pa;
         }
         assert player != null;
         boolean samePlayer = player.getUniqueId().toString().equals(e.getUniqueId().toString());
-        if (Boolean.TRUE.equals(samePlayer)) {
-            giveMoney = false;
-        }
+        giveMoney = true;
         setDefaultDrops();
         setCustomDrops(e,pa);
         if (Boolean.TRUE.equals(giveMoney)){
             setRange(e, pa);
             displayKillMessage(pa);
-            sendKillMessage(pa, econ);
+            sendKillMessage(pa);
         }
     }
 
@@ -97,14 +101,13 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void sendKillMessage(CommandSender pa, Economy econ){
+    public static void sendKillMessage(CommandSender pa) throws IOException, ParseException {
         EconomyResponse r = null;
         Player player = null;
         if (pa instanceof Player) {
             player = (Player) pa;
         }
         int counter = 1;
-
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -113,18 +116,31 @@ public abstract class MobKiller implements CommandExecutor {
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
                 language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
                 if (Boolean.TRUE.equals(showMessage)) {
+                    JSONParser parser = new JSONParser();
+                    String path = Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder().toString();
+                    Object obj = parser.parse(new FileReader(path + "/../AConomy/playerdatas/" + player.getUniqueId() + ".json"));
+                    Double balance = null;
                     if (money != 0) {
-                        Double balance = econ.getBalance(player);
+                        JSONObject jsonObject = (JSONObject) obj;
+                        String[] first = obj.toString().split(":");
+                        String amount = first[1];
+                        amount = StringUtils.substring(amount, 0, amount.length() - 1);
+                        balance = Double.parseDouble(amount);
                         df.format(balance);
                         if (Double.compare(money, 0.0) > 0.0) {
-                            econ.depositPlayer(player, money);
-                            balance = econ.getBalance(player);
+                            FileWriter myWriter = new FileWriter(path + "/../AConomy/playerdatas/" + player.getUniqueId() + ".json");
+                            balance = balance + money;
+                            myWriter.write("{  \"money\": "+balance+"}");
+                            myWriter.close();
                             String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                             String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                             assert moneyRewardedMessage != null;
                             MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
                         } else {
-                            econ.withdrawPlayer(player, Math.abs(money));
+                            FileWriter myWriter = new FileWriter(path + "/../AConomy/playerdatas/" + player.getUniqueId() + ".json");
+                            balance = balance + money;
+                            myWriter.write("{  \"money\": "+balance+"}");
+                            myWriter.close();
                             String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
@@ -194,7 +210,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void giveMoneyCheck(CommandSender pa, Entity e, Economy econ) throws IOException {
+    public static void giveMoneyCheck(CommandSender pa, Entity e) throws IOException, ParseException {
         int counter = 0;
         Player predator = null;
         if (pa instanceof Player) {
@@ -243,22 +259,42 @@ public abstract class MobKiller implements CommandExecutor {
                         giveMoney = false;
                         percentageLost = MobConfigManager.mobsCfg.getDouble("mobs.Player.percentageDropAmount");
                         Player prey = ((Player) e).getPlayer();
-                        double preyBalance = econ.getBalance(prey);
+                        JSONParser parser = new JSONParser();
+                        String path = Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder().toString();
+                        Object obj = parser.parse(new FileReader(path + "/../AConomy/playerdatas/" + predator.getUniqueId() + ".json"));
+                        Double predatorBalance = null;
+                        FileWriter myWriter = new FileWriter(path + "/../AConomy/playerdatas/" + predator.getUniqueId() + ".json");
+                        String[] first = obj.toString().split(":");
+                        String amount = first[1];
+                        amount = StringUtils.substring(amount, 0, amount.length() - 1);
+                        predatorBalance = Double.parseDouble(amount);
+
+                        JSONParser parser2 = new JSONParser();
+                        Object obj2 = parser2.parse(new FileReader(path + "/../AConomy/playerdatas/" + prey.getUniqueId() + ".json"));
+                        Double preyBalance = null;
+                        FileWriter myWriter2 = new FileWriter(path + "/../AConomy/playerdatas/" + prey.getUniqueId() + ".json");
+                        String[] first2 = obj2.toString().split(":");
+                        String amount2 = first2[1];
+                        amount2 = StringUtils.substring(amount2, 0, amount2.length() - 1);
+                        preyBalance = Double.parseDouble(amount2);
                         double amountToSubtract = (preyBalance / 100) * percentageLost;
-                        econ.withdrawPlayer(prey, amountToSubtract);
-                        econ.depositPlayer(predator, amountToSubtract);
+                        predatorBalance = predatorBalance + amountToSubtract;
+                        preyBalance = preyBalance - amountToSubtract;
+                        myWriter.write("{  \"money\": "+predatorBalance+"}");
+                        myWriter.close();
+                        myWriter2.write("{  \"money\": "+preyBalance+"}");
+                        myWriter2.close();
                         String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".message");
                         String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".location");
                         assert playerKilledPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(predatorBalance * 100.0) / 100.0, playerKilledPlayerMessageLocation);
                         String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".message");
                         String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".location");
                         assert playerKilledByPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(preyBalance * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
                     }
                 }
             }
-
         } else {
             giveMoney = false;
         }

@@ -26,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.parser.ParseException;
 
 
 public class Money4Mobs extends JavaPlugin implements Listener {
@@ -74,7 +75,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         for (OfflinePlayer p : getServer().getOfflinePlayers()) {
             String language = ConfigFileManager.configCfg.getString("defaultLanguage");
             if (language == null){
@@ -121,7 +121,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+        } catch (RuntimeException | NoClassDefFoundError | IOException | ParseException ignore) {
         }
         if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
             Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
@@ -155,27 +155,27 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().toString().equals("NATURAL")) {
-            try {
-                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
-                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
-                if (mobReasonCfg.isSet("spawnerMobs")){
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
-                } else {
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
-                }
-                mobReasonCfg.save(mobReasonsFile);
-                MobKiller.getSpawnReason(event);
-            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException | IOException e ) {
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
-            }
-        }
+//        if (!event.getSpawnReason().toString().equals("NATURAL")) {
+//            try {
+//                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+//                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
+//                if (mobReasonCfg.isSet("spawnerMobs")){
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+//                } else {
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+//                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+//                }
+//                mobReasonCfg.save(mobReasonsFile);
+//                MobKiller.getSpawnReason(event);
+//            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException | IOException e ) {
+//                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
+//                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
+//                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
+//            }
+//        }
     }
 
     @EventHandler
@@ -223,16 +223,16 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         Money4Mobs.entityId = entityId;
     }
 
-    public void callRewardMobKiller(EntityDeathEvent event) throws IOException {
+    public void callRewardMobKiller(EntityDeathEvent event) throws IOException, ParseException {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
             if (getIsTamedWolf() == 0) {
-                MobKiller.rewardPlayerMoney(pa, e, econ);
+                MobKiller.rewardPlayerMoney(pa, e);
             } else {
                 if (!Boolean.FALSE.equals(tamedWolvesGiveMoney)) {
-                    MobKiller.rewardPlayerMoney(pa, e, econ);
+                    MobKiller.rewardPlayerMoney(pa, e);
                 }
             }
         }
