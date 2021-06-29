@@ -2,6 +2,7 @@ package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Managers.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -36,6 +38,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
+    private static Latch.Money4Mobs.MobSpawnedReasonManager MobReasonCfgm;
     private static ConfigFileManager ConfigCfgm;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
@@ -51,6 +54,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
         loadUserConfigManager();
+        loadMobReasonConfigManager();
         try {
             loadLanguageConfigManager();
             loadConfigFileManager();
@@ -107,18 +111,21 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         sml.getMobModel();
     }
 
-
     @Override
     public void onDisable() {
         log.info(String.format("[%s] Disabled Version %s", getDescription().getName(), getDescription().getVersion()));
     }
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event) {
+    public void onEntityDeath(EntityDeathEvent event) throws IOException {
         try {
             MobKiller.setEvent(event);
             callRewardMobKiller(event);
         } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+        }
+        if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
+            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
+            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.save(Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile);
         }
     }
 
@@ -150,8 +157,20 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void onEntitySpawn(CreatureSpawnEvent event) {
         if (!event.getSpawnReason().toString().equals("NATURAL")) {
             try {
+                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
+                if (mobReasonCfg.isSet("spawnerMobs")){
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+                } else {
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+                }
+                mobReasonCfg.save(mobReasonsFile);
                 MobKiller.getSpawnReason(event);
-            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException e) {
+            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException | IOException e ) {
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
@@ -239,6 +258,10 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MessagesCfgm = new MessagesConfigManager();
         MessagesCfgm.setup();
     }
+    private static void loadMobReasonConfigManager() {
+        MobReasonCfgm = new Latch.Money4Mobs.MobSpawnedReasonManager();
+        MobReasonCfgm.setup();
+    }
 
     static void loadConfigFileManager() throws IOException {
         ConfigCfgm = new ConfigFileManager();
@@ -258,6 +281,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadItemConfigManager();
         loadUserConfigManager();
         loadLanguageConfigManager();
+        loadMobReasonConfigManager();
         loadConfigFileManager();
     }
 }
