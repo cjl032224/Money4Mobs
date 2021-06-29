@@ -155,21 +155,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             try {
                 File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
                 FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
-                int numberOfMobs = 1;
                 if (mobReasonCfg.isSet("spawnerMobs")){
-                    for(String firstUsers : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
-                        numberOfMobs++;
-                    }
-                    mobReasonCfg.set("spawnerMobs.mob-" + numberOfMobs + ".mobUUID", event.getEntity().getUniqueId().toString());
-                    mobReasonCfg.set("spawnerMobs.mob-" + numberOfMobs + ".reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs.mob-" + numberOfMobs + ".mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs.mob-" + numberOfMobs + ".location", event.getLocation().toString());
-                            numberOfMobs++;
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
                 } else {
-                    mobReasonCfg.set("spawnerMobs.mob-1.mobUUID", event.getEntity().getUniqueId().toString());
-                    mobReasonCfg.set("spawnerMobs.mob-1.reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs.mob-1.mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs.mob-" + numberOfMobs + ".location", event.getLocation().toString());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
                 }
                 mobReasonCfg.save(mobReasonsFile);
                 MobKiller.getSpawnReason(event);

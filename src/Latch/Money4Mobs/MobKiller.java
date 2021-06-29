@@ -1,5 +1,6 @@
 package Latch.Money4Mobs;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -205,16 +206,19 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             int numberOfMobs = 1;
             FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
+            File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
             Money4Mobs.loadConfigFileManager();
-            for(String firstUsers : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
-                if (mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".mobUUID").equalsIgnoreCase(e.getUniqueId().toString())){
-                    if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
+            for(String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
+                if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())){
+                    if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
                         Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
                         giveMoney = Boolean.TRUE.equals(spawnEggs);
-                    } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs.mob-" + numberOfMobs + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
+                    } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
                         Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
                         giveMoney = Boolean.TRUE.equals(spawners);
                     }
+                    MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
+                    mobReasonCfg.save(mobReasonsFile);
                 }
                 numberOfMobs++;
             }
