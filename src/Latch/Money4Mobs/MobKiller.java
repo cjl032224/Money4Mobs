@@ -14,6 +14,7 @@ import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 public abstract class MobKiller implements CommandExecutor {
 
@@ -33,7 +35,7 @@ public abstract class MobKiller implements CommandExecutor {
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static double money = 0;
     private static final List<MobSpawnedReason> msr = new ArrayList<>();
-    private static Boolean giveMoney = false;
+    private static Boolean giveMoney = true;
     private static String language = "";
     private static Boolean showMessage = true;
     private static final Random r = new Random();
@@ -41,26 +43,21 @@ public abstract class MobKiller implements CommandExecutor {
     private static List<String> multiplierList = new ArrayList<>();
     private static double distance = 0;
 
-    public static void rewardPlayerMoney(CommandSender pa, Entity e, Economy econ) throws IOException {
+    public static void rewardPlayerMoney(CommandSender pa, Entity e) throws IOException {
         Money4Mobs.loadConfigFileManager();
         setLanguage(pa);
-        giveMoneyCheck(pa,e, econ);
+        giveMoneyCheck(pa,e);
         Player player = null;
         if (pa instanceof Player){
             player = (Player) pa;
         }
         assert player != null;
-        boolean samePlayer = player.getUniqueId().toString().equals(e.getUniqueId().toString());
-        if (Boolean.TRUE.equals(samePlayer)) {
-            giveMoney = false;
-        }
         setDefaultDrops();
         setCustomDrops(e,pa);
-        if (Boolean.TRUE.equals(giveMoney)){
-            setRange(e, pa);
-            displayKillMessage(pa);
-            sendKillMessage(pa, econ);
-        }
+        setRange(e, pa);
+        displayKillMessage(pa);
+        sendKillMessage(pa);
+
     }
 
     public static void setEvent(EntityDeathEvent e) {
@@ -97,14 +94,16 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void sendKillMessage(CommandSender pa, Economy econ){
-        EconomyResponse r = null;
+    public static void sendKillMessage(CommandSender pa){
         Player player = null;
         if (pa instanceof Player) {
             player = (Player) pa;
         }
         int counter = 1;
 
+        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+        Economy econ = null;
+        econ = rsp.getProvider();
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -129,7 +128,6 @@ public abstract class MobKiller implements CommandExecutor {
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
                             MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
-
                         }
 
                     }
@@ -195,7 +193,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void giveMoneyCheck(CommandSender pa, Entity e, Economy econ) throws IOException {
+    public static void giveMoneyCheck(CommandSender pa, Entity e) throws IOException {
         int counter = 0;
         Player predator = null;
         if (pa instanceof Player) {
@@ -228,6 +226,10 @@ public abstract class MobKiller implements CommandExecutor {
                     giveMoney = false;
                 }
             }
+
+            RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+            Economy econ = null;
+            econ = rsp.getProvider();
 
             MobConfigManager.mobsCfg.getBoolean("mobs.Player.ipBan");
             if(e instanceof Player) {
@@ -290,6 +292,7 @@ public abstract class MobKiller implements CommandExecutor {
                 } else {
                     money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
                     money = Math.round(money * 100.0) / 100.0;
+                    
                 }
             } else if (e instanceof Player) {
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs.Player.worth.low");
