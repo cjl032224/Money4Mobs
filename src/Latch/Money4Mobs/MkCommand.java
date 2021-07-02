@@ -33,8 +33,6 @@ public class MkCommand implements CommandExecutor {
     private static List<UserModel> um = UserManager.updateUsersOnReload();
     private static List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
     private static Boolean showMessage = true;
-    private static final Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
-
     // Config file paths Constants
     private static final String SHOW_MESSAGE = ".showMessage";
     private static final String USERS_USER = "users.user-";
@@ -42,7 +40,6 @@ public class MkCommand implements CommandExecutor {
     private static final String SPAWN_EGGS = "spawneggs";
     private static final String SPAWNERS = "spawners";
     private static final String TAMED_WOLVES_GIVE_MONEY = "tamedWolvesGiveMoney";
-    private static final String OVERRIDE_KILL_MESSAGE = "customMessageOption.overrideKillMessage";
     private static final String INVALID_MOB_ERROR_MESSAGE = ".invalidMobErrorMessage";
     private static final String MOBS = "mobs.";
     private static final String DROPS_ITEMS = ".drops.item-";
@@ -91,7 +88,10 @@ public class MkCommand implements CommandExecutor {
         if (!(player2 instanceof Player)){
             language = DEFAULT_LANGUAGE;
         }
-        if (args.length == 1) {
+        if (args.length == 0){
+            commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
+        }
+        else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("worth")){
                 commandErrorMessage(commandSender, language, ".worthCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("setHighWorth")){
@@ -258,6 +258,8 @@ public class MkCommand implements CommandExecutor {
                     logger.log(Level.INFO, reloadConfirmMessage.substring(2));
                     convertMessage(reloadConfirmMessage, commandSender, null, null, null, null, null, null, null, reloadConfirmMessageLocation);
                 }
+            } else {
+                commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("setHighWorth")){
@@ -496,6 +498,8 @@ public class MkCommand implements CommandExecutor {
                     assert accessDeniedMessage != null;
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
+            } else {
+                commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
         }
         else if (args.length == 3) {
@@ -647,6 +651,8 @@ public class MkCommand implements CommandExecutor {
                     assert accessDeniedMessage != null;
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
                 }
+            } else {
+                commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
         } else if (args.length == 5) {
             if (args[0].equalsIgnoreCase("toggleKM")){
@@ -789,6 +795,8 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("addCustomDrop")){
                 commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            } else {
+                commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
         }
      return true;
@@ -912,72 +920,101 @@ public class MkCommand implements CommandExecutor {
     }
 
     public static void convertMessage(String message, CommandSender pa, String mobName, String itemName, Integer chance, Double amount, String lowWorth, String highWorth, Double balance, String messageLocation) {
-        String[] customArray = message.split(" ");
-        List<String> colorArray = new ArrayList<>();
-        colorArray.add("&4");
-        colorArray.add("&c");
-        colorArray.add("&6");
-        colorArray.add("&e");
-        colorArray.add("&2");
-        colorArray.add("&a");
-        colorArray.add("&b");
-        colorArray.add("&3");
-        colorArray.add("&1");
-        colorArray.add("&9");
-        colorArray.add("&d");
-        colorArray.add("&5");
-        colorArray.add("&f");
-        colorArray.add("&7");
-        colorArray.add("&8");
-        colorArray.add("&0");
-        List<Object> object = new ArrayList<>();
-        splitStringIntoArrayAndConvert(customArray, colorArray, object);
-        StringBuilder d = new StringBuilder(object.get(0).toString());
-        int count = 1;
-        for (Object word: object){
-            if (count > 1){
-                if (word.toString().equalsIgnoreCase("%mobName%")){
-                    word = mobName;
+        String[] customArray = new String[0];
+        try {
+            customArray = message.split(" ");
+            List<String> colorArray = new ArrayList<>();
+            colorArray.add("&4");
+            colorArray.add("&c");
+            colorArray.add("&6");
+            colorArray.add("&e");
+            colorArray.add("&2");
+            colorArray.add("&a");
+            colorArray.add("&b");
+            colorArray.add("&3");
+            colorArray.add("&1");
+            colorArray.add("&9");
+            colorArray.add("&d");
+            colorArray.add("&5");
+            colorArray.add("&f");
+            colorArray.add("&7");
+            colorArray.add("&8");
+            colorArray.add("&0");
+            List<Object> object = new ArrayList<>();
+            splitStringIntoArrayAndConvert(customArray, colorArray, object);
+            StringBuilder d = new StringBuilder(object.get(0).toString());
+            int count = 1;
+            for (Object word: object){
+                if (count > 1){
+                    if (word.toString().equalsIgnoreCase("%mobName%")){
+                        word = mobName;
+                    }
+                    if (word.toString().equalsIgnoreCase("%language%")){
+                        word = mobName;
+                    }
+                    if (word.toString().equalsIgnoreCase("%itemName%")){
+                        word = itemName;
+                    }
+                    if (word.toString().equalsIgnoreCase("%chance%")){
+                        word = chance;
+                    }
+                    if (word.toString().equalsIgnoreCase("%amount%")){
+                        word = amount;
+                    }
+                    if (word.toString().equalsIgnoreCase("%lowWorth%") || word.toString().equalsIgnoreCase("%worth%")){
+                        word = lowWorth;
+                    }
+                    if (word.toString().equalsIgnoreCase("%highWorth%")){
+                        word = highWorth;
+                    }
+                    if (word.toString().equalsIgnoreCase("%balance%")){
+                        word = balance;
+                    }
+                    if (word instanceof String && !word.toString().equals(".")) {
+                        d.append(word).append(" ");
+                    }
+                    else {
+                        d.append(word);
+                    }
                 }
-                if (word.toString().equalsIgnoreCase("%language%")){
-                    word = mobName;
-                }
-                if (word.toString().equalsIgnoreCase("%itemName%")){
-                    word = itemName;
-                }
-                if (word.toString().equalsIgnoreCase("%chance%")){
-                    word = chance;
-                }
-                if (word.toString().equalsIgnoreCase("%amount%")){
-                    word = amount;
-                }
-                if (word.toString().equalsIgnoreCase("%lowWorth%") || word.toString().equalsIgnoreCase("%worth%")){
-                    word = lowWorth;
-                }
-                if (word.toString().equalsIgnoreCase("%highWorth%")){
-                    word = highWorth;
-                }
-                if (word.toString().equalsIgnoreCase("%balance%")){
-                    word = balance;
-                }
-                if (word instanceof String && !word.toString().equals(".")) {
-                    d.append(word).append(" ");
-                }
-                else {
-                    d.append(word);
-                }
+                count++;
             }
-            count++;
-        }
-        String completedMessage = d.toString();
-        completedMessage = completedMessage.replace("$ ", "$");
+            String completedMessage = d.toString();
+            completedMessage = completedMessage.replace("$ ", "$");
 
-        if (messageLocation.equalsIgnoreCase("ActionBar") && pa instanceof Player){
-            Player player = (Player) pa;
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(completedMessage));
-        } else if (messageLocation.equalsIgnoreCase("ChatMenu")) {
-            pa.sendMessage(completedMessage);
+            if (messageLocation.equalsIgnoreCase("ActionBar") && pa instanceof Player){
+                Player player = (Player) pa;
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(completedMessage));
+            } else if (messageLocation.equalsIgnoreCase("ChatMenu")) {
+                pa.sendMessage(completedMessage);
+            }
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            try {
+                String language = ConfigFileManager.configCfg.getString("defaultLanguage");
+                if (language.equalsIgnoreCase("french")){
+                    pa.sendMessage(ChatColor.RED + "Erreur: Incorrect Parameters - Please try your command again");
+                } else if (language.equalsIgnoreCase("spanish")) {
+                    pa.sendMessage(ChatColor.RED + "Parámetros incorrectos: vuelva a intentar su comando");
+                } else if (language.equalsIgnoreCase("german")) {
+                    pa.sendMessage(ChatColor.RED + "Error: Falsche Parameter - Bitte versuchen Sie Ihren Befehl erneut");
+                } else if (language.equalsIgnoreCase("italian")) {
+                    pa.sendMessage(ChatColor.RED + "Parametri errati - Riprova il comando");
+                } else if (language.equalsIgnoreCase("hindi")) {
+                    pa.sendMessage(ChatColor.RED + "रुटि: गलत पैरामीटर - कृपया अपने आदेश का पुन: प्रयास करें");
+                } else if (language.equalsIgnoreCase("russian")) {
+                    pa.sendMessage(ChatColor.RED + "Ошибка: Неправильные параметры - попробуйте команду еще раз");
+                } else if (language.equalsIgnoreCase("chinese_simplified")) {
+                    pa.sendMessage(ChatColor.RED + "错误: 不正确的参数 - 请重试您的命令");
+                } else if (language.equalsIgnoreCase("chinese_traditional")) {
+                    pa.sendMessage(ChatColor.RED + "錯誤: 不正確的參數 - 請重試您的命令");
+                } else {
+                    pa.sendMessage(ChatColor.RED + "Error: Incorrect Parameters - Please try your command again");
+                }
+            } catch (NullPointerException i){
+                pa.sendMessage(ChatColor.RED + "Error: Incorrect Parameters - Please try your command again");
+            }
         }
+
     }
 
     private static void splitStringIntoArrayAndConvert(String[] customArray, List<String> colorArray, List<Object> object) {

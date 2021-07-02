@@ -156,4 +156,6 @@ projectile| If a player kills a mob with a bow or crossbow |
 noWeapon| If a player kills a mob without a weapon | If a player beats a mob to death with an item that is not a weapon or tool, i.e. (Hoe, Sword, Shield, Trident, etc)
 mountedMob| If a player kills a mob that is mounted, i.e, spider jockey | This is only for the mob riding the other mob. So skeleton on a spider and not the spider
 
-
+mobSpawnedReasons.yml
+Adds mobs to a list if mob was spawned by a spawn egg or spawner
+Removes mob from the list if the mob is killed by any action other than command
