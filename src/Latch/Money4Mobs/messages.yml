@@ -154,6 +154,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cError: &7Enter command like this -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Available commands are -> /mk [worth, drops, language,
+        reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   french:
     mobKillerOnMessage:
       message: '&aMessage MobKiller &6activé'
@@ -318,6 +323,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cErreur: &7Entrez la commande comme celle-ci -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErreur: &7Les commandes disponibles sont -> /mk [worth, drops, language,
+        reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   spanish:
     mobKillerOnMessage:
       message: '&aMensaje de MobKiller &6en'
@@ -480,6 +490,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cError: &7ingrese un comando como este -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Los comandos disponibles son -> /mk [worth, drops, language,
+        reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   german:
     mobKillerOnMessage:
       message: '&aMobKiller nachricht &6am'
@@ -644,6 +659,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cError: &7Verfügbare Befehle sind -> /mk [worth, drops, language,
+        reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   italian:
     mobKillerOnMessage:
       message: '&aMessaggio MobKiller &6attivo'
@@ -802,6 +822,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cErrore: &7Inserisci il comando in questo modo -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cErrore: &7I comandi disponibili sono -> /mk [worth, drops, language,
+        reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   russian:
     mobKillerOnMessage:
       message: '&aСообщение MobKiller &6включен'
@@ -962,6 +987,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cОшибка: &7Введите команду, подобную этой -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&Ошибка: &7Доступные команды -> /mk [worth, drops, language, reload,
+        removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   hindi:
     mobKillerOnMessage:
       message: '&aMobKiller संदेश &6पर'
@@ -1116,6 +1146,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&cरुटि: &7उपलब्ध आदेश हैं -> /mk [worth, drops, language, reload,
+        removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops,
+        toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   chinese_traditional:
     mobKillerOnMessage:
       message: '&aMobKiller 信息 &6上'
@@ -1261,6 +1296,11 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&c錯誤: &7像這樣輸入命令 -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&c錯誤: &7可用的命令是 -> /mk [worth, drops, language, reload, removeCustomDrop,
+        setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM,
+        toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'
   chinese_simplified:
     mobKillerOnMessage:
       message: '&aMobKiller 信息 &6上'
@@ -1406,3 +1446,8 @@ language:
     reloadCommandErrorMessage:
       location: ChatMenu
       message: '&c错误: &7像这样输入命令 -> /mk reload'
+    incompleteCommandErrorMessage:
+      location: ChatMenu
+      message: '&c错误: &7可用的命令是 -> /mk [worth, drops, language, reload, removeCustomDrop,
+        setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM,
+        toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves'

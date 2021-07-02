@@ -692,6 +692,7 @@ public class MessagesConfigManager {
 
         update155PercentageLostPlayerKillPlayer();
         add163CommandErrorMessages();
+        add165CommandErrorMessages();
         messagesCfg.save(messagesFile);
         messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
     }
@@ -944,6 +945,34 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawners");
             messagesCfg.set("language.russian.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromTamedWolves");
             messagesCfg.set("language.russian.reloadCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk reload");
+        }
+    }
+
+    public static void add165CommandErrorMessages() {
+        if (Boolean.FALSE.equals(messagesCfg.isSet("language.english.incompleteCommandErrorMessage.message"))) {
+            List<String> languageList = new ArrayList<>();
+            languageList.add("english");
+            languageList.add("french");
+            languageList.add("spanish");
+            languageList.add("german");
+            languageList.add("italian");
+            languageList.add("russian");
+            languageList.add("hindi");
+            languageList.add("chinese_traditional");
+            languageList.add("chinese_simplified");
+            String incompleteMessage = ".incompleteCommandErrorMessage.message";
+            for (String language : languageList) {
+                messagesCfg.set("language." + language + ".incompleteCommandErrorMessage.location", CHAT_MENU);
+            }
+            messagesCfg.set("language.english" + incompleteMessage, "&cError: &7Available commands are -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.french" + incompleteMessage, "&cErreur: &7Les commandes disponibles sont -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.spanish" + incompleteMessage, "&cError: &7Los comandos disponibles son -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.german" + incompleteMessage, "&cError: &7Verfügbare Befehle sind -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.italian" + incompleteMessage, "&cErrore: &7I comandi disponibili sono -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.russian" + incompleteMessage, "&Ошибка: &7Доступные команды -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.hindi" + incompleteMessage, "&cरुटि: &7उपलब्ध आदेश हैं -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.chinese_traditional" + incompleteMessage, "&c錯誤: &7可用的命令是 -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.chinese_simplified" + incompleteMessage, "&c错误: &7可用的命令是 -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
         }
     }
 }
