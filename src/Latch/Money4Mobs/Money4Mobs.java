@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.economy.Economy;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -187,12 +188,13 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return;
         }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return;
         }
         econ = rsp.getProvider();
         setEconomy(econ);
+
     }
 
     public void setEconomy(Economy value) {
@@ -229,10 +231,10 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
             boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
             if (getIsTamedWolf() == 0) {
-                MobKiller.rewardPlayerMoney(pa, e, econ);
+                MobKiller.rewardPlayerMoney(pa, e);
             } else {
                 if (!Boolean.FALSE.equals(tamedWolvesGiveMoney)) {
-                    MobKiller.rewardPlayerMoney(pa, e, econ);
+                    MobKiller.rewardPlayerMoney(pa, e);
                 }
             }
         }
