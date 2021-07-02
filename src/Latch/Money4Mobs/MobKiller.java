@@ -102,8 +102,8 @@ public abstract class MobKiller implements CommandExecutor {
         int counter = 1;
 
         RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-        Economy econ2 = null;
-        econ2 = rsp.getProvider();
+        Economy econ = null;
+        econ = rsp.getProvider();
         for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
             String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
             assert userId != null;
@@ -113,17 +113,17 @@ public abstract class MobKiller implements CommandExecutor {
                 language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
                 if (Boolean.TRUE.equals(showMessage)) {
                     if (money != 0) {
-                        Double balance = econ2.getBalance(player);
+                        Double balance = econ.getBalance(player);
                         df.format(balance);
                         if (Double.compare(money, 0.0) > 0.0) {
-                            econ2.depositPlayer(player, money);
-                            balance = econ2.getBalance(player);
+                            econ.depositPlayer(player, money);
+                            balance = econ.getBalance(player);
                             String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                             String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                             assert moneyRewardedMessage != null;
                             MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
                         } else {
-                            econ2.withdrawPlayer(player, Math.abs(money));
+                            econ.withdrawPlayer(player, Math.abs(money));
                             String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
@@ -228,8 +228,8 @@ public abstract class MobKiller implements CommandExecutor {
             }
 
             RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-            Economy econ2 = null;
-            econ2 = rsp.getProvider();
+            Economy econ = null;
+            econ = rsp.getProvider();
 
             MobConfigManager.mobsCfg.getBoolean("mobs.Player.ipBan");
             if(e instanceof Player) {
@@ -246,18 +246,18 @@ public abstract class MobKiller implements CommandExecutor {
                         giveMoney = false;
                         percentageLost = MobConfigManager.mobsCfg.getDouble("mobs.Player.percentageDropAmount");
                         Player prey = ((Player) e).getPlayer();
-                        double preyBalance = econ2.getBalance(prey);
+                        double preyBalance = econ.getBalance(prey);
                         double amountToSubtract = (preyBalance / 100) * percentageLost;
-                        econ2.withdrawPlayer(prey, amountToSubtract);
-                        econ2.depositPlayer(predator, amountToSubtract);
+                        econ.withdrawPlayer(prey, amountToSubtract);
+                        econ.depositPlayer(predator, amountToSubtract);
                         String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".message");
                         String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".location");
                         assert playerKilledPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ2.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation);
                         String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".message");
                         String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".location");
                         assert playerKilledByPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ2.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
                     }
                 }
             }
@@ -292,6 +292,7 @@ public abstract class MobKiller implements CommandExecutor {
                 } else {
                     money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
                     money = Math.round(money * 100.0) / 100.0;
+                    
                 }
             } else if (e instanceof Player) {
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs.Player.worth.low");

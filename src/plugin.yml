@@ -1,8 +1,8 @@
 name: Money4Mobs
-version: 1.6.4.1-DEV
+version: 1.6.5
 author: Latch
 main: Latch.Money4Mobs.Money4Mobs
-api-version: 1.12
+api-version: 1.17
 softdepend: [Vault]
 commands:
   mk:
