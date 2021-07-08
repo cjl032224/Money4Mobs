@@ -9,3 +9,4 @@
 | 1.15      | 1.6.5      | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.15---Money4Mobs-v1.6.5.jar)  |
 | 1.16   | 1.6.5       | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.16---Money4Mobs-v1.6.5.jar)      |
 | 1.17   | 1.6.5      | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.17---Money4Mobs-v1.6.5.jar)      |
+| 1.17-DEV   | 1.6.5.1-DEV      | [<img src="https://raw.githubusercontent.com/lakeboy93/Money4Mobs/master/images/download%20button.png">](https://github.com/lakeboy93/Money4Mobs/raw/master/jar%20files/1.17---Money4Mobs-v1.6.5.1-DEV.jar)      |
