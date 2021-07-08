@@ -66,19 +66,21 @@ public class UserManager {
         int counter = 1;
         List<UserModel> um = new ArrayList<>();
         usersCfg = YamlConfiguration.loadConfiguration(usersFile);
-        for(String users : usersCfg.getConfigurationSection("users").getKeys(false)) {
-            String userID = usersCfg.getString("users.user-" + counter + ".userId");
-            String language = usersCfg.getString("users.user-" + counter + ".language");
-            boolean showMessage = usersCfg.getBoolean("users.user-" + counter + ".showMessage");
-            String userName = usersCfg.getString("users.user-" + counter + ".userName");
-            if (usersCfg.getString("users.user-" + counter + ".userName") != null){
-                String ipAddress = usersCfg.getString("users.user-" + counter + ".ipAddress");
-                um.add(new UserModel(userName, userID, showMessage, language, ipAddress));
+        if (usersCfg.isSet("users")){
+            for(String users : usersCfg.getConfigurationSection("users").getKeys(false)) {
+                String userID = usersCfg.getString("users.user-" + counter + ".userId");
+                String language = usersCfg.getString("users.user-" + counter + ".language");
+                boolean showMessage = usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+                String userName = usersCfg.getString("users.user-" + counter + ".userName");
+                if (usersCfg.getString("users.user-" + counter + ".userName") != null){
+                    String ipAddress = usersCfg.getString("users.user-" + counter + ".ipAddress");
+                    um.add(new UserModel(userName, userID, showMessage, language, ipAddress));
+                }
+                else {
+                    um.add(new UserModel(userName, userID, showMessage, language, null));
+                }
+                counter++;
             }
-            else {
-                um.add(new UserModel(userName, userID, showMessage, language, null));
-            }
-            counter++;
         }
         return um;
     }
