@@ -1,9 +1,10 @@
-version: 1.6.6
+version: 1.6.7
 checkForUpdate: true
 spawneggs: true
 spawners: false
 tamedWolvesGiveMoney: true
 defaultLanguage: english
+oldSpawnReasonLogic: true
 group-multiplier:
   level-1: 1.0
   level-2: 1.0
