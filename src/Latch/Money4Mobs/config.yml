@@ -1,4 +1,4 @@
-version: 1.6.6 # Current version of M4M. Should update accordingly
+version: 1.6.7 # Current version of M4M. Should update accordingly
 checkForUpdate: true # Checks if a new update is available. Version is checked in SpigotMC and take some hours to sync up
 spawneggs: true # Boolean if players will get rewarded money for killing mobs spawned in with eggs
 spawners: false # Boolean if players will get rewarded money for killing mobs spawned in by a spawner
