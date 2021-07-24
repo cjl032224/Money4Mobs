@@ -2,6 +2,8 @@ package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Managers.ConfigFileManager;
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
+
+import Latch.Money4Mobs.Managers.MobSpawnedReasonManager;
 import Latch.Money4Mobs.Managers.MobConfigManager;
 import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
@@ -215,8 +217,8 @@ public abstract class MobKiller implements CommandExecutor {
             FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
             if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
                 int numberOfMobs = 1;
-                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
-                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+                FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
+                File mobReasonsFile = MobSpawnedReasonManager.mobReasonsFile;
                 Money4Mobs.loadConfigFileManager();
                 for (String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
                     if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())) {
@@ -227,7 +229,7 @@ public abstract class MobKiller implements CommandExecutor {
                             Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
                             giveMoney = Boolean.TRUE.equals(spawners);
                         }
-                        Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
+                        MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
                         mobReasonCfg.save(mobReasonsFile);
                     }
                     numberOfMobs++;
