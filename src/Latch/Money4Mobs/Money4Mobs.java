@@ -40,7 +40,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
-    private static Latch.Money4Mobs.MobSpawnedReasonManager MobReasonCfgm;
+    private static MobSpawnedReasonManager MobReasonCfgm;
     private static ConfigFileManager ConfigCfgm;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
@@ -128,9 +128,9 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 callRewardMobKiller(event);
             } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
             }
-            if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
-                Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
-                Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.save(Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile);
+            if (MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
+                MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
+                MobSpawnedReasonManager.mobReasonsCfg.save(MobSpawnedReasonManager.mobReasonsFile);
             }
         } else {
             try {
@@ -172,8 +172,8 @@ public class Money4Mobs extends JavaPlugin implements Listener {
                 File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
                 FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
                 if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
-                    File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
-                    FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
+                    File mobReasonsFile = MobSpawnedReasonManager.mobReasonsFile;
+                    FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
                     if (mobReasonCfg.isSet("spawnerMobs")){
                         mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
                         mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
@@ -278,7 +278,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MessagesCfgm.setup();
     }
     private static void loadMobReasonConfigManager() {
-        MobReasonCfgm = new Latch.Money4Mobs.MobSpawnedReasonManager();
+        MobReasonCfgm = new MobSpawnedReasonManager();
         MobReasonCfgm.setup();
     }
 
