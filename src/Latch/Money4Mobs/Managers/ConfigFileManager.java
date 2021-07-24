@@ -16,7 +16,7 @@ public class ConfigFileManager {
     public static File configFile;
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.6";
+    public static final String VERSION_NUMBER = "1.6.7";
     private static final String VERSION = "version";
 
     // Set up mobs.yml configuration file
@@ -41,6 +41,7 @@ public class ConfigFileManager {
         }
         copyInfoFromMobsConfig();
         update150ActionsMultiplier();
+        AddSpawnReasonToggle167();
         configCfg.save(configFile);
     }
 
@@ -320,6 +321,12 @@ public class ConfigFileManager {
             configCfg.set("actions-multipliers.mountedMob.multiplier", 1.0);
             configCfg.set("actions-multipliers.mountedMob.isActive", false);
             configCfg.set("actions-multipliers.mountedMob.priority", 1);
+        }
+    }
+
+    public static void AddSpawnReasonToggle167() {
+        if (!configCfg.isSet("oldSpawnReasonLogic")){
+            configCfg.set("oldSpawnReasonLogic", false);
         }
     }
 }
