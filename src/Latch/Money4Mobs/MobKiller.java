@@ -14,7 +14,7 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 
-import Latch.Money4Mobs.MobSpawnedReasonManager;
+import Latch.Money4Mobs.Managers.MobSpawnedReasonManager;
 import Latch.Money4Mobs.Managers.MobConfigManager;
 import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
@@ -226,7 +226,7 @@ public abstract class MobKiller implements CommandExecutor {
             if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
                 int numberOfMobs = 1;
                 FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
-                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+                File mobReasonsFile = MobSpawnedReasonManager.mobReasonsFile;
                 Money4Mobs.loadConfigFileManager();
                 for (String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
                     if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())) {
