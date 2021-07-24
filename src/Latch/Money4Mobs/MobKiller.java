@@ -308,7 +308,7 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            if (mobObject.equalsIgnoreCase(e.getName().replace(" ", ""))){
+            if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())){
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
