@@ -7,6 +7,9 @@ import java.util.*;
 
 import Latch.Money4Mobs.Managers.*;
 
+import Latch.Money4Mobs.Managers.MobSpawnedReasonManager;
+import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
