@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -109,14 +110,24 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) throws IOException {
-        try {
-            MobKiller.setEvent(event);
-            callRewardMobKiller(event);
-        } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
-        }
-        if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
-            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
-            Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.save(Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile);
+        File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
+        FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
+        if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
+            try {
+                MobKiller.setEvent(event);
+                callRewardMobKiller(event);
+            } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+            }
+            if (Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
+                Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
+                Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.save(Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile);
+            }
+        } else {
+            try {
+                MobKiller.setEvent(event);
+                callRewardMobKiller(event);
+            } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+            }
         }
     }
 
@@ -148,18 +159,22 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void onEntitySpawn(CreatureSpawnEvent event) {
         if (!event.getSpawnReason().toString().equals("NATURAL")) {
             try {
-                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
-                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
-                if (mobReasonCfg.isSet("spawnerMobs")){
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
-                } else {
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                    mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+                File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
+                FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
+                if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
+                    File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+                    FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
+                    if (mobReasonCfg.isSet("spawnerMobs")){
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+                    } else {
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
+                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
+                    }
+                    mobReasonCfg.save(mobReasonsFile);
                 }
-                mobReasonCfg.save(mobReasonsFile);
                 MobKiller.getSpawnReason(event);
             } catch (NoClassDefFoundError | NullPointerException | IllegalStateException | IOException e ) {
                 System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
@@ -218,12 +233,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void callRewardMobKiller(EntityDeathEvent event) throws IOException {
         Player pa = event.getEntity().getKiller();
         Entity e = event.getEntity();
+        File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
+        FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
         if (pa != null && pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
-            boolean tamedWolvesGiveMoney = MobConfigManager.mobsCfg.getBoolean("tamedWolvesGiveMoney");
+            boolean tamedWolvesGiveMoney = configCfg.getBoolean("tamedWolvesGiveMoney");
             if (getIsTamedWolf() == 0) {
                 MobKiller.rewardPlayerMoney(pa, e);
             } else {
-                if (!Boolean.FALSE.equals(tamedWolvesGiveMoney)) {
+                if (Boolean.TRUE.equals(tamedWolvesGiveMoney)) {
                     MobKiller.rewardPlayerMoney(pa, e);
                 }
             }

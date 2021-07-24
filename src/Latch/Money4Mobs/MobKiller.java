@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -51,11 +52,13 @@ public abstract class MobKiller implements CommandExecutor {
             player = (Player) pa;
         }
         assert player != null;
-        setDefaultDrops();
-        setCustomDrops(e,pa);
-        setRange(e, pa);
-        displayKillMessage(pa);
-        sendKillMessage(pa);
+        if (Boolean.TRUE.equals(giveMoney)){
+            setDefaultDrops();
+            setCustomDrops(e,pa);
+            setRange(e, pa);
+            displayKillMessage(pa);
+            sendKillMessage(pa);
+        }
 
     }
 
@@ -208,23 +211,43 @@ public abstract class MobKiller implements CommandExecutor {
         assert predator != null;
         String killerIP = predator.getAddress().getAddress().toString();
         if (pa.hasPermission("m4m.rewardMoney") || pa.isOp() || pa.hasPermission("m4m.rewardmoney")) {
-            int numberOfMobs = 1;
-            FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
-            File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
-            Money4Mobs.loadConfigFileManager();
-            for(String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
-                if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())){
-                    if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
-                        Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
-                        giveMoney = Boolean.TRUE.equals(spawnEggs);
-                    } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
-                        Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
-                        giveMoney = Boolean.TRUE.equals(spawners);
+            File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
+            FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
+            if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
+                int numberOfMobs = 1;
+                FileConfiguration mobReasonCfg = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg;
+                File mobReasonsFile = Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsFile;
+                Money4Mobs.loadConfigFileManager();
+                for (String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
+                    if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())) {
+                        if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
+                            Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
+                            giveMoney = Boolean.TRUE.equals(spawnEggs);
+                        } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
+                            Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
+                            giveMoney = Boolean.TRUE.equals(spawners);
+                        }
+                        Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
+                        mobReasonCfg.save(mobReasonsFile);
                     }
-                    Latch.Money4Mobs.MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
-                    mobReasonCfg.save(mobReasonsFile);
+                    numberOfMobs++;
                 }
-                numberOfMobs++;
+            } else {
+                for (MobSpawnedReason mobSpawnedReason : msr) {
+                    if (mobSpawnedReason.getUuid().equals(e.getUniqueId().toString())) {
+                        counter = 1;
+                        if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER_EGG")) {
+                            Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
+                            giveMoney = Boolean.TRUE.equals(spawnEggs);
+                        } else if (mobSpawnedReason.getMobSpawnReason().equalsIgnoreCase("SPAWNER")) {
+                            Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
+                            giveMoney = Boolean.TRUE.equals(spawners);
+                        }
+                    }
+                }
+                if(counter == 0){
+                    giveMoney = true;
+                }
             }
             List<Mobs4MoneyPlayer> pl = Money4Mobs.getPlayerList();
             for (int i = 0; i < Money4Mobs.getPlayerList().size(); i++){
@@ -290,7 +313,7 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            if (mobObject.equalsIgnoreCase(e.getName().replace(" ", ""))){
+            if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())){
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
