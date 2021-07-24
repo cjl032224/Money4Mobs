@@ -45,7 +45,10 @@ m4m.multiplier.level-1 | Permission for level-1 multiplier
 m4m.multiplier.superbad | Permission for superbad multiplier
 m4m.multiplier.naruto | Permission for naruto multiplier
 
-Link to default mobs.yml file ---> https://github.com/latch93/Money4Mobs/blob/master/src/Latch/Money4Mobs/messages.yml
+Link to default mobs.yml file ---> https://github.com/Latch93/Money4Mobs/blob/master/src/Latch/Money4Mobs/mobs.yml
+Link to default config.yml file ---> https://github.com/Latch93/Money4Mobs/blob/master/src/Latch/Money4Mobs/config.yml
+
+
 ## How to set up a custom message
 * Messages go off of the language set in users.language and corresponds to the language.[language] 
 * * If the users language is english, then in the messages.yml file, the message layout needs to be language.english, not language.English. This option is case sensitive.
