@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ConfigFileManager {
 
@@ -16,7 +17,7 @@ public class ConfigFileManager {
     public static File configFile;
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.7";
+    public static final String VERSION_NUMBER = "1.6.8";
     private static final String VERSION = "version";
 
     // Set up mobs.yml configuration file
@@ -37,6 +38,10 @@ public class ConfigFileManager {
                 configCfg.save(configFile);
             } catch (IOException e) {
                 System.out.println(ChatColor.RED + "Could not create the config.yml file");
+            }
+        } else {
+            if (!configCfg.isSet(VERSION) || !Objects.equals(configCfg.getString(VERSION), VERSION_NUMBER)) {
+                configCfg.set(VERSION, VERSION_NUMBER);
             }
         }
         copyInfoFromMobsConfig();
@@ -326,7 +331,7 @@ public class ConfigFileManager {
 
     public static void AddSpawnReasonToggle167() {
         if (!configCfg.isSet("oldSpawnReasonLogic")){
-            configCfg.set("oldSpawnReasonLogic", false);
+            configCfg.set("oldSpawnReasonLogic", true);
         }
     }
 }
