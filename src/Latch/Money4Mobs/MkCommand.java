@@ -532,7 +532,10 @@ public class MkCommand implements CommandExecutor {
                             try {
                                 if (highWorth >= Double.parseDouble(args[2])) {
                                     MobConfigManager.mobsCfg.set(MOBS + mobName + ".worth.low", Double.parseDouble(args[2]));
-                                    setLowWorthSuccessMessage(commandSender, args[2], mobName, "english");
+                                    String setLowWorthSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + MESSAGE);
+                                    String setLowWorthSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + LOCATION);
+                                    assert setLowWorthSuccessMessage != null;
+                                    convertMessage(setLowWorthSuccessMessage, commandSender, mobName, null, null, null, args[2] , null, null, setLowWorthSuccessMessageLocation);
                                     MobConfigManager.mobsCfg.save(mobsFile);
                                 } else {
                                     String setHighWorthTooLowErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + MESSAGE);
@@ -992,7 +995,7 @@ public class MkCommand implements CommandExecutor {
             try {
                 String language = ConfigFileManager.configCfg.getString("defaultLanguage");
                 if (language.equalsIgnoreCase("french")){
-                    pa.sendMessage(ChatColor.RED + "Erreur: Incorrect Parameters - Please try your command again");
+                    pa.sendMessage(ChatColor.RED + "Erreur: Paramètres incorrects - Veuillez réessayer votre commande");
                 } else if (language.equalsIgnoreCase("spanish")) {
                     pa.sendMessage(ChatColor.RED + "Parámetros incorrectos: vuelva a intentar su comando");
                 } else if (language.equalsIgnoreCase("german")) {
@@ -1008,7 +1011,7 @@ public class MkCommand implements CommandExecutor {
                 } else if (language.equalsIgnoreCase("chinese_traditional")) {
                     pa.sendMessage(ChatColor.RED + "錯誤: 不正確的參數 - 請重試您的命令");
                 } else {
-                    pa.sendMessage(ChatColor.RED + "Error: Incorrect Parameters - Please try your command again");
+                    pa.sendMessage(ChatColor.RED + "Error: Incorrect Parameters - Please try your command again" + e);
                 }
             } catch (NullPointerException i){
                 pa.sendMessage(ChatColor.RED + "Error: Incorrect Parameters - Please try your command again");
