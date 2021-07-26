@@ -162,3 +162,18 @@ mountedMob| If a player kills a mob that is mounted, i.e, spider jockey | This i
 mobSpawnedReasons.yml
 Adds mobs to a list if mob was spawned by a spawn egg or spawner
 Removes mob from the list if the mob is killed by any action other than command
+
+## Performance change for reasons mob spawned. Option in config.yml 'oldSpawnReasonLogic'
+I've updated a toggle in the config file 'oldSpawnReasonLogic'. If this is true, then it will use the old logic which only keeps a track of mobs in the session. If this is false, it will use the newer method.
+
+### The trade off of the old method:
+#### Pros:
+#####    Better performance on server
+#### Cons:
+#####    Some mobs will give money even if spawneggs/spawners is set to false. Sometimes when a chunk is reloaded, but happens when the server is restarted or reloaded
+
+### The trade off of the new method
+#### Pros:
+#####    Keeps track of every mob spawned so no matter the instance, a mob will or will not give money based on configuration settings
+#### Cons:
+#####    Performance heavy and can bog down a server if it contains a stacked mob plugin or has many players

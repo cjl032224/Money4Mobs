@@ -1,10 +1,11 @@
-version: 1.6.7 # Current version of M4M. Should update accordingly
+version: 1.6.8 # Current version of M4M. Should update accordingly
 checkForUpdate: true # Checks if a new update is available. Version is checked in SpigotMC and take some hours to sync up
 spawneggs: true # Boolean if players will get rewarded money for killing mobs spawned in with eggs
 spawners: false # Boolean if players will get rewarded money for killing mobs spawned in by a spawner
 tamedWolvesGiveMoney: true # Boolean if players will get rewarded money if their tamed wolf kills a mob
 defaultLanguage: english # Sets the default language of the server which links up with the messages.yml and will set the language of new users in the users.yml
-group-multiplier: # Percentage multiplier which can be updated and group names changed. Permissions are m4m.multiplier.superbad.[group-name]	
+oldSpawnReasonLogic: true # Boolean if old spawn logic will be used. More documentation in Github.README.md
+group-multiplier: # Percentage multiplier which can be updated and group names changed. Permissions are m4m.multiplier.superbad.[group-name]
   level-1: 1.0
   level-2: 1.0
   level-3: 1.0
