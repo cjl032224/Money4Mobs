@@ -39,7 +39,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static MobConfigManager MobCfgm;
     private static ItemListManager ItemCfgm;
     private static UserManager UserCfgm;
-    private static MobSpawnedReasonManager MobReasonCfgm;
     private static ConfigFileManager ConfigCfgm;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
@@ -55,7 +54,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
         loadUserConfigManager();
-        loadMobReasonConfigManager();
         try {
             loadLanguageConfigManager();
             loadConfigFileManager();
@@ -118,31 +116,13 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) throws IOException {
-        System.out.println(event.get);
-    }
-
-    @EventHandler
     public void onEntityDeath(EntityDeathEvent event) throws IOException {
         File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
-        FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
-        if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
             try {
                 MobKiller.setEvent(event);
                 callRewardMobKiller(event);
             } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
             }
-            if (MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
-                MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
-                MobSpawnedReasonManager.mobReasonsCfg.save(MobSpawnedReasonManager.mobReasonsFile);
-            }
-        } else {
-            try {
-                MobKiller.setEvent(event);
-                callRewardMobKiller(event);
-            } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
-            }
-        }
     }
 
     @EventHandler
@@ -165,35 +145,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         if (Boolean.TRUE.equals(checkForUpdate)){
             if (event.getPlayer().isOp() && Boolean.TRUE.equals(isUpdateAvailable)) {
                 event.getPlayer().sendMessage(ChatColor.RED + "[" + ChatColor.GOLD + "Money4Mobs" + ChatColor.RED + "] Update available -> " + ChatColor.AQUA + "https://www.spigotmc.org/resources/money4mobs.85373/.");
-            }
-        }
-    }
-
-    @EventHandler
-    public void onEntitySpawn(CreatureSpawnEvent event) {
-        if (!event.getSpawnReason().toString().equals("NATURAL")) {
-            try {
-                File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
-                FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
-                if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
-                    File mobReasonsFile = MobSpawnedReasonManager.mobReasonsFile;
-                    FileConfiguration mobReasonCfg = MobSpawnedReasonManager.mobReasonsCfg;
-                    if (mobReasonCfg.isSet("spawnerMobs")){
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
-                    } else {
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".reasonSpawned", event.getSpawnReason().toString());
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".mobName", event.getEntity().getName());
-                        mobReasonCfg.set("spawnerMobs." + event.getEntity().getUniqueId() + ".location", event.getLocation().toString());
-                    }
-                    mobReasonCfg.save(mobReasonsFile);
-                }
-                MobKiller.getSpawnReason(event);
-            } catch (NoClassDefFoundError | NullPointerException | IllegalStateException | IOException e ) {
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "Couldn't get the spawn reason for the entity killed.");
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "If this continues and money is not rewarded, please restart server.");
-                System.out.println(ChatColor.YELLOW + "Warning: " + ChatColor.WHITE + "This issue may occur after reloading the server or Money4Mobs");
             }
         }
     }
@@ -281,11 +232,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MessagesCfgm = new MessagesConfigManager();
         MessagesCfgm.setup();
     }
-    private static void loadMobReasonConfigManager() {
-        MobReasonCfgm = new MobSpawnedReasonManager();
-        MobReasonCfgm.setup();
-    }
-
     static void loadConfigFileManager() throws IOException {
         ConfigCfgm = new ConfigFileManager();
         ConfigCfgm.setup();
@@ -304,7 +250,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadItemConfigManager();
         loadUserConfigManager();
         loadLanguageConfigManager();
-        loadMobReasonConfigManager();
         loadConfigFileManager();
     }
 }
