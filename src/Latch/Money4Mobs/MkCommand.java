@@ -20,11 +20,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MkCommand implements CommandExecutor {
-    private static final FileConfiguration mobsCfg = MobConfigManager.mobsCfg;
     private static final File mobsFile = MobConfigManager.mobsFile;
     private static final FileConfiguration configCfg = ConfigFileManager.configCfg;
     private static final File configFile = ConfigFileManager.configFile;
@@ -48,7 +48,7 @@ public class MkCommand implements CommandExecutor {
     private static final String LANGUAGE = "language.";
     private static final String LOCATION = ".location";
     private static final String MESSAGE = ".message";
-    private static final String DEFAULT_LANGUAGE = configCfg.getString("defaultLanguage").toLowerCase();
+    private static final String DEFAULT_LANGUAGE = Objects.requireNonNull(configCfg.getString("defaultLanguage")).toLowerCase();
     private static int userNumber;
     Logger logger = Logger.getLogger(MkCommand.class.getName());
 

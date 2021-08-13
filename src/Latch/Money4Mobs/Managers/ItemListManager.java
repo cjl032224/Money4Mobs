@@ -1,6 +1,5 @@
 package Latch.Money4Mobs.Managers;
 
-import Latch.Money4Mobs.Managers.MobConfigManager;
 import Latch.Money4Mobs.Money4Mobs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

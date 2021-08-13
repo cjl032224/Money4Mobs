@@ -1,19 +1,7 @@
 package Latch.Money4Mobs;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.*;
-
-import Latch.Money4Mobs.Managers.ConfigFileManager;
-import Latch.Money4Mobs.Managers.MessagesConfigManager;
-
-import Latch.Money4Mobs.Managers.MobSpawnedReasonManager;
-import Latch.Money4Mobs.Managers.MobConfigManager;
-import Latch.Money4Mobs.Managers.UserManager;
+import Latch.Money4Mobs.Managers.*;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
@@ -27,6 +15,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public abstract class MobKiller implements CommandExecutor {
 

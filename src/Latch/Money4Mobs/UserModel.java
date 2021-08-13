@@ -1,7 +1,5 @@
 package Latch.Money4Mobs;
 
-import java.util.UUID;
-
 public class UserModel {
     public String userName;
     public String userId;
