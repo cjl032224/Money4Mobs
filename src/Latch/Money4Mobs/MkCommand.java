@@ -110,6 +110,8 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("language")){
                 commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
+                commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
             }
             else if (args[0].equalsIgnoreCase("toggleKM")) {
                 if (player2 != null && (player2.hasPermission("m4m.command.mk.toggleKM") || commandSender.isOp())) {
@@ -120,7 +122,7 @@ public class MkCommand implements CommandExecutor {
                         String mobKillerOffMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language +  ".mobKillerOffMessage" + MESSAGE);
                         String mobKillerOffMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language +  ".mobKillerOffMessage" + LOCATION);
                         assert mobKillerOffMessage != null;
-                        convertMessage(mobKillerOffMessage, commandSender, null, null, null, null, null, null, null, mobKillerOffMessageLocation);
+                        convertMessage(mobKillerOffMessage, commandSender, null, null, null, null, null, null, null, mobKillerOffMessageLocation, null);
                         UserManager.usersCfg.set(USERS_USER + userNumber + SHOW_MESSAGE, false);
                         try {
                             UserManager.usersCfg.save(userFile);
@@ -131,7 +133,7 @@ public class MkCommand implements CommandExecutor {
                         String mobKillerOnMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobKillerOnMessage" + MESSAGE);
                         String mobKillerOnMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobKillerOnMessage" + LOCATION);
                         assert mobKillerOnMessage != null;
-                        convertMessage(mobKillerOnMessage, commandSender, null, null, null, null, null, null, null, mobKillerOnMessageLocation);
+                        convertMessage(mobKillerOnMessage, commandSender, null, null, null, null, null, null, null, mobKillerOnMessageLocation, null);
                         UserManager.usersCfg.set(USERS_USER + userNumber + SHOW_MESSAGE, true);
                         try {
                             UserManager.usersCfg.save(userFile);
@@ -144,7 +146,7 @@ public class MkCommand implements CommandExecutor {
                         String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                         String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                         assert accessDeniedMessage != null;
-                        convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                        convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                     }
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawnEggs")) {
@@ -155,13 +157,13 @@ public class MkCommand implements CommandExecutor {
                         String eggSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + MESSAGE);
                         String eggSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardFalseMessage" + LOCATION);
                         assert eggSpawnRewardFalseMessage != null;
-                        convertMessage(eggSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardFalseMessageLocation);
+                        convertMessage(eggSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardFalseMessageLocation, null);
                     } else {
                         configCfg.set(SPAWN_EGGS, true);
                         String eggSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + MESSAGE);
                         String eggSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".eggSpawnRewardTrueMessage" + LOCATION);
                         assert eggSpawnRewardTrueMessage != null;
-                        convertMessage(eggSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardTrueMessageLocation);
+                        convertMessage(eggSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, eggSpawnRewardTrueMessageLocation, null);
                     }
                     try {
                         configCfg.save(configFile);
@@ -172,7 +174,7 @@ public class MkCommand implements CommandExecutor {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromSpawners")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleMoneyFromSpawners") || commandSender.isOp()) {
@@ -182,13 +184,13 @@ public class MkCommand implements CommandExecutor {
                         String spawnerSpawnRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + MESSAGE);
                         String spawnerSpawnRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardFalseMessage" + LOCATION);
                         assert spawnerSpawnRewardFalseMessage != null;
-                        convertMessage(spawnerSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardFalseMessageLocation);
+                        convertMessage(spawnerSpawnRewardFalseMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardFalseMessageLocation, null);
                     } else {
                         configCfg.set(SPAWNERS, true);
                         String spawnerSpawnRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + MESSAGE);
                         String spawnerSpawnRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".spawnerSpawnRewardTrueMessage" + LOCATION);
                         assert spawnerSpawnRewardTrueMessage != null;
-                        convertMessage(spawnerSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardTrueMessageLocation);
+                        convertMessage(spawnerSpawnRewardTrueMessage, commandSender, null, null, null, null, null, null, null, spawnerSpawnRewardTrueMessageLocation, null);
                     }
                     try {
                         configCfg.save(configFile);
@@ -199,7 +201,7 @@ public class MkCommand implements CommandExecutor {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             }
             else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")) {
@@ -210,13 +212,13 @@ public class MkCommand implements CommandExecutor {
                         String tamedWolvesRewardFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + MESSAGE);
                         String tamedWolvesRewardFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardFalseMessage" + LOCATION);
                         assert tamedWolvesRewardFalseMessage != null;
-                        convertMessage(tamedWolvesRewardFalseMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardFalseMessageLocation);
+                        convertMessage(tamedWolvesRewardFalseMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardFalseMessageLocation, null);
                     } else {
                         configCfg.set(TAMED_WOLVES_GIVE_MONEY, true);
                         String tamedWolvesRewardTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + MESSAGE);
                         String tamedWolvesRewardTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".tamedWolvesRewardTrueMessage" + LOCATION);
                         assert tamedWolvesRewardTrueMessage != null;
-                        convertMessage(tamedWolvesRewardTrueMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardTrueMessageLocation);
+                        convertMessage(tamedWolvesRewardTrueMessage, commandSender, null, null, null, null, null, null, null, tamedWolvesRewardTrueMessageLocation, null);
                     }
                     try {
                         configCfg.save(configFile);
@@ -227,7 +229,7 @@ public class MkCommand implements CommandExecutor {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             }
             else if (args[0].equalsIgnoreCase("reload")) {
@@ -241,7 +243,7 @@ public class MkCommand implements CommandExecutor {
                     String reloadingMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadingMessage" + LOCATION);
                     assert reloadingMessage != null;
                     logger.log(Level.INFO, reloadingMessage.substring(2));
-                    convertMessage(reloadingMessage, commandSender, null, null, null, null, null, null, null, reloadingMessageLocation);
+                    convertMessage(reloadingMessage, commandSender, null, null, null, null, null, null, null, reloadingMessageLocation, null);
                     mm.clear();
                     try {
                         Money4Mobs.loadMobConfigManager();
@@ -256,7 +258,7 @@ public class MkCommand implements CommandExecutor {
                     String reloadConfirmMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".reloadConfirmMessage" + LOCATION);
                     assert reloadConfirmMessage != null;
                     logger.log(Level.INFO, reloadConfirmMessage.substring(2));
-                    convertMessage(reloadConfirmMessage, commandSender, null, null, null, null, null, null, null, reloadConfirmMessageLocation);
+                    convertMessage(reloadConfirmMessage, commandSender, null, null, null, null, null, null, null, reloadConfirmMessageLocation, null);
                 }
             } else {
                 commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
@@ -295,12 +297,12 @@ public class MkCommand implements CommandExecutor {
                                 String mobWorthMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobWorthMessage" + MESSAGE);
                                 String mobWorthMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobWorthMessage" + LOCATION);
                                 assert mobWorthMessage != null;
-                                convertMessage(mobWorthMessage, commandSender, mobName, null, null, null, lowWorth.toString(), null, null, mobWorthMessageLocation);
+                                convertMessage(mobWorthMessage, commandSender, mobName, null, null, null, lowWorth.toString(), null, null, mobWorthMessageLocation, null);
                             } else {
                                 String mobRangeWorthMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobRangeWorthMessage" + MESSAGE);
                                 String mobRangeWorthMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobRangeWorthMessage" + LOCATION);
                                 assert mobRangeWorthMessage != null;
-                                convertMessage(mobRangeWorthMessage, commandSender, mobName, null, null, null, lowWorth.toString(), highWorth.toString(), null, mobRangeWorthMessageLocation);
+                                convertMessage(mobRangeWorthMessage, commandSender, mobName, null, null, null, lowWorth.toString(), highWorth.toString(), null, mobRangeWorthMessageLocation, null);
                             }
                         }
                     }
@@ -308,13 +310,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else if (args[0].equalsIgnoreCase("drops")) {
                 if (commandSender.hasPermission("m4m.command.mk.drops") || commandSender.isOp()) {
@@ -338,7 +340,7 @@ public class MkCommand implements CommandExecutor {
                                     String customDropsNotSetMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotSetMessage" + MESSAGE);
                                     String customDropsNotSetMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotSetMessage" + LOCATION);
                                     assert customDropsNotSetMessage != null;
-                                    convertMessage(customDropsNotSetMessage, commandSender, mobName, null, null, null, null, null, null, customDropsNotSetMessageLocation);
+                                    convertMessage(customDropsNotSetMessage, commandSender, mobName, null, null, null, null, null, null, customDropsNotSetMessageLocation, null);
                                 } else {
                                     int counter = 1;
                                     for (int l = 0; l < numberOfDrops; l++) {
@@ -348,7 +350,7 @@ public class MkCommand implements CommandExecutor {
                                         String mobDropInfoMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + MESSAGE);
                                         String mobDropInfoMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobDropInfoMessage" + LOCATION);
                                         assert mobDropInfoMessage != null;
-                                        convertMessage(mobDropInfoMessage, commandSender, mobName, itemName, (int) chance, amount, null, null, null, mobDropInfoMessageLocation);
+                                        convertMessage(mobDropInfoMessage, commandSender, mobName, itemName, (int) chance, amount, null, null, null, mobDropInfoMessageLocation, null);
                                         counter++;
 
                                     }
@@ -357,7 +359,7 @@ public class MkCommand implements CommandExecutor {
                                 String customDropsNotEnabledMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotEnabledMessage" + MESSAGE);
                                 String customDropsNotEnabledMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsNotEnabledMessage" + LOCATION);
                                 assert customDropsNotEnabledMessage != null;
-                                convertMessage(customDropsNotEnabledMessage, commandSender, mobName, null, null, null, null, null, null, customDropsNotEnabledMessageLocation);
+                                convertMessage(customDropsNotEnabledMessage, commandSender, mobName, null, null, null, null, null, null, customDropsNotEnabledMessageLocation, null);
                             }
                         }
                     }
@@ -365,13 +367,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else if (args[0].equalsIgnoreCase("toggleCustomDrops")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleCustomDrops") || commandSender.isOp()) {
@@ -386,13 +388,13 @@ public class MkCommand implements CommandExecutor {
                                 String customDropsFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsFalseMessage" + MESSAGE);
                                 String customDropsFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsFalseMessage" + LOCATION);
                                 assert customDropsFalseMessage != null;
-                                convertMessage(customDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, customDropsFalseMessageLocation);
+                                convertMessage(customDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, customDropsFalseMessageLocation, null);
                             } else {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + CUSTOM_DROPS, true);
                                 String customDropsTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsTrueMessage" + MESSAGE);
                                 String customDropsTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsTrueMessage" + LOCATION);
                                 assert customDropsTrueMessage != null;
-                                convertMessage(customDropsTrueMessage, commandSender, mobName, null, null, null, null, null, null, customDropsTrueMessageLocation);
+                                convertMessage(customDropsTrueMessage, commandSender, mobName, null, null, null, null, null, null, customDropsTrueMessageLocation, null);
                             }
                             try {
                                 MobConfigManager.mobsCfg.save(mobsFile);
@@ -405,13 +407,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")) {
                 if (commandSender.hasPermission("m4m.command.mk.toggleDefaultDrops") || commandSender.isOp()) {
@@ -426,13 +428,13 @@ public class MkCommand implements CommandExecutor {
                                 String defaultDropsFalseMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsFalseMessage" + MESSAGE);
                                 String defaultDropsFalseMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsFalseMessage" + LOCATION);
                                 assert defaultDropsFalseMessage != null;
-                                convertMessage(defaultDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, defaultDropsFalseMessageLocation);
+                                convertMessage(defaultDropsFalseMessage, commandSender, mobName, null, null, null, null, null, null, defaultDropsFalseMessageLocation, null);
                             } else {
                                 MobConfigManager.mobsCfg.set(MOBS + mobName + KEEP_DEFAULT_DROPS, true);
                                 String defaultDropsTrueMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsTrueMessage" + MESSAGE);
                                 String defaultDropsTrueMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".defaultDropsTrueMessage" + LOCATION);
                                 assert defaultDropsTrueMessage != null;
-                                convertMessage(defaultDropsTrueMessage, commandSender, mobName, null, null, null, null, null, null, defaultDropsTrueMessageLocation);
+                                convertMessage(defaultDropsTrueMessage, commandSender, mobName, null, null, null, null, null, null, defaultDropsTrueMessageLocation, null);
                             }
                             try {
                                 MobConfigManager.mobsCfg.save(mobsFile);
@@ -445,13 +447,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else if (args[0].equalsIgnoreCase("language")) {
                 if (player2 instanceof Player && (commandSender.hasPermission("m4m.command.mk.language") || commandSender.isOp())) {
@@ -474,7 +476,7 @@ public class MkCommand implements CommandExecutor {
                                         String languageChangeSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + args[1] + ".languageChangeSuccessMessage" + MESSAGE);
                                         String languageChangeSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + args[1] + ".languageChangeSuccessMessage" + LOCATION);
                                         assert languageChangeSuccessMessage != null;
-                                        convertMessage(languageChangeSuccessMessage, commandSender, args[1], null, null, null, null, null, null, languageChangeSuccessMessageLocation);
+                                        convertMessage(languageChangeSuccessMessage, commandSender, args[1], null, null, null, null, null, null, languageChangeSuccessMessageLocation, null);
                                         for (UserModel user : um){
                                             if (user.getUserId().equalsIgnoreCase(player2.getUniqueId().toString())) {
                                                 user.setLanguage(args[1]);
@@ -490,13 +492,57 @@ public class MkCommand implements CommandExecutor {
                         String invalidLanguageMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".invalidLanguageErrorMessage" + MESSAGE);
                         String invalidLanguageMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".invalidLanguageErrorMessage" + LOCATION);
                         assert invalidLanguageMessage != null;
-                        convertMessage(invalidLanguageMessage, commandSender, args[1], null, null, null, null, null, null, invalidLanguageMessageLocation);
+                        convertMessage(invalidLanguageMessage, commandSender, args[1], null, null, null, null, null, null, invalidLanguageMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
+                }
+            } else if (args[0].equalsIgnoreCase("mobRewardWorlds")) {
+                if (player2 instanceof Player && (commandSender.hasPermission("m4m.command.mk.mobRewardWorlds") || commandSender.isOp())) {
+                    String mobRewardWorldsMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobRewardWorldsMessage" + MESSAGE);
+                    String invalidLanguageMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".mobRewardWorldsMessage" + LOCATION);
+                    assert mobRewardWorldsMessage != null;
+                    List<String> worlds = new ArrayList<>();
+                    Boolean error = true;
+                    for(String mob : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                        if (args[1].equalsIgnoreCase(mob)){
+                            error = false;
+                            for(String world : MobConfigManager.mobsCfg.getConfigurationSection("mobs."+ mob + ".worlds").getKeys(false)){
+                                if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mob + ".worlds." + world))){
+                                    worlds.add(world);
+                                }
+                            }
+                        }
+                    }
+                    String worldsString = "[";
+                    int worldCount = worlds.size();
+                    int counter = 0;
+                    if (worldCount == 0){
+                        worldsString = worldsString + "]";
+                    }
+                    for (String world : worlds){
+                        counter++;
+                        if (worldCount == 1){
+                            worldsString = worldsString + world + "]";
+                        } else {
+                            if (counter < worldCount){
+                                worldsString = worldsString + world + ", ";
+                            } else {
+                                worldsString = worldsString + world + "]";
+                            }
+                        }
+                    }
+                    if (Boolean.TRUE.equals(error)) {
+                        String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
+                        String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
+                        assert addCustomDropInvalidMobErrorMessage != null;
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
+                    } else {
+                        convertMessage(mobRewardWorldsMessage, commandSender, args[1], null, null, null, null, null, null, invalidLanguageMessageLocation, worldsString);
+                    }
                 }
             } else {
                 commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
@@ -522,6 +568,8 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".reloadCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("toggleMoneyFromTamedWolves")){
                 commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
+                commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("setLowWorth")) {
                 if (commandSender.hasPermission("m4m.command.mk.setLowWorth") || commandSender.isOp()) {
                     for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
@@ -535,19 +583,19 @@ public class MkCommand implements CommandExecutor {
                                     String setLowWorthSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + MESSAGE);
                                     String setLowWorthSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + LOCATION);
                                     assert setLowWorthSuccessMessage != null;
-                                    convertMessage(setLowWorthSuccessMessage, commandSender, mobName, null, null, null, args[2] , null, null, setLowWorthSuccessMessageLocation);
+                                    convertMessage(setLowWorthSuccessMessage, commandSender, mobName, null, null, null, args[2] , null, null, setLowWorthSuccessMessageLocation, null);
                                     MobConfigManager.mobsCfg.save(mobsFile);
                                 } else {
                                     String setHighWorthTooLowErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + MESSAGE);
                                     String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + LOCATION);
                                     assert setHighWorthTooLowErrorMessage != null;
-                                    convertMessage(setHighWorthTooLowErrorMessage, commandSender, mobName, null, null, null, null, null, null, messageLocation);
+                                    convertMessage(setHighWorthTooLowErrorMessage, commandSender, mobName, null, null, null, null, null, null, messageLocation, null);
                                 }
                             } catch (NumberFormatException | IOException e){
                                 String setLowWorthCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthCommandErrorMessage" + MESSAGE );
                                 assert setLowWorthCommandErrorMessage != null;
                                 String messageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthTooLowErrorMessage" + LOCATION);
-                                convertMessage(setLowWorthCommandErrorMessage, commandSender, null, null, null, null, null, null, null, messageLocation);
+                                convertMessage(setLowWorthCommandErrorMessage, commandSender, null, null, null, null, null, null, null, messageLocation, null);
                             }
                         }
                     }
@@ -555,13 +603,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             }
             else if (args[0].equalsIgnoreCase("setHighWorth")) {
@@ -581,13 +629,13 @@ public class MkCommand implements CommandExecutor {
                                     String setLowWorthTooHighErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthTooHighErrorMessage" + MESSAGE);
                                     String setLowWorthTooHighErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthTooHighErrorMessage" + LOCATION);
                                     assert setLowWorthTooHighErrorMessage != null;
-                                    convertMessage(setLowWorthTooHighErrorMessage, commandSender, mobName, null, null, null, null, null, null, setLowWorthTooHighErrorMessageLocation);
+                                    convertMessage(setLowWorthTooHighErrorMessage, commandSender, mobName, null, null, null, null, null, null, setLowWorthTooHighErrorMessageLocation, null);
                                 }
                             } catch (NumberFormatException | IOException e){
                                 String setHighWorthCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthCommandErrorMessage" + MESSAGE);
                                 String setHighWorthCommandErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthCommandErrorMessage" + LOCATION);
                                 assert setHighWorthCommandErrorMessage != null;
-                                convertMessage(setHighWorthCommandErrorMessage, commandSender, null, null, null, null, null, null, null, setHighWorthCommandErrorMessageLocation);
+                                convertMessage(setHighWorthCommandErrorMessage, commandSender, null, null, null, null, null, null, null, setHighWorthCommandErrorMessageLocation, null);
                             }
                         }
                     }
@@ -595,49 +643,49 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
-            }
-            else if (args[0].equalsIgnoreCase("removeCustomDrop")) {
+            } else if (args[0].equalsIgnoreCase("removeCustomDrop")) {
                 if (commandSender.hasPermission("m4m.command.mk.removeCustomDrop") || commandSender.isOp()) {
-                    List<ItemModel> itemList = new ArrayList<>();
                     boolean itemError = true;
                     boolean mobError = true;
                     for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
                         if (mobObject.equalsIgnoreCase(args[1])) {
                             String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
                             mobError = false;
-                            for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
-                                if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." +drop + ".name").equals(args[2])){
-                                    itemError = false;
-                                    MobConfigManager.mobsCfg.set(MOBS + mobName + ".drops." +drop, null);
+                            if (MobConfigManager.mobsCfg.isSet(MOBS + mobName + ".drops")){
+                                for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS + mobName + ".drops").getKeys(false)) {
+                                    if (MobConfigManager.mobsCfg.getString(MOBS + mobName + ".drops." +drop + ".name").equals(args[2])){
+                                        itemError = false;
+                                        MobConfigManager.mobsCfg.set(MOBS + mobName + ".drops." +drop, null);
+                                        try {
+                                            MobConfigManager.mobsCfg.save(mobsFile);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                if (Boolean.TRUE.equals(itemError)) {
+                                    String customDropsDoNotExistErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + MESSAGE);
+                                    String customDropsDoNotExistErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + LOCATION);
+                                    assert customDropsDoNotExistErrorMessage != null;
+                                    convertMessage(customDropsDoNotExistErrorMessage, commandSender, args[1], null, null, null, null, null, null, customDropsDoNotExistErrorMessageLocation, null);
+                                } else {
                                     try {
+                                        String removeCustomDropSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeCustomDropSuccessMessage" + MESSAGE);
+                                        String removeCustomDropSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeCustomDropSuccessMessage" + LOCATION);
+                                        assert removeCustomDropSuccessMessage != null;
+                                        convertMessage(removeCustomDropSuccessMessage, commandSender, args[1], args[2], null, null, null, null, null, removeCustomDropSuccessMessageLocation, null);
                                         MobConfigManager.mobsCfg.save(mobsFile);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                }
-                            }
-                            if (Boolean.TRUE.equals(itemError)) {
-                                String customDropsDoNotExistErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + MESSAGE);
-                                String customDropsDoNotExistErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".customDropsDoNotExistErrorMessage" + LOCATION);
-                                assert customDropsDoNotExistErrorMessage != null;
-                                convertMessage(customDropsDoNotExistErrorMessage, commandSender, args[1], null, null, null, null, null, null, customDropsDoNotExistErrorMessageLocation);
-                            } else {
-                                try {
-                                    String removeCustomDropSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeCustomDropSuccessMessage" + MESSAGE);
-                                    String removeCustomDropSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeCustomDropSuccessMessage" + LOCATION);
-                                    assert removeCustomDropSuccessMessage != null;
-                                    convertMessage(removeCustomDropSuccessMessage, commandSender, args[1], args[2], null, null, null, null, null, removeCustomDropSuccessMessageLocation);
-                                    MobConfigManager.mobsCfg.save(mobsFile);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
                                 }
                             }
                         }
@@ -646,13 +694,13 @@ public class MkCommand implements CommandExecutor {
                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                         assert addCustomDropInvalidMobErrorMessage != null;
-                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                     }
                 } else {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             } else {
                 commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
@@ -684,14 +732,15 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleCustomDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("toggleDefaultDrops")){
                 commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
-            }
-            else if (args[0].equalsIgnoreCase("addCustomDrop")) {
+            } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
+                commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addCustomDrop")) {
                 if (commandSender.hasPermission("m4m.command.mk.addCustomDrop") || commandSender.isOp()) {
                     if (args[1].equalsIgnoreCase("Player")){
                         String addCustomDropsErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsErrorMessage" + MESSAGE);
                         String addCustomDropsErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsErrorMessage" + LOCATION);
                         assert addCustomDropsErrorMessage != null;
-                        convertMessage(addCustomDropsErrorMessage, commandSender, null, null, null, null, null, null, null, addCustomDropsErrorMessageLocation);
+                        convertMessage(addCustomDropsErrorMessage, commandSender, null, null, null, null, null, null, null, addCustomDropsErrorMessageLocation, null);
                     }
                     else {
                         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
@@ -732,13 +781,13 @@ public class MkCommand implements CommandExecutor {
                                                         String addCustomDropSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropSuccessMessage" + MESSAGE);
                                                         String addCustomDropSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropSuccessMessage" + LOCATION);
                                                         assert addCustomDropSuccessMessage != null;
-                                                        convertMessage(addCustomDropSuccessMessage, commandSender, mobName, args[2], chance, (double) amount, null, null, null, addCustomDropSuccessMessageLocation);
+                                                        convertMessage(addCustomDropSuccessMessage, commandSender, mobName, args[2], chance, (double) amount, null, null, null, addCustomDropSuccessMessageLocation, null);
                                                         MobConfigManager.mobsCfg.save(mobsFile);
                                                     } catch (NumberFormatException e) {
                                                         String addCustomDropsCommandErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsCommandErrorMessage" + MESSAGE);
                                                         String addCustomDropsCommandErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropsCommandErrorMessage" + LOCATION);
                                                         assert addCustomDropsCommandErrorMessage != null;
-                                                        convertMessage(addCustomDropsCommandErrorMessage, commandSender, null, null, null, null, null, null, null, addCustomDropsCommandErrorMessageLocation);
+                                                        convertMessage(addCustomDropsCommandErrorMessage, commandSender, null, null, null, null, null, null, null, addCustomDropsCommandErrorMessageLocation, null);
                                                     } catch (IOException e) {
                                                         e.printStackTrace();
                                                     }
@@ -749,7 +798,7 @@ public class MkCommand implements CommandExecutor {
                                             String addCustomDropAlreadyPresentErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropAlreadyPresentErrorMessage" + MESSAGE);
                                             String addCustomDropAlreadyPresentErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addCustomDropAlreadyPresentErrorMessage" + LOCATION);
                                             assert addCustomDropAlreadyPresentErrorMessage != null;
-                                            convertMessage(addCustomDropAlreadyPresentErrorMessage, commandSender, null, args[2], null, null, null, null, null, addCustomDropAlreadyPresentErrorMessageLocation);
+                                            convertMessage(addCustomDropAlreadyPresentErrorMessage, commandSender, null, args[2], null, null, null, null, null, addCustomDropAlreadyPresentErrorMessageLocation, null);
                                         }
 
                                     }
@@ -757,7 +806,7 @@ public class MkCommand implements CommandExecutor {
                                         String addCustomDropInvalidMobErrorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + MESSAGE);
                                         String addCustomDropInvalidMobErrorMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + INVALID_MOB_ERROR_MESSAGE + LOCATION);
                                         assert addCustomDropInvalidMobErrorMessage != null;
-                                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation);
+                                        convertMessage(addCustomDropInvalidMobErrorMessage, commandSender, args[1], null, null, null, null, null, null, addCustomDropInvalidMobErrorMessageLocation, null);
                                     }
                                 }
                             }
@@ -766,7 +815,7 @@ public class MkCommand implements CommandExecutor {
                     String accessDeniedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + MESSAGE);
                     String accessDeniedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ACCESS_DENIED_MESSAGE + LOCATION);
                     assert accessDeniedMessage != null;
-                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation);
+                    convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
             }
         } else {
@@ -798,6 +847,8 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("addCustomDrop")){
                 commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
+                commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
             } else {
                 commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
@@ -809,19 +860,7 @@ public class MkCommand implements CommandExecutor {
         String errorMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + error + MESSAGE);
         String errorLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + error + LOCATION);
         assert errorMessage != null;
-        convertMessage(errorMessage, commandSender, null, null, null, null, null, null, null, errorLocation);
-    }
-
-    private void setLowWorthSuccessMessage(CommandSender commandSender, String arg, String mobName, String language) {
-        try {
-            String setLowWorthSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + MESSAGE);
-            String setLowWorthSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setLowWorthSuccessMessage" + LOCATION);
-            assert setLowWorthSuccessMessage != null;
-            convertMessage(setLowWorthSuccessMessage, commandSender, mobName, null, null, null, arg, null, null, setLowWorthSuccessMessageLocation);
-            MobConfigManager.mobsCfg.save(mobsFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        convertMessage(errorMessage, commandSender, null, null, null, null, null, null, null, errorLocation, null);
     }
 
     private void setHighWorthSuccessMessage(CommandSender commandSender, String arg, String mobName, String language) {
@@ -829,7 +868,7 @@ public class MkCommand implements CommandExecutor {
             String setHighWorthSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthSuccessMessage" + MESSAGE);
             String setHighWorthSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".setHighWorthSuccessMessage" + LOCATION);
             assert setHighWorthSuccessMessage != null;
-            convertMessage(setHighWorthSuccessMessage, commandSender, mobName, null, null, null, null, arg, null, setHighWorthSuccessMessageLocation);
+            convertMessage(setHighWorthSuccessMessage, commandSender, mobName, null, null, null, null, arg, null, setHighWorthSuccessMessageLocation, null);
             MobConfigManager.mobsCfg.save(mobsFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -922,7 +961,7 @@ public class MkCommand implements CommandExecutor {
         return holder;
     }
 
-    public static void convertMessage(String message, CommandSender pa, String mobName, String itemName, Integer chance, Double amount, String lowWorth, String highWorth, Double balance, String messageLocation) {
+    public static void convertMessage(String message, CommandSender pa, String mobName, String itemName, Integer chance, Double amount, String lowWorth, String highWorth, Double balance, String messageLocation, String worlds) {
         String[] customArray = new String[0];
         try {
             customArray = message.split(" ");
@@ -972,6 +1011,9 @@ public class MkCommand implements CommandExecutor {
                     }
                     if (word.toString().equalsIgnoreCase("%balance%")){
                         word = balance;
+                    }
+                    if (word.toString().equalsIgnoreCase("%worlds%")){
+                        word = worlds;
                     }
                     if (word instanceof String && !word.toString().equals(".")) {
                         d.append(word).append(" ");
