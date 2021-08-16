@@ -7,6 +7,7 @@ import Latch.Money4Mobs.SetMobList;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Mob;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         update155UpdateChecker();
+        updateZombifiedPiglin169();
+        updatePerWorldReward169();
         mobsCfg.save(mobsFile);
     }
 
@@ -214,4 +217,33 @@ public class MobConfigManager {
         return mobListFromConfig;
     }
 
+    public static void updatePerWorldReward169() throws IOException {
+        for(String mob : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (!mobsCfg.isSet("mobs." + mob + ".worlds.world")){
+                mobsCfg.set("mobs." + mob + ".worlds.world", true);
+            }
+            if (!mobsCfg.isSet("mobs." + mob + ".worlds.world_nether")){
+                mobsCfg.set("mobs." + mob + ".worlds.world_nether", true);
+            }
+            if (!mobsCfg.isSet("mobs." + mob + ".worlds.world_the_end")){
+                mobsCfg.set("mobs." + mob + ".worlds.world_the_end", true);
+            }
+        }
+        mobsCfg.save(mobsFile);
+    }
+
+    public static void updateZombifiedPiglin169() throws IOException {
+        if (mobsCfg.isSet("mobs.PigZombie")){
+            mobsCfg.set("mobs.ZombifiedPiglin.worth.low", mobsCfg.getDouble("mobs.PigZombie.worth.low"));
+            mobsCfg.set("mobs.ZombifiedPiglin.worth.high", mobsCfg.getDouble("mobs.PigZombie.worth.high"));
+            mobsCfg.set("mobs.ZombifiedPiglin.keepDefaultDrops", mobsCfg.getBoolean("mobs.PigZombie.keepDefaultDrops"));
+            mobsCfg.set("mobs.ZombifiedPiglin.customDrops", mobsCfg.getBoolean("mobs.PigZombie.customDrops"));
+        } else if (!mobsCfg.isSet("mobs.ZombifiedPiglin")){
+            mobsCfg.set("mobs.ZombifiedPiglin.worth.low", 20);
+            mobsCfg.set("mobs.ZombifiedPiglin.worth.high", 20);
+            mobsCfg.set("mobs.ZombifiedPiglin.keepDefaultDrops", true);
+            mobsCfg.set("mobs.ZombifiedPiglin.customDrops", false);
+        }
+        mobsCfg.set("mobs.PigZombie", null);
+    }
 }
