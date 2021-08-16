@@ -693,6 +693,7 @@ public class MessagesConfigManager {
         update155PercentageLostPlayerKillPlayer();
         add163CommandErrorMessages();
         add165CommandErrorMessages();
+        add169MobWorldRewardMessages();
         messagesCfg.save(messagesFile);
         messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
     }
@@ -973,6 +974,44 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + incompleteMessage, "&cरुटि: &7उपलब्ध आदेश हैं -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
             messagesCfg.set("language.chinese_traditional" + incompleteMessage, "&c錯誤 ： &7可用的指令 -> /mk [worth、drops、language、reload、removeCustomDrop、setLowWorth、setHighWorth、toggleCustomDrops、toggleDefaultDrops、toggleKM、toggleMoneyFromSpawnEggs、toggleMoneyFromSpawners、toggleMoneyFromTamedWolves。");
             messagesCfg.set("language.chinese_simplified" + incompleteMessage, "&c错误 ： &7可用的命令 -> /mk [worth、drops、language、reload、removeCustomDrop、setLowWorth、setHighWorth、toggleCustomDrops、toggleDefaultDrops、toggleKM、toggleMoneyFromSpawnEggs、toggleMoneyFromSpawners、toggleMoneyFromTamedWolves。");
+        }
+    }
+    public static void add169MobWorldRewardMessages() {
+        if (Boolean.FALSE.equals(messagesCfg.isSet("language.english.mobRewardWorldsMessage.message"))) {
+            List<String> languageList = new ArrayList<>();
+            languageList.add("english");
+            languageList.add("french");
+            languageList.add("spanish");
+            languageList.add("german");
+            languageList.add("italian");
+            languageList.add("russian");
+            languageList.add("hindi");
+            languageList.add("chinese_traditional");
+            languageList.add("chinese_simplified");
+            String mobRewardWorldsMessage = ".mobRewardWorldsMessage.message";
+            String mobRewardWorldsCommandErrorMessage = ".mobRewardWorldsCommandErrorMessage.message";
+            for (String language : languageList) {
+                messagesCfg.set("language." + language + ".mobRewardWorldsMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language + ".mobRewardWorldsCommandErrorMessage.location", CHAT_MENU);
+            }
+            messagesCfg.set("language.english" + mobRewardWorldsMessage, "&aMoney for &6%mobName% &ais rewarded in &6%worlds%");
+            messagesCfg.set("language.french" + mobRewardWorldsMessage, "&aL'argent pour &6%mobName% &arécompensé dans &6%worlds");
+            messagesCfg.set("language.spanish" + mobRewardWorldsMessage, "&aEl dinero de  &6%mobName% &ase recompensa ens &6%worlds");
+            messagesCfg.set("language.german" + mobRewardWorldsMessage, "&aGeld für &6%mobName% &awird belohnt in &6%worlds");
+            messagesCfg.set("language.italian" + mobRewardWorldsMessage, "&aI soldi per &6%mobName% &avengono ricompensati in &6%worlds");
+            messagesCfg.set("language.russian" + mobRewardWorldsMessage, "&aДеньги для &6%mobName% &aвознаграждаются в &6%worlds");
+            messagesCfg.set("language.hindi" + mobRewardWorldsMessage, "&6%mobName% &aके लिए धन &6%worlds . में पुरस्कृत किया जाता है");
+            messagesCfg.set("language.chinese_traditional" + mobRewardWorldsMessage, "&6%mobName% &a的錢在 &6%worlds 中得到獎勵");
+            messagesCfg.set("language.chinese_simplified" + mobRewardWorldsMessage, "&6%mobName% &a的钱在 &6%worlds 中得到奖励");
+            messagesCfg.set("language.english" + mobRewardWorldsCommandErrorMessage, "&cError: &7Enter command like this -> /mk mobRewardWorlds [mobName]");
+            messagesCfg.set("language.french" + mobRewardWorldsCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk mobRewardWorlds [nom_mob]");
+            messagesCfg.set("language.spanish" + mobRewardWorldsCommandErrorMessage, "&cError: &7ingrese un comando como este -> / mk mobRewardWorlds [nombre de mob]");
+            messagesCfg.set("language.german" + mobRewardWorldsCommandErrorMessage, "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk mobRewardWorlds [mobName]");
+            messagesCfg.set("language.italian" + mobRewardWorldsCommandErrorMessage, "&cErrore: &7Inserisci il comando in questo modo -> /mk mobRewardWorlds [mobName]");
+            messagesCfg.set("language.russian" + mobRewardWorldsCommandErrorMessage, "&cОшибка: &7Введите команду, подобную этой -> /mk mobRewardWorlds [mobName]");
+            messagesCfg.set("language.hindi" + mobRewardWorldsCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk mobRewardWorlds [mob-नाम]");
+            messagesCfg.set("language.chinese_traditional" + mobRewardWorldsCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk mobRewardWorlds [生物名稱]");
+            messagesCfg.set("language.chinese_simplified" + mobRewardWorldsCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk mobRewardWorlds [生物名称]");
         }
     }
 }
