@@ -21,6 +21,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -123,13 +124,13 @@ public abstract class MobKiller implements CommandExecutor {
                             String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                             String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                             assert moneyRewardedMessage != null;
-                            MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation);
+                            MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation, null);
                         } else {
                             econ.withdrawPlayer(player, Math.abs(money));
                             String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
-                            MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation);
+                            MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation, null);
                         }
 
                     }
@@ -276,11 +277,11 @@ public abstract class MobKiller implements CommandExecutor {
                         String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".message");
                         String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".location");
                         assert playerKilledPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation, null);
                         String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".message");
                         String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".location");
                         assert playerKilledByPlayerMessage != null;
-                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation);
+                        MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation, null);
                     }
                 }
             }
@@ -306,8 +307,10 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa.isOp()){
             levelMultiplier = operator;
         }
+        String mobName = "";
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())){
+                mobName = mobObject;
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
@@ -347,6 +350,10 @@ public abstract class MobKiller implements CommandExecutor {
             getHighestPriority(e, pa);
         }
         money = money * levelMultiplier;
+        String entityWorld = e.getWorld().getName();
+        if (Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld))) {
+            money = 0;
+        }
     }
 
     private static double getDistanceFromKiller(Entity e, CommandSender pa) {
@@ -448,7 +455,8 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     private static void isRidingStriderMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Strider")){
+        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) &&
+                getVehicle(pa).equals("Strider")){
             double ridingStriderMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-strider.multiplier");
             Boolean isRidingStriderActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-strider.isActive");
             if (Boolean.TRUE.equals(isRidingStriderActive)){
