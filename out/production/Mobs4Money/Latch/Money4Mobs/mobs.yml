@@ -245,12 +245,6 @@ mobs:
       high: 25.0
     keepDefaultDrops: true
     customDrops: false
-  PigZombie:
-    worth:
-      low: 45.0
-      high: 45.0
-    keepDefaultDrops: true
-    customDrops: false
   PiglinBrute:
     worth:
       low: 75.0
@@ -452,5 +446,11 @@ mobs:
     worth:
       low: 20.0
       high: 20.0
+    keepDefaultDrops: true
+    customDrops: false
+  ZombifiedPiglin:
+    worth:
+      low: 45.0
+      high: 45.0
     keepDefaultDrops: true
     customDrops: false

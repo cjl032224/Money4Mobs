@@ -2,11 +2,13 @@ package Latch.Money4Mobs;
 
 import Latch.Money4Mobs.Managers.MessagesConfigManager;
 import Latch.Money4Mobs.Managers.MobConfigManager;
+import Latch.Money4Mobs.Managers.UserManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -14,17 +16,19 @@ import org.bukkit.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobWorthTabComplete implements TabCompleter {
-    private static SetMobList mobModelList = new SetMobList();
-    private static List<String> itemList = new ArrayList<>();
-    private static Material[] m = Material.values();
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List<String> mobArrayList = new ArrayList<>();
-        List<String> firstArgumentList = new ArrayList<>();
+import static Latch.Money4Mobs.MkCommand.convertMessage;
 
+public class MobWorthTabComplete implements TabCompleter {
+    private static List<String> itemList = new ArrayList<>();
+    private static List<String> worldList = new ArrayList<>();
+    private static Material[] m = Material.values();
+    private static List<String> mobArrayList = new ArrayList<>();
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> firstArgumentList = new ArrayList<>();
         firstArgumentList.add("addCustomDrop");
         firstArgumentList.add("drops");
         firstArgumentList.add("language");
+        firstArgumentList.add("mobRewardWorlds");
         firstArgumentList.add("reload");
         firstArgumentList.add("removeCustomDrop");
         firstArgumentList.add("setHighWorth");
@@ -36,7 +40,6 @@ public class MobWorthTabComplete implements TabCompleter {
         firstArgumentList.add("toggleMoneyFromSpawners");
         firstArgumentList.add("toggleMoneyFromTamedWolves");
         firstArgumentList.add("worth");
-
 
         Player pa = (Player) sender;
 
@@ -83,6 +86,9 @@ public class MobWorthTabComplete implements TabCompleter {
             if(!pa.hasPermission("m4m.command.mk.reload")){
                 firstArgumentList.remove("reload");
             }
+            if(!pa.hasPermission("m4m.command.mk.mobRewardWorlds")){
+                firstArgumentList.remove("mobRewardWorlds");
+            }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
             }
@@ -94,11 +100,9 @@ public class MobWorthTabComplete implements TabCompleter {
         try {
             if (args[0].equalsIgnoreCase("worth") || args[0].equalsIgnoreCase("drops")
                     || args[0].equalsIgnoreCase("setLowWorth") || args[0].equalsIgnoreCase("setHighWorth") ||
-                    args[0].equalsIgnoreCase("toggleCustomDrops") || args[0].equalsIgnoreCase("toggleDefaultDrops")){
-                    List<MobModel> mobsList = mobModelList.getMobModel();
-                    for (int i = 0; i < mobsList.size(); i++){
-                        mobArrayList.add(i, mobsList.get(i).getMobName());
-                    }
+                    args[0].equalsIgnoreCase("toggleCustomDrops") || args[0].equalsIgnoreCase("toggleDefaultDrops") ||
+                    args[0].equalsIgnoreCase("mobRewardWorlds")){
+                    setMobList();
                     return (args.length > 0) ? StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>()) : null;
             }
         }
@@ -106,10 +110,7 @@ public class MobWorthTabComplete implements TabCompleter {
             return (args.length > 0) ? StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>()) : null;
         }
         if(args[0].equalsIgnoreCase("addCustomDrop")) {
-            List<MobModel> mobsList = mobModelList.getMobModel();
-            for (int i = 0; i < mobsList.size(); i++){
-                mobArrayList.add(i, mobsList.get(i).getMobName());
-            }
+            setMobList();
             if (args.length <= 2) {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
@@ -132,10 +133,7 @@ public class MobWorthTabComplete implements TabCompleter {
 
         }
         if(args[0].equalsIgnoreCase("removeCustomDrop")) {
-            List<MobModel> mobsList = mobModelList.getMobModel();
-            for (int i = 0; i < mobsList.size(); i++){
-                mobArrayList.add(i, mobsList.get(i).getMobName());
-            }
+            setMobList();
             if (args.length <= 2) {
                 if (StringUtils.isNotBlank(args[0])) {
                     try {
@@ -149,8 +147,11 @@ public class MobWorthTabComplete implements TabCompleter {
                 for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
                     if (mobObject.equalsIgnoreCase(args[1])) {
                         itemList.clear();
-                        for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
-                            itemList.add(MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops." + drop + ".name"));
+                        try {
+                            for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
+                                itemList.add(MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops." + drop + ".name"));
+                            }
+                        } catch (NullPointerException ignored){
                         }
                     }
                 }
@@ -173,5 +174,9 @@ public class MobWorthTabComplete implements TabCompleter {
             }
         }
         return StringUtil.copyPartialMatches(args[0], firstArgumentList, new ArrayList<>());
+    }
+
+    public static void setMobList() {
+        mobArrayList.addAll(MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false));
     }
 }
