@@ -259,10 +259,23 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("logMobName"))){
-            pa.sendMessage("Mob Name Killed: " + e.getName());
+            pa.sendMessage("Mob Killed Name: " + e.toString());
         }
+        String moddedMob = e.toString();
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            if (e.getName().replace(" ", "").equalsIgnoreCase(mobObject)){
+            if (moddedMob.contains("CraftMonster")){
+                if (moddedMob.toUpperCase().contains(mobObject.toUpperCase())){
+                    double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
+                    double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
+                    if (lowWorth == highWorth){
+                        money = lowWorth;
+                    } else {
+                        money = lowWorth + (highWorth - lowWorth) * r.nextDouble();
+                        money = Math.round(money * 100.0) / 100.0;
+                    }
+                }
+            }
+            else if (e.getName().replace(" ", "").equalsIgnoreCase(mobObject)){
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
