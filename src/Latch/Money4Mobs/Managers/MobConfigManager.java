@@ -4,6 +4,7 @@ import Latch.Money4Mobs.ItemModel;
 import Latch.Money4Mobs.MobModel;
 import Latch.Money4Mobs.Money4Mobs;
 import Latch.Money4Mobs.SetMobList;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -45,7 +46,9 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         update155UpdateChecker();
-        updateZombifiedPiglin169();
+        if (Bukkit.getServer().getBukkitVersion().contains("1.17") || Bukkit.getServer().getBukkitVersion().contains("1.16")){
+            updateZombifiedPiglin169();
+        }
         updatePerWorldReward169();
         mobsCfg.save(mobsFile);
     }
