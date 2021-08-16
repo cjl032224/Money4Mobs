@@ -52,7 +52,6 @@ public class SetMobList {
         mobList.add(new MobModel("Phantom", 45.0, 45.0, true, false, null));
         mobList.add(new MobModel("Pig", 3.0, 3.0, true, false, null));
         mobList.add(new MobModel("Piglin", 25.0, 25.0, true, false, null));
-        mobList.add(new MobModel("PigZombie", 45.0, 45.0, true, false, null));
         mobList.add(new MobModel("PiglinBrute", 75.0, 75.0, true, false, null));
         mobList.add(new MobModel("Pillager", 25.0, 25.0, true, false, null));
         mobList.add(new MobModel("Player", 25.0, 25.0, true, false, null));
@@ -87,5 +86,6 @@ public class SetMobList {
         mobList.add(new MobModel("Zombie", 15.0, 25.0, true, false, null));
         mobList.add(new MobModel("ZombieHorse", 35.0, 35.0, true, false, null));
         mobList.add(new MobModel("ZombieVillager", 20.0, 20.0, true, false, null));
+        mobList.add(new MobModel("ZombifiedPiglin", 45.0, 45.0, true, false, null));
     }
 }
