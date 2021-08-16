@@ -46,7 +46,6 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         update155UpdateChecker();
-        System.out.println("teasdas" + Bukkit.getServer().getBukkitVersion());
         if (Bukkit.getServer().getBukkitVersion().contains("1.17") || Bukkit.getServer().getBukkitVersion().contains("1.16")){
             updateZombifiedPiglin169();
         }
