@@ -5,6 +5,7 @@ spawners: false # Boolean if players will get rewarded money for killing mobs sp
 tamedWolvesGiveMoney: true # Boolean if players will get rewarded money if their tamed wolf kills a mob
 defaultLanguage: english # Sets the default language of the server which links up with the messages.yml and will set the language of new users in the users.yml
 oldSpawnReasonLogic: true # Boolean if old spawn logic will be used. More documentation in Github.README.md
+## Group Multipliers are a multiplier factor. 2.0 equals 2 times the amount rewarded
 group-multiplier: # Percentage multiplier which can be updated and group names changed. Permissions are m4m.multiplier.superbad.[group-name]
   level-1: 1.0
   level-2: 1.0
@@ -12,6 +13,7 @@ group-multiplier: # Percentage multiplier which can be updated and group names c
   level-4: 1.0
   level-5: 1.0
   operator: 1.0
+  ## Action Multipliers are a multiplier factor. 2.0 equals 2 times the amount rewarded
 actions-multipliers: # Multipliers
   isMultipliersAggregate: false # If money is added up for each action multiplier 
   riding-horse:
