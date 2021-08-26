@@ -694,6 +694,7 @@ public class MessagesConfigManager {
         add163CommandErrorMessages();
         add165CommandErrorMessages();
         add169MobWorldRewardMessages();
+        add170MobWorldAddRemoveMessages();
         messagesCfg.save(messagesFile);
         messagesCfg = YamlConfiguration.loadConfiguration(messagesFile);
     }
@@ -1012,6 +1013,82 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + mobRewardWorldsCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk mobRewardWorlds [mob-नाम]");
             messagesCfg.set("language.chinese_traditional" + mobRewardWorldsCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk mobRewardWorlds [生物名稱]");
             messagesCfg.set("language.chinese_simplified" + mobRewardWorldsCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk mobRewardWorlds [生物名称]");
+        }
+    }
+
+    public static void add170MobWorldAddRemoveMessages() {
+        if (Boolean.FALSE.equals(messagesCfg.isSet("language.english.addWorldSuccessMessage.message"))) {
+            List<String> languageList = new ArrayList<>();
+            languageList.add("english");
+            languageList.add("french");
+            languageList.add("spanish");
+            languageList.add("german");
+            languageList.add("italian");
+            languageList.add("russian");
+            languageList.add("hindi");
+            languageList.add("chinese_traditional");
+            languageList.add("chinese_simplified");
+            String addWorldSuccessMessage = ".addWorldSuccessMessage.message";
+            String addWorldCommandErrorMessage = ".addWorldCommandErrorMessage.message";
+            String removeWorldSuccessMessage = ".removeWorldSuccessMessage.message";
+            String removeWorldCommandErrorMessage = ".removeWorldCommandErrorMessage.message";
+            String removeWorldFailureMessage = ".removeWorldFailureMessage.message";
+            for (String language : languageList) {
+                messagesCfg.set("language." + language + ".addWorldSuccessMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language + ".addWorldCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language + ".removeWorldSuccessMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language + ".removeWorldCommandErrorMessage.location", CHAT_MENU);
+                messagesCfg.set("language." + language + ".removeWorldFailureMessage.location", CHAT_MENU);
+            }
+            messagesCfg.set("language.english" + addWorldSuccessMessage, "&aAdded &6%worlds% &aworld");
+            messagesCfg.set("language.french" + addWorldSuccessMessage, "&aAjout du monde &6%worlds%");
+            messagesCfg.set("language.spanish" + addWorldSuccessMessage, "&aAñadido &6%worlds% &amundo");
+            messagesCfg.set("language.german" + addWorldSuccessMessage, "&6%worlds% &aWelt hinzugefügt");
+            messagesCfg.set("language.italian" + addWorldSuccessMessage, "&aAggiunto &6%worlds% &amondo");
+            messagesCfg.set("language.russian" + addWorldSuccessMessage, "&aДобавлен &6%worlds% &aмир");
+            messagesCfg.set("language.hindi" + addWorldSuccessMessage, "&aजोड़ा गया &6%worlds% &aदुनिया");
+            messagesCfg.set("language.chinese_traditional" + addWorldSuccessMessage, "&a新增 &6%worlds% &a世界");
+            messagesCfg.set("language.chinese_simplified" + addWorldSuccessMessage, "&a新增 &6%worlds% &a世界");
+
+            messagesCfg.set("language.english" + addWorldCommandErrorMessage, "&cError: &7Enter command like this -> /mk addWorld [worldName]");
+            messagesCfg.set("language.french" + addWorldCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk addWorld [nom du monde]");
+            messagesCfg.set("language.spanish" + addWorldCommandErrorMessage, "&cError: &7ingrese un comando como este -> /mk addWorld [nombre mundial]");
+            messagesCfg.set("language.german" + addWorldCommandErrorMessage, "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk addWorld [Weltname]");
+            messagesCfg.set("language.italian" + addWorldCommandErrorMessage, "&cErrore: &7Inserisci il comando in questo modo -> /mk addWorld [nome Mondiale]");
+            messagesCfg.set("language.russian" + addWorldCommandErrorMessage, "&cОшибка: &7Введите команду, подобную этой -> /mk addWorld [мировое имя]");
+            messagesCfg.set("language.hindi" + addWorldCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addWorld [दुनिया का नाम]");
+            messagesCfg.set("language.chinese_traditional" + addWorldCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk addWorld [世界名]");
+            messagesCfg.set("language.chinese_simplified" + addWorldCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk addWorld [世界名]");
+
+            messagesCfg.set("language.english" + removeWorldSuccessMessage, "&aRemoved &6%worlds% &aworld");
+            messagesCfg.set("language.french" + removeWorldSuccessMessage, "&aMonde &6%worlds% supprimé");
+            messagesCfg.set("language.spanish" + removeWorldSuccessMessage, "&aEliminado &6%worlds% &amundo");
+            messagesCfg.set("language.german" + removeWorldSuccessMessage, "&6%worlds% &aWelt Welt entfernt");
+            messagesCfg.set("language.italian" + removeWorldSuccessMessage, "&Rimosso &6%worlds% &amondo");
+            messagesCfg.set("language.russian" + removeWorldSuccessMessage, "&Удален &6%worlds% &aмир");
+            messagesCfg.set("language.hindi" + removeWorldSuccessMessage, "&aहटाया गया &6%worlds% &aदुनिया");
+            messagesCfg.set("language.chinese_traditional" + removeWorldSuccessMessage, "&a移除 &6%worlds% &a世界");
+            messagesCfg.set("language.chinese_simplified" + removeWorldSuccessMessage, "&a移除 &6%worlds% &a世界");
+
+            messagesCfg.set("language.english" + removeWorldCommandErrorMessage, "&cError: &7Enter command like this -> /mk removeWorld [worldName]");
+            messagesCfg.set("language.french" + removeWorldCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk removeWorld [nom du monde]");
+            messagesCfg.set("language.spanish" + removeWorldCommandErrorMessage, "&cError: &7ingrese un comando como este -> /mk removeWorld [nombre mundial]");
+            messagesCfg.set("language.german" + removeWorldCommandErrorMessage, "&cError: &7Geben Sie einen Befehl wie diesen ein -> /mk removeWorld [Weltname]");
+            messagesCfg.set("language.italian" + removeWorldCommandErrorMessage, "&cErrore: &7Inserisci il comando in questo modo -> /mk removeWorld [Mondiale]");
+            messagesCfg.set("language.russian" + removeWorldCommandErrorMessage, "&cОшибка: &7Введите команду, подобную этой -> /mk removeWorld [мировое имя]");
+            messagesCfg.set("language.hindi" + removeWorldCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk removeWorld [दुनिया का नाम]");
+            messagesCfg.set("language.chinese_traditional" + removeWorldCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk removeWorld [世界名]");
+            messagesCfg.set("language.chinese_simplified" + removeWorldCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk removeWorld [世界名]");
+
+            messagesCfg.set("language.english" + removeWorldFailureMessage, "&cError: &7World doesn't exist or has incorrect capitalization");
+            messagesCfg.set("language.french" + removeWorldFailureMessage, "&cErreur: &7Le monde n'existe pas ou a une majuscule incorrecte");
+            messagesCfg.set("language.spanish" + removeWorldFailureMessage, "&cError: &7El mundo no existe o tiene mayúsculas incorrectas");
+            messagesCfg.set("language.german" + removeWorldFailureMessage, "&cError: &7Welt existiert nicht oder hat falsche Groß-/Kleinschreibung");
+            messagesCfg.set("language.italian" + removeWorldFailureMessage, "&cErrore: &7Il mondo non esiste o ha lettere maiuscole errate");
+            messagesCfg.set("language.russian" + removeWorldFailureMessage, "&cОшибка: &7Мир не существует или в нем неверно написаны заглавные буквы.");
+            messagesCfg.set("language.hindi" + removeWorldFailureMessage, "'&cत्रुटि: &7दुनिया मौजूद नहीं है या गलत कैपिटलाइज़ेशन है");
+            messagesCfg.set("language.chinese_traditional" + removeWorldFailureMessage, "&c錯誤 ： &7World 不存在或大小寫不正確");
+            messagesCfg.set("language.chinese_simplified" + removeWorldFailureMessage, "&c错误 ： &7World 不存在或大小写不正确");
         }
     }
 }
