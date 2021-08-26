@@ -26,11 +26,13 @@ public class MobWorthTabComplete implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> firstArgumentList = new ArrayList<>();
         firstArgumentList.add("addCustomDrop");
+        firstArgumentList.add("addWorld");
         firstArgumentList.add("drops");
         firstArgumentList.add("language");
         firstArgumentList.add("mobRewardWorlds");
         firstArgumentList.add("reload");
         firstArgumentList.add("removeCustomDrop");
+        firstArgumentList.add("removeWorld");
         firstArgumentList.add("setHighWorth");
         firstArgumentList.add("setLowWorth");
         firstArgumentList.add("toggleCustomDrops");
@@ -89,6 +91,12 @@ public class MobWorthTabComplete implements TabCompleter {
             if(!pa.hasPermission("m4m.command.mk.mobRewardWorlds")){
                 firstArgumentList.remove("mobRewardWorlds");
             }
+            if(!pa.hasPermission("m4m.command.mk.addWorld")){
+                firstArgumentList.remove("addWorld");
+            }
+            if(!pa.hasPermission("m4m.command.mk.removeWorld")){
+                firstArgumentList.remove("removeWorld");
+            }
             if(firstArgumentList.size() == 0 ){
                 firstArgumentList.add(0, ChatColor.RED + "You do not have access to this command.");
             }
@@ -104,6 +112,13 @@ public class MobWorthTabComplete implements TabCompleter {
                     args[0].equalsIgnoreCase("mobRewardWorlds")){
                     setMobList();
                     return (args.length > 0) ? StringUtil.copyPartialMatches(args[1], mobArrayList, new ArrayList<>()) : null;
+            }
+            if (args[0].equalsIgnoreCase("removeWorld")){
+                List<String> worldList = new ArrayList<>();
+                for(String worldObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs.Zombie.worlds").getKeys(false)) {
+                    worldList.add(worldObject);
+                }
+                return (args.length > 0) ? StringUtil.copyPartialMatches(args[1], worldList, new ArrayList<>()) : null;
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
