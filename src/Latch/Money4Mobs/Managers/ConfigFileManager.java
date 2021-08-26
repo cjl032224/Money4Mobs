@@ -17,7 +17,7 @@ public class ConfigFileManager {
     public static File configFile;
     public static FileConfiguration mobsCfg;
     public static File mobsFile;
-    public static final String VERSION_NUMBER = "1.6.9-Nice-:)";
+    public static final String VERSION_NUMBER = "1.7.0";
     private static final String VERSION = "version";
 
     // Set up mobs.yml configuration file
@@ -47,6 +47,7 @@ public class ConfigFileManager {
         copyInfoFromMobsConfig();
         update150ActionsMultiplier();
         AddSpawnReasonToggle167();
+        AddGlobalWorldReward170();
         configCfg.save(configFile);
     }
 
@@ -332,6 +333,12 @@ public class ConfigFileManager {
     public static void AddSpawnReasonToggle167() {
         if (!configCfg.isSet("oldSpawnReasonLogic")){
             configCfg.set("oldSpawnReasonLogic", true);
+        }
+    }
+
+    public static void AddGlobalWorldReward170() {
+        if (!configCfg.isSet("disableMoneyReward")){
+            configCfg.set("disableMoneyReward", false);
         }
     }
 }

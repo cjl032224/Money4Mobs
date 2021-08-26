@@ -359,7 +359,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
         money = money * levelMultiplier;
         String entityWorld = e.getWorld().getName();
-        if (Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld))) {
+        if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld ))){
             money = 0;
         }
     }
