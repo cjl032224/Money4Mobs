@@ -13,6 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -112,6 +113,10 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".languageCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
                 commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addWorld")){
+                commandErrorMessage(commandSender, language, ".addWorldCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeWorld")){
+                commandErrorMessage(commandSender, language, ".removeWorldCommandErrorMessage");
             }
             else if (args[0].equalsIgnoreCase("toggleKM")) {
                 if (player2 != null && (player2.hasPermission("m4m.command.mk.toggleKM") || commandSender.isOp())) {
@@ -318,6 +323,49 @@ public class MkCommand implements CommandExecutor {
                     assert accessDeniedMessage != null;
                     convertMessage(accessDeniedMessage, commandSender, null, null, null, null, null, null, null, accessDeniedMessageLocation, null);
                 }
+            } else if (args[0].equalsIgnoreCase("addWorld")) {
+                if (commandSender.hasPermission("m4m.command.mk.addWorld") || commandSender.isOp()) {
+                    if (!MobConfigManager.mobsCfg.isSet("mobs.Creeper.worlds." + args[1])){
+                        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                            MobConfigManager.mobsCfg.set("mobs." + mobObject + ".worlds." + args[1], true);
+                        }
+                        try {
+                            MobConfigManager.mobsCfg.save(mobsFile);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    String addWorldSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addWorldSuccessMessage" + MESSAGE);
+                    String addWorldSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".addWorldSuccessMessage" + LOCATION);
+                    assert addWorldSuccessMessage != null;
+                    convertMessage(addWorldSuccessMessage, commandSender, null, null, null, null, null, null, null, addWorldSuccessMessageLocation, args[1]);
+                }
+            }
+            else if (args[0].equalsIgnoreCase("removeWorld")) {
+                if (commandSender.hasPermission("m4m.command.mk.removeWorld") || commandSender.isOp()) {
+                    boolean isWorldPresent = false;
+                    if (MobConfigManager.mobsCfg.isSet("mobs.Creeper.worlds." + args[1])){
+                        isWorldPresent = true;
+                        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                            MobConfigManager.mobsCfg.set("mobs." + mobObject + ".worlds." + args[1], null);
+                        }
+                        try {
+                            MobConfigManager.mobsCfg.save(mobsFile);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        String removeWorldSuccessMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeWorldSuccessMessage" + MESSAGE);
+                        String removeWorldSuccessMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeWorldSuccessMessage" + LOCATION);
+                        assert removeWorldSuccessMessage != null;
+                        convertMessage(removeWorldSuccessMessage, commandSender, null, null, null, null, null, null, null, removeWorldSuccessMessageLocation, args[1]);
+                    }
+                    if (Boolean.FALSE.equals(isWorldPresent)){
+                        String removeWorldFailureMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeWorldFailureMessage" + MESSAGE);
+                        String removeWorldFailureMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE + language + ".removeWorldFailureMessage" + LOCATION);
+                        assert removeWorldFailureMessage != null;
+                        convertMessage(removeWorldFailureMessage, commandSender, null, null, null, null, null, null, null, removeWorldFailureMessageLocation, args[1]);
+                    }
+                }
             } else if (args[0].equalsIgnoreCase("drops")) {
                 if (commandSender.hasPermission("m4m.command.mk.drops") || commandSender.isOp()) {
                     boolean error = true;
@@ -507,12 +555,17 @@ public class MkCommand implements CommandExecutor {
                     assert mobRewardWorldsMessage != null;
                     List<String> worlds = new ArrayList<>();
                     Boolean error = true;
-                    for(String mob : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-                        if (args[1].equalsIgnoreCase(mob)){
-                            error = false;
-                            for(String world : MobConfigManager.mobsCfg.getConfigurationSection("mobs."+ mob + ".worlds").getKeys(false)){
-                                if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mob + ".worlds." + world))){
-                                    worlds.add(world);
+                    if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward"))){
+                        error = false;
+                        worlds.add("");
+                    } else {
+                        for(String mob : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+                            if (args[1].equalsIgnoreCase(mob)){
+                                error = false;
+                                for(String world : MobConfigManager.mobsCfg.getConfigurationSection("mobs."+ mob + ".worlds").getKeys(false)){
+                                    if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mob + ".worlds." + world))){
+                                        worlds.add(world);
+                                    }
                                 }
                             }
                         }
@@ -570,6 +623,10 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleMoneyFromTamedWolvesCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
                 commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addWorld")){
+                commandErrorMessage(commandSender, language, ".addWorldCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeWorld")){
+                commandErrorMessage(commandSender, language, ".removeWorldCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("setLowWorth")) {
                 if (commandSender.hasPermission("m4m.command.mk.setLowWorth") || commandSender.isOp()) {
                     for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
@@ -734,6 +791,10 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".toggleDefaultDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
                 commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addWorld")){
+                commandErrorMessage(commandSender, language, ".addWorldCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeWorld")){
+                commandErrorMessage(commandSender, language, ".removeWorldCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("addCustomDrop")) {
                 if (commandSender.hasPermission("m4m.command.mk.addCustomDrop") || commandSender.isOp()) {
                     if (args[1].equalsIgnoreCase("Player")){
@@ -849,6 +910,10 @@ public class MkCommand implements CommandExecutor {
                 commandErrorMessage(commandSender, language, ".addCustomDropsCommandErrorMessage");
             } else if (args[0].equalsIgnoreCase("mobRewardWorlds")){
                 commandErrorMessage(commandSender, language, ".mobRewardWorldsCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("addWorld")){
+                commandErrorMessage(commandSender, language, ".addWorldCommandErrorMessage");
+            } else if (args[0].equalsIgnoreCase("removeWorld")){
+                commandErrorMessage(commandSender, language, ".removeWorldCommandErrorMessage");
             } else {
                 commandErrorMessage(commandSender, language, ".incompleteCommandErrorMessage");
             }
