@@ -19,6 +19,9 @@ mk worth [mobName] | m4m.command.mk.worth | Gets worth of mob.
 /mk language [language] | m4m.command.mk.language | Changes language of messages for M4M per player.
 /mk reload | m4m.command.mk.reload | Reloads M4M data with manually changed values in config files without needing to reload or restart the whole server
 /mk toggleMoneyFromTamedWolves | m4m.command.mk.toggleMoneyFromTamedWolves | Toggles if players receive money when their tamed wolf kills a mob
+/mk mobRewardWorlds [mobName] | m4m.command.mk.mobRewardWorlds | Displays the worlds a mob will get rewarded money in
+/mk addWorld [worldName] | m4m.command.mk.addWorld | Adds a world to the mobs.yml file for each mob with a value of true
+/mk removeWorld [worldName] | m4m.command.mk.removeWorld | Removes an existing world from the mobs.yml file
 Not Applicable| m4m.bypass.ipBan | Allows a user to bypass the ipBan option for players on the same IP
 
 ## Permissions for group specific multipliers
@@ -143,6 +146,14 @@ reloadCommandErrorMessage | | /reload- When a player improperly uses the command
 setLowWorthCommandErrorMessage |  | /mk setLowWorth - When a player improperly uses the command
 setHighWorthCommandErrorMessage |  | /mk setHighWorth - When a player improperly uses the command
 addCustomDropsCommandErrorMessage |  | /mk addCustomDrop - When a player improperly uses the command
+incompleteCommandErrorMessage | | Displays if the user tries to type a command that does not exist
+mobRewardWorldsMessage | %mobName% | /mk mobRewardWorlds - When a player checks the worlds a mob is rewarded money in 
+mobRewardWorldsCommandErrorMessage | | /mk mobRewardWorlds - When a player improperly uses the command
+addWorldSuccessMessage | %worlds% | /mk addWorld - When a player successfully adds a new world to the mobs.yml
+addWorldCommandErrorMessage | | /mk addWorld - When a player improperly uses the command
+removeWorldSuccessMessage | %worlds% | /mk removeWorld - When a player successfully removes an existing world from the mobs.yml
+removeWorldCommandErrorMessage | | /mk removeWorld - When a player improperly uses the command
+removeWorldFailureMessage | | /mk removeWorld - When a player tries to remove a world that does not exist, or has incorrect capitalization
 
 Action Multipliers in config.yml when 'isMultipliersAggregate' is false will take the highest priority multiplier that fit the conditions
 Action Multipliers in config.yml when 'isMultipliersAggregate' is true will multiply all active multipliers that fit the conditions
