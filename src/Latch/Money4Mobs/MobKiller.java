@@ -61,7 +61,6 @@ public abstract class MobKiller implements CommandExecutor {
             displayKillMessage(pa);
             sendKillMessage(pa);
         }
-
     }
 
     public static void setEvent(EntityDeathEvent e) {
@@ -309,8 +308,11 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         String mobName = "";
+        pa.sendMessage("MobObject: " + e.toString());
+        pa.sendMessage("MobName: " + e.getName());
+        pa.sendMessage("MobCustomName: " + e.getCustomName());
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
-            if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())){
+            if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase()) || e.toString().toUpperCase().contains(mobObject.toUpperCase())){
                 mobName = mobObject;
                 double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
                 double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
