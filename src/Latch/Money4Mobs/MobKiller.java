@@ -114,25 +114,26 @@ public abstract class MobKiller implements CommandExecutor {
             if (player.getUniqueId().toString().equals(userId)) {
                 showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
                 language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
-                if (Boolean.TRUE.equals(showMessage)) {
-                    if (money != 0) {
-                        Double balance = econ.getBalance(player);
-                        df.format(balance);
-                        if (Double.compare(money, 0.0) > 0.0) {
-                            econ.depositPlayer(player, money);
-                            balance = econ.getBalance(player);
+                if (money != 0) {
+                    Double balance = econ.getBalance(player);
+                    df.format(balance);
+                    if (Double.compare(money, 0.0) > 0.0) {
+                        econ.depositPlayer(player, money);
+                        balance = econ.getBalance(player);
+                        if (Boolean.TRUE.equals(showMessage)){
                             String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                             String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                             assert moneyRewardedMessage != null;
                             MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation, null);
-                        } else {
-                            econ.withdrawPlayer(player, Math.abs(money));
+                        }
+                    } else {
+                        econ.withdrawPlayer(player, Math.abs(money));
+                        if (Boolean.TRUE.equals(showMessage)){
                             String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
                             MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation, null);
                         }
-
                     }
                 }
             }
@@ -308,9 +309,6 @@ public abstract class MobKiller implements CommandExecutor {
             levelMultiplier = operator;
         }
         String mobName = "";
-        pa.sendMessage("MobObject: " + e.toString());
-        pa.sendMessage("MobName: " + e.getName());
-        pa.sendMessage("MobCustomName: " + e.getCustomName());
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase()) || e.toString().toUpperCase().contains(mobObject.toUpperCase())){
                 mobName = mobObject;
