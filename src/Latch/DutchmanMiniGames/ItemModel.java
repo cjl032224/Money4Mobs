@@ -1,4 +1,4 @@
-package Latch.Money4Mobs;
+package Latch.DutchmanMiniGames;
 
 public class ItemModel {
     protected String itemName;

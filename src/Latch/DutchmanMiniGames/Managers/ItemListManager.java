@@ -1,7 +1,6 @@
-package Latch.Money4Mobs.Managers;
+package Latch.DutchmanMiniGames.Managers;
 
-import Latch.Money4Mobs.Managers.MobConfigManager;
-import Latch.Money4Mobs.Money4Mobs;
+import Latch.DutchmanMiniGames.DutchmanMiniGames;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 public class ItemListManager {
 
-    private Money4Mobs plugin = Money4Mobs.getPlugin(Money4Mobs.class);
+    private DutchmanMiniGames plugin = DutchmanMiniGames.getPlugin(DutchmanMiniGames.class);
     public static FileConfiguration itemsCfg;
     public File itemsFile;
     private static final Material[] m = Material.values();

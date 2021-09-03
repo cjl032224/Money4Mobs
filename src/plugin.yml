@@ -1,10 +1,13 @@
-name: Money4Mobs
-version: "1.7.0"
+name: DutchmanMiniGames
+version: 0.0.1
 author: Latch
-main: Latch.Money4Mobs.Money4Mobs
+main: Latch.DutchmanMiniGames.DutchmanMiniGames
 api-version: 1.17
 softdepend: [Vault]
 commands:
-  mk:
-    description: Mob Killer
-    usage: /mk
+  tickets:
+    description: Check for amount of tickets
+    usage: /tickets
+  dutchman:
+    description: Main command
+    usage: /dutchman reload
