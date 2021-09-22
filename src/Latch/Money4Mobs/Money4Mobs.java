@@ -17,6 +17,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     private static UserManager UserCfgm;
     private static MobSpawnedReasonManager MobReasonCfgm;
     private static ConfigFileManager ConfigCfgm;
+    private static MobLogConfigManager MobLogConfigCfgm;
     private static int entityId;
     private static MessagesConfigManager MessagesCfgm;
     Boolean isUpdateAvailable = false;
@@ -52,17 +54,14 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
         try {
             loadMobConfigManager();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        loadUserConfigManager();
-        loadMobReasonConfigManager();
-        try {
+            loadMobLogConfigFileManager();
             loadLanguageConfigManager();
             loadConfigFileManager();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        loadUserConfigManager();
+        loadMobReasonConfigManager();
         loadItemConfigManager();
         getServer().getPluginManager().registerEvents(this, this);
         setupEconomy();
@@ -85,6 +84,9 @@ public class Money4Mobs extends JavaPlugin implements Listener {
             userList.add(new UserModel(p.getName(), p.getUniqueId().toString(), true, language, null));
             playerList.add(new Mobs4MoneyPlayer(p.getName(), true));
 
+        }
+        if (!MobLogConfigManager.mobLogCfg.isSet("users")) {
+            MobLogConfigCfgm.createMobLogConfig();
         }
 
         int pluginId = 9484; // <-- Replace with the id of your plugin!
@@ -122,21 +124,34 @@ public class Money4Mobs extends JavaPlugin implements Listener {
     public void onEntityDeath(EntityDeathEvent event) throws IOException {
         File configFile = new File(Money4Mobs.getPlugin(Money4Mobs.class).getDataFolder(), "config.yml");
         FileConfiguration configCfg = YamlConfiguration.loadConfiguration(configFile);
-        if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
-            try {
-                MobKiller.setEvent(event);
-                callRewardMobKiller(event);
-            } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+        String mobName = "";
+        for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (event.getEntity().getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())) {
+                mobName = mobObject;
             }
-            if (MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
-                MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
-                MobSpawnedReasonManager.mobReasonsCfg.save(MobSpawnedReasonManager.mobReasonsFile);
-            }
-        } else {
-            try {
-                MobKiller.setEvent(event);
-                callRewardMobKiller(event);
-            } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+        }
+        if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + event.getEntity().getWorld() ))){
+            if (Boolean.FALSE.equals(configCfg.getBoolean("oldSpawnReasonLogic"))) {
+                try {
+                    if (Boolean.TRUE.equals(MobKiller.isMobTimerActive(event.getEntity(), event.getEntity().getKiller(), mobName))){
+                        MobKiller.setEvent(event);
+                        callRewardMobKiller(event);
+                    }
+                } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+                }
+                if (MobSpawnedReasonManager.mobReasonsCfg.isSet("spawnerMobs." + event.getEntity().getUniqueId())){
+                    MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + event.getEntity().getUniqueId(), null);
+                    MobSpawnedReasonManager.mobReasonsCfg.save(MobSpawnedReasonManager.mobReasonsFile);
+                }
+            } else {
+                try {
+
+                    if (Boolean.TRUE.equals(MobKiller.isMobTimerActive(event.getEntity(), event.getEntity().getKiller(), mobName))){
+                        MobKiller.setEvent(event);
+                        callRewardMobKiller(event);
+                    }
+                } catch (RuntimeException | NoClassDefFoundError | IOException ignore) {
+                }
             }
         }
     }
@@ -155,6 +170,7 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         }
         UserModel um = new UserModel(event.getPlayer().getName(), event.getPlayer().getUniqueId().toString(), true, language, event.getPlayer().getAddress().toString());
         UserManager.addUserToList(um);
+        MobLogConfigManager.addUserToList(um);
         if (count == 0) {
             playerList.add(new Mobs4MoneyPlayer((event.getPlayer().getName()), true));
         }
@@ -282,6 +298,11 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         MobReasonCfgm.setup();
     }
 
+    static void loadMobLogConfigFileManager() throws IOException {
+        MobLogConfigCfgm = new MobLogConfigManager();
+        MobLogConfigCfgm.setup();
+    }
+
     static void loadConfigFileManager() throws IOException {
         ConfigCfgm = new ConfigFileManager();
         ConfigCfgm.setup();
@@ -302,5 +323,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
         loadLanguageConfigManager();
         loadMobReasonConfigManager();
         loadConfigFileManager();
+        loadMobLogConfigFileManager();
     }
 }

@@ -5,16 +5,12 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import Latch.Money4Mobs.Managers.ConfigFileManager;
-import Latch.Money4Mobs.Managers.MessagesConfigManager;
+import Latch.Money4Mobs.Managers.*;
 
-import Latch.Money4Mobs.Managers.MobSpawnedReasonManager;
-import Latch.Money4Mobs.Managers.MobConfigManager;
-import Latch.Money4Mobs.Managers.UserManager;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +18,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -31,7 +26,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public abstract class MobKiller implements CommandExecutor {
 
-    private static final List<MobModel> mm = MobConfigManager.getMobModelFromConfig();
     private static EntityDeathEvent ede;
     private static final Random rand = new Random();
     private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -44,6 +38,16 @@ public abstract class MobKiller implements CommandExecutor {
     private static double percentageLost = 0;
     private static List<String> multiplierList = new ArrayList<>();
     private static double distance = 0;
+    private static final String LANGUAGE_CONSTANT = "language.";
+    private static final String USERS_USER = "users.user-";
+    private static final String USERID = ".userId";
+    private static final String USERS = "users";
+    private static final String MESSAGE = ".message";
+    private static final String LOCATION_CONSTANT = ".location";
+    private static final String MOBS_CONSTANT = "mobs.";
+    private static final String DROPS_ITEM = ".drops.item-";
+    private static final String SPAWNER_MOBS = "spawnerMobs.";
+
 
     public static void rewardPlayerMoney(CommandSender pa, Entity e) throws IOException {
         Money4Mobs.loadConfigFileManager();
@@ -70,13 +74,13 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void setLanguage(CommandSender pa){
         int counter = 1;
-        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection(USERS).getKeys(false)) {
+            String userId = UserManager.usersCfg.getString(USERS_USER + counter + USERID);
             assert userId != null;
             if (pa instanceof Player){
                 Player player = (Player) pa;
                 if(userId.equalsIgnoreCase(player.getUniqueId().toString())){
-                    language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
+                    language = UserManager.usersCfg.getString(USERS_USER + counter + ".language");
                 }
             }
             counter++;
@@ -85,13 +89,13 @@ public abstract class MobKiller implements CommandExecutor {
 
     public static void displayKillMessage(CommandSender pa){
         int counter = 1;
-        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection(USERS).getKeys(false)) {
+            String userId = UserManager.usersCfg.getString(USERS_USER + counter + USERID);
             assert userId != null;
             if (pa instanceof Player) {
                 Player player = (Player) pa;
                 if (userId.equalsIgnoreCase(player.getUniqueId().toString())) {
-                    showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
+                    showMessage = UserManager.usersCfg.getBoolean(USERS_USER + counter + ".showMessage");
                 }
             }
             counter++;
@@ -108,13 +112,13 @@ public abstract class MobKiller implements CommandExecutor {
         RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
         Economy econ = null;
         econ = rsp.getProvider();
-        for(String users : UserManager.usersCfg.getConfigurationSection("users").getKeys(false)) {
-            String userId = UserManager.usersCfg.getString("users.user-" + counter + ".userId");
+        for(String users : UserManager.usersCfg.getConfigurationSection(USERS).getKeys(false)) {
+            String userId = UserManager.usersCfg.getString(USERS_USER + counter + USERID);
             assert userId != null;
             assert player != null;
             if (player.getUniqueId().toString().equals(userId)) {
-                showMessage = UserManager.usersCfg.getBoolean("users.user-" + counter + ".showMessage");
-                language = UserManager.usersCfg.getString("users.user-" + counter + ".language");
+                showMessage = UserManager.usersCfg.getBoolean(USERS_USER + counter + ".showMessage");
+                language = UserManager.usersCfg.getString(USERS_USER + counter + ".language");
                 if (Boolean.TRUE.equals(showMessage)) {
                     if (money != 0) {
                         Double balance = econ.getBalance(player);
@@ -122,14 +126,14 @@ public abstract class MobKiller implements CommandExecutor {
                         if (Double.compare(money, 0.0) > 0.0) {
                             econ.depositPlayer(player, money);
                             balance = econ.getBalance(player);
-                            String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
-                            String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
+                            String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".moneyRewardedMessage" + MESSAGE);
+                            String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".moneyRewardedMessage" + LOCATION_CONSTANT);
                             assert moneyRewardedMessage != null;
                             MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation, null);
                         } else {
                             econ.withdrawPlayer(player, Math.abs(money));
-                            String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
-                            String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
+                            String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".moneySubtractedMessage" + MESSAGE);
+                            String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".moneySubtractedMessage" + LOCATION_CONSTANT);
                             assert moneySubtractedMessage != null;
                             MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation, null);
                         }
@@ -143,22 +147,22 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     public static void setCustomDrops(Entity e, CommandSender p){
-        getLootingLevel();
+        //getLootingLevel();
         int randomNumber = rand.nextInt(100);
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (mobObject.equalsIgnoreCase(e.getName())) {
                 String mobName = mobObject.substring(0, 1).toUpperCase() + mobObject.substring(1);
-                boolean customDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".customDrops");
+                boolean customDrops = MobConfigManager.mobsCfg.getBoolean(MOBS_CONSTANT + mobName + ".customDrops");
                 if (Boolean.TRUE.equals(customDrops)){
                     int numberOfDrops = 0;
-                    for(String drop : MobConfigManager.mobsCfg.getConfigurationSection("mobs." + mobName + ".drops").getKeys(false)) {
+                    for(String drop : MobConfigManager.mobsCfg.getConfigurationSection(MOBS_CONSTANT + mobName + ".drops").getKeys(false)) {
                         numberOfDrops++;
                     }
                     int counter = 1;
                     for (int l = 0; l < numberOfDrops; l++) {
-                        String itemName = MobConfigManager.mobsCfg.getString("mobs." + mobName + ".drops.item-" + counter + ".name");
-                        int amount = MobConfigManager.mobsCfg.getInt("mobs." + mobName + ".drops.item-" + counter + ".amount");
-                        double chance = MobConfigManager.mobsCfg.getDouble("mobs." + mobName + ".drops.item-" + counter + ".chance");
+                        String itemName = MobConfigManager.mobsCfg.getString(MOBS_CONSTANT + mobName + DROPS_ITEM + counter + ".name");
+                        int amount = MobConfigManager.mobsCfg.getInt(MOBS_CONSTANT + mobName + DROPS_ITEM + counter + ".amount");
+                        double chance = MobConfigManager.mobsCfg.getDouble(MOBS_CONSTANT + mobName + DROPS_ITEM + counter + ".chance");
                         counter++;
                         if (chance == 0){
                             chance = 100;
@@ -176,7 +180,7 @@ public abstract class MobKiller implements CommandExecutor {
     public static void setDefaultDrops() {
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (mobObject.equalsIgnoreCase(ede.getEntity().getName())) {
-                boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean("mobs." + mobObject + ".keepDefaultDrops");
+                boolean defaultDrops = MobConfigManager.mobsCfg.getBoolean(MOBS_CONSTANT + mobObject + ".keepDefaultDrops");
                 if (!Boolean.TRUE.equals(defaultDrops)) {
                      ede.getDrops().clear();
                 }
@@ -216,14 +220,14 @@ public abstract class MobKiller implements CommandExecutor {
                 Money4Mobs.loadConfigFileManager();
                 for (String mobUUID : mobReasonCfg.getConfigurationSection("spawnerMobs").getKeys(false)) {
                     if (mobUUID.equalsIgnoreCase(e.getUniqueId().toString())) {
-                        if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
+                        if (Objects.requireNonNull(mobReasonCfg.getString(SPAWNER_MOBS + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER_EGG")) {
                             Boolean spawnEggs = ConfigFileManager.configCfg.getBoolean("spawneggs");
                             giveMoney = Boolean.TRUE.equals(spawnEggs);
-                        } else if (Objects.requireNonNull(mobReasonCfg.getString("spawnerMobs." + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
+                        } else if (Objects.requireNonNull(mobReasonCfg.getString(SPAWNER_MOBS + mobUUID + ".reasonSpawned")).equalsIgnoreCase("SPAWNER")) {
                             Boolean spawners = ConfigFileManager.configCfg.getBoolean("spawners");
                             giveMoney = Boolean.TRUE.equals(spawners);
                         }
-                        MobSpawnedReasonManager.mobReasonsCfg.set("spawnerMobs." + mobUUID, null);
+                        MobSpawnedReasonManager.mobReasonsCfg.set(SPAWNER_MOBS + mobUUID, null);
                         mobReasonCfg.save(mobReasonsFile);
                     }
                     numberOfMobs++;
@@ -275,12 +279,12 @@ public abstract class MobKiller implements CommandExecutor {
                         double amountToSubtract = (preyBalance / 100) * percentageLost;
                         econ.withdrawPlayer(prey, amountToSubtract);
                         econ.depositPlayer(predator, amountToSubtract);
-                        String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".message");
-                        String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledPlayerMessage" + ".location");
+                        String playerKilledPlayerMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".playerKilledPlayerMessage" + MESSAGE);
+                        String playerKilledPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".playerKilledPlayerMessage" + LOCATION_CONSTANT);
                         assert playerKilledPlayerMessage != null;
                         MkCommand.convertMessage(playerKilledPlayerMessage, predator, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(predator) * 100.0) / 100.0, playerKilledPlayerMessageLocation, null);
-                        String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".message");
-                        String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".playerKilledByPlayerMessage" + ".location");
+                        String playerKilledByPlayerMessage = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".playerKilledByPlayerMessage" + MESSAGE);
+                        String playerKilledByPlayerMessageLocation = MessagesConfigManager.messagesCfg.getString(LANGUAGE_CONSTANT + language + ".playerKilledByPlayerMessage" + LOCATION_CONSTANT);
                         assert playerKilledByPlayerMessage != null;
                         MkCommand.convertMessage(playerKilledByPlayerMessage, prey, null, null, null, Math.round(amountToSubtract * 100.0) / 100.0, null, null, Math.round(econ.getBalance(prey) * 100.0) / 100.0, playerKilledByPlayerMessageLocation, null);
                     }
@@ -308,12 +312,10 @@ public abstract class MobKiller implements CommandExecutor {
         if (pa.isOp()){
             levelMultiplier = operator;
         }
-        String mobName = "";
         for(String mobObject : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
             if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())){
-                mobName = mobObject;
-                double lowWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.low");
-                double highWorth = MobConfigManager.mobsCfg.getDouble("mobs." + mobObject + ".worth.high");
+                double lowWorth = MobConfigManager.mobsCfg.getDouble(MOBS_CONSTANT + mobObject + ".worth.low");
+                double highWorth = MobConfigManager.mobsCfg.getDouble(MOBS_CONSTANT + mobObject + ".worth.high");
                 if (lowWorth == highWorth){
                     money = lowWorth;
                 } else {
@@ -337,24 +339,72 @@ public abstract class MobKiller implements CommandExecutor {
 
         boolean isMultiplierAggregate = ConfigFileManager.configCfg.getBoolean("actions-multipliers.isMultipliersAggregate");
         if (Boolean.TRUE.equals(isMultiplierAggregate)){
-            isFallDamageMultiplier(money);
-            isProjectileMultiplierPresent(money);
-            isLongDistanceMultiplier(distance, money);
-            isNoWeaponMultiplier(pa, money);
-            isRidingHorseMultiplier(money, pa);
-            isRidingDonkeyMultiplier(money, pa);
-            isRidingMuleMultiplier(money, pa);
-            isRidingPigMultiplier(money, pa);
-            isRidingStriderMultiplier(money, pa);
-            isPreyRidingMultiplier(money, pa, e);
+            isFallDamageMultiplier();
+            isProjectileMultiplierPresent();
+            isLongDistanceMultiplier(distance);
+            isNoWeaponMultiplier(pa);
+            isRidingHorseMultiplier(pa);
+            isRidingDonkeyMultiplier(pa);
+            isRidingMuleMultiplier( pa);
+            isRidingPigMultiplier(pa);
+            isRidingStriderMultiplier(pa);
+            isPreyRidingMultiplier(e);
         } else {
             getHighestPriority(e, pa);
         }
         money = money * levelMultiplier;
-        String entityWorld = e.getWorld().getName();
-        if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld ))){
-            money = 0;
+    }
+
+    static boolean isMobTimerActive(Entity e, CommandSender pa, String mobName) throws IOException {
+        Player player = null;
+        boolean doesGiveMoney = true;
+        if (pa instanceof Player){
+            player = ((Player) pa).getPlayer();
         }
+        Calendar calendar = Calendar.getInstance();
+        //Returns current time in millis
+        long timeMilli2 = calendar.getTimeInMillis();
+//
+        int mobTimer = 0;
+        double mobTotalReward = 0;
+        boolean isTimerActive = false;
+        File mobLogFile = MobLogConfigManager.mobLogFile;
+        for(String mobObject : MobLogConfigManager.mobLogCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (e.getName().replace(" ", "").toUpperCase().contains(mobObject.toUpperCase())) {
+                MobLogConfigManager.mobLogCfg.set("users." +player.getUniqueId() + ".log." + timeMilli2 + ".mobName", mobObject);
+                MobLogConfigManager.mobLogCfg.set("users." +player.getUniqueId() + ".log." + timeMilli2 + ".mobReward", money);
+                MobLogConfigManager.mobLogCfg.save(mobLogFile);
+                if (Boolean.TRUE.equals(MobLogConfigManager.mobLogCfg.getBoolean(MOBS_CONSTANT + mobObject + ".isTimerActive"))){
+                    isTimerActive = true;
+                    mobTimer = MobLogConfigManager.mobLogCfg.getInt(MOBS_CONSTANT + mobObject + ".timer");
+                    mobTotalReward = MobLogConfigManager.mobLogCfg.getDouble(MOBS_CONSTANT + mobObject + ".maxReward");
+                }
+            }
+        }
+        double totalReward = 0;
+        if (Boolean.TRUE.equals(isTimerActive)){
+            for(String mobs : MobLogConfigManager.mobLogCfg.getConfigurationSection("users."+player.getUniqueId() + ".log").getKeys(false)) {
+                long mobTimestamp = Long.parseLong(mobs);
+                long currentTimestamp = calendar.getTimeInMillis();
+                long timestampDifference = currentTimestamp - mobTimestamp;
+                if (MobLogConfigManager.mobLogCfg.getString("users." +player.getUniqueId() + ".log."+mobs+ ".mobName").equals(mobName)){
+                    if (timestampDifference > (mobTimer * 1000)){
+                        MobLogConfigManager.mobLogCfg.set("users." +player.getUniqueId() + ".log." + mobTimestamp, null);
+                    } else {
+                        totalReward = totalReward + MobLogConfigManager.mobLogCfg.getDouble("users." +player.getUniqueId() + ".log."+mobs+ ".mobReward");
+                    }
+                }
+            }
+            if (totalReward >= mobTotalReward){
+                money = 0;
+                doesGiveMoney = false;
+                if (Boolean.TRUE.equals(MobLogConfigManager.mobLogCfg.getBoolean("displayMaxRewardMessages"))){
+                    pa.sendMessage(ChatColor.YELLOW + "You have reached the max amount of money rewarded for " + ChatColor.GOLD + mobName);
+                }
+            }
+        }
+        MobLogConfigManager.mobLogCfg.save(mobLogFile);
+        return doesGiveMoney;
     }
 
     private static double getDistanceFromKiller(Entity e, CommandSender pa) {
@@ -366,21 +416,21 @@ public abstract class MobKiller implements CommandExecutor {
             int preyXLocation = e.getLocation().getBlockX();
             int preyYLocation = e.getLocation().getBlockY();
             int preyZLocation = e.getLocation().getBlockZ();
-            distance = Math.sqrt(Math.pow(preyXLocation-predatorXLocation, 2) + Math.pow(preyYLocation-predatorYLocation, 2) + Math.pow(preyZLocation-predatorZLocation, 2));
+            distance = Math.sqrt(Math.pow((double) preyXLocation-predatorXLocation, 2) + Math.pow((double) preyYLocation-predatorYLocation, 2) + Math.pow((double) preyZLocation-predatorZLocation, 2));
         }
         return distance;
     }
 
-    private static void isFallDamageMultiplier(double moneySaved) {
+    private static void isFallDamageMultiplier() {
         double fallDamageMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.fallDamage.multiplier");
         Boolean isFallDamageActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.fallDamage.isActive");
-        if (ede.getEntity().getLastDamageCause().getCause().toString().equals("FALL") && Boolean.TRUE.equals(isFallDamageActive)){
+        if (Objects.requireNonNull(ede.getEntity().getLastDamageCause()).getCause().toString().equals("FALL") && Boolean.TRUE.equals(isFallDamageActive)){
             money = money * fallDamageMultiplier;
             money = Math.round(money * 100.0) / 100.0;
         }
     }
 
-    private static void isProjectileMultiplierPresent(double moneySaved) {
+    private static void isProjectileMultiplierPresent() {
         double projectileMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.projectile.multiplier");
         Boolean isProjectileActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.projectile.isActive");
         if (ede.getEntity().getLastDamageCause().getCause().toString().equals("PROJECTILE") && Boolean.TRUE.equals(isProjectileActive)){
@@ -389,7 +439,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    private static void isLongDistanceMultiplier(double distance, double moneySaved) {
+    private static void isLongDistanceMultiplier(double distance) {
         double distanceMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.longDistance.multiplier");
         Boolean isDistanceMultiplierActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.longDistance.isActive");
         double distanceLength = ConfigFileManager.configCfg.getDouble("actions-multipliers.longDistance.distance");
@@ -399,7 +449,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    private static void isNoWeaponMultiplier(CommandSender pa, double moneySaved) {
+    private static void isNoWeaponMultiplier(CommandSender pa) {
         if (pa instanceof Player) {
             Player player = (Player) pa;
             if (ede.getEntity().getLastDamageCause().getCause().toString().equals("ENTITY_ATTACK")) {
@@ -416,73 +466,94 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    private static void isRidingHorseMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Horse")) {
-            double ridingHorseMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-horse.multiplier");
-            Boolean isRidingHorseActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-horse.isActive");
-            if (Boolean.TRUE.equals(isRidingHorseActive)) {
-                money = money * ridingHorseMultiplier;
+    private static void isRidingHorseMultiplier(CommandSender pa) {
+        try {
+            if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && "Horse".equals(getVehicle(pa))) {
+                double ridingHorseMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-horse.multiplier");
+                Boolean isRidingHorseActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-horse.isActive");
+                if (Boolean.TRUE.equals(isRidingHorseActive)) {
+                    money = money * ridingHorseMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else {
                 money = Math.round(money * 100.0) / 100.0;
             }
-        } else {
-            money = Math.round(money * 100.0) / 100.0;
+        } catch (NullPointerException ignored){
+
+        }
+
+    }
+
+    private static void isRidingMuleMultiplier(CommandSender pa) {
+        try {
+            if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && "Mule".equals(getVehicle(pa))) {
+                double ridingMuleMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-mule.multiplier");
+                Boolean isRidingMuleActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-mule.isActive");
+                if (Boolean.TRUE.equals(isRidingMuleActive)) {
+                    money = money * ridingMuleMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else {
+                money = Math.round(money * 100.0) / 100.0;
+            }
+        } catch (NullPointerException ignored){
+
         }
     }
 
-    private static void isRidingMuleMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Mule")) {
-            double ridingMuleMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-mule.multiplier");
-            Boolean isRidingMuleActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-mule.isActive");
-            if (Boolean.TRUE.equals(isRidingMuleActive)) {
-                money = money * ridingMuleMultiplier;
+    private static void isRidingDonkeyMultiplier(CommandSender pa) {
+        try {
+            if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && "Donkey".equals(getVehicle(pa))){
+                double ridingDonkeyMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
+                Boolean isRidingDonkeyActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
+                if (Boolean.TRUE.equals(isRidingDonkeyActive)){
+                    money = money * ridingDonkeyMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else {
                 money = Math.round(money * 100.0) / 100.0;
             }
-        } else {
-            money = Math.round(money * 100.0) / 100.0;
+        } catch (NullPointerException ignored){
+
         }
     }
 
-    private static void isRidingDonkeyMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Donkey")){
-            double ridingDonkeyMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-donkey.multiplier");
-            Boolean isRidingDonkeyActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-donkey.isActive");
-            if (Boolean.TRUE.equals(isRidingDonkeyActive)){
-                money = money * ridingDonkeyMultiplier;
+    private static void isRidingStriderMultiplier(CommandSender pa) {
+        try {
+            if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) &&
+                    "Strider".equals(getVehicle(pa))){
+                double ridingStriderMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-strider.multiplier");
+                Boolean isRidingStriderActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-strider.isActive");
+                if (Boolean.TRUE.equals(isRidingStriderActive)){
+                    money = money * ridingStriderMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else {
                 money = Math.round(money * 100.0) / 100.0;
             }
-        } else {
-            money = Math.round(money * 100.0) / 100.0;
+        } catch (NullPointerException ignored){
+
         }
     }
 
-    private static void isRidingStriderMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) &&
-                getVehicle(pa).equals("Strider")){
-            double ridingStriderMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-strider.multiplier");
-            Boolean isRidingStriderActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-strider.isActive");
-            if (Boolean.TRUE.equals(isRidingStriderActive)){
-                money = money * ridingStriderMultiplier;
+    private static void isRidingPigMultiplier(CommandSender pa) {
+        try {
+            if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && "Pig".equals(getVehicle(pa))){
+                double ridingPigMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-pig.multiplier");
+                Boolean isRidingPigActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-pig.isActive");
+                if (Boolean.TRUE.equals(isRidingPigActive)){
+                    money = money * ridingPigMultiplier;
+                    money = Math.round(money * 100.0) / 100.0;
+                }
+            } else {
                 money = Math.round(money * 100.0) / 100.0;
             }
-        } else {
-            money = Math.round(money * 100.0) / 100.0;
+        } catch (NullPointerException ignored){
+
         }
     }
 
-    private static void isRidingPigMultiplier(double moneySaved, CommandSender pa) {
-        if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa)) && getVehicle(pa).equals("Pig")){
-            double ridingPigMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.riding-pig.multiplier");
-            Boolean isRidingPigActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.riding-pig.isActive");
-            if (Boolean.TRUE.equals(isRidingPigActive)){
-                money = money * ridingPigMultiplier;
-                money = Math.round(money * 100.0) / 100.0;
-            }
-        } else {
-            money = Math.round(money * 100.0) / 100.0;
-        }
-    }
-
-    private static void isPreyRidingMultiplier(double moneySaved, CommandSender pa, Entity e) {
+    private static void isPreyRidingMultiplier(Entity e) {
         if (Boolean.TRUE.equals(isPreyIsOnVehicle(e))){
             double preyRidingMultiplier = ConfigFileManager.configCfg.getDouble("actions-multipliers.mountedMob.multiplier");
             Boolean isPreyRidingActive = ConfigFileManager.configCfg.getBoolean("actions-multipliers.mountedMob.isActive");
@@ -507,11 +578,7 @@ public abstract class MobKiller implements CommandExecutor {
     }
 
     private static boolean isPreyIsOnVehicle(Entity e) {
-        boolean isRiding = false;
-        if (e.getVehicle() != null) {
-            isRiding = true;
-        }
-        return isRiding;
+        return e.getVehicle() != null;
     }
 
     private static String getVehicle(CommandSender pa) {
@@ -553,26 +620,25 @@ public abstract class MobKiller implements CommandExecutor {
             }
         }
         if (Boolean.TRUE.equals(ifPlayerOnVehicle(pa))){
-            String vehicle = getVehicle(pa).toLowerCase();
-            multiplierList.add("riding-" + vehicle);
+
+            if (pa != null && getVehicle(pa) != null){
+                multiplierList.add("riding-" + getVehicle(pa).toLowerCase());
+            }
         }
         if (Boolean.TRUE.equals(isPreyIsOnVehicle(e))){
             multiplierList.add("mountedMob");
         }
     }
 
-    private static double getHighestPriority(Entity e, CommandSender pa) {
-        double multiplier = 1;
+    private static void getHighestPriority(Entity e, CommandSender pa) {
         int priority = 0;
         String actionMultiplierString = null;
-        double moneySaved = money;
         multiplierList(e, pa);
         for (String actionMultiplier : ConfigFileManager.configCfg.getConfigurationSection("actions-multipliers").getKeys(false)) {
-            for (int i = 0; i < multiplierList.size(); i++){
-                if (multiplierList.get(i).equals(actionMultiplier)){
-                    if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive"))){
+            for (String s : multiplierList) {
+                if (s.equals(actionMultiplier)) {
+                    if (ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority") > priority && Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("actions-multipliers." + actionMultiplier + ".isActive"))) {
                         priority = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".priority");
-                        multiplier = ConfigFileManager.configCfg.getInt("actions-multipliers." + actionMultiplier + ".multiplier");
                         actionMultiplierString = actionMultiplier;
                     }
                 }
@@ -581,42 +647,40 @@ public abstract class MobKiller implements CommandExecutor {
         try {
             switch (Objects.requireNonNull(actionMultiplierString)) {
                 case "fallDamage":
-                    isFallDamageMultiplier(moneySaved);
+                    isFallDamageMultiplier();
                     break;
                 case "projectile":
-                    isProjectileMultiplierPresent(moneySaved);
+                    isProjectileMultiplierPresent();
                     break;
                 case "longDistance":
-                    isLongDistanceMultiplier(getDistanceFromKiller(e, pa), moneySaved);
+                    isLongDistanceMultiplier(getDistanceFromKiller(e, pa));
                     break;
                 case "noWeapon":
-                    isNoWeaponMultiplier(pa, moneySaved);
+                    isNoWeaponMultiplier(pa);
                     break;
                 case "riding-horse":
-                    isRidingHorseMultiplier(moneySaved, pa);
+                    isRidingHorseMultiplier(pa);
                     break;
                 case "riding-mule":
-                    isRidingMuleMultiplier(moneySaved, pa);
+                    isRidingMuleMultiplier(pa);
                     break;
                 case "riding-donkey":
-                    isRidingDonkeyMultiplier(moneySaved, pa);
+                    isRidingDonkeyMultiplier(pa);
                     break;
                 case "riding-strider":
-                    isRidingStriderMultiplier(moneySaved, pa);
+                    isRidingStriderMultiplier(pa);
                     break;
                 case "riding-pig":
-                    isRidingPigMultiplier(moneySaved, pa);
+                    isRidingPigMultiplier(pa);
                     break;
                 case "mountedMob":
-                    isPreyRidingMultiplier(moneySaved, pa, e);
+                    isPreyRidingMultiplier(e);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + Objects.requireNonNull(actionMultiplierString));
             }
-        } catch (NullPointerException ignored) {
-
+        } catch (IllegalStateException ignored) {
         }
-        return multiplier;
     }
 
 
