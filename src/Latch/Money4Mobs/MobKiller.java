@@ -58,7 +58,7 @@ public abstract class MobKiller implements CommandExecutor {
             setCustomDrops(e,pa);
             setRange(e, pa);
             displayKillMessage(pa);
-            sendKillMessage(pa);
+            sendKillMessage(pa, e);
         }
 
     }
@@ -97,7 +97,7 @@ public abstract class MobKiller implements CommandExecutor {
         }
     }
 
-    public static void sendKillMessage(CommandSender pa){
+    public static void sendKillMessage(CommandSender pa, Entity e){
         Player player = null;
         if (pa instanceof Player) {
             player = (Player) pa;
@@ -124,13 +124,13 @@ public abstract class MobKiller implements CommandExecutor {
                             String moneyRewardedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".message");
                             String moneyRewardedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneyRewardedMessage" + ".location");
                             assert moneyRewardedMessage != null;
-                            MkCommand.convertMessage(moneyRewardedMessage, pa, null, null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation, null);
+                            MkCommand.convertMessage(moneyRewardedMessage, pa, e.getName(), null, null, Math.round(money * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneyRewardedMessageLocation, null);
                         } else {
                             econ.withdrawPlayer(player, Math.abs(money));
                             String moneySubtractedMessage = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".message");
                             String moneySubtractedMessageLocation = MessagesConfigManager.messagesCfg.getString("language." + language + ".moneySubtractedMessage" + ".location");
                             assert moneySubtractedMessage != null;
-                            MkCommand.convertMessage(moneySubtractedMessage, pa, null, null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation, null);
+                            MkCommand.convertMessage(moneySubtractedMessage, pa, e.getName(), null, null, Math.round(Math.abs(money) * 100.0) / 100.0, null, null, Math.round(balance * 100.0) / 100.0, moneySubtractedMessageLocation, null);
                         }
 
                     }
