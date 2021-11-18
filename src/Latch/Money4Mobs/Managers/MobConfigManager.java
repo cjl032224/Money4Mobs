@@ -46,6 +46,7 @@ public class MobConfigManager {
         update137AddPiglin();
         update14Add117Mobs();
         update155UpdateChecker();
+        updatePerWorldReward172();
         if (Bukkit.getServer().getBukkitVersion().contains("1.17") || Bukkit.getServer().getBukkitVersion().contains("1.16")){
             updateZombifiedPiglin169();
         }
@@ -248,5 +249,15 @@ public class MobConfigManager {
             mobsCfg.set("mobs.ZombifiedPiglin.customDrops", false);
         }
         mobsCfg.set("mobs.PigZombie", null);
+    }
+
+
+    public static void updatePerWorldReward172() throws IOException {
+        for(String mob : MobConfigManager.mobsCfg.getConfigurationSection("mobs").getKeys(false)) {
+            if (!mobsCfg.isSet("mobs." + mob + ".percentDrop")){
+                mobsCfg.set("mobs." + mob + ".percentDrop", 100);
+            }
+        }
+        mobsCfg.save(mobsFile);
     }
 }
