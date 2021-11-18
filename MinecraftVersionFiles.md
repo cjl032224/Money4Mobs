@@ -1,11 +1,11 @@
 | Minecraft Version      | Plugin Version | Download    |
 |   :----:   |    :----:   |    :----:   |
-| 1.8      | 1.7.0       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.8.jar)  |
-| 1.9   | 1.7.0    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.9.jar)      |
-| 1.10      | 1.7.0       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.10.jar)  |
-| 1.12   | 1.7.0        | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.12.jar)      |
-| 1.13      | 1.7.0       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.13.jar)  |
-| 1.14   | 1.7.0        | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.14.jar)      |
-| 1.15      | 1.7.0      | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.15.jar)  |
-| 1.16   | 1.7.0       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.16.jar)      |
-| 1.17   | 1.7.0    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.0---1.17.jar)      |
+| 1.8    | 1.7.1       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.8.jar)  |
+| 1.9    | 1.7.1    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.9.jar)      |
+| 1.10   | 1.7.1       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.10.jar)  |
+| 1.12   | 1.7.1        | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.12.jar)      |
+| 1.13   | 1.7.1       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.13.jar)  |
+| 1.14   | 1.7.1        | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.14.jar)      |
+| 1.15   | 1.7.1      | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.15.jar)  |
+| 1.16   | 1.7.1       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.16.jar)      |
+| 1.17   | 1.7.1    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.1---1.17.jar)      |
