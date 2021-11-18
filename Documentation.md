@@ -131,8 +131,8 @@ defaultDropsFalseMessage | %mobName% | /mk toggleDefaultDrops - When the '[mobNa
 customDropsTrueMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName].customDrops' property in mobs.yml gets set to true 
 customDropsFalseMessage | %mobName% | /mk toggleCustomDrops - When the '[mobName].customDrops' property in mobs.yml gets set to false 
 languageChangeSuccessMessage |  | /mk language - When the command sender's language in the users.yml file is updated successfully
-moneyRewardedMessage | %amount%, %balance% | When a player kills a mob and the low worth is greater than 0
-moneySubtractedMessage | %amount%, %balance% | When a player kills a mob and the low worth is less than 0
+moneyRewardedMessage | %amount%, %balance%, %mobName% | When a player kills a mob and the low worth is greater than 0
+moneySubtractedMessage | %amount%, %balance%, %mobName% | When a player kills a mob and the low worth is less than 0
 removeCustomDropsCommandErrorMessage | | /mk removeCustomDrop - When a player improperly uses the command
 toggleCustomDropsCommandErrorMessage | | /mk toggleCustomDrops - When a player improperly uses the command
 toggleDefaultDropsCommandErrorMessage | | /mk toggleDefaultDrops - When a player improperly uses the command

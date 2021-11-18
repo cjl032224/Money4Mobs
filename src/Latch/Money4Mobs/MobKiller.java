@@ -361,6 +361,13 @@ public abstract class MobKiller implements CommandExecutor {
         if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld ))){
             money = 0;
         }
+
+        Random r = new Random();
+        double randomValue = 0 + (100 - 0) * r.nextDouble();
+        double mobRandomValue = MobConfigManager.mobsCfg.getDouble("mobs." + mobName + ".percentDrop");
+        if (randomValue > mobRandomValue) {
+            money = 0;
+        }
     }
 
     private static double getDistanceFromKiller(Entity e, CommandSender pa) {
