@@ -685,6 +685,79 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.languageChangeSuccessMessage.location",CHAT_MENU);
             messagesCfg.set("language.chinese_simplified.moneyRewardedMessage.location",ACTION_BAR);
             messagesCfg.set("language.chinese_simplified.moneySubtractedMessage.location",ACTION_BAR);
+            
+            // Polish Messages
+            messagesCfg.set("language.polish.mobKillerOnMessage.message","&aWiadomości MobKiller &6włączone");
+            messagesCfg.set("language.polish.mobKillerOffMessage.message","&aWiadomości MobKiller &6wyłączone");
+            messagesCfg.set("language.polish.accessDeniedMessage.message","&cNie masz dostępu do tej komendy");
+            messagesCfg.set("language.polish.eggSpawnRewardTrueMessage.message","&aNagrody pieniężne za zabicie stworzeń powstałych z jajek zostały &6włączone");
+            messagesCfg.set("language.polish.eggSpawnRewardFalseMessage.message","&aNagrody pieniężne za zabicie stworzeń powstałych z jajek zostały &6wyłączone");
+            messagesCfg.set("language.polish.spawnerSpawnRewardTrueMessage.message","&aNagrody pieniężne za zabicie stworzeń powstałych z generatorów zostały &6włączone");
+            messagesCfg.set("language.polish.spawnerSpawnRewardFalseMessage.message","&aNagrody pieniężne za zabicie stworzeń powstałych z generatorów zostały &6wyłączone");
+            messagesCfg.set("language.polish.tamedWolvesRewardTrueMessage.message","&aNagrody pieniężne za zabicie stworzeń przez oswojone wilki zostały &6włączone");
+            messagesCfg.set("language.polish.tamedWolvesRewardFalseMessage.message","&aNagrody pieniężne za zabicie stworzeń przez oswojone wilki zostały &6wyłączone");
+            messagesCfg.set("language.polish.reloadingMessage.message","&bPrzeładowywanie Money4Mobs");
+            messagesCfg.set("language.polish.reloadConfirmMessage.message","&6Money4Mobs przeładowywanie zakończone");
+            messagesCfg.set("language.polish.setLowWorthCommandErrorMessage.message","&cError: &7Wpisz komende w ten sposób -> /mk setLowWorth [nazwaStorzenia] [ilość]");
+            messagesCfg.set("language.polish.setHighWorthCommandErrorMessage.message","&cError: &7Wpisz komende w ten sposób -> /mk setHighWorth [nazwaStorzenia] [ilość]");
+            messagesCfg.set("language.polish.addCustomDropsErrorMessage.message","&cError: Niestandardowe dropy nie mogą być dodawane do graczy");
+            messagesCfg.set("language.polish.addCustomDropsCommandErrorMessage.message","&cError: &7Wpisz komende w ten sposób -> /mk addCustomDrop [nazwaStworzenia] [nazwaPrzedmiotu] [ilość] [szansa]");
+            messagesCfg.set("language.polish.addCustomDropAlreadyPresentErrorMessage.message","&cError: &6%itemName% &7just już ustawiony jako niestandardowy drop");
+            messagesCfg.set("language.polish.addCustomDropSuccessMessage.message","&aDodano &6%amount%  %itemName% &ado &6%mobName% &az szansą &6%chance% % &ana dropa");
+            messagesCfg.set("language.polish.removeCustomDropSuccessMessage.message","&6%itemName% &ausunięte z listy dropów &6%mobName% &atego stworzenia");
+            messagesCfg.set("language.polish.customDropsDoNotExistErrorMessage.message","&cError: &7Drop nie istnieje dla &astworzenia &6%mobName%");
+            messagesCfg.set("language.polish.customDropsNotEnabledMessage.message","&aNiestandardowe dropy nie są włączone dla &6%mobName% &astworzenia");
+            messagesCfg.set("language.polish.setLowWorthTooHighErrorMessage.message","&cError: &7Niższa wartość dla &6%mobName% &7stworzenia jest wyższa niż granica którą ustawiłeś");
+            messagesCfg.set("language.polish.setHighWorthTooLowErrorMessage.message","&cError: &7Wyższa wartość dla &6%mobName% &7stworzenia jest niższa niż wartość którą ustawiłeś");
+            messagesCfg.set("language.polish.mobDropInfoMessage.message","&6%mobName% &astworzenie ma &6%chance% % &aszansy na wydropienie &6%amount%  %itemName%");
+            messagesCfg.set("language.polish.customDropsNotSetMessage.message","&6%mobName% &astworzenia nie ma ustawionego nistandardowego dropu");
+            messagesCfg.set("language.polish.mobWorthMessage.message","&6%mobName% &astworzenia jest warte &6%lowWorth% &adolar(ów)");
+            messagesCfg.set("language.polish.mobRangeWorthMessage.message","&6%mobName% &astworzenia jest warte pomiędzy &6%lowWorth% &aa &6%highWorth% &adolarów");
+            messagesCfg.set("language.polish.setLowWorthSuccessMessage.message","&aNiższa wartość dla &6%mobName% &astworzenia została ustawiona na &6%lowWorth% &adolar(ów)");
+            messagesCfg.set("language.polish.setHighWorthSuccessMessage.message","&aWyższa wartość dla &6%mobName% &astworzenia została ustawiona na &6%highWorth% &adolar(ów)");
+            messagesCfg.set("language.polish.defaultDropsTrueMessage.message","&aDomyślne dropy za &6%mobName% &astworzenia są &6włączone");
+            messagesCfg.set("language.polish.defaultDropsFalseMessage.message","&aDomyślne dropy za &6%mobName% &astworzenia są &6wyłączone");
+            messagesCfg.set("language.polish.customDropsTrueMessage.message","&aNiestandardowe dropy za &6%mobName% &astworzenia są &6włączone");
+            messagesCfg.set("language.polish.customDropsFalseMessage.message","&aNiestandardowe dropy za &6%mobName% &astworzenia są &6wyłączone");
+            messagesCfg.set("language.polish.languageChangeSuccessMessage.message","&aZmieniono wiadomości dla Money4Mobs na &6Polskie");
+            messagesCfg.set("language.polish.moneyRewardedMessage.message","&aOtrzymałeś &6$ %amount%  &ai masz obecnie &6$ %balance%");
+            messagesCfg.set("language.polish.moneySubtractedMessage.message","&6$ %amount%  &azostało zabrane i masz obecnie &6$ %balance%");
+            // Polish Message Location
+            messagesCfg.set("language.polish.mobKillerOnMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.mobKillerOffMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.accessDeniedMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.eggSpawnRewardTrueMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.eggSpawnRewardFalseMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.spawnerSpawnRewardTrueMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.spawnerSpawnRewardFalseMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.tamedWolvesRewardTrueMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.tamedWolvesRewardFalseMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.reloadingMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.reloadConfirmMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setLowWorthCommandErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setHighWorthCommandErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.addCustomDropsErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.addCustomDropsCommandErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.addCustomDropAlreadyPresentErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.addCustomDropSuccessMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.removeCustomDropSuccessMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.customDropsDoNotExistErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.customDropsNotEnabledMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setLowWorthTooHighErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setHighWorthTooLowErrorMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.mobDropInfoMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.customDropsNotSetMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.mobWorthMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.mobRangeWorthMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setLowWorthSuccessMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.setHighWorthSuccessMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.defaultDropsTrueMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.defaultDropsFalseMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.customDropsTrueMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.customDropsFalseMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.languageChangeSuccessMessage.location",CHAT_MENU);
+            messagesCfg.set("language.polish.moneyRewardedMessage.location",ACTION_BAR);
+            messagesCfg.set("language.polish.moneySubtractedMessage.location",ACTION_BAR);
 
             messagesCfg.save(messagesFile);
 
@@ -735,6 +808,10 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_traditional.playerKilledByPlayerMessage.message","&a你被拿走 &6$ %amount% 元 &a，現在餘額 &6$ %balance% 元 &a。");
             messagesCfg.set("language.chinese_traditional.playerKilledPlayerMessage.location",ACTION_BAR);
             messagesCfg.set("language.chinese_traditional.playerKilledByPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.polish.playerKilledPlayerMessage.message", "&aOtrzymałeś &6$ %amount%  &ai masz obecnie &6$ %balance%");
+            messagesCfg.set("language.polish.playerKilledByPlayerMessage.message","Straciłeś &6$ %amount%  &ai teraz masz &6$ %balance%");
+            messagesCfg.set("language.polish.playerKilledPlayerMessage.location",ACTION_BAR);
+            messagesCfg.set("language.polish.playerKilledByPlayerMessage.location",ACTION_BAR);
         }
         renameCustomDropsMessage();
         messagesCfg.save(messagesFile);
@@ -813,6 +890,14 @@ public class MessagesConfigManager {
             messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.message", "&c错误: &6%mobName% &7不是有效的暴徒");
             messagesCfg.set("language.chinese_simplified.invalidMobErrorMessage.location", CHAT_MENU);
         }
+        if (!MessagesConfigManager.messagesCfg.isSet("language.polsih.addCustomDropInvalidMobErrorMessage.message")) {
+            messagesCfg.set("language.polish.invalidMobErrorMessage.message", "&cError: &6%mobName% &7nie jest prawidłową nazwą stworzenia");
+            messagesCfg.set("language.polish.invalidMobErrorMessage.location", CHAT_MENU);
+        }else {
+            messagesCfg.set("language.polish.invalidMobErrorMessage.message", MessagesConfigManager.messagesCfg.getString("language.polish.addCustomDropInvalidMobErrorMessage.message"));
+            messagesCfg.set("language.polish.invalidMobErrorMessage.location", MessagesConfigManager.messagesCfg.getString("language.polish.addCustomDropInvalidMobErrorMessage.location"));
+            messagesCfg.set("language.polish.addCustomDropInvalidMobErrorMessage", null);
+        }
     }
 
     public static void add163CommandErrorMessages() {
@@ -827,6 +912,7 @@ public class MessagesConfigManager {
             languageList.add("hindi");
             languageList.add("chinese_traditional");
             languageList.add("chinese_simplified");
+            languageList.add("polish");
             for (String language : languageList){
                 messagesCfg.set("language." + language  + ".removeCustomDropsCommandErrorMessage.location", CHAT_MENU);
                 messagesCfg.set("language." + language  + ".toggleCustomDropsCommandErrorMessage.location", CHAT_MENU);
@@ -947,6 +1033,18 @@ public class MessagesConfigManager {
             messagesCfg.set("language.russian.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromSpawners");
             messagesCfg.set("language.russian.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk toggleMoneyFromTamedWolves");
             messagesCfg.set("language.russian.reloadCommandErrorMessage.message", "&cОшибка: &7Введите команду, подобную этой -> /mk reload");
+            
+            messagesCfg.set("language.polish.removeCustomDropsCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk removeCustomDrop [nazwaStworzenia] [nazwaPrzedmiotu]");
+            messagesCfg.set("language.polish.toggleCustomDropsCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleCustomDrops [nazwaStworzenia]");
+            messagesCfg.set("language.polish.toggleDefaultDropsCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleDefaultDrops [nazwaStworzenia]");
+            messagesCfg.set("language.polish.worthCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk worth [nazwaStworzenia]");
+            messagesCfg.set("language.polish.dropsCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk drops [nazwaStworzenia]");
+            messagesCfg.set("language.polish.languageCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk language [język]");
+            messagesCfg.set("language.polish.toggleKMCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleKM");
+            messagesCfg.set("language.polish.toggleMoneyFromSpawnEggsCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleMoneyFromSpawnEggs");
+            messagesCfg.set("language.polish.toggleMoneyFromSpawnersCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleMoneyFromSpawners");
+            messagesCfg.set("language.polish.toggleMoneyFromTamedWolvesCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk toggleMoneyFromTamedWolves");
+            messagesCfg.set("language.polish.reloadCommandErrorMessage.message", "&cError: &7Wpisz komende w ten sposób -> /mk reload");
         }
     }
 
@@ -962,6 +1060,7 @@ public class MessagesConfigManager {
             languageList.add("hindi");
             languageList.add("chinese_traditional");
             languageList.add("chinese_simplified");
+            languageList.add("polish");
             String incompleteMessage = ".incompleteCommandErrorMessage.message";
             for (String language : languageList) {
                 messagesCfg.set("language." + language + ".incompleteCommandErrorMessage.location", CHAT_MENU);
@@ -975,6 +1074,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + incompleteMessage, "&cरुटि: &7उपलब्ध आदेश हैं -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
             messagesCfg.set("language.chinese_traditional" + incompleteMessage, "&c錯誤 ： &7可用的指令 -> /mk [worth、drops、language、reload、removeCustomDrop、setLowWorth、setHighWorth、toggleCustomDrops、toggleDefaultDrops、toggleKM、toggleMoneyFromSpawnEggs、toggleMoneyFromSpawners、toggleMoneyFromTamedWolves。");
             messagesCfg.set("language.chinese_simplified" + incompleteMessage, "&c错误 ： &7可用的命令 -> /mk [worth、drops、language、reload、removeCustomDrop、setLowWorth、setHighWorth、toggleCustomDrops、toggleDefaultDrops、toggleKM、toggleMoneyFromSpawnEggs、toggleMoneyFromSpawners、toggleMoneyFromTamedWolves。");
+            messagesCfg.set("language.polish" + incompleteMessage, "&cError: &7Dostępne komendy to -> /mk [worth, drops, language, reload, removeCustomDrop, setLowWorth, setHighWorth, toggleCustomDrops, toggleDefaultDrops, toggleKM, toggleMoneyFromSpawnEggs, toggleMoneyFromSpawners, toggleMoneyFromTamedWolves");
         }
     }
     public static void add169MobWorldRewardMessages() {
@@ -989,6 +1089,7 @@ public class MessagesConfigManager {
             languageList.add("hindi");
             languageList.add("chinese_traditional");
             languageList.add("chinese_simplified");
+            languageList.add("polish");
             String mobRewardWorldsMessage = ".mobRewardWorldsMessage.message";
             String mobRewardWorldsCommandErrorMessage = ".mobRewardWorldsCommandErrorMessage.message";
             for (String language : languageList) {
@@ -1004,6 +1105,8 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + mobRewardWorldsMessage, "&6%mobName% &aके लिए धन &6%worlds . में पुरस्कृत किया जाता है");
             messagesCfg.set("language.chinese_traditional" + mobRewardWorldsMessage, "&6%mobName% &a的錢在 &6%worlds 中得到獎勵");
             messagesCfg.set("language.chinese_simplified" + mobRewardWorldsMessage, "&6%mobName% &a的钱在 &6%worlds 中得到奖励");
+            messagesCfg.set("language.polish" + mobRewardWorldsMessage, "&aPięniądze za zabicie &6%mobName% &azostały otrzymane w &6%worlds%");
+            
             messagesCfg.set("language.english" + mobRewardWorldsCommandErrorMessage, "&cError: &7Enter command like this -> /mk mobRewardWorlds [mobName]");
             messagesCfg.set("language.french" + mobRewardWorldsCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk mobRewardWorlds [nom_mob]");
             messagesCfg.set("language.spanish" + mobRewardWorldsCommandErrorMessage, "&cError: &7ingrese un comando como este -> / mk mobRewardWorlds [nombre de mob]");
@@ -1013,6 +1116,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + mobRewardWorldsCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk mobRewardWorlds [mob-नाम]");
             messagesCfg.set("language.chinese_traditional" + mobRewardWorldsCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk mobRewardWorlds [生物名稱]");
             messagesCfg.set("language.chinese_simplified" + mobRewardWorldsCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk mobRewardWorlds [生物名称]");
+            messagesCfg.set("language.polish" + mobRewardWorldsCommandErrorMessage, "&cError: &7Wpisz komnędne w ten sposób -> /mk mobRewardWorlds [nazwaStworzenia]");
         }
     }
 
@@ -1028,6 +1132,7 @@ public class MessagesConfigManager {
             languageList.add("hindi");
             languageList.add("chinese_traditional");
             languageList.add("chinese_simplified");
+            languageList.add("polish");
             String addWorldSuccessMessage = ".addWorldSuccessMessage.message";
             String addWorldCommandErrorMessage = ".addWorldCommandErrorMessage.message";
             String removeWorldSuccessMessage = ".removeWorldSuccessMessage.message";
@@ -1049,6 +1154,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + addWorldSuccessMessage, "&aजोड़ा गया &6%worlds% &aदुनिया");
             messagesCfg.set("language.chinese_traditional" + addWorldSuccessMessage, "&a新增 &6%worlds% &a世界");
             messagesCfg.set("language.chinese_simplified" + addWorldSuccessMessage, "&a新增 &6%worlds% &a世界");
+            messagesCfg.set("language.polish" + addWorldSuccessMessage, "&aDodano &6%worlds% &ado świata");
 
             messagesCfg.set("language.english" + addWorldCommandErrorMessage, "&cError: &7Enter command like this -> /mk addWorld [worldName]");
             messagesCfg.set("language.french" + addWorldCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk addWorld [nom du monde]");
@@ -1059,6 +1165,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + addWorldCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk addWorld [दुनिया का नाम]");
             messagesCfg.set("language.chinese_traditional" + addWorldCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk addWorld [世界名]");
             messagesCfg.set("language.chinese_simplified" + addWorldCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk addWorld [世界名]");
+            messagesCfg.set("language.polish" + addWorldCommandErrorMessage, "&cError: &7Wpisz komende w ten sposób -> /mk addWorld [nazwaŚwiata]");
 
             messagesCfg.set("language.english" + removeWorldSuccessMessage, "&aRemoved &6%worlds% &aworld");
             messagesCfg.set("language.french" + removeWorldSuccessMessage, "&aMonde &6%worlds% supprimé");
@@ -1069,6 +1176,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + removeWorldSuccessMessage, "&aहटाया गया &6%worlds% &aदुनिया");
             messagesCfg.set("language.chinese_traditional" + removeWorldSuccessMessage, "&a移除 &6%worlds% &a世界");
             messagesCfg.set("language.chinese_simplified" + removeWorldSuccessMessage, "&a移除 &6%worlds% &a世界");
+            messagesCfg.set("language.polish" + removeWorldSuccessMessage, "&aUsnięto &6%worlds% &aze świata");
 
             messagesCfg.set("language.english" + removeWorldCommandErrorMessage, "&cError: &7Enter command like this -> /mk removeWorld [worldName]");
             messagesCfg.set("language.french" + removeWorldCommandErrorMessage, "&cErreur: &7Entrez la commande comme celle-ci -> /mk removeWorld [nom du monde]");
@@ -1079,6 +1187,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + removeWorldCommandErrorMessage, "'&cत्रुटि: &7इस तरह कमांड दर्ज करें -> /mk removeWorld [दुनिया का नाम]");
             messagesCfg.set("language.chinese_traditional" + removeWorldCommandErrorMessage, "&c錯誤 ： &7用法說明 -> /mk removeWorld [世界名]");
             messagesCfg.set("language.chinese_simplified" + removeWorldCommandErrorMessage, "&c错误 ： &7用法说明 -> /mk removeWorld [世界名]");
+            messagesCfg.set("language.polish" + removeWorldCommandErrorMessage, "&cError: &7Wpisz komende w ten sposób -> /mk removeWorld [nazwaŚwiata]");
 
             messagesCfg.set("language.english" + removeWorldFailureMessage, "&cError: &7World doesn't exist or has incorrect capitalization");
             messagesCfg.set("language.french" + removeWorldFailureMessage, "&cErreur: &7Le monde n'existe pas ou a une majuscule incorrecte");
@@ -1089,6 +1198,7 @@ public class MessagesConfigManager {
             messagesCfg.set("language.hindi" + removeWorldFailureMessage, "'&cत्रुटि: &7दुनिया मौजूद नहीं है या गलत कैपिटलाइज़ेशन है");
             messagesCfg.set("language.chinese_traditional" + removeWorldFailureMessage, "&c錯誤 ： &7World 不存在或大小寫不正確");
             messagesCfg.set("language.chinese_simplified" + removeWorldFailureMessage, "&c错误 ： &7World 不存在或大小写不正确");
+            messagesCfg.set("language.polish" + removeWorldFailureMessage, "&cError: &7Świat nie istnieje lub ma nieprawidłową wielokość liter");
         }
     }
 }
