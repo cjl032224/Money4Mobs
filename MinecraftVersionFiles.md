@@ -9,3 +9,4 @@
 | 1.15   | 1.7.2      | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.2---1.15.jar)  |
 | 1.16   | 1.7.2       | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.2---1.16.jar)      |
 | 1.17   | 1.7.2    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.2---1.17.jar)      |
+| 1.18   | 1.7.2    | [<img src="https://raw.githubusercontent.com/latch93/Money4Mobs/master/images/download%20button.png">](https://github.com/latch93/Money4Mobs/raw/master/jar%20files/Money4Mobs-v1.7.2---1.18.jar)      |
