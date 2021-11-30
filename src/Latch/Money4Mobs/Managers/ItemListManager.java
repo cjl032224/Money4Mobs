@@ -49,7 +49,7 @@ public class ItemListManager {
         try {
             itemsFile.createNewFile();
             for (int i = 0; i < m.length; i++){
-                if (!m[i].toString().contains("CANDLE_CAKE")){
+                if (!m[i].toString().contains("CAVE_VINES_PLANT")){
                     itemsCfg.set("items.name." + i, m[i].toString());
                 }
             }
