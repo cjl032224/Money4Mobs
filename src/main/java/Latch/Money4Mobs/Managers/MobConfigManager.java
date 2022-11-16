@@ -43,12 +43,10 @@ public class MobConfigManager {
         }
         update137AddPiglin();
         update14Add117Mobs();
-        update155UpdateChecker();
         updateAdd119Mobs();
         if (Bukkit.getServer().getBukkitVersion().contains("1.17") || Bukkit.getServer().getBukkitVersion().contains("1.16")){
             updateZombifiedPiglin169();
         }
-        updatePerWorldReward169();
         updatePerWorldReward172();
         mobsCfg.save(mobsFile);
     }

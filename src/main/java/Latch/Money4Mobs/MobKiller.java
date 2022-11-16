@@ -253,7 +253,8 @@ public abstract class MobKiller implements CommandExecutor {
             }
 
             RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-            Economy econ = null;
+            Economy econ;
+            assert rsp != null;
             econ = rsp.getProvider();
 
             MobConfigManager.mobsCfg.getBoolean("mobs.Player.ipBan");
@@ -286,7 +287,6 @@ public abstract class MobKiller implements CommandExecutor {
                     }
                 }
             }
-
         } else {
             giveMoney = false;
         }
@@ -304,7 +304,6 @@ public abstract class MobKiller implements CommandExecutor {
             }
         }
         double operator = ConfigFileManager.configCfg.getDouble("group-multiplier.operator");
-
         if (pa.isOp()){
             levelMultiplier = operator;
         }
@@ -333,7 +332,6 @@ public abstract class MobKiller implements CommandExecutor {
                 }
             }
         }
-
         double distance = getDistanceFromKiller(e, pa);
 
         boolean isMultiplierAggregate = ConfigFileManager.configCfg.getBoolean("actions-multipliers.isMultipliersAggregate");
@@ -353,10 +351,11 @@ public abstract class MobKiller implements CommandExecutor {
         }
         money = money * levelMultiplier;
         String entityWorld = e.getWorld().getName();
-        if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || Boolean.FALSE.equals(MobConfigManager.mobsCfg.getBoolean("mobs." + mobName + ".worlds." + entityWorld ))){
+        FileConfiguration mobCfg = Api.getFileConfiguration("mobs");
+        List<String> enabledWorlds = mobCfg.getStringList("mobs." + mobName + ".enabledWorlds");
+        if (Boolean.TRUE.equals(ConfigFileManager.configCfg.getBoolean("disableMoneyReward")) || !enabledWorlds.contains(entityWorld)){
             money = 0;
         }
-
         Random r = new Random();
         double randomValue = 0 + (100 - 0) * r.nextDouble();
         double mobRandomValue = MobConfigManager.mobsCfg.getDouble("mobs." + mobName + ".percentDrop");

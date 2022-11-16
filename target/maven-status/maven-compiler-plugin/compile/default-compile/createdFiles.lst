@@ -14,6 +14,7 @@ Latch\Money4Mobs\Managers\UserManager.class
 Latch\Money4Mobs\Metrics$SimpleBarChart.class
 Latch\Money4Mobs\Metrics.class
 Latch\Money4Mobs\Money4Mobs.class
+Latch\Money4Mobs\Api.class
 Latch\Money4Mobs\MobModel.class
 Latch\Money4Mobs\Mobs4MoneyPlayer.class
 Latch\Money4Mobs\UserModel.class

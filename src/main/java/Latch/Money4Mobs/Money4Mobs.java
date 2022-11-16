@@ -32,7 +32,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Money4Mobs extends JavaPlugin implements Listener {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    public static Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
     private static final List<Mobs4MoneyPlayer> playerList = new ArrayList<>();
     private static final List<UserModel> userList = new ArrayList<>();
@@ -96,19 +96,6 @@ public class Money4Mobs extends JavaPlugin implements Listener {
 
         Objects.requireNonNull(this.getCommand("mk")).setExecutor(new MkCommand());
         Objects.requireNonNull(this.getCommand("mk")).setTabCompleter(new MobWorthTabComplete());
-
-        if (Boolean.TRUE.equals(MobConfigManager.mobsCfg.isSet("checkForUpdate"))) {
-            checkForUpdate = MobConfigManager.mobsCfg.getBoolean("checkForUpdate");
-        }
-
-        new UpdateChecker(this, 85373).getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                System.out.println("[Money4Mobs] No new version available");
-            } else {
-                System.out.println("[Money4Mobs] New version available -> https://www.spigotmc.org/resources/money4mobs.85373");
-                isUpdateAvailable = true;
-            }
-        });
 
         sml.getMobModel();
     }
