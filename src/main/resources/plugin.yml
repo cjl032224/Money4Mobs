@@ -1,8 +1,8 @@
 name: Money4Mobs
 version: "1.7.2"
 author: Latch
-main: Latch.Money4Mobs.Money4Mobs
-api-version: 1.18
+main: Money4Mobs.Main
+api-version: 1.20
 softdepend: [Vault]
 commands:
   mk:
